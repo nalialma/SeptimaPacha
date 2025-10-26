@@ -563,3 +563,128 @@ document.querySelectorAll('.plantilla-card').forEach(card => {
 });
 
 console.log('✨ Animaciones de Plantillas cargadas correctamente');
+
+
+// === MENÚ EXPANDIBLE EN HERO ===
+
+const menuBoton = document.getElementById('menuBoton');
+const menuExpandible = document.getElementById('menuExpandible');
+const menuCerrar = document.getElementById('menuCerrar');
+const menuItems = document.querySelectorAll('.menu-item');
+
+// Abrir menú
+menuBoton.addEventListener('click', () => {
+    menuExpandible.classList.add('activo');
+    menuBoton.classList.add('activo');
+    document.body.style.overflow = 'hidden';
+    
+    // Animación de entrada para items
+    gsap.staggerTo('.menu-item', 0.3, {
+        opacity: 1,
+        y: 0,
+        ease: "back.out"
+    }, 0.05);
+});
+
+// Cerrar menú con botón X
+menuCerrar.addEventListener('click', cerrarMenu);
+
+// Cerrar menú al hacer click en un item
+menuItems.forEach(item => {
+    item.addEventListener('click', (e) => {
+        e.preventDefault();
+        cerrarMenu();
+        
+        // Scroll suave a la sección
+        const href = item.getAttribute('href');
+        if (href !== '#') {
+            const targetClass = href.substring(1);
+            const target = document.querySelector('.' + targetClass);
+            if (target) {
+                gsap.to(window, {
+                    duration: 1.5,
+                    scrollTo: target,
+                    ease: "power2.inOut"
+                });
+            }
+        }
+    });
+});
+
+// Función para cerrar menú
+function cerrarMenu() {
+    menuExpandible.classList.remove('activo');
+    menuBoton.classList.remove('activo');
+    document.body.style.overflow = 'auto';
+}
+
+// Cerrar menú al presionar ESC
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menuExpandible.classList.contains('activo')) {
+        cerrarMenu();
+    }
+});
+
+// Cerrar menú al hacer click fuera del menú (en el fondo oscuro)
+menuExpandible.addEventListener('click', (e) => {
+    if (e.target === menuExpandible) {
+        cerrarMenu();
+    }
+});
+
+// Animación del botón al hacer hover
+menuBoton.addEventListener('mouseenter', () => {
+    gsap.to(menuBoton, {
+        duration: 0.3,
+        scale: 1.15,
+        ease: "back.out"
+    });
+});
+
+menuBoton.addEventListener('mouseleave', () => {
+    if (!menuBoton.classList.contains('activo')) {
+        gsap.to(menuBoton, {
+            duration: 0.3,
+            scale: 1,
+            ease: "back.out"
+        });
+    }
+});
+
+// Efecto de onda al hacer click en items
+menuItems.forEach(item => {
+    item.addEventListener('click', (e) => {
+        const ripple = document.createElement('div');
+        ripple.style.cssText = `
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(243, 156, 18, 0.3);
+            transform: scale(0);
+            pointer-events: none;
+        `;
+        
+        item.style.position = 'relative';
+        item.style.overflow = 'hidden';
+        
+        const size = Math.max(item.clientWidth, item.clientHeight);
+        const x = e.clientX - item.getBoundingClientRect().left - size / 2;
+        const y = e.clientY - item.getBoundingClientRect().top - size / 2;
+        
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+        
+        item.appendChild(ripple);
+        
+        gsap.to(ripple, {
+            scale: 1,
+            opacity: 0,
+            duration: 0.8,
+            ease: "power2.out",
+            onComplete: () => ripple.remove()
+        });
+    });
+});
+
+console.log('✨ Menú expandible cargado - Séptima Pacha Co.');
+
