@@ -2629,7 +2629,7 @@
     }
 }
 
-/* === MENÚ EXPANDIBLE EN HERO - CSS CORREGIDO === */
+/* === MENÚ EXPANDIBLE EN HERO - CSS === */
 
 /* Botón de Menú */
 .menu-boton {
@@ -2853,3 +2853,4 @@
         gap: 1.5rem;
     }
 }
+
