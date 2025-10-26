@@ -565,7 +565,7 @@ document.querySelectorAll('.plantilla-card').forEach(card => {
 console.log('✨ Animaciones de Plantillas cargadas correctamente');
 
 
-// === MENÚ EXPANDIBLE EN HERO ===
+// === MENÚ EXPANDIBLE EN HERO - VERSIÓN CORREGIDA ===
 
 const menuBoton = document.getElementById('menuBoton');
 const menuExpandible = document.getElementById('menuExpandible');
@@ -577,13 +577,6 @@ menuBoton.addEventListener('click', () => {
     menuExpandible.classList.add('activo');
     menuBoton.classList.add('activo');
     document.body.style.overflow = 'hidden';
-    
-    // Animación de entrada para items
-    gsap.staggerTo('.menu-item', 0.3, {
-        opacity: 1,
-        y: 0,
-        ease: "back.out"
-    }, 0.05);
 });
 
 // Cerrar menú con botón X
@@ -593,20 +586,23 @@ menuCerrar.addEventListener('click', cerrarMenu);
 menuItems.forEach(item => {
     item.addEventListener('click', (e) => {
         e.preventDefault();
+        
+        const targetClass = item.getAttribute('data-scroll');
+        const target = document.querySelector(targetClass);
+        
         cerrarMenu();
         
-        // Scroll suave a la sección
-        const href = item.getAttribute('href');
-        if (href !== '#') {
-            const targetClass = href.substring(1);
-            const target = document.querySelector('.' + targetClass);
-            if (target) {
+        if (target) {
+            setTimeout(() => {
                 gsap.to(window, {
-                    duration: 1.5,
-                    scrollTo: target,
+                    duration: 1.2,
+                    scrollTo: {
+                        y: target,
+                        offsetY: 60
+                    },
                     ease: "power2.inOut"
                 });
-            }
+            }, 300);
         }
     });
 });
@@ -625,20 +621,24 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Cerrar menú al hacer click fuera del menú (en el fondo oscuro)
-menuExpandible.addEventListener('click', (e) => {
-    if (e.target === menuExpandible) {
+// Cerrar menú al hacer click fuera del menú
+document.addEventListener('click', (e) => {
+    if (menuExpandible.classList.contains('activo') && 
+        !menuExpandible.contains(e.target) && 
+        !menuBoton.contains(e.target)) {
         cerrarMenu();
     }
 });
 
 // Animación del botón al hacer hover
 menuBoton.addEventListener('mouseenter', () => {
-    gsap.to(menuBoton, {
-        duration: 0.3,
-        scale: 1.15,
-        ease: "back.out"
-    });
+    if (!menuBoton.classList.contains('activo')) {
+        gsap.to(menuBoton, {
+            duration: 0.3,
+            scale: 1.15,
+            ease: "back.out"
+        });
+    }
 });
 
 menuBoton.addEventListener('mouseleave', () => {
@@ -653,38 +653,21 @@ menuBoton.addEventListener('mouseleave', () => {
 
 // Efecto de onda al hacer click en items
 menuItems.forEach(item => {
-    item.addEventListener('click', (e) => {
-        const ripple = document.createElement('div');
-        ripple.style.cssText = `
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(243, 156, 18, 0.3);
-            transform: scale(0);
-            pointer-events: none;
-        `;
-        
-        item.style.position = 'relative';
-        item.style.overflow = 'hidden';
-        
-        const size = Math.max(item.clientWidth, item.clientHeight);
-        const x = e.clientX - item.getBoundingClientRect().left - size / 2;
-        const y = e.clientY - item.getBoundingClientRect().top - size / 2;
-        
-        ripple.style.width = ripple.style.height = size + 'px';
-        ripple.style.left = x + 'px';
-        ripple.style.top = y + 'px';
-        
-        item.appendChild(ripple);
-        
-        gsap.to(ripple, {
+    item.addEventListener('mouseenter', function() {
+        gsap.to(this, {
+            duration: 0.3,
+            scale: 1.1,
+            ease: "back.out"
+        });
+    });
+
+    item.addEventListener('mouseleave', function() {
+        gsap.to(this, {
+            duration: 0.3,
             scale: 1,
-            opacity: 0,
-            duration: 0.8,
-            ease: "power2.out",
-            onComplete: () => ripple.remove()
+            ease: "back.out"
         });
     });
 });
 
-console.log('✨ Menú expandible cargado - Séptima Pacha Co.');
-
+console.log('✨ Menú expandible corregido - Séptima Pacha Co.');
