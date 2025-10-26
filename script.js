@@ -335,3 +335,231 @@
 
         preloadImages();
  
+// === ANIMACIONES PARA SECCIÓN PLANTILLAS ===
+
+// Animación de entrada para tarjetas de plantillas
+gsap.utils.toArray('.plantilla-card').forEach((card, index) => {
+    gsap.fromTo(card,
+        { 
+            y: 60, 
+            opacity: 0,
+            scale: 0.9
+        },
+        {
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            duration: 0.8,
+            delay: index * 0.1,
+            ease: "power2.out",
+            scrollTrigger: {
+                trigger: card,
+                start: "top 85%",
+                end: "bottom 15%",
+                toggleActions: "play none none none"
+            }
+        }
+    );
+});
+
+// Efecto hover mejorado con partículas
+document.querySelectorAll('.plantilla-card').forEach(card => {
+    card.addEventListener('mouseenter', (e) => {
+        gsap.to(card, {
+            duration: 0.3,
+            ease: "power2.out"
+        });
+
+        // Crear efecto de partículas al hover
+        const rect = card.getBoundingClientRect();
+        createPlantillaParticles(e.clientX, e.clientY);
+    });
+
+    card.addEventListener('mouseleave', () => {
+        gsap.to(card, {
+            duration: 0.3,
+            ease: "power2.out"
+        });
+    });
+});
+
+// Función para crear partículas de esmeralda
+function createPlantillaParticles(x, y) {
+    const particleCount = 5;
+    
+    for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.style.cssText = `
+            position: fixed;
+            left: ${x}px;
+            top: ${y}px;
+            width: 8px;
+            height: 8px;
+            background: radial-gradient(circle, #1ABC9C, #16A085);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            box-shadow: 0 0 10px rgba(26, 188, 156, 0.6);
+        `;
+        document.body.appendChild(particle);
+
+        const angle = (Math.PI * 2 * i) / particleCount;
+        const velocity = 3 + Math.random() * 2;
+        const vx = Math.cos(angle) * velocity;
+        const vy = Math.sin(angle) * velocity;
+
+        gsap.to(particle, {
+            x: vx * 100,
+            y: vy * 100,
+            opacity: 0,
+            scale: 0,
+            duration: 1.2,
+            ease: "power2.out",
+            onComplete: () => particle.remove()
+        });
+    }
+}
+
+// Animación de números de precios (contador)
+const observerPrecios = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting && !entry.target.dataset.animated) {
+            entry.target.dataset.animated = 'true';
+            
+            const priceText = entry.target.textContent;
+            const priceNumber = parseInt(priceText.replace('$', ''));
+            
+            gsap.fromTo(entry.target, 
+                { textContent: 0 },
+                {
+                    textContent: priceNumber,
+                    duration: 1,
+                    snap: { textContent: 1 },
+                    ease: "power2.out",
+                    onUpdate: function() {
+                        entry.target.textContent = '$' + Math.round(this.targets()[0].textContent);
+                    }
+                }
+            );
+        }
+    });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('.plantilla-precio').forEach(precio => {
+    observerPrecios.observe(precio);
+});
+
+// Animación de features con delay
+gsap.utils.toArray('.feature').forEach((feature, index) => {
+    gsap.fromTo(feature,
+        { 
+            opacity: 0,
+            scale: 0.8,
+            y: 10
+        },
+        {
+            opacity: 1,
+            scale: 1,
+            y: 0,
+            duration: 0.6,
+            delay: index * 0.05,
+            ease: "back.out",
+            scrollTrigger: {
+                trigger: feature.closest('.plantilla-card'),
+                start: "top 80%",
+                toggleActions: "play none none none"
+            }
+        }
+    );
+});
+
+// Pulsación sutil de íconos de plantilla
+gsap.utils.toArray('.plantilla-icono').forEach(icono => {
+    gsap.to(icono, {
+        duration: 2,
+        scale: 1.1,
+        yoyo: true,
+        repeat: -1,
+        ease: "sine.inOut",
+        scrollTrigger: {
+            trigger: icono.closest('.plantilla-card'),
+            start: "top 80%",
+            onEnter: () => {
+                gsap.to(icono, {
+                    duration: 2,
+                    scale: 1.1,
+                    yoyo: true,
+                    repeat: -1,
+                    ease: "sine.inOut"
+                });
+            }
+        }
+    });
+});
+
+// Efecto de destello en bordes de tarjetas
+document.querySelectorAll('.plantilla-card').forEach(card => {
+    const preview = card.querySelector('.plantilla-preview');
+    
+    card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const moveX = (x - rect.width / 2) * 0.02;
+        const moveY = (y - rect.height / 2) * 0.02;
+        
+        gsap.to(card, {
+            rotateX: moveY,
+            rotateY: moveX,
+            duration: 0.3,
+            transformOrigin: "center center",
+            ease: "power2.out"
+        });
+    });
+    
+    card.addEventListener('mouseleave', () => {
+        gsap.to(card, {
+            rotateX: 0,
+            rotateY: 0,
+            duration: 0.6,
+            ease: "power2.out"
+        });
+    });
+});
+
+// Efecto ripple al hacer click
+document.querySelectorAll('.plantilla-card').forEach(card => {
+    card.addEventListener('click', (e) => {
+        const rect = card.getBoundingClientRect();
+        const ripple = document.createElement('div');
+        
+        ripple.style.cssText = `
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(26, 188, 156, 0.6);
+            transform: scale(0);
+            pointer-events: none;
+        `;
+        
+        const size = Math.max(rect.width, rect.height);
+        const x = e.clientX - rect.left - size / 2;
+        const y = e.clientY - rect.top - size / 2;
+        
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+        
+        card.appendChild(ripple);
+        
+        gsap.to(ripple, {
+            scale: 1,
+            opacity: 0,
+            duration: 0.8,
+            ease: "power2.out",
+            onComplete: () => ripple.remove()
+        });
+    });
+});
+
+console.log('✨ Animaciones de Plantillas cargadas correctamente');
