@@ -565,7 +565,7 @@ document.querySelectorAll('.plantilla-card').forEach(card => {
 console.log('✨ Animaciones de Plantillas cargadas correctamente');
 
 
-// === MENÚ EXPANDIBLE EN HERO - VERSIÓN CORREGIDA ===
+// === MENÚ EXPANDIBLE EN HERO -  ===
 
 const menuBoton = document.getElementById('menuBoton');
 const menuExpandible = document.getElementById('menuExpandible');
@@ -671,3 +671,4 @@ menuItems.forEach(item => {
 });
 
 console.log('✨ Menú expandible corregido - Séptima Pacha Co.');
+
