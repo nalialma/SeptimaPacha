@@ -565,7 +565,7 @@ document.querySelectorAll('.plantilla-card').forEach(card => {
 console.log('✨ Animaciones de Plantillas cargadas correctamente');
 
 
-// === MENÚ EXPANDIBLE EN HERO -  ===
+// === MENÚ EXPANDIBLE - NAVEGACIÓN MEJORADA ===
 
 const menuBoton = document.getElementById('menuBoton');
 const menuExpandible = document.getElementById('menuExpandible');
@@ -587,11 +587,14 @@ menuItems.forEach(item => {
     item.addEventListener('click', (e) => {
         e.preventDefault();
         
+        // Obtener el selector de la sección
         const targetClass = item.getAttribute('data-scroll');
         const target = document.querySelector(targetClass);
         
+        // Cerrar menú primero
         cerrarMenu();
         
+        // Luego hacer scroll a la sección
         if (target) {
             setTimeout(() => {
                 gsap.to(window, {
@@ -602,7 +605,7 @@ menuItems.forEach(item => {
                     },
                     ease: "power2.inOut"
                 });
-            }, 300);
+            }, 300); // Esperar a que cierre el menú
         }
     });
 });
@@ -651,7 +654,7 @@ menuBoton.addEventListener('mouseleave', () => {
     }
 });
 
-// Efecto de onda al hacer click en items
+// Efecto de onda al hacer hover en items
 menuItems.forEach(item => {
     item.addEventListener('mouseenter', function() {
         gsap.to(this, {
@@ -670,5 +673,4 @@ menuItems.forEach(item => {
     });
 });
 
-console.log('✨ Menú expandible corregido - Séptima Pacha Co.');
-
+console.log('✨ Menú expandible con navegación correcta - Séptima Pacha Co.');
