@@ -565,50 +565,29 @@ document.querySelectorAll('.plantilla-card').forEach(card => {
 console.log('✨ Animaciones de Plantillas cargadas correctamente');
 
 
-// === MENÚ EXPANDIBLE - NAVEGACIÓN MEJORADA ===
+// ========================================
+// MENÚ EXPANDIBLE - SOLUCIÓN FINAL
+// ========================================
 
+// Selectores del menú
 const menuBoton = document.getElementById('menuBoton');
 const menuExpandible = document.getElementById('menuExpandible');
 const menuCerrar = document.getElementById('menuCerrar');
 const menuItems = document.querySelectorAll('.menu-item');
 
-// Abrir menú
-menuBoton.addEventListener('click', () => {
+console.log('✨ Menú elementos encontrados:', {
+    boton: menuBoton,
+    menu: menuExpandible,
+    cerrar: menuCerrar,
+    items: menuItems.length
+});
+
+// Función para abrir menú
+function abrirMenu() {
     menuExpandible.classList.add('activo');
     menuBoton.classList.add('activo');
     document.body.style.overflow = 'hidden';
-});
-
-// Cerrar menú con botón X
-menuCerrar.addEventListener('click', cerrarMenu);
-
-// Cerrar menú al hacer click en un item
-menuItems.forEach(item => {
-    item.addEventListener('click', (e) => {
-        e.preventDefault();
-        
-        // Obtener el selector de la sección
-        const targetClass = item.getAttribute('data-scroll');
-        const target = document.querySelector(targetClass);
-        
-        // Cerrar menú primero
-        cerrarMenu();
-        
-        // Luego hacer scroll a la sección
-        if (target) {
-            setTimeout(() => {
-                gsap.to(window, {
-                    duration: 1.2,
-                    scrollTo: {
-                        y: target,
-                        offsetY: 60
-                    },
-                    ease: "power2.inOut"
-                });
-            }, 300); // Esperar a que cierre el menú
-        }
-    });
-});
+}
 
 // Función para cerrar menú
 function cerrarMenu() {
@@ -617,6 +596,50 @@ function cerrarMenu() {
     document.body.style.overflow = 'auto';
 }
 
+// Click en botón de menú
+menuBoton.addEventListener('click', (e) => {
+    e.stopPropagation();
+    abrirMenu();
+});
+
+// Click en botón de cerrar
+menuCerrar.addEventListener('click', (e) => {
+    e.stopPropagation();
+    cerrarMenu();
+});
+
+// FUNCIÓN PRINCIPAL: Click en items del menú
+menuItems.forEach(item => {
+    item.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // Obtener el selector de la sección
+        const targetSelector = item.getAttribute('data-scroll');
+        console.log('🎯 Navegando a:', targetSelector);
+        
+        // Obtener el elemento objetivo
+        const targetElement = document.querySelector(targetSelector);
+        
+        if (targetElement) {
+            // Cerrar menú primero
+            cerrarMenu();
+            
+            // Esperar a que cierre el menú (600ms es la duración de la animación)
+            setTimeout(() => {
+                // Usar scroll behavior nativo para mejor compatibilidad
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                console.log('✅ Scroll completado');
+            }, 600);
+        } else {
+            console.error('❌ Elemento no encontrado:', targetSelector);
+        }
+    });
+});
+
 // Cerrar menú al presionar ESC
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && menuExpandible.classList.contains('activo')) {
@@ -624,7 +647,7 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Cerrar menú al hacer click fuera del menú
+// Cerrar menú al hacer click fuera
 document.addEventListener('click', (e) => {
     if (menuExpandible.classList.contains('activo') && 
         !menuExpandible.contains(e.target) && 
@@ -654,7 +677,7 @@ menuBoton.addEventListener('mouseleave', () => {
     }
 });
 
-// Efecto de onda al hacer hover en items
+// Efecto hover en items del menú
 menuItems.forEach(item => {
     item.addEventListener('mouseenter', function() {
         gsap.to(this, {
@@ -674,3 +697,4 @@ menuItems.forEach(item => {
 });
 
 console.log('✨ Menú expandible con navegación correcta - Séptima Pacha Co.');
+
