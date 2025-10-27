@@ -2629,9 +2629,8 @@
     }
 }
 
-/* === MENÚ EXPANDIBLE EN HERO - CSS === */
+/* MENÚ EXPANDIBLE - VERSIÓN LIMPIA */
 
-/* Botón de Menú */
 .menu-boton {
     position: fixed;
     bottom: 2rem;
@@ -2646,30 +2645,21 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 10px 30px rgba(243, 156, 18, 0.4);
     font-size: 1.8rem;
     color: #fff;
     font-weight: bold;
-    backdrop-filter: blur(10px);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    animation: pulse-menu 2s ease-in-out infinite;
-    padding: 0;
-    outline: none;
+    box-shadow: 0 10px 30px rgba(243, 156, 18, 0.4);
+    transition: all 0.4s ease;
+    animation: pulse-btn 2s ease-in-out infinite;
 }
 
-@keyframes pulse-menu {
-    0%, 100% {
-        box-shadow: 0 10px 30px rgba(243, 156, 18, 0.4);
-    }
-    50% {
-        box-shadow: 0 10px 40px rgba(243, 156, 18, 0.7);
-    }
+@keyframes pulse-btn {
+    0%, 100% { box-shadow: 0 10px 30px rgba(243, 156, 18, 0.4); }
+    50% { box-shadow: 0 10px 40px rgba(243, 156, 18, 0.7); }
 }
 
 .menu-boton:hover {
     transform: scale(1.1);
-    box-shadow: 0 15px 40px rgba(243, 156, 18, 0.6);
 }
 
 .menu-boton.activo {
@@ -2677,17 +2667,11 @@
     background: linear-gradient(135deg, var(--fuego), var(--tierra));
 }
 
-.menu-icon {
-    display: block;
-    transition: all 0.3s ease;
-    line-height: 1;
-}
-
-/* Menú Expandible */
+/* MENÚ EXPANDIBLE */
 .menu-expandible {
     position: fixed;
-    bottom: 0;
-    right: 0;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     background: rgba(26, 26, 26, 0.98);
@@ -2700,8 +2684,6 @@
     clip-path: circle(0px at calc(100% - 80px) calc(100% - 80px));
     transition: clip-path 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     pointer-events: none;
-    top: 0;
-    left: 0;
 }
 
 .menu-expandible.activo {
@@ -2709,28 +2691,26 @@
     pointer-events: all;
 }
 
-/* Botón Cerrar */
+/* BOTÓN CERRAR */
 .menu-cerrar {
     position: fixed;
     top: 2rem;
     right: 2rem;
+    width: 50px;
+    height: 50px;
     background: rgba(255, 255, 255, 0.1);
     border: 2px solid var(--oro);
     color: var(--oro);
-    width: 50px;
-    height: 50px;
     border-radius: 50%;
     font-size: 1.8rem;
     cursor: pointer;
     z-index: 8001;
-    transition: all 0.3s ease;
-    opacity: 0;
-    transform: scale(0);
-    padding: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    outline: none;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.3s ease;
 }
 
 .menu-expandible.activo .menu-cerrar {
@@ -2741,14 +2721,13 @@
 .menu-cerrar:hover {
     background: var(--oro);
     color: #1a1a1a;
-    transform: scale(1.1) rotate(90deg);
 }
 
-/* Contenido del Menú */
+/* CONTENIDO MENÚ */
 .menu-contenido {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 2.5rem;
     text-align: center;
     opacity: 0;
     transform: translateY(30px);
@@ -2762,52 +2741,49 @@
     pointer-events: all;
 }
 
-/* Items del Menú */
+/* ITEMS MENÚ */
 .menu-item {
     font-family: 'Playfair Display', serif;
     font-size: 2.5rem;
     font-weight: 600;
     color: var(--oro);
     text-decoration: none;
-    transition: all 0.3s ease;
     cursor: pointer;
     letter-spacing: 1px;
     position: relative;
-    padding: 1rem 2rem;
+    padding: 1rem;
     border: none;
     background: none;
-    outline: none;
+    transition: all 0.3s ease;
 }
 
-.menu-item::before {
+.menu-item::after {
     content: '';
     position: absolute;
-    bottom: -5px;
+    bottom: -8px;
     left: 50%;
     width: 0;
     height: 2px;
     background: linear-gradient(90deg, var(--tierra), var(--fuego), var(--aire));
     transform: translateX(-50%);
-    transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: width 0.4s ease;
 }
 
 .menu-item:hover {
     color: #fff;
-    transform: scale(1.1);
+    transform: scale(1.15);
     text-shadow: 0 0 20px rgba(243, 156, 18, 0.5);
 }
 
-.menu-item:hover::before {
-    width: 80%;
+.menu-item:hover::after {
+    width: 100%;
 }
 
-/* Responsive */
+/* RESPONSIVE */
 @media (max-width: 768px) {
     .menu-boton {
         width: 50px;
         height: 50px;
-        bottom: 1.5rem;
-        right: 1.5rem;
         font-size: 1.5rem;
     }
 
@@ -2819,7 +2795,6 @@
 
     .menu-item {
         font-size: 1.8rem;
-        padding: 0.8rem 1.5rem;
     }
 
     .menu-expandible.activo {
@@ -2846,7 +2821,6 @@
 
     .menu-item {
         font-size: 1.5rem;
-        padding: 0.6rem 1rem;
     }
 
     .menu-contenido {
