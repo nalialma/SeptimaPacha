@@ -45,7 +45,7 @@
     <div class="custom-cursor"></div>
 
     <!-- 1: El Umbral de la Pacha -->
-    <section class="umbral">
+    <section class="umbral" id="umbral">
         <h2 class="titulo-principal" data-lang-es="Séptima Pacha Co." data-lang-en="Seventh Pacha Co.">Séptima Pacha </h2>
         <h1 class="subtitulo" data-lang-es="Arte multidisciplinario ancestral-tecnológico" data-lang-en="Ancestral-technological multidisciplinary art">Arte multidisciplinario ancestral-tecnológico</h1>
         <div class="scroll-arrow">↓
@@ -60,13 +60,13 @@
     <button class="menu-cerrar" id="menuCerrar">✕</button>
     
     <div class="menu-contenido">
-        <a href="javascript:void(0)" class="menu-item" data-scroll=".umbral" data-lang-es="Inicio" data-lang-en="Home">Inicio</a>
-        <a href="javascript:void(0)" class="menu-item" data-scroll=".plantillas" data-lang-es="Plantillas" data-lang-en="Templates">Plantillas</a>
-        <a href="javascript:void(0)" class="menu-item" data-scroll=".proyectos" data-lang-es="Proyectos" data-lang-en="Projects">Proyectos</a>
-        <a href="javascript:void(0)" class="menu-item" data-scroll=".fases" data-lang-es="Las 4 Fases" data-lang-en="The 4 Phases">Las 4 Fases</a>
-        <a href="javascript:void(0)" class="menu-item" data-scroll=".servicios" data-lang-es="Servicios" data-lang-en="Services">Servicios</a>
-        <a href="javascript:void(0)" class="menu-item" data-scroll=".sobre-mi" data-lang-es="Sobre Mí" data-lang-en="About Me">Sobre Mí</a>
-        <a href="javascript:void(0)" class="menu-item" data-scroll=".contacto" data-lang-es="Contacto" data-lang-en="Contact">Contacto</a>
+        <a href="#umbral"  class="menu-item" data-scroll=".umbral" data-lang-es="Inicio" data-lang-en="Home">Inicio</a>
+        <a href="#plantillas" class="menu-item" data-scroll=".plantillas" data-lang-es="Plantillas" data-lang-en="Templates">Plantillas</a>
+        <a href="#proyectos"  class="menu-item" data-scroll=".proyectos" data-lang-es="Proyectos" data-lang-en="Projects">Proyectos</a>
+        <a href="#fases"  class="menu-item" data-scroll=".fases" data-lang-es="Las 4 Fases" data-lang-en="The 4 Phases">Las 4 Fases</a>
+        <a href="#servicios"  class="menu-item" data-scroll=".servicios" data-lang-es="Servicios" data-lang-en="Services">Servicios</a>
+        <a href="#sobre-mi"  class="menu-item" data-scroll=".sobre-mi" data-lang-es="Sobre Mí" data-lang-en="About Me">Sobre Mí</a>
+        <a href="#contacto" class="menu-item" data-scroll=".contacto" data-lang-es="Contacto" data-lang-en="Contact">Contacto</a>
     </div>
     
 </nav>
@@ -74,7 +74,7 @@
     </section>
     
 <!-- Sección 2: Plantillas en Oferta -->
-<section class="plantillas">
+<section class="plantillas" id="plantillas">
     <h2 class="section-title fade-in" data-lang-es="Plantillas Listas para Transformar" data-lang-en="Templates Ready to Transform">Plantillas Listas para Transformar</h2>
     <p class="plantillas-subtitulo fade-in" data-lang-es="Páginas web estáticas, responsivas y personalizables. Elige tu favorita y hazla tuya." data-lang-en="Static, responsive and customizable web pages. Choose your favorite and make it yours.">Páginas web estáticas, responsivas y personalizables. Elige tu favorita y hazla tuya.</p>
     
@@ -201,7 +201,7 @@
     </div>
 </section>
     <!-- 3: Camino de Creaciones -->
-    <section class="proyectos">
+    <section class="proyectos" id="proyectos">
         <h2 class="section-title fade-in" data-lang-es="Camino de Creaciones" data-lang-en="Path of Creations">Camino de Creaciones</h2>
                     <h3 class="section-title fade-in" 
                     data-lang-es="Proyectos" data-lang-en="Projects">Proyectos</h3>
@@ -260,7 +260,7 @@
     </section>
 
     <!--3: Las 4 Fases del Arte -->
-   <section class="fases">
+   <section class="fases" id="fases">
         <h2 class="section-title fade-in">Las 4 Fases del Arte</h2>
         
         <div class="chakana-container fade-in">
@@ -300,7 +300,7 @@
         </div>
     </section>
     <!--  4: Servicios -->
-    <section class="servicios">
+    <section class="servicios" id="servicios">
         <h2 class="section-title fade-in" data-lang-es="Ofrendas Creativas" data-lang-en="Creative Offerings">Ofrendas Creativas</h2>
         <div class="servicios-grid">
             <div class="servicio fade-in">
@@ -335,7 +335,7 @@
     </section>
 
     <!-- 5: Sobre Mí -->
-    <section class="sobre-mi">
+    <section class="sobre-mi" id="sobre-mi">
         <h2 class="section-title fade-in" data-lang-es="Huella" data-lang-en="Footprint">Huella</h2>
         <div class="huella-container">
             <div class="huella"></div>
@@ -346,7 +346,7 @@
     </section>
 
     <!-- 6: Contacto -->
-    <section class="contacto">
+    <section class="contacto" id="contacto">
         <h2 class="section-title fade-in" data-lang-es="Conexión" data-lang-en="Connection">Conexión</h2>
         <form class="formulario fade-in">
             <div class="campo">
@@ -368,6 +368,7 @@
      <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
