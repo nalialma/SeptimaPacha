@@ -2629,8 +2629,6 @@
     }
 }
 
-/* MENÚ EXPANDIBLE - VERSIÓN LIMPIA */
-
 .menu-boton {
     position: fixed;
     bottom: 2rem;
@@ -2666,39 +2664,107 @@
     transform: scale(1.15) rotate(90deg);
     background: linear-gradient(135deg, var(--fuego), var(--tierra));
 }
-/* COMPACT EXPANDABLE MENU */
 
-.menu-button {
+.menu-icon {
+    display: block;
+}
+
+/* MENÚ EXPANDIBLE */
+
+.expandable-menu {
     position: fixed;
-    bottom: 1.5rem;
+    top: 0;
+    right: -100%;
+    width: 300px;
+    height: 100vh;
+    background: rgba(26, 26, 26, 0.95);
+    backdrop-filter: blur(10px);
+    border-left: 1px solid rgba(243, 156, 18, 0.3);
+    z-index: 7999;
+    transition: right 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    overflow-y: auto;
+    padding-top: 4rem;
+}
+
+.expandable-menu.activo {
+    right: 0;
+}
+
+.menu-close {
+    position: absolute;
+    top: 1.5rem;
     right: 1.5rem;
-    width: 50px;
-    height: 50px;
-    background: linear-gradient(135deg, var(--oro), var(--fuego));
-    border: none;
+    background: rgba(243, 156, 18, 0.2);
+    border: 1px solid rgba(243, 156, 18, 0.5);
+    color: var(--oro);
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     cursor: pointer;
-    z-index: 8000;
+    font-size: 1.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
-    color: #fff;
-    font-weight: bold;
-    box-shadow: 0 8px 20px rgba(243, 156, 18, 0.4);
     transition: all 0.3s ease;
+    z-index: 10;
 }
 
-.menu-button:hover {
+.menu-close:hover {
+    background: rgba(243, 156, 18, 0.4);
     transform: scale(1.1);
-    box-shadow: 0 10px 25px rgba(243, 156, 18, 0.6);
 }
 
-.menu-button.activo {
-    transform: scale(1.1) rotate(90deg);
-    background: linear-gradient(135deg, var(--fuego), var(--tierra));
+.menu-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0 1rem;
 }
 
+.menu-item {
+    display: block;
+    padding: 1.2rem 1.5rem;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(243, 156, 18, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
 
+.menu-item:hover {
+    background: rgba(243, 156, 18, 0.1);
+    color: var(--oro);
+    padding-left: 2rem;
+}
 
+.menu-item:active {
+    transform: scale(0.98);
+}
 
+/* Responsive */
+@media (max-width: 768px) {
+    .expandable-menu {
+        width: 250px;
+    }
+    
+    .menu-boton {
+        width: 50px;
+        height: 50px;
+        bottom: 1.5rem;
+        right: 1.5rem;
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .expandable-menu {
+        width: 100%;
+        right: -100%;
+    }
+    
+    .menu-boton {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
+    }
+}
