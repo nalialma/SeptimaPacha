@@ -2666,9 +2666,41 @@
     transform: scale(1.15) rotate(90deg);
     background: linear-gradient(135deg, var(--fuego), var(--tierra));
 }
+/* COMPACT EXPANDABLE MENU */
 
-/* MENÚ EXPANDIBLE */
-.menu-expandible {
+.menu-button {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--oro), var(--fuego));
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 8000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #fff;
+    font-weight: bold;
+    box-shadow: 0 8px 20px rgba(243, 156, 18, 0.4);
+    transition: all 0.3s ease;
+}
+
+.menu-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 10px 25px rgba(243, 156, 18, 0.6);
+}
+
+.menu-button.activo {
+    transform: scale(1.1) rotate(90deg);
+    background: linear-gradient(135deg, var(--fuego), var(--tierra));
+}
+
+/* EXPANDABLE MENU */
+.expandable-menu {
     position: fixed;
     top: 0;
     left: 0;
@@ -2681,28 +2713,28 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    clip-path: circle(0px at calc(100% - 80px) calc(100% - 80px));
-    transition: clip-path 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    clip-path: circle(0px at calc(100% - 60px) calc(100% - 60px));
+    transition: clip-path 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     pointer-events: none;
 }
 
-.menu-expandible.activo {
-    clip-path: circle(150% at calc(100% - 80px) calc(100% - 80px));
+.expandable-menu.activo {
+    clip-path: circle(150% at calc(100% - 60px) calc(100% - 60px));
     pointer-events: all;
 }
 
-/* BOTÓN CERRAR */
-.menu-cerrar {
+/* CLOSE BUTTON */
+.menu-close {
     position: fixed;
-    top: 2rem;
-    right: 2rem;
-    width: 50px;
-    height: 50px;
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 40px;
+    height: 40px;
     background: rgba(255, 255, 255, 0.1);
     border: 2px solid var(--oro);
     color: var(--oro);
     border-radius: 50%;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     cursor: pointer;
     z-index: 8001;
     display: flex;
@@ -2713,45 +2745,47 @@
     transition: all 0.3s ease;
 }
 
-.menu-expandible.activo .menu-cerrar {
+.expandable-menu.activo .menu-close {
     opacity: 1;
     transform: scale(1);
 }
 
-.menu-cerrar:hover {
+.menu-close:hover {
     background: var(--oro);
     color: #1a1a1a;
+    transform: scale(1.1);
 }
 
-/* CONTENIDO MENÚ */
-.menu-contenido {
+/* MENU CONTENT */
+.menu-content {
     display: flex;
     flex-direction: column;
-    gap: 2.5rem;
+    gap: 1.5rem;
     text-align: center;
     opacity: 0;
     transform: translateY(30px);
     transition: all 0.5s ease 0.2s;
     pointer-events: none;
+    max-width: 90%;
 }
 
-.menu-expandible.activo .menu-contenido {
+.expandable-menu.activo .menu-content {
     opacity: 1;
     transform: translateY(0);
     pointer-events: all;
 }
 
-/* ITEMS MENÚ */
+/* MENU ITEMS */
 .menu-item {
     font-family: 'Playfair Display', serif;
-    font-size: 2.5rem;
+    font-size: 1.6rem;
     font-weight: 600;
     color: var(--oro);
     text-decoration: none;
     cursor: pointer;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
     position: relative;
-    padding: 1rem;
+    padding: 0.5rem 1rem;
     border: none;
     background: none;
     transition: all 0.3s ease;
@@ -2760,71 +2794,75 @@
 .menu-item::after {
     content: '';
     position: absolute;
-    bottom: -8px;
+    bottom: -5px;
     left: 50%;
     width: 0;
     height: 2px;
     background: linear-gradient(90deg, var(--tierra), var(--fuego), var(--aire));
     transform: translateX(-50%);
-    transition: width 0.4s ease;
+    transition: width 0.3s ease;
 }
 
 .menu-item:hover {
     color: #fff;
-    transform: scale(1.15);
-    text-shadow: 0 0 20px rgba(243, 156, 18, 0.5);
+    transform: scale(1.08);
+    text-shadow: 0 0 15px rgba(243, 156, 18, 0.5);
 }
 
 .menu-item:hover::after {
-    width: 100%;
+    width: 80%;
 }
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
-    .menu-boton {
-        width: 50px;
-        height: 50px;
-        font-size: 1.5rem;
-    }
-
-    .menu-cerrar {
+    .menu-button {
         width: 45px;
         height: 45px;
-        font-size: 1.5rem;
+        font-size: 1.3rem;
+        bottom: 1rem;
+        right: 1rem;
+    }
+
+    .menu-close {
+        width: 38px;
+        height: 38px;
+        font-size: 1.3rem;
+        top: 1rem;
+        right: 1rem;
     }
 
     .menu-item {
-        font-size: 1.8rem;
+        font-size: 1.3rem;
     }
 
-    .menu-expandible.activo {
-        clip-path: circle(120% at calc(100% - 65px) calc(100% - 65px));
+    .menu-content {
+        gap: 1.2rem;
+    }
+
+    .expandable-menu.activo {
+        clip-path: circle(120% at calc(100% - 50px) calc(100% - 50px));
     }
 }
 
 @media (max-width: 480px) {
-    .menu-boton {
-        width: 45px;
-        height: 45px;
-        bottom: 1rem;
-        right: 1rem;
-        font-size: 1.3rem;
+    .menu-button {
+        width: 42px;
+        height: 42px;
+        font-size: 1.2rem;
     }
 
-    .menu-cerrar {
-        top: 1.5rem;
-        right: 1.5rem;
-        width: 40px;
-        height: 40px;
-        font-size: 1.3rem;
+    .menu-close {
+        width: 35px;
+        height: 35px;
+        font-size: 1.2rem;
     }
 
     .menu-item {
-        font-size: 1.5rem;
+        font-size: 1.1rem;
+        padding: 0.4rem 0.8rem;
     }
 
-    .menu-contenido {
-        gap: 1.5rem;
+    .menu-content {
+        gap: 1rem;
     }
 }
-
