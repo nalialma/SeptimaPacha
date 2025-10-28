@@ -583,11 +583,10 @@ console.log('✨ Menú elementos encontrados:', {
 });
 
 // Función para abrir menú
-function abrirMenu() {
-    menuExpandible.classList.add('activo');
-    menuBoton.classList.add('activo');
-    document.body.style.overflow = 'hidden';
-}
+menuButton.addEventListener('click', (e) => {
+    e.stopPropagation();
+    openMenu();
+
 
 // Función para cerrar menú
 function cerrarMenu() {
@@ -697,4 +696,5 @@ menuItems.forEach(item => {
 });
 
 console.log('✨ Menú expandible con navegación correcta - Séptima Pacha Co.');
+
 
