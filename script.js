@@ -501,18 +501,18 @@ console.log('✨ Menú elementos encontrados:', {
 
 // Función para abrir menú
 function abrirMenu() {
-    if (menuExpandible) {
+    if (menuExpandible && menuBoton ) {
         menuExpandible.classList.add('activo');
-        if (menuBoton) menuBoton.classList.add('activo');
+        menuBoton.classList.add('activo');
         document.body.style.overflow = 'hidden';
     }
 }
 
 // Función para cerrar menú
 function cerrarMenu() {
-    if (menuExpandible) {
+    if (menuExpandible && menuBoton) {
         menuExpandible.classList.remove('activo');
-        if (menuBoton) menuBoton.classList.remove('activo');
+         menuBoton.classList.remove('activo');
         document.body.style.overflow = 'auto';
     }
 }
@@ -537,37 +537,28 @@ if (menuCerrar) {
     });
 }
 
-// FUNCIÓN PRINCIPAL: Click en items del menú
+
+// Click en items del menú
 menuItems.forEach(item => {
     item.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
         
-        // Obtener el selector de la sección
         const targetSelector = item.getAttribute('data-scroll');
-        console.log('🎯 Navegando a:', targetSelector);
-        
-        // Obtener el elemento objetivo
         const targetElement = document.querySelector(targetSelector);
         
         if (targetElement) {
-            // Cerrar menú primero
             cerrarMenu();
-            
-            // Esperar a que cierre el menú (400ms es la duración de la animación)
             setTimeout(() => {
-                // Usar scroll behavior nativo para mejor compatibilidad
                 targetElement.scrollIntoView({
                     behavior: 'smooth',
                     block: 'start'
                 });
-                console.log('✅ Scroll completado a:', targetSelector);
             }, 400);
-        } else {
-            console.error('❌ Elemento no encontrado:', targetSelector);
         }
     });
 });
+
 
 // Cerrar menú al presionar ESC
 document.addEventListener('keydown', (e) => {
@@ -628,3 +619,4 @@ menuItems.forEach(item => {
 });
 
 console.log('✨ Menú expandible funcionando correctamente - Séptima Pacha');
+
