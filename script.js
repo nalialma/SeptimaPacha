@@ -564,102 +564,100 @@ document.querySelectorAll('.plantilla-card').forEach(card => {
 
 console.log('✨ Animaciones de Plantillas cargadas correctamente');
 
-
 // ========================================
-// MENÚ EXPANDIBLE - SOLUCIÓN FINAL
+// COMPACT EXPANDABLE MENU - ENGLISH VERSION
 // ========================================
 
-// Selectores del menú
-const menuBoton = document.getElementById('menuBoton');
-const menuExpandible = document.getElementById('menuExpandible');
-const menuCerrar = document.getElementById('menuCerrar');
+const menuButton = document.getElementById('menuButton');
+const expandableMenu = document.getElementById('expandableMenu');
+const menuClose = document.getElementById('menuClose');
 const menuItems = document.querySelectorAll('.menu-item');
 
-console.log('✨ Menú elementos encontrados:', {
-    boton: menuBoton,
-    menu: menuExpandible,
-    cerrar: menuCerrar,
+console.log('✨ Menu elements found:', {
+    button: menuButton,
+    menu: expandableMenu,
+    close: menuClose,
     items: menuItems.length
 });
 
-// Función para abrir menú
-function abrirMenu() {
-    menuExpandible.classList.add('activo');
-    menuBoton.classList.add('activo');
+// Open menu
+function openMenu() {
+    expandableMenu.classList.add('activo');
+    menuButton.classList.add('activo');
     document.body.style.overflow = 'hidden';
 }
 
-// Función para cerrar menú
-function cerrarMenu() {
-    menuExpandible.classList.remove('activo');
-    menuBoton.classList.remove('activo');
+// Close menu
+function closeMenu() {
+    expandableMenu.classList.remove('activo');
+    menuButton.classList.remove('activo');
     document.body.style.overflow = 'auto';
 }
 
-// Click en botón de menú
-menuBoton.addEventListener('click', (e) => {
+// Click on menu button
+menuButton.addEventListener('click', (e) => {
     e.stopPropagation();
-    abrirMenu();
+    openMenu();
 });
 
-// Click en botón de cerrar
-menuCerrar.addEventListener('click', (e) => {
+// Click on close button
+menuClose.addEventListener('click', (e) => {
     e.stopPropagation();
-    cerrarMenu();
+    closeMenu();
 });
 
-// FUNCIÓN PRINCIPAL: Click en items del menú
+// MAIN FUNCTION: Click on menu items
 menuItems.forEach(item => {
     item.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
         
-        // Obtener el selector de la sección
+        // Get target selector
         const targetSelector = item.getAttribute('data-scroll');
-        console.log('🎯 Navegando a:', targetSelector);
+        console.log('🎯 Navigating to:', targetSelector);
         
-        // Obtener el elemento objetivo
+        // Get target element
         const targetElement = document.querySelector(targetSelector);
         
         if (targetElement) {
-            // Cerrar menú primero
-            cerrarMenu();
+            // Close menu first
+            closeMenu();
             
-            // Esperar a que cierre el menú (600ms es la duración de la animación)
+            // Wait for menu to close (500ms animation duration)
             setTimeout(() => {
-                // Usar scroll behavior nativo para mejor compatibilidad
+                // Use native scroll behavior for better compatibility
                 targetElement.scrollIntoView({
                     behavior: 'smooth',
                     block: 'start'
                 });
-                console.log('✅ Scroll completado');
-            }, 600);
+                console.log('✅ Scroll completed');
+            }, 500);
         } else {
-            console.error('❌ Elemento no encontrado:', targetSelector);
+            console.error('❌ Element not found:', targetSelector);
         }
     });
 });
 
-// Cerrar menú al presionar ESC
+// Close menu on ESC key
 document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && menuExpandible.classList.contains('activo')) {
-        cerrarMenu();
+    if (e.key === 'Escape' && expandableMenu.classList.contains('activo')) {
+        closeMenu();
     }
 });
 
-// Cerrar menú al hacer click fuera
+// Close menu on click outside
 document.addEventListener('click', (e) => {
-    if (menuExpandible.classList.contains('activo') && 
-        !menuExpandible.contains(e.target) && 
-        !menuBoton.contains(e.target)) {
-        cerrarMenu();
+    if (expandableMenu.classList.contains('activo') && 
+        !expandableMenu.contains(e.target) && 
+        !menuButton.contains(e.target)) {
+        closeMenu();
     }
 });
 
-// Animación del botón al hacer hover
-menuBoton.addEventListener('mouseenter', () => {
-    if (!menuBoton.classList.contains('activo')) {
-        gsap.to(menuBoton, {
+// Hover animation on button
+menuButton.addEventListener('mouseenter', () => {
+    if (!menuButton.classList.contains('activo')) {
+        gsap.to(menuButton, {
             duration: 0.3,
             scale: 1.15,
             ease: "back.out"
@@ -667,9 +665,9 @@ menuBoton.addEventListener('mouseenter', () => {
     }
 });
 
-menuBoton.addEventListener('mouseleave', () => {
-    if (!menuBoton.classList.contains('activo')) {
-        gsap.to(menuBoton, {
+menuButton.addEventListener('mouseleave', () => {
+    if (!menuButton.classList.contains('activo')) {
+        gsap.to(menuButton, {
             duration: 0.3,
             scale: 1,
             ease: "back.out"
@@ -677,12 +675,12 @@ menuBoton.addEventListener('mouseleave', () => {
     }
 });
 
-// Efecto hover en items del menú
+// Hover effect on menu items
 menuItems.forEach(item => {
     item.addEventListener('mouseenter', function() {
         gsap.to(this, {
             duration: 0.3,
-            scale: 1.1,
+            scale: 1.08,
             ease: "back.out"
         });
     });
@@ -696,5 +694,4 @@ menuItems.forEach(item => {
     });
 });
 
-console.log('✨ Menú expandible con navegación correcta - Séptima Pacha Co.');
-
+console.log('✨ Compact expandable menu with correct navigation - Séptima Pacha Co.');
