@@ -620,3 +620,33 @@ menuItems.forEach(item => {
 
 console.log('✨ Menú expandible funcionando correctamente - Séptima Pacha');
 
+// Mensajes aleatorios en el hero
+const randomMessages = {
+    es: [
+        "🌐 Diseño web a medida para tu negocio",
+        "🎨 Crea tu identidad visual con nuestro diseño gráfico",
+        "📱 Lleva tu negocio al siguiente nivel con una app móvil",
+        "🚀 Posiciona tu marca en internet con nuestro SEO",
+        "💻 Desarrollamos software personalizado para ti"
+    ],
+    en: [
+        "🌐 Custom web design for your business",
+        "🎨 Create your visual identity with our graphic design",
+        "📱 Take your business to the next level with a mobile app", 
+        "🚀 Position your brand on the internet with our SEO",
+        "💻 We develop custom software for you"
+    ]
+};
+
+function showRandomMessage() {
+    const messageContainer = document.getElementById("randomMessage");
+    const messages = currentLang === "es" ? randomMessages.es : randomMessages.en;
+    const randomIndex = Math.floor(Math.random() * messages.length);
+    messageContainer.textContent = messages[randomIndex];
+}
+
+// Mostrar mensaje aleatorio al cargar la página
+showRandomMessage();
+// Cambiar mensaje cada 5 segundos
+setInterval(showRandomMessage, 5000);
+
