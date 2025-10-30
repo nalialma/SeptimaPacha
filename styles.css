@@ -1019,9 +1019,8 @@
             color: var(--oro);
             font-size: clamp(1rem, 2.5vw, 1.2rem);
         }
-
 /* ==========================================
-   SECCIÓN SOBRE MÍ - VERSIÓN DESTELLOS
+   SECCIÓN SOBRE MÍ - VERSIÓN MEJORADA
    ========================================== */
 
 .sobre-mi {
@@ -1056,7 +1055,7 @@
     100% { opacity: 0.7; }
 }
 
-/* Contenedor principal - MÁS GRANDE */
+/* Contenedor principal */
 .huella-container {
     position: relative;
     width: clamp(500px, 80vw, 800px);
@@ -1073,7 +1072,7 @@
     border-radius: 50%;
 }
 
-/* El círculo brillante original - MANTENERLO */
+/* El círculo brillante original */
 .huella {
     position: absolute;
     top: 50%;
@@ -1151,7 +1150,7 @@
     }
 }
 
-/* BOTÓN CENTRAL CLICKEABLE */
+/* BOTÓN CENTRAL CLICKEABLE - SIN ESTIKERS */
 .huella-link {
     position: absolute;
     top: 50%;
@@ -1218,19 +1217,37 @@
     gap: 0.5rem;
 }
 
-/* Texto grande "Conóceme" */
+/* Texto grande "Conóceme" - COLOR SALMON ANARANJADO BRILLANTE */
 .huella-texto-grande {
     font-family: 'Playfair Display', serif;
     font-size: 2.5rem;
     font-weight: 700;
-    color: var(--oro);
+    /* NUEVO COLOR: Salmon anaranjado brillante */
+    color: #FF8C69;
     text-shadow: 
-        0 0 20px rgba(243, 156, 18, 0.8),
+        0 0 25px rgba(255, 140, 105, 0.9),
+        0 0 40px rgba(255, 107, 53, 0.6),
         0 2px 4px rgba(0, 0, 0, 0.3);
     letter-spacing: 1px;
+    animation: textoResplandor 3s ease-in-out infinite;
 }
 
-/* Texto pequeño "Haz click" */
+@keyframes textoResplandor {
+    0%, 100% {
+        text-shadow: 
+            0 0 25px rgba(255, 140, 105, 0.9),
+            0 0 40px rgba(255, 107, 53, 0.6),
+            0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    50% {
+        text-shadow: 
+            0 0 35px rgba(255, 140, 105, 1),
+            0 0 60px rgba(255, 107, 53, 0.8),
+            0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+}
+
+/* Texto pequeño "Haz click" - SIN ESTIKERS */
 .huella-texto-pequeño {
     font-size: 1.3rem;
     font-weight: 500;
@@ -1242,8 +1259,8 @@
 /* Flecha animada */
 .huella-flecha {
     font-size: 2.5rem;
-    color: var(--oro);
-    filter: drop-shadow(0 0 10px rgba(243, 156, 18, 0.6));
+    color: #FF8C69;
+    filter: drop-shadow(0 0 15px rgba(255, 140, 105, 0.8));
     animation: flechaBota 1.5s ease-in-out infinite;
 }
 
@@ -1317,118 +1334,167 @@
 }
 
 /* ==========================================
-   FRASES COMO DESTELLOS
+   FRASES ALEATORIAS MEJORADAS
    ========================================== */
 
 .frase-destello {
     position: absolute;
-    color: var(--oro);
-    font-weight: 500;
-    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    color: #FF8C69;
+    font-weight: 600;
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
     text-align: center;
-    max-width: 300px;
-    padding: 0.8rem 1.5rem;
+    max-width: 320px;
+    padding: 1rem 1.8rem;
     background: linear-gradient(135deg, 
-        rgba(243, 156, 18, 0.15) 0%, 
-        rgba(139, 69, 19, 0.1) 100%
+        rgba(255, 140, 105, 0.2) 0%, 
+        rgba(255, 107, 53, 0.15) 100%
     );
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(243, 156, 18, 0.3);
-    border-radius: 15px;
+    backdrop-filter: blur(12px);
+    border: 2px solid rgba(255, 140, 105, 0.4);
+    border-radius: 18px;
     opacity: 0;
     pointer-events: none;
-    text-shadow: 0 0 10px rgba(243, 156, 18, 0.5);
-    box-shadow: 0 0 20px rgba(243, 156, 18, 0.2);
-    animation: destelloAparece 12s ease-in-out infinite;
+    text-shadow: 
+        0 0 15px rgba(255, 140, 105, 0.8),
+        0 2px 6px rgba(0, 0, 0, 0.4);
+    box-shadow: 
+        0 0 30px rgba(255, 140, 105, 0.3),
+        inset 0 0 20px rgba(255, 140, 105, 0.1);
+    z-index: 5;
 }
 
-/* Cada frase aparece en diferentes momentos */
+/* Cada frase con aparición completamente aleatoria */
 .frase-destello-1 {
-    top: 5%;
+    top: 8%;
     left: 50%;
     transform: translateX(-50%);
-    animation-delay: 0s;
+    animation: destelloAleatorio1 15s ease-in-out infinite;
 }
 
 .frase-destello-2 {
     top: 50%;
-    right: 3%;
+    right: 5%;
     transform: translateY(-50%);
-    animation-delay: 3s;
+    animation: destelloAleatorio2 18s ease-in-out infinite;
 }
 
 .frase-destello-3 {
-    bottom: 5%;
+    bottom: 8%;
     left: 50%;
     transform: translateX(-50%);
-    animation-delay: 6s;
+    animation: destelloAleatorio3 20s ease-in-out infinite;
 }
 
 .frase-destello-4 {
     top: 50%;
-    left: 3%;
+    left: 5%;
     transform: translateY(-50%);
-    animation-delay: 9s;
+    animation: destelloAleatorio4 16s ease-in-out infinite;
 }
 
-/* Animación de destello: aparece, brilla, desaparece */
-@keyframes destelloAparece {
-    0% {
+/* Animaciones aleatorias individuales - MÁS VISIBLES */
+@keyframes destelloAleatorio1 {
+    0%, 100% {
         opacity: 0;
-        transform: translateX(-50%) scale(0.8);
+        transform: translateX(-50%) scale(0.7) translateY(20px);
     }
-    5% {
-        opacity: 0.9;
-        transform: translateX(-50%) scale(1);
+    8% {
+        opacity: 1;
+        transform: translateX(-50%) scale(1) translateY(0);
+    }
+    15% {
+        opacity: 1;
+        transform: translateX(-50%) scale(1.05) translateY(-5px);
+    }
+    30% {
+        opacity: 1;
+        transform: translateX(-50%) scale(1) translateY(0);
+    }
+    38% {
+        opacity: 0;
+        transform: translateX(-50%) scale(0.8) translateY(-20px);
+    }
+}
+
+@keyframes destelloAleatorio2 {
+    0%, 100% {
+        opacity: 0;
+        transform: translateY(-50%) scale(0.7) translateX(-20px);
     }
     20% {
-        opacity: 1;
-        transform: translateX(-50%) scale(1.02);
-        text-shadow: 0 0 20px rgba(243, 156, 18, 0.8);
-        box-shadow: 0 0 30px rgba(243, 156, 18, 0.4);
-    }
-    25% {
         opacity: 0;
-        transform: translateX(-50%) scale(0.95);
+        transform: translateY(-50%) scale(0.7) translateX(-20px);
+    }
+    28% {
+        opacity: 1;
+        transform: translateY(-50%) scale(1) translateX(0);
+    }
+    35% {
+        opacity: 1;
+        transform: translateY(-50%) scale(1.05) translateX(5px);
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(-50%) scale(1) translateX(0);
+    }
+    58% {
+        opacity: 0;
+        transform: translateY(-50%) scale(0.8) translateX(20px);
+    }
+}
+
+@keyframes destelloAleatorio3 {
+    0%, 45% {
+        opacity: 0;
+        transform: translateX(-50%) scale(0.7) translateY(-20px);
+    }
+    53% {
+        opacity: 1;
+        transform: translateX(-50%) scale(1) translateY(0);
+    }
+    60% {
+        opacity: 1;
+        transform: translateX(-50%) scale(1.05) translateY(5px);
+    }
+    75% {
+        opacity: 1;
+        transform: translateX(-50%) scale(1) translateY(0);
+    }
+    83% {
+        opacity: 0;
+        transform: translateX(-50%) scale(0.8) translateY(20px);
     }
     100% {
         opacity: 0;
+        transform: translateX(-50%) scale(0.7) translateY(-20px);
     }
 }
 
-/* Ajuste para frases en diferentes posiciones */
-.frase-destello-2 {
-    animation: destelloAparece2 12s ease-in-out infinite;
-    animation-delay: 3s;
-}
-
-@keyframes destelloAparece2 {
-    0% {
+@keyframes destelloAleatorio4 {
+    0%, 60% {
         opacity: 0;
-        transform: translateY(-50%) scale(0.8);
+        transform: translateY(-50%) scale(0.7) translateX(20px);
     }
-    5% {
-        opacity: 0.9;
-        transform: translateY(-50%) scale(1);
-    }
-    20% {
+    68% {
         opacity: 1;
-        transform: translateY(-50%) scale(1.02);
-        text-shadow: 0 0 20px rgba(243, 156, 18, 0.8);
-        box-shadow: 0 0 30px rgba(243, 156, 18, 0.4);
+        transform: translateY(-50%) scale(1) translateX(0);
     }
-    25% {
+    75% {
+        opacity: 1;
+        transform: translateY(-50%) scale(1.05) translateX(-5px);
+    }
+    90% {
+        opacity: 1;
+        transform: translateY(-50%) scale(1) translateX(0);
+    }
+    98% {
         opacity: 0;
-        transform: translateY(-50%) scale(0.95);
+        transform: translateY(-50%) scale(0.8) translateX(-20px);
     }
     100% {
         opacity: 0;
+        transform: translateY(-50%) scale(0.7) translateX(20px);
     }
-}
-
-.frase-destello-4 {
-    animation: destelloAparece2 12s ease-in-out infinite;
-    animation-delay: 9s;
 }
 
 /* ==========================================
@@ -1460,7 +1526,8 @@
     
     .frase-destello {
         font-size: 1.1rem;
-        max-width: 250px;
+        max-width: 280px;
+        padding: 0.9rem 1.5rem;
     }
 }
 
@@ -1499,25 +1566,25 @@
     
     .frase-destello {
         font-size: 1rem;
-        max-width: 200px;
-        padding: 0.6rem 1.2rem;
+        max-width: 220px;
+        padding: 0.7rem 1.3rem;
     }
     
     /* Reposicionar frases en móvil */
     .frase-destello-1 {
-        top: 3%;
+        top: 5%;
     }
     
     .frase-destello-2 {
-        right: 2%;
+        right: 3%;
     }
     
     .frase-destello-3 {
-        bottom: 3%;
+        bottom: 5%;
     }
     
     .frase-destello-4 {
-        left: 2%;
+        left: 3%;
     }
 }
 
@@ -1556,8 +1623,8 @@
     
     .frase-destello {
         font-size: 0.9rem;
-        max-width: 180px;
-        padding: 0.5rem 1rem;
+        max-width: 190px;
+        padding: 0.6rem 1.1rem;
     }
 }
         /* Sección 6: Contacto */
@@ -4096,6 +4163,7 @@ MENÚ SUPERIOR CENTRADO
 .expandable-menu * {
     pointer-events: auto;
 }
+
 
 
 
