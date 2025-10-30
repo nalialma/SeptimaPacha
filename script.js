@@ -472,3 +472,175 @@ console.log('%cHecho con 💛 por Séptima Pacha', 'font-size: 0.9rem; color: #f
 console.log('✨ Sistema de animaciones cargado correctamente');
 console.log('🎨 Menú de navegación activo');
 console.log('🌐 Efectos interactivos listos');
+
+
+// ========================================
+// MENÚ EXPANDIBLE - VERSIÓN CORREGIDA
+// ========================================
+
+// Selectores del menú
+const menuBoton = document.getElementById('menuBoton');
+const menuExpandible = document.getElementById('expandableMenu');
+const menuCerrar = document.getElementById('menuCerrar');
+const menuItems = document.querySelectorAll('.menu-item');
+
+console.log('✨ Menú elementos encontrados:', {
+    boton: menuBoton,
+    menu: menuExpandible,
+    cerrar: menuCerrar,
+    items: menuItems.length
+});
+
+// Función para abrir menú
+function abrirMenu() {
+    if (menuExpandible && menuBoton ) {
+        menuExpandible.classList.add('activo');
+        menuBoton.classList.add('activo');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+// Función para cerrar menú
+function cerrarMenu() {
+    if (menuExpandible && menuBoton) {
+        menuExpandible.classList.remove('activo');
+         menuBoton.classList.remove('activo');
+        document.body.style.overflow = 'auto';
+    }
+}
+
+// Click en botón de menú
+if (menuBoton) {
+    menuBoton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (menuExpandible && menuExpandible.classList.contains('activo')) {
+            cerrarMenu();
+        } else {
+            abrirMenu();
+        }
+    });
+}
+
+// Click en botón de cerrar
+if (menuCerrar) {
+    menuCerrar.addEventListener('click', (e) => {
+        e.stopPropagation();
+        cerrarMenu();
+    });
+}
+
+
+// Click en items del menú
+menuItems.forEach(item => {
+    item.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        const targetSelector = item.getAttribute('data-scroll');
+        const targetElement = document.querySelector(targetSelector);
+        
+        if (targetElement) {
+            cerrarMenu();
+            setTimeout(() => {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }, 400);
+        }
+    });
+});
+
+
+// Cerrar menú al presionar ESC
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menuExpandible && menuExpandible.classList.contains('activo')) {
+        cerrarMenu();
+    }
+});
+
+// Cerrar menú al hacer click fuera
+document.addEventListener('click', (e) => {
+    if (menuExpandible && menuExpandible.classList.contains('activo') && 
+        !menuExpandible.contains(e.target) && 
+        !menuBoton.contains(e.target)) {
+        cerrarMenu();
+    }
+});
+
+// Animación del botón al hacer hover
+if (menuBoton) {
+    menuBoton.addEventListener('mouseenter', () => {
+        if (!menuBoton.classList.contains('activo')) {
+            gsap.to(menuBoton, {
+                duration: 0.3,
+                scale: 1.15,
+                ease: "back.out"
+            });
+        }
+    });
+
+    menuBoton.addEventListener('mouseleave', () => {
+        if (!menuBoton.classList.contains('activo')) {
+            gsap.to(menuBoton, {
+                duration: 0.3,
+                scale: 1,
+                ease: "back.out"
+            });
+        }
+    });
+}
+
+// Efecto hover en items del menú
+menuItems.forEach(item => {
+    item.addEventListener('mouseenter', function() {
+        gsap.to(this, {
+            duration: 0.3,
+            scale: 1.1,
+            ease: "back.out"
+        });
+    });
+
+    item.addEventListener('mouseleave', function() {
+        gsap.to(this, {
+            duration: 0.3,
+            scale: 1,
+            ease: "back.out"
+        });
+    });
+});
+
+console.log('✨ Menú expandible funcionando correctamente - Séptima Pacha');
+
+// Mensajes aleatorios en el hero
+const randomMessages = {
+    es: [
+        "🌐 Diseño web a medida para tu negocio",
+        "🎨 Crea tu identidad visual con nuestro diseño gráfico",
+        "📱 Lleva tu negocio al siguiente nivel con una app móvil",
+        "🚀 Posiciona tu marca en internet con nuestro SEO",
+        "💻 Desarrollamos software personalizado para ti"
+    ],
+    en: [
+        "🌐 Custom web design for your business",
+        "🎨 Create your visual identity with our graphic design",
+        "📱 Take your business to the next level with a mobile app", 
+        "🚀 Position your brand on the internet with our SEO",
+        "💻 We develop custom software for you"
+    ]
+};
+
+function showRandomMessage() {
+    const messageContainer = document.getElementById("randomMessage");
+    const messages = currentLang === "es" ? randomMessages.es : randomMessages.en;
+    const randomIndex = Math.floor(Math.random() * messages.length);
+    messageContainer.textContent = messages[randomIndex];
+}
+
+// Mostrar mensaje aleatorio al cargar la página
+showRandomMessage();
+// Cambiar mensaje cada 5 segundos
+setInterval(showRandomMessage, 5000);
+
+
+
