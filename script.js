@@ -1,4 +1,6 @@
-// Sistema de traducción
+// ==========================================
+// SISTEMA DE TRADUCCIÓN
+// ==========================================
 let currentLang = 'es';
 const translations = {
     es: {
@@ -17,7 +19,6 @@ function toggleLanguage() {
     currentLang = currentLang === 'es' ? 'en' : 'es';
     document.documentElement.lang = currentLang;
     
-    // Actualizar todos los elementos con data-lang
     const elements = document.querySelectorAll('[data-lang-es], [data-lang-en]');
     elements.forEach(element => {
         const text = element.getAttribute(`data-lang-${currentLang}`);
@@ -27,10 +28,14 @@ function toggleLanguage() {
     });
 }
 
-// Registro de plugins GSAP
+// ==========================================
+// REGISTRO DE PLUGINS GSAP
+// ==========================================
 gsap.registerPlugin(ScrollTrigger);
 
-// Animación del logo en splash screen
+// ==========================================
+// ANIMACIÓN DEL SPLASH SCREEN
+// ==========================================
 window.addEventListener('load', () => {
     const logoPaths = document.querySelectorAll('.logo-path');
     const logoText = document.querySelector('.logo-text');
@@ -55,28 +60,68 @@ window.addEventListener('load', () => {
     
     setTimeout(() => {
         splashScreen.classList.add('hide');
-        setTimeout(() => {
-            splashScreen.style.display = 'none';
-        }, 1000);
     }, 4000);
 });
 
-// Event listener para cambio de idioma
-document.getElementById('languageToggle').addEventListener('click', toggleLanguage);
+// ==========================================
+// MENÚ DE NAVEGACIÓN
+// ==========================================
+const mainNav = document.getElementById('mainNav');
+const menuToggle = document.getElementById('menuToggle');
+const navMenu = document.querySelector('.nav-menu');
+const navLinks = document.querySelectorAll('.nav-menu a');
 
-// Cursor personalizado
-const cursor = document.querySelector('.custom-cursor');
-let trails = [];
+// Scroll effect
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 100) {
+        mainNav.classList.add('scrolled');
+    } else {
+        mainNav.classList.remove('scrolled');
+    }
+});
 
-for (let i = 0; i < 10; i++) {
-    const trail = document.createElement('div');
-    trail.className = 'cursor-trail';
-    document.body.appendChild(trail);
-    trails.push(trail);
+// Mobile menu toggle
+if (menuToggle) {
+    menuToggle.addEventListener('click', () => {
+        menuToggle.classList.toggle('active');
+        navMenu.classList.toggle('active');
+    });
 }
 
+// Smooth scroll y cierre de menú
+navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href');
+        const targetSection = document.querySelector(targetId);
+        
+        if (targetSection) {
+            const offsetTop = targetSection.offsetTop - 80;
+            
+            window.scrollTo({
+                top: offsetTop,
+                behavior: 'smooth'
+            });
+            
+            // Cerrar menú móvil
+            if (window.innerWidth <= 768) {
+                menuToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        }
+    });
+});
+
+// ==========================================
+// IDIOMA
+// ==========================================
+document.getElementById('languageToggle').addEventListener('click', toggleLanguage);
+
+// ==========================================
+// CURSOR PERSONALIZADO
+// ==========================================
+const cursor = document.querySelector('.custom-cursor');
 let mouseX = 0, mouseY = 0;
-let trailX = [], trailY = [];
 
 document.addEventListener('mousemove', (e) => {
     mouseX = e.clientX;
@@ -85,40 +130,31 @@ document.addEventListener('mousemove', (e) => {
     gsap.to(cursor, {
         x: mouseX - 10,
         y: mouseY - 10,
-        duration: 0.1
+        duration: 0.15,
+        ease: "power2.out"
     });
 });
 
-function animateTrails() {
-    trailX.unshift(mouseX);
-    trailY.unshift(mouseY);
+// Cambiar cursor en hover de elementos interactivos
+document.querySelectorAll('a, button, .plantilla-card').forEach(element => {
+    element.addEventListener('mouseenter', () => {
+        gsap.to(cursor, {
+            scale: 1.5,
+            duration: 0.3
+        });
+    });
     
-    if (trailX.length > trails.length) {
-        trailX.pop();
-        trailY.pop();
-    }
-
-    trails.forEach((trail, index) => {
-        if (trailX[index] !== undefined) {
-            gsap.to(trail, {
-                x: trailX[index] - 2,
-                y: trailY[index] - 2,
-                duration: 0.3,
-                ease: "power2.out"
-            });
-        }
+    element.addEventListener('mouseleave', () => {
+        gsap.to(cursor, {
+            scale: 1,
+            duration: 0.3
+        });
     });
-
-    requestAnimationFrame(animateTrails);
-}
-animateTrails();
-
-// Scroll suave para la flecha
-document.querySelector('.scroll-arrow').addEventListener('click', () => {
-    gsap.to(window, {duration: 1.5, scrollTo: ".proyectos", ease: "power2.inOut"});
 });
 
-// Animaciones de scroll
+// ==========================================
+// ANIMACIONES DE SCROLL
+// ==========================================
 gsap.utils.toArray('.fade-in').forEach(element => {
     gsap.fromTo(element, 
         { y: 50, opacity: 0 },
@@ -129,7 +165,7 @@ gsap.utils.toArray('.fade-in').forEach(element => {
             ease: "power2.out",
             scrollTrigger: {
                 trigger: element,
-                start: "top 80%",
+                start: "top 85%",
                 end: "bottom 20%",
                 toggleActions: "play none none none"
             }
@@ -137,162 +173,9 @@ gsap.utils.toArray('.fade-in').forEach(element => {
     );
 });
 
-// Animación de proyectos en timeline
-gsap.utils.toArray('.proyecto').forEach((proyecto, index) => {
-    gsap.fromTo(proyecto,
-        { x: index % 2 === 0 ? -100 : 100, opacity: 0 },
-        {
-            x: 0,
-            opacity: 1,
-            duration: 1,
-            ease: "power2.out",
-            scrollTrigger: {
-                trigger: proyecto,
-                start: "top 80%",
-                toggleActions: "play none none none"
-            }
-        }
-    );
-});
-
-// Interacción con las fases
-document.querySelectorAll('.fase').forEach(fase => {
-    fase.addEventListener('mouseenter', () => {
-        gsap.to(fase, {
-            scale: 1.05,
-            duration: 0.3,
-            ease: "power2.out"
-        });
-    });
-
-    fase.addEventListener('mouseleave', () => {
-        gsap.to(fase, {
-            scale: 1,
-            duration: 0.3,
-            ease: "power2.out"
-        });
-    });
-});
-
-// Interacción con la huella
-const huella = document.querySelector('.huella');
-const frases = document.querySelectorAll('.frase');
-let fraseActual = 0;
-
-if (huella) {
-    huella.addEventListener('mouseenter', () => {
-        if (frases[fraseActual]) {
-            frases[fraseActual].classList.remove('activa');
-        }
-        
-        fraseActual = (fraseActual + 1) % frases.length;
-        frases[fraseActual].classList.add('activa');
-    });
-}
-
-// Animación del formulario
-const formulario = document.querySelector('.formulario');
-if (formulario) {
-    formulario.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        const btn = document.querySelector('.btn-enviar');
-        const originalText = btn.textContent;
-        
-        btn.textContent = translations[currentLang]['btn-sending'];
-        btn.disabled = true;
-        
-        setTimeout(() => {
-            btn.textContent = translations[currentLang]['btn-sent'];
-            
-            const semilla = document.createElement('div');
-            semilla.innerHTML = '🌱';
-            semilla.style.cssText = `
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                font-size: 2rem;
-                z-index: 10000;
-                pointer-events: none;
-            `;
-            document.body.appendChild(semilla);
-            
-            gsap.fromTo(semilla, 
-                { scale: 0, y: 0 },
-                { 
-                    scale: 3, 
-                    y: -100, 
-                    duration: 2,
-                    ease: "power2.out",
-                    onComplete: () => semilla.remove()
-                }
-            );
-            
-            setTimeout(() => {
-                btn.textContent = originalText;
-                btn.disabled = false;
-                formulario.reset();
-            }, 3000);
-        }, 2000);
-    });
-}
-
-// Cambios de cursor según sección
-const secciones = [
-    { selector: '.umbral', cursor: '✨' },
-    { selector: '.proyectos', cursor: '🎨' },
-    { selector: '.fases', cursor: '⚡' },
-    { selector: '.servicios', cursor: '💫' },
-    { selector: '.sobre-mi', cursor: '👋' },
-    { selector: '.contacto', cursor: '📧' }
-];
-
-secciones.forEach(seccion => {
-    ScrollTrigger.create({
-        trigger: seccion.selector,
-        start: "top center",
-        end: "bottom center",
-        onEnter: () => cursor.innerHTML = seccion.cursor,
-        onEnterBack: () => cursor.innerHTML = seccion.cursor
-    });
-});
-
-// Responsividad mejorada para dispositivos móviles
-function updateResponsiveElements() {
-    const isMobile = window.innerWidth <= 768;
-    
-    if (isMobile) {
-        ScrollTrigger.batch('.fade-in', {
-            onEnter: elements => gsap.fromTo(elements, 
-                { y: 30, opacity: 0 },
-                { y: 0, opacity: 1, duration: 0.6, stagger: 0.1 }
-            )
-        });
-    }
-}
-
-window.addEventListener('resize', updateResponsiveElements);
-updateResponsiveElements();
-
-// Optimización de rendimiento para dispositivos móviles
-if (window.innerWidth <= 768) {
-    trails = trails.slice(0, 5);
-    gsap.set('.cursor-trail', { display: 'none' });
-}
-
-// Accesibilidad mejorada
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Tab') {
-        cursor.style.display = 'none';
-    }
-});
-
-document.addEventListener('mousemove', () => {
-    cursor.style.display = 'block';
-});
-
-// === ANIMACIONES PARA SECCIÓN PLANTILLAS ===
-
+// ==========================================
+// ANIMACIONES DE PLANTILLAS
+// ==========================================
 gsap.utils.toArray('.plantilla-card').forEach((card, index) => {
     gsap.fromTo(card,
         { 
@@ -317,25 +200,15 @@ gsap.utils.toArray('.plantilla-card').forEach((card, index) => {
     );
 });
 
+// Efecto hover de plantillas
 document.querySelectorAll('.plantilla-card').forEach(card => {
     card.addEventListener('mouseenter', (e) => {
-        gsap.to(card, {
-            duration: 0.3,
-            ease: "power2.out"
-        });
         createPlantillaParticles(e.clientX, e.clientY);
-    });
-
-    card.addEventListener('mouseleave', () => {
-        gsap.to(card, {
-            duration: 0.3,
-            ease: "power2.out"
-        });
     });
 });
 
 function createPlantillaParticles(x, y) {
-    const particleCount = 5;
+    const particleCount = 6;
     
     for (let i = 0; i < particleCount; i++) {
         const particle = document.createElement('div');
@@ -370,283 +243,232 @@ function createPlantillaParticles(x, y) {
     }
 }
 
-gsap.utils.toArray('.feature').forEach((feature, index) => {
-    gsap.fromTo(feature,
-        { 
-            opacity: 0,
-            scale: 0.8,
-            y: 10
-        },
-        {
-            opacity: 1,
-            scale: 1,
-            y: 0,
-            duration: 0.6,
-            delay: index * 0.05,
-            ease: "back.out",
-            scrollTrigger: {
-                trigger: feature.closest('.plantilla-card'),
-                start: "top 80%",
-                toggleActions: "play none none none"
-            }
-        }
-    );
-});
-
-gsap.utils.toArray('.plantilla-icono').forEach(icono => {
-    gsap.to(icono, {
-        duration: 2,
-        scale: 1.1,
-        yoyo: true,
+// ==========================================
+// ANIMACIÓN DE SVGs DECORATIVOS
+// ==========================================
+gsap.utils.toArray('.decorative-svg').forEach((svg, index) => {
+    gsap.to(svg, {
+        rotation: 360,
+        duration: 20 + (index * 5),
         repeat: -1,
-        ease: "sine.inOut",
-        scrollTrigger: {
-            trigger: icono.closest('.plantilla-card'),
-            start: "top 80%",
-            onEnter: () => {
-                gsap.to(icono, {
-                    duration: 2,
-                    scale: 1.1,
-                    yoyo: true,
-                    repeat: -1,
-                    ease: "sine.inOut"
-                });
-            }
-        }
+        ease: "none"
     });
 });
 
-document.querySelectorAll('.plantilla-card').forEach(card => {
-    const preview = card.querySelector('.plantilla-preview');
-    
-    card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        const moveX = (x - rect.width / 2) * 0.02;
-        const moveY = (y - rect.height / 2) * 0.02;
-        
-        gsap.to(card, {
-            rotateX: moveY,
-            rotateY: moveX,
-            duration: 0.3,
-            transformOrigin: "center center",
-            ease: "power2.out"
-        });
-    });
-    
-    card.addEventListener('mouseleave', () => {
-        gsap.to(card, {
-            rotateX: 0,
-            rotateY: 0,
-            duration: 0.6,
-            ease: "power2.out"
-        });
-    });
-});
-
-document.querySelectorAll('.plantilla-card').forEach(card => {
-    card.addEventListener('click', (e) => {
-        const rect = card.getBoundingClientRect();
-        const ripple = document.createElement('div');
-        
-        ripple.style.cssText = `
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(26, 188, 156, 0.6);
-            transform: scale(0);
-            pointer-events: none;
-        `;
-        
-        const size = Math.max(rect.width, rect.height);
-        const x = e.clientX - rect.left - size / 2;
-        const y = e.clientY - rect.top - size / 2;
-        
-        ripple.style.width = ripple.style.height = size + 'px';
-        ripple.style.left = x + 'px';
-        ripple.style.top = y + 'px';
-        
-        card.appendChild(ripple);
-        
-        gsap.to(ripple, {
-            scale: 1,
-            opacity: 0,
-            duration: 0.8,
-            ease: "power2.out",
-            onComplete: () => ripple.remove()
-        });
-    });
-});
-
-console.log('✨ Animaciones de Plantillas cargadas correctamente');
-
-
-// ========================================
-// MENÚ EXPANDIBLE - VERSIÓN CORREGIDA
-// ========================================
-
-// Selectores del menú
-const menuBoton = document.getElementById('menuBoton');
-const menuExpandible = document.getElementById('expandableMenu');
-const menuCerrar = document.getElementById('menuCerrar');
-const menuItems = document.querySelectorAll('.menu-item');
-
-console.log('✨ Menú elementos encontrados:', {
-    boton: menuBoton,
-    menu: menuExpandible,
-    cerrar: menuCerrar,
-    items: menuItems.length
-});
-
-// Función para abrir menú
-function abrirMenu() {
-    if (menuExpandible && menuBoton ) {
-        menuExpandible.classList.add('activo');
-        menuBoton.classList.add('activo');
-        document.body.style.overflow = 'hidden';
-    }
-}
-
-// Función para cerrar menú
-function cerrarMenu() {
-    if (menuExpandible && menuBoton) {
-        menuExpandible.classList.remove('activo');
-         menuBoton.classList.remove('activo');
-        document.body.style.overflow = 'auto';
-    }
-}
-
-// Click en botón de menú
-if (menuBoton) {
-    menuBoton.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (menuExpandible && menuExpandible.classList.contains('activo')) {
-            cerrarMenu();
-        } else {
-            abrirMenu();
-        }
-    });
-}
-
-// Click en botón de cerrar
-if (menuCerrar) {
-    menuCerrar.addEventListener('click', (e) => {
-        e.stopPropagation();
-        cerrarMenu();
-    });
-}
-
-
-// Click en items del menú
-menuItems.forEach(item => {
-    item.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        
-        const targetSelector = item.getAttribute('data-scroll');
-        const targetElement = document.querySelector(targetSelector);
-        
-        if (targetElement) {
-            cerrarMenu();
-            setTimeout(() => {
-                targetElement.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }, 400);
-        }
-    });
-});
-
-
-// Cerrar menú al presionar ESC
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && menuExpandible && menuExpandible.classList.contains('activo')) {
-        cerrarMenu();
-    }
-});
-
-// Cerrar menú al hacer click fuera
-document.addEventListener('click', (e) => {
-    if (menuExpandible && menuExpandible.classList.contains('activo') && 
-        !menuExpandible.contains(e.target) && 
-        !menuBoton.contains(e.target)) {
-        cerrarMenu();
-    }
-});
-
-// Animación del botón al hacer hover
-if (menuBoton) {
-    menuBoton.addEventListener('mouseenter', () => {
-        if (!menuBoton.classList.contains('activo')) {
-            gsap.to(menuBoton, {
-                duration: 0.3,
-                scale: 1.15,
-                ease: "back.out"
-            });
-        }
-    });
-
-    menuBoton.addEventListener('mouseleave', () => {
-        if (!menuBoton.classList.contains('activo')) {
-            gsap.to(menuBoton, {
-                duration: 0.3,
-                scale: 1,
-                ease: "back.out"
-            });
-        }
-    });
-}
-
-// Efecto hover en items del menú
-menuItems.forEach(item => {
-    item.addEventListener('mouseenter', function() {
-        gsap.to(this, {
-            duration: 0.3,
-            scale: 1.1,
-            ease: "back.out"
-        });
-    });
-
-    item.addEventListener('mouseleave', function() {
-        gsap.to(this, {
-            duration: 0.3,
-            scale: 1,
-            ease: "back.out"
-        });
-    });
-});
-
-console.log('✨ Menú expandible funcionando correctamente - Séptima Pacha');
-
-// Mensajes aleatorios en el hero
-const randomMessages = {
-    es: [
-        "🌐 Diseño web a medida para tu negocio",
-        "🎨 Crea tu identidad visual con nuestro diseño gráfico",
-        "📱 Lleva tu negocio al siguiente nivel con una app móvil",
-        "🚀 Posiciona tu marca en internet con nuestro SEO",
-        "💻 Desarrollamos software personalizado para ti"
-    ],
-    en: [
-        "🌐 Custom web design for your business",
-        "🎨 Create your visual identity with our graphic design",
-        "📱 Take your business to the next level with a mobile app", 
-        "🚀 Position your brand on the internet with our SEO",
-        "💻 We develop custom software for you"
-    ]
+// ==========================================
+// ANIMACIONES DEL HERO
+// ==========================================
+const heroElements = {
+    title: document.querySelector('.animate-title'),
+    subtitle: document.querySelector('.animate-subtitle'),
+    description: document.querySelector('.animate-description'),
+    ctas: document.querySelector('.animate-ctas')
 };
 
-function showRandomMessage() {
-    const messageContainer = document.getElementById("randomMessage");
-    const messages = currentLang === "es" ? randomMessages.es : randomMessages.en;
-    const randomIndex = Math.floor(Math.random() * messages.length);
-    messageContainer.textContent = messages[randomIndex];
+// Animar chakana central
+gsap.to('.hero-chakana', {
+    rotation: 360,
+    duration: 120,
+    repeat: -1,
+    ease: "none"
+});
+
+// Parallax effect en hero
+if (window.innerWidth > 768) {
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const heroChakana = document.querySelector('.hero-chakana');
+        const decorativeSvgs = document.querySelectorAll('.decorative-svg');
+        
+        if (heroChakana) {
+            heroChakana.style.transform = `translateY(${scrolled * 0.5}px) rotate(${scrolled * 0.1}deg)`;
+            heroChakana.style.opacity = 1 - (scrolled / 800);
+        }
+        
+        decorativeSvgs.forEach((svg, index) => {
+            const speed = 0.3 + (index * 0.1);
+            svg.style.transform = `translateY(${scrolled * speed}px)`;
+            svg.style.opacity = 1 - (scrolled / 1000);
+        });
+    });
 }
 
-// Mostrar mensaje aleatorio al cargar la página
-showRandomMessage();
-// Cambiar mensaje cada 5 segundos
-setInterval(showRandomMessage, 5000);
+// ==========================================
+// FORMULARIO DE CONTACTO
+// ==========================================
+const formulario = document.querySelector('.formulario');
+if (formulario) {
+    formulario.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const btn = document.querySelector('.btn-enviar');
+        const originalText = btn.textContent;
+        
+        btn.textContent = translations[currentLang]['btn-sending'];
+        btn.disabled = true;
+        
+        setTimeout(() => {
+            btn.textContent = translations[currentLang]['btn-sent'];
+            
+            const semilla = document.createElement('div');
+            semilla.innerHTML = '🌱';
+            semilla.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                font-size: 3rem;
+                z-index: 10000;
+                pointer-events: none;
+                transform: translate(-50%, -50%);
+            `;
+            document.body.appendChild(semilla);
+            
+            gsap.fromTo(semilla, 
+                { scale: 0, y: 0, rotation: 0 },
+                { 
+                    scale: 3, 
+                    y: -100,
+                    rotation: 360,
+                    duration: 2,
+                    ease: "power2.out",
+                    onComplete: () => semilla.remove()
+                }
+            );
+            
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.disabled = false;
+                formulario.reset();
+            }, 3000);
+        }, 2000);
+    });
+}
 
+// ==========================================
+// OPTIMIZACIÓN PARA MÓVILES
+// ==========================================
+function updateResponsiveElements() {
+    const isMobile = window.innerWidth <= 768;
+    
+    if (isMobile) {
+        // Desactivar efectos pesados en móvil
+        document.querySelectorAll('.floating-particles .particle').forEach(p => {
+            p.style.display = 'none';
+        });
+    } else {
+        document.querySelectorAll('.floating-particles .particle').forEach(p => {
+            p.style.display = 'block';
+        });
+    }
+}
+
+window.addEventListener('resize', updateResponsiveElements);
+updateResponsiveElements();
+
+// ==========================================
+// ACCESIBILIDAD
+// ==========================================
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Tab') {
+        cursor.style.display = 'none';
+    }
+    
+    // Cerrar menú móvil con ESC
+    if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+        menuToggle.classList.remove('active');
+        navMenu.classList.remove('active');
+    }
+});
+
+document.addEventListener('mousemove', () => {
+    cursor.style.display = 'block';
+});
+
+// ==========================================
+// CAMBIO DE CURSOR POR SECCIÓN
+// ==========================================
+const secciones = [
+    { selector: '.umbral', emoji: '✨' },
+    { selector: '.plantillas', emoji: '🌐' },
+    { selector: '.proyectos', emoji: '🎨' },
+    { selector: '.fases', emoji: '⚡' },
+    { selector: '.servicios', emoji: '💫' },
+    { selector: '.sobre-mi', emoji: '👋' },
+    { selector: '.contacto', emoji: '📧' }
+];
+
+secciones.forEach(seccion => {
+    ScrollTrigger.create({
+        trigger: seccion.selector,
+        start: "top center",
+        end: "bottom center",
+        onEnter: () => {
+            if (cursor) cursor.innerHTML = seccion.emoji;
+        },
+        onEnterBack: () => {
+            if (cursor) cursor.innerHTML = seccion.emoji;
+        }
+    });
+});
+
+// ==========================================
+// EFECTOS DE ENTRADA SUAVES
+// ==========================================
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+        }
+    });
+}, observerOptions);
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// ==========================================
+// ANIMACIÓN DEL SCROLL INDICATOR
+// ==========================================
+const scrollIndicator = document.querySelector('.scroll-indicator');
+if (scrollIndicator) {
+    scrollIndicator.addEventListener('click', () => {
+        const plantillasSection = document.querySelector('#plantillas');
+        if (plantillasSection) {
+            window.scrollTo({
+                top: plantillasSection.offsetTop - 80,
+                behavior: 'smooth'
+            });
+        }
+    });
+}
+
+// ==========================================
+// PERFORMANCE OPTIMIZATION
+// ==========================================
+// Reducir animaciones cuando la batería está baja
+if ('getBattery' in navigator) {
+    navigator.getBattery().then(battery => {
+        if (battery.level < 0.2) {
+            document.body.classList.add('low-power-mode');
+            gsap.globalTimeline.timeScale(0.5);
+        }
+    });
+}
+
+// ==========================================
+// CONSOLE ART
+// ==========================================
+console.log('%c✨ Séptima Pacha ✨', 'font-size: 2rem; color: #F39C12; font-weight: bold;');
+console.log('%cArte multidisciplinario ancestral-tecnológico', 'font-size: 1rem; color: #1ABC9C;');
+console.log('%cHecho con 💛 por Séptima Pacha', 'font-size: 0.9rem; color: #fff;');
+
+// ==========================================
+// INICIALIZACIÓN FINAL
+// ==========================================
+console.log('✨ Sistema de animaciones cargado correctamente');
+console.log('🎨 Menú de navegación activo');
+console.log('🌐 Efectos interactivos listos');
