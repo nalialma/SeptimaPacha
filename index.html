@@ -101,17 +101,113 @@
 </div>
 
 </nav>
-    <!-- 1: El Umbral de la Pacha -->
+   <!-- HERO MEJORADO -->
+    <section class="umbral" id="umbral">
+        <!-- SVGs Decorativos Andinos -->
+        <svg class="decorative-svg top-left" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path class="svg-path" d="M100,20 L120,80 L180,100 L120,120 L100,180 L80,120 L20,100 L80,80 Z" 
+                  fill="none" stroke="var(--oro)" stroke-width="2" opacity="0.3"/>
+            <circle cx="100" cy="100" r="60" fill="none" stroke="var(--oro)" stroke-width="1" opacity="0.2"/>
+        </svg>
+        
+        <svg class="decorative-svg top-right" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path class="svg-path" d="M40,40 L160,40 L100,160 Z" 
+                  fill="none" stroke="var(--fuego)" stroke-width="2" opacity="0.3"/>
+            <path d="M70,70 L130,70 L100,130 Z" fill="none" stroke="var(--fuego)" stroke-width="1" opacity="0.2"/>
+        </svg>
+        
+        <svg class="decorative-svg bottom-left" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <rect x="50" y="50" width="100" height="100" 
+                  fill="none" stroke="var(--agua)" stroke-width="2" opacity="0.3" transform="rotate(45 100 100)"/>
+            <circle cx="100" cy="100" r="40" fill="none" stroke="var(--agua)" stroke-width="1" opacity="0.2"/>
+        </svg>
+        
+        <svg class="decorative-svg bottom-right" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path class="svg-path" d="M100,50 L150,100 L100,150 L50,100 Z" 
+                  fill="none" stroke="var(--tierra)" stroke-width="2" opacity="0.3"/>
+            <path d="M100,70 L130,100 L100,130 L70,100 Z" 
+                  fill="none" stroke="var(--tierra)" stroke-width="1" opacity="0.2"/>
+        </svg>
 
+        <!-- Chakana Central Animada -->
+        <div class="hero-chakana">
+            <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+                <!-- Cruz Principal -->
+                <line x1="200" y1="50" x2="200" y2="350" stroke="var(--oro)" stroke-width="3" class="chakana-line"/>
+                <line x1="50" y1="200" x2="350" y2="200" stroke="var(--oro)" stroke-width="3" class="chakana-line"/>
+                
+                <!-- Escalones -->
+                <path d="M200,120 L220,120 L220,140 L240,140 L240,160 L260,160 M200,120 L180,120 L180,140 L160,140 L160,160 L140,160" 
+                      stroke="var(--oro)" stroke-width="2" fill="none" class="chakana-detail" opacity="0.7"/>
+                <path d="M200,280 L220,280 L220,260 L240,260 L240,240 L260,240 M200,280 L180,280 L180,260 L160,260 L160,240 L140,240" 
+                      stroke="var(--oro)" stroke-width="2" fill="none" class="chakana-detail" opacity="0.7"/>
+                <path d="M120,200 L120,220 L140,220 L140,240 L160,240 L160,260 M120,200 L120,180 L140,180 L140,160 L160,160" 
+                      stroke="var(--oro)" stroke-width="2" fill="none" class="chakana-detail" opacity="0.7"/>
+                <path d="M280,200 L280,220 L260,220 L260,240 L240,240 L240,260 M280,200 L280,180 L260,180 L260,160 L240,160" 
+                      stroke="var(--oro)" stroke-width="2" fill="none" class="chakana-detail" opacity="0.7"/>
+                
+                <!-- Centro -->
+                <circle cx="200" cy="200" r="30" stroke="var(--oro)" stroke-width="3" fill="none" class="chakana-center"/>
+                <circle cx="200" cy="200" r="15" fill="var(--oro)" opacity="0.3" class="chakana-center-fill"/>
+                
+                <!-- Esquinas -->
+                <rect x="60" y="60" width="20" height="20" fill="var(--tierra)" opacity="0.5" class="chakana-corner"/>
+                <rect x="320" y="60" width="20" height="20" fill="var(--fuego)" opacity="0.5" class="chakana-corner"/>
+                <rect x="60" y="320" width="20" height="20" fill="var(--agua)" opacity="0.5" class="chakana-corner"/>
+                <rect x="320" y="320" width="20" height="20" fill="var(--aire)" opacity="0.5" class="chakana-corner"/>
+            </svg>
+        </div>
 
-<section class="umbral" id="umbral">
-    <h2 class="titulo-principal" data-lang-es="Séptima Pacha" data-lang-en="Seventh Pacha">Séptima Pacha</h2>
-    <h1 class="subtitulo" data-lang-es="Arte multidisciplinario ancestral-tecnológico" data-lang-en="Ancestral-technological multidisciplinary art">Arte multidisciplinario ancestral-tecnológico</h1>
-    <div class="scroll-arrow">↓</div>
-    <p class="subtitulo" data-lang-es="Este es un espacio de arte, creación y tecnología. ¡Encuentra lo que buscas!" data-lang-en="This is a space for art, creation, and technology. Find what you're looking for!">Este es un espacio de arte, creación y tecnología. ¡Encuentra lo que buscas!</p>
-    <div id="randomMessage" class="random-message"></div>
-</section>
+        <div class="hero-content">
+            <h2 class="titulo-principal animate-title" data-lang-es="Séptima Pacha" data-lang-en="Seventh Pacha">
+                Séptima Pacha
+            </h2>
+            
+            <div class="subtitulo-container">
+                <div class="line-decoration left"></div>
+                <h1 class="subtitulo animate-subtitle" 
+                    data-lang-es="Arte multidisciplinario ancestral-tecnológico" 
+                    data-lang-en="Ancestral-technological multidisciplinary art">
+                    Arte multidisciplinario ancestral-tecnológico
+                </h1>
+                <div class="line-decoration right"></div>
+            </div>
 
+            <p class="hero-description animate-description" 
+               data-lang-es="Un espacio donde convergen raíces ancestrales y visión digital. Creamos experiencias que honran el pasado mientras abrazan el futuro." 
+               data-lang-en="A space where ancestral roots and digital vision converge. We create experiences that honor the past while embracing the future.">
+                Un espacio donde convergen raíces ancestrales y visión digital. Creamos experiencias que honran el pasado mientras abrazan el futuro.
+            </p>
+
+            <div class="hero-ctas animate-ctas">
+                <a href="#plantillas" class="cta-primary">
+                    <span data-lang-es="Explorar Plantillas" data-lang-en="Explore Templates">Explorar Plantillas</span>
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M5 10H15M15 10L10 5M15 10L10 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </a>
+                <a href="#proyectos" class="cta-secondary">
+                    <span data-lang-es="Ver Proyectos" data-lang-en="View Projects">Ver Proyectos</span>
+                </a>
+            </div>
+
+            <div class="scroll-indicator">
+                <div class="scroll-mouse">
+                    <div class="scroll-wheel"></div>
+                </div>
+                <span data-lang-es="Descubre más" data-lang-en="Discover more">Descubre más</span>
+            </div>
+        </div>
+
+        <!-- Partículas Flotantes -->
+        <div class="floating-particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+    </section>
     </section>
     <!-- Sección 2: Plantillas en SUPER Oferta -->
 <section class="plantillas" id="plantillas">
@@ -543,6 +639,7 @@
      <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
