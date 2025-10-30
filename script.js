@@ -64,58 +64,12 @@ window.addEventListener('load', () => {
 });
 
 // ==========================================
-// MENÚ DE NAVEGACIÓN
-// ==========================================
-const mainNav = document.getElementById('mainNav');
-const menuToggle = document.getElementById('menuToggle');
-const navMenu = document.querySelector('.nav-menu');
-const navLinks = document.querySelectorAll('.nav-menu a');
-
-// Scroll effect
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 100) {
-        mainNav.classList.add('scrolled');
-    } else {
-        mainNav.classList.remove('scrolled');
-    }
-});
-
-// Mobile menu toggle
-if (menuToggle) {
-    menuToggle.addEventListener('click', () => {
-        menuToggle.classList.toggle('active');
-        navMenu.classList.toggle('active');
-    });
-}
-
-// Smooth scroll y cierre de menú
-navLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetId = link.getAttribute('href');
-        const targetSection = document.querySelector(targetId);
-        
-        if (targetSection) {
-            const offsetTop = targetSection.offsetTop - 80;
-            
-            window.scrollTo({
-                top: offsetTop,
-                behavior: 'smooth'
-            });
-            
-            // Cerrar menú móvil
-            if (window.innerWidth <= 768) {
-                menuToggle.classList.remove('active');
-                navMenu.classList.remove('active');
-            }
-        }
-    });
-});
-
-// ==========================================
 // IDIOMA
 // ==========================================
-document.getElementById('languageToggle').addEventListener('click', toggleLanguage);
+const languageToggle = document.getElementById('languageToggle');
+if (languageToggle) {
+    languageToggle.addEventListener('click', toggleLanguage);
+}
 
 // ==========================================
 // CURSOR PERSONALIZADO
@@ -123,34 +77,36 @@ document.getElementById('languageToggle').addEventListener('click', toggleLangua
 const cursor = document.querySelector('.custom-cursor');
 let mouseX = 0, mouseY = 0;
 
-document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    
-    gsap.to(cursor, {
-        x: mouseX - 10,
-        y: mouseY - 10,
-        duration: 0.15,
-        ease: "power2.out"
+if (cursor) {
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        
+        gsap.to(cursor, {
+            x: mouseX - 10,
+            y: mouseY - 10,
+            duration: 0.15,
+            ease: "power2.out"
+        });
     });
-});
 
-// Cambiar cursor en hover de elementos interactivos
-document.querySelectorAll('a, button, .plantilla-card').forEach(element => {
-    element.addEventListener('mouseenter', () => {
-        gsap.to(cursor, {
-            scale: 1.5,
-            duration: 0.3
+    // Cambiar cursor en hover de elementos interactivos
+    document.querySelectorAll('a, button, .plantilla-card').forEach(element => {
+        element.addEventListener('mouseenter', () => {
+            gsap.to(cursor, {
+                scale: 1.5,
+                duration: 0.3
+            });
+        });
+        
+        element.addEventListener('mouseleave', () => {
+            gsap.to(cursor, {
+                scale: 1,
+                duration: 0.3
+            });
         });
     });
-    
-    element.addEventListener('mouseleave', () => {
-        gsap.to(cursor, {
-            scale: 1,
-            duration: 0.3
-        });
-    });
-});
+}
 
 // ==========================================
 // ANIMACIONES DE SCROLL
@@ -258,26 +214,21 @@ gsap.utils.toArray('.decorative-svg').forEach((svg, index) => {
 // ==========================================
 // ANIMACIONES DEL HERO
 // ==========================================
-const heroElements = {
-    title: document.querySelector('.animate-title'),
-    subtitle: document.querySelector('.animate-subtitle'),
-    description: document.querySelector('.animate-description'),
-    ctas: document.querySelector('.animate-ctas')
-};
-
 // Animar chakana central
-gsap.to('.hero-chakana', {
-    rotation: 360,
-    duration: 120,
-    repeat: -1,
-    ease: "none"
-});
+const heroChakana = document.querySelector('.hero-chakana');
+if (heroChakana) {
+    gsap.to(heroChakana, {
+        rotation: 360,
+        duration: 120,
+        repeat: -1,
+        ease: "none"
+    });
+}
 
 // Parallax effect en hero
 if (window.innerWidth > 768) {
     window.addEventListener('scroll', () => {
         const scrolled = window.pageYOffset;
-        const heroChakana = document.querySelector('.hero-chakana');
         const decorativeSvgs = document.querySelectorAll('.decorative-svg');
         
         if (heroChakana) {
@@ -351,7 +302,6 @@ function updateResponsiveElements() {
     const isMobile = window.innerWidth <= 768;
     
     if (isMobile) {
-        // Desactivar efectos pesados en móvil
         document.querySelectorAll('.floating-particles .particle').forEach(p => {
             p.style.display = 'none';
         });
@@ -369,19 +319,24 @@ updateResponsiveElements();
 // ACCESIBILIDAD
 // ==========================================
 document.addEventListener('keydown', (e) => {
-    if (e.key === 'Tab') {
+    if (e.key === 'Tab' && cursor) {
         cursor.style.display = 'none';
     }
     
-    // Cerrar menú móvil con ESC
-    if (e.key === 'Escape' && navMenu.classList.contains('active')) {
-        menuToggle.classList.remove('active');
-        navMenu.classList.remove('active');
+    // Cerrar menú expandible con ESC
+    if (e.key === 'Escape') {
+        const menuExpandible = document.getElementById('expandableMenu');
+        const menuBoton = document.getElementById('menuBoton');
+        if (menuExpandible && menuExpandible.classList.contains('activo')) {
+            cerrarMenu();
+        }
     }
 });
 
 document.addEventListener('mousemove', () => {
-    cursor.style.display = 'block';
+    if (cursor) {
+        cursor.style.display = 'block';
+    }
 });
 
 // ==========================================
@@ -449,7 +404,6 @@ if (scrollIndicator) {
 // ==========================================
 // PERFORMANCE OPTIMIZATION
 // ==========================================
-// Reducir animaciones cuando la batería está baja
 if ('getBattery' in navigator) {
     navigator.getBattery().then(battery => {
         if (battery.level < 0.2) {
@@ -467,16 +421,8 @@ console.log('%cArte multidisciplinario ancestral-tecnológico', 'font-size: 1rem
 console.log('%cHecho con 💛 por Séptima Pacha', 'font-size: 0.9rem; color: #fff;');
 
 // ==========================================
-// INICIALIZACIÓN FINAL
+// MENÚ EXPANDIBLE - VERSIÓN CORREGIDA Y MEJORADA
 // ==========================================
-console.log('✨ Sistema de animaciones cargado correctamente');
-console.log('🎨 Menú de navegación activo');
-console.log('🌐 Efectos interactivos listos');
-
-
-// ========================================
-// MENÚ EXPANDIBLE - VERSIÓN CORREGIDA
-// ========================================
 
 // Selectores del menú
 const menuBoton = document.getElementById('menuBoton');
@@ -484,87 +430,106 @@ const menuExpandible = document.getElementById('expandableMenu');
 const menuCerrar = document.getElementById('menuCerrar');
 const menuItems = document.querySelectorAll('.menu-item');
 
-console.log('✨ Menú elementos encontrados:', {
-    boton: menuBoton,
-    menu: menuExpandible,
-    cerrar: menuCerrar,
+console.log('✨ Inicializando menú expandible...');
+console.log('Menú elementos encontrados:', {
+    boton: !!menuBoton,
+    menu: !!menuExpandible,
+    cerrar: !!menuCerrar,
     items: menuItems.length
 });
 
 // Función para abrir menú
 function abrirMenu() {
-    if (menuExpandible && menuBoton ) {
+    console.log('Abriendo menú...');
+    if (menuExpandible && menuBoton) {
         menuExpandible.classList.add('activo');
         menuBoton.classList.add('activo');
         document.body.style.overflow = 'hidden';
+        console.log('✅ Menú abierto');
+    } else {
+        console.error('❌ No se encontraron elementos del menú');
     }
 }
 
 // Función para cerrar menú
 function cerrarMenu() {
+    console.log('Cerrando menú...');
     if (menuExpandible && menuBoton) {
         menuExpandible.classList.remove('activo');
-         menuBoton.classList.remove('activo');
+        menuBoton.classList.remove('activo');
         document.body.style.overflow = 'auto';
+        console.log('✅ Menú cerrado');
     }
 }
 
 // Click en botón de menú
 if (menuBoton) {
     menuBoton.addEventListener('click', (e) => {
+        e.preventDefault();
         e.stopPropagation();
+        console.log('Click en botón de menú');
+        
         if (menuExpandible && menuExpandible.classList.contains('activo')) {
             cerrarMenu();
         } else {
             abrirMenu();
         }
     });
+    console.log('✅ Event listener agregado al botón de menú');
+} else {
+    console.error('❌ No se encontró el botón de menú');
 }
 
 // Click en botón de cerrar
 if (menuCerrar) {
     menuCerrar.addEventListener('click', (e) => {
+        e.preventDefault();
         e.stopPropagation();
+        console.log('Click en botón de cerrar');
         cerrarMenu();
     });
+    console.log('✅ Event listener agregado al botón de cerrar');
 }
 
-
 // Click en items del menú
-menuItems.forEach(item => {
+menuItems.forEach((item, index) => {
     item.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
         
+        console.log(`Click en item del menú ${index + 1}`);
+        
         const targetSelector = item.getAttribute('data-scroll');
+        console.log('Target selector:', targetSelector);
+        
         const targetElement = document.querySelector(targetSelector);
         
         if (targetElement) {
+            console.log('Elemento encontrado, cerrando menú y haciendo scroll...');
             cerrarMenu();
+            
             setTimeout(() => {
                 targetElement.scrollIntoView({
                     behavior: 'smooth',
                     block: 'start'
                 });
             }, 400);
+        } else {
+            console.error('❌ No se encontró el elemento:', targetSelector);
         }
     });
 });
 
-
-// Cerrar menú al presionar ESC
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && menuExpandible && menuExpandible.classList.contains('activo')) {
-        cerrarMenu();
-    }
-});
+console.log(`✅ Event listeners agregados a ${menuItems.length} items del menú`);
 
 // Cerrar menú al hacer click fuera
 document.addEventListener('click', (e) => {
-    if (menuExpandible && menuExpandible.classList.contains('activo') && 
-        !menuExpandible.contains(e.target) && 
-        !menuBoton.contains(e.target)) {
-        cerrarMenu();
+    if (menuExpandible && menuExpandible.classList.contains('activo')) {
+        // Verificar si el click fue fuera del menú y del botón
+        if (!menuExpandible.contains(e.target) && !menuBoton.contains(e.target)) {
+            console.log('Click fuera del menú, cerrando...');
+            cerrarMenu();
+        }
     }
 });
 
@@ -596,7 +561,8 @@ menuItems.forEach(item => {
     item.addEventListener('mouseenter', function() {
         gsap.to(this, {
             duration: 0.3,
-            scale: 1.1,
+            scale: 1.05,
+            x: 10,
             ease: "back.out"
         });
     });
@@ -605,10 +571,25 @@ menuItems.forEach(item => {
         gsap.to(this, {
             duration: 0.3,
             scale: 1,
+            x: 0,
             ease: "back.out"
         });
     });
 });
 
-console.log('✨ Menú expandible funcionando correctamente - Séptima Pacha');
+// ==========================================
+// INICIALIZACIÓN FINAL
+// ==========================================
+console.log('✨ Sistema de animaciones cargado correctamente');
+console.log('🎨 Menú expandible activo');
+console.log('🌐 Efectos interactivos listos');
 
+// Verificar que el menú esté presente en el DOM después de cargar
+setTimeout(() => {
+    const verificarMenu = document.getElementById('menuBoton');
+    if (verificarMenu) {
+        console.log('✅ Verificación final: Menú presente en el DOM');
+    } else {
+        console.error('❌ Verificación final: Menú NO encontrado en el DOM');
+    }
+}, 1000);
