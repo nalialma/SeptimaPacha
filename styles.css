@@ -1020,11 +1020,10 @@
             font-size: clamp(1rem, 2.5vw, 1.2rem);
         }
 
-  /* ==========================================
-   SECCIÓN SOBRE MÍ - CSS CORREGIDO
+/* ==========================================
+   SECCIÓN SOBRE MÍ - VERSIÓN DESTELLOS
    ========================================== */
 
-/* Mantener el contenedor original */
 .sobre-mi {
     min-height: 100vh;
     padding: 4rem 1rem;
@@ -1259,125 +1258,177 @@
     }
 }
 
-/* Partículas orbitando */
-.particula-orbital {
+/* ==========================================
+   PARTÍCULAS SVG SUTILES
+   ========================================== */
+
+.particula-svg {
     position: absolute;
-    font-size: 2rem;
+    width: 40px;
+    height: 40px;
     pointer-events: none;
-    filter: drop-shadow(0 0 12px rgba(243, 156, 18, 0.6));
-    animation: orbitar 20s linear infinite;
+    opacity: 0.6;
 }
 
-.particula-orbital.p-1 {
-    top: 10%;
-    left: 50%;
-    animation-delay: 0s;
+.particula-svg-1 {
+    top: 15%;
+    left: 15%;
+    animation: flotarSuave 6s ease-in-out infinite;
 }
 
-.particula-orbital.p-2 {
-    top: 50%;
-    right: 10%;
-    animation-delay: -5s;
+.particula-svg-2 {
+    top: 20%;
+    right: 18%;
+    animation: flotarSuave 7s ease-in-out infinite;
+    animation-delay: -2s;
 }
 
-.particula-orbital.p-3 {
-    bottom: 10%;
-    left: 50%;
-    animation-delay: -10s;
+.particula-svg-3 {
+    bottom: 18%;
+    left: 18%;
+    animation: flotarSuave 8s ease-in-out infinite;
+    animation-delay: -4s;
 }
 
-.particula-orbital.p-4 {
-    top: 50%;
-    left: 10%;
-    animation-delay: -15s;
+.particula-svg-4 {
+    bottom: 15%;
+    right: 15%;
+    animation: flotarSuave 5s ease-in-out infinite;
+    animation-delay: -1s;
 }
 
-@keyframes orbitar {
-    from {
-        transform: rotate(0deg) translateX(280px) rotate(0deg);
+@keyframes flotarSuave {
+    0%, 100% {
+        transform: translate(0, 0);
+        opacity: 0.4;
     }
-    to {
-        transform: rotate(360deg) translateX(280px) rotate(-360deg);
+    25% {
+        transform: translate(10px, -10px);
+        opacity: 0.7;
+    }
+    50% {
+        transform: translate(0, -15px);
+        opacity: 0.6;
+    }
+    75% {
+        transform: translate(-10px, -10px);
+        opacity: 0.7;
     }
 }
 
-/* FRASES FLOTANTES MEJORADAS */
-.frase {
+/* ==========================================
+   FRASES COMO DESTELLOS
+   ========================================== */
+
+.frase-destello {
     position: absolute;
     color: var(--oro);
     font-weight: 500;
-    opacity: 0;
-    transition: all 0.5s ease;
-    pointer-events: auto;
-    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
     text-align: center;
-    max-width: 280px;
-    animation: fraseFadeIn 1s ease forwards;
+    max-width: 300px;
+    padding: 0.8rem 1.5rem;
+    background: linear-gradient(135deg, 
+        rgba(243, 156, 18, 0.15) 0%, 
+        rgba(139, 69, 19, 0.1) 100%
+    );
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(243, 156, 18, 0.3);
+    border-radius: 15px;
+    opacity: 0;
+    pointer-events: none;
+    text-shadow: 0 0 10px rgba(243, 156, 18, 0.5);
+    box-shadow: 0 0 20px rgba(243, 156, 18, 0.2);
+    animation: destelloAparece 12s ease-in-out infinite;
 }
 
-.frase-nueva {
-    background: rgba(26, 26, 26, 0.9);
-    backdrop-filter: blur(10px);
-    border: 2px solid rgba(243, 156, 18, 0.4);
-    border-radius: 25px;
-    padding: 1rem 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    cursor: default;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-    animation: fraseFlota 5s ease-in-out infinite;
+/* Cada frase aparece en diferentes momentos */
+.frase-destello-1 {
+    top: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    animation-delay: 0s;
 }
 
-@keyframes fraseFadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+.frase-destello-2 {
+    top: 50%;
+    right: 3%;
+    transform: translateY(-50%);
+    animation-delay: 3s;
 }
 
-@keyframes fraseFlota {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-12px); }
+.frase-destello-3 {
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    animation-delay: 6s;
 }
 
-.frase-nueva:hover {
-    transform: translateY(-8px) scale(1.08);
-    background: rgba(243, 156, 18, 0.2);
-    border-color: var(--oro);
-    box-shadow: 0 12px 35px rgba(243, 156, 18, 0.5);
+.frase-destello-4 {
+    top: 50%;
+    left: 3%;
+    transform: translateY(-50%);
+    animation-delay: 9s;
 }
 
-.frase-emoji {
-    font-size: 1.8rem;
-    filter: drop-shadow(0 0 8px rgba(243, 156, 18, 0.5));
+/* Animación de destello: aparece, brilla, desaparece */
+@keyframes destelloAparece {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) scale(0.8);
+    }
+    5% {
+        opacity: 0.9;
+        transform: translateX(-50%) scale(1);
+    }
+    20% {
+        opacity: 1;
+        transform: translateX(-50%) scale(1.02);
+        text-shadow: 0 0 20px rgba(243, 156, 18, 0.8);
+        box-shadow: 0 0 30px rgba(243, 156, 18, 0.4);
+    }
+    25% {
+        opacity: 0;
+        transform: translateX(-50%) scale(0.95);
+    }
+    100% {
+        opacity: 0;
+    }
 }
 
-/* Posiciones de las frases */
-.frase-pos-1 {
-    top: 8%;
-    left: 2%;
-    animation-delay: 0.5s;
+/* Ajuste para frases en diferentes posiciones */
+.frase-destello-2 {
+    animation: destelloAparece2 12s ease-in-out infinite;
+    animation-delay: 3s;
 }
 
-.frase-pos-2 {
-    top: 20%;
-    right: 2%;
-    animation-delay: 1s;
+@keyframes destelloAparece2 {
+    0% {
+        opacity: 0;
+        transform: translateY(-50%) scale(0.8);
+    }
+    5% {
+        opacity: 0.9;
+        transform: translateY(-50%) scale(1);
+    }
+    20% {
+        opacity: 1;
+        transform: translateY(-50%) scale(1.02);
+        text-shadow: 0 0 20px rgba(243, 156, 18, 0.8);
+        box-shadow: 0 0 30px rgba(243, 156, 18, 0.4);
+    }
+    25% {
+        opacity: 0;
+        transform: translateY(-50%) scale(0.95);
+    }
+    100% {
+        opacity: 0;
+    }
 }
 
-.frase-pos-3 {
-    bottom: 20%;
-    left: 2%;
-    animation-delay: 1.5s;
-}
-
-.frase-pos-4 {
-    bottom: 8%;
-    right: 2%;
-    animation-delay: 2s;
-}
-
-.frase.activa {
-    opacity: 1;
+.frase-destello-4 {
+    animation: destelloAparece2 12s ease-in-out infinite;
+    animation-delay: 9s;
 }
 
 /* ==========================================
@@ -1405,6 +1456,11 @@
     
     .huella-texto-pequeño {
         font-size: 1.1rem;
+    }
+    
+    .frase-destello {
+        font-size: 1.1rem;
+        max-width: 250px;
     }
 }
 
@@ -1436,29 +1492,32 @@
         font-size: 2rem;
     }
     
-    .particula-orbital {
-        font-size: 1.5rem;
+    .particula-svg {
+        width: 30px;
+        height: 30px;
     }
     
-    @keyframes orbitar {
-        from {
-            transform: rotate(0deg) translateX(180px) rotate(0deg);
-        }
-        to {
-            transform: rotate(360deg) translateX(180px) rotate(-360deg);
-        }
+    .frase-destello {
+        font-size: 1rem;
+        max-width: 200px;
+        padding: 0.6rem 1.2rem;
     }
     
-    /* Frases en stack vertical para móvil */
-    .frase-nueva {
-        position: static;
-        margin: 0.8rem auto;
-        max-width: 85%;
-        animation: none;
+    /* Reposicionar frases en móvil */
+    .frase-destello-1 {
+        top: 3%;
     }
     
-    .frase-pos-1, .frase-pos-2, .frase-pos-3, .frase-pos-4 {
-        position: static;
+    .frase-destello-2 {
+        right: 2%;
+    }
+    
+    .frase-destello-3 {
+        bottom: 3%;
+    }
+    
+    .frase-destello-4 {
+        left: 2%;
     }
 }
 
@@ -1490,22 +1549,15 @@
         font-size: 1.5rem;
     }
     
-    .frase-nueva {
-        padding: 0.8rem 1.2rem;
-        font-size: 0.95rem;
+    .particula-svg {
+        width: 25px;
+        height: 25px;
     }
     
-    .frase-emoji {
-        font-size: 1.5rem;
-    }
-    
-    @keyframes orbitar {
-        from {
-            transform: rotate(0deg) translateX(120px) rotate(0deg);
-        }
-        to {
-            transform: rotate(360deg) translateX(120px) rotate(-360deg);
-        }
+    .frase-destello {
+        font-size: 0.9rem;
+        max-width: 180px;
+        padding: 0.5rem 1rem;
     }
 }
         /* Sección 6: Contacto */
@@ -4044,6 +4096,7 @@ MENÚ SUPERIOR CENTRADO
 .expandable-menu * {
     pointer-events: auto;
 }
+
 
 
 
