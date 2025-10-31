@@ -209,266 +209,347 @@
         </div>
     </section>
     </section>
-    <!-- Sección 2: Plantillas en SUPER Oferta -->
+    <!-- ==========================================
+     SECCIÓN PLANTILLAS EN OFERTA - CARRUSEL
+     ========================================== -->
+
 <section class="plantillas" id="plantillas">
     <h2 class="section-title fade-in" data-lang-es="Plantillas en ofertas Listas para Transformar" data-lang-en="Templates Ready to Transform">Plantillas en ofertas Listas para Transformar</h2>
-    <p class="plantillas-subtitulo fade-in" data-lang-es="Páginas web estáticas basica,  diseño responsivo (adaptable a celulares y computadoras), secciones básicas (Inicio, Servicios, Contacto), un módulo de WhatsApp." data-lang-en="Basic static web pages, responsive design (adaptable for mobile phones and computers), basic sections (Home, Services, Contact), a WhatsApp module">Páginas web estáticas basica,  diseño responsivo (adaptable a celulares y computadoras), secciones básicas (Inicio, Servicios, Contacto), un módulo de WhatsApp</p>
+    <p class="plantillas-subtitulo fade-in" data-lang-es="Páginas web estáticas basica, diseño responsivo (adaptable a celulares y computadoras), secciones básicas (Inicio, Servicios, Contacto), un módulo de WhatsApp." data-lang-en="Basic static web pages, responsive design (adaptable for mobile phones and computers), basic sections (Home, Services, Contact), a WhatsApp module">Páginas web estáticas basica, diseño responsivo (adaptable a celulares y computadoras), secciones básicas (Inicio, Servicios, Contacto), un módulo de WhatsApp</p>
     
-    <div class="plantillas-grid">
-        <!-- Plantilla 1 -->
-        <a href="https://nalialma.github.io/servicios-plantilla/" class="plantilla-card fade-in">
-            <div class="plantilla-preview">
-                <div class="plantilla-icono">✨</div>
-            </div>
-            <div class="plantilla-info">
-                <h3 class="plantilla-nombre" data-lang-es="Servicios" data-lang-en="Service">Servicios</h3>
-                <p class="plantilla-desc" data-lang-es="Plantilla lista para modificar, colores, tipografía, información, imágenes." data-lang-en="Plantilla lista para modificar, colores, tipografia, informacion, imagenes.">Plantilla lista para modificar, colores, tipografía, información, imágenes.</p>
-                <div class="plantilla-features">
-                    <span class="feature" data-lang-es="Responsiva" data-lang-en="Responsive">Responsiva</span>
-                    <span class="feature" data-lang-es="Contactos" data-lang-en="Contact">Contacto</span>
-                    <span class="feature" data-lang-es="SEO" data-lang-en="SEO">SEO</span>
-                </div>
-                <div class="plantilla-footer">
-                    <span class="plantilla-precio">$80.000</span>
-                     <span class="plantilla-precio">$130.000 con el dominio</span>
-                    <span class="plantilla-btn" data-lang-es="Configurar" data-lang-en="Configure">Configurar →</span>
-                </div>
-            </div>
-        </a>
+    <!-- Carrusel Container -->
+    <div class="carrusel-container">
+        <!-- Botón anterior -->
+        <button class="carrusel-btn carrusel-prev" id="carruselPrev">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+        </button>
 
+        <!-- Carrusel wrapper -->
+        <div class="carrusel-wrapper">
+            <div class="plantillas-grid carrusel" id="carruselOferta">
+                
+                <!-- Plantilla 1: Servicios -->
+                <a href="https://nalialma.github.io/servicios-plantilla/" class="plantilla-card" data-image="https://images.unsplash.com/photo-1559028615-cd4628902d4a?w=500&h=400&fit=crop">
+                    <div class="plantilla-preview">
+                        <img class="plantilla-imagen" src="https://images.unsplash.com/photo-1559028615-cd4628902d4a?w=500&h=400&fit=crop" alt="Plantilla Servicios" loading="lazy">
+                        <div class="plantilla-overlay">
+                            <span class="plantilla-btn-hover" data-lang-es="Ver" data-lang-en="View">Ver</span>
+                        </div>
+                    </div>
+                    <div class="plantilla-info">
+                        <h3 class="plantilla-nombre" data-lang-es="Servicios" data-lang-en="Service">Servicios</h3>
+                        <p class="plantilla-desc" data-lang-es="Plantilla lista para modificar, colores, tipografía, información, imágenes." data-lang-en="Plantilla lista para modificar, colores, tipografia, informacion, imagenes.">Plantilla lista para modificar, colores, tipografía, información, imágenes.</p>
+                        <div class="plantilla-features">
+                            <span class="feature" data-lang-es="Responsiva" data-lang-en="Responsive">Responsiva</span>
+                            <span class="feature" data-lang-es="Contactos" data-lang-en="Contact">Contacto</span>
+                            <span class="feature" data-lang-es="SEO" data-lang-en="SEO">SEO</span>
+                        </div>
+                        <div class="plantilla-footer">
+                            <span class="plantilla-precio">$80.000</span>
+                            <span class="plantilla-precio-dominio">$130.000 con dominio</span>
+                        </div>
+                    </div>
+                </a>
 
-        <!-- Plantilla 2 -->
-        <a href="https://nalialma.github.io/plantilla-abogado/" class="plantilla-card fade-in">
-            <div class="plantilla-preview">
-                <div class="plantilla-icono">🎨</div>
-            </div>
-            <div class="plantilla-info">
-                <h3 class="plantilla-nombre" data-lang-es="Ejecutivo" data-lang-en="Service">Ejecutivo</h3>
-                <p class="plantilla-desc" data-lang-es="Plantilla sobria lista para modificar, colores, tipografia, información, imágenes." data-lang-en="Plantilla lista para modificar, colores, tipografía, información, imagenes.">Plantilla lista para modificar, colores, tipografía, información, imágenes</p>
-                <div class="plantilla-features">
-                    <span class="feature" data-lang-es="Responsiva" data-lang-en="Responsive">Responsiva</span>
-                    <span class="feature" data-lang-es="Contactos" data-lang-en="Contact">Contacto</span>
-                    <span class="feature" data-lang-es="SEO" data-lang-en="SEO">SEO</span>
-                </div>
-                <div class="plantilla-footer">
-                    <span class="plantilla-precio">$80.000</span>
-                     <span class="plantilla-precio">$130.000 con el dominio</span>
-                    <span class="plantilla-btn" data-lang-es="Configurar" data-lang-en="Configure">Configurar →</span>
-                </div>
-            </div>
-        </a>
-         <!-- Plantilla 3 -->
-        <a href="https://nalialma.github.io/Blog-escritor/" class="plantilla-card fade-in">
-            <div class="plantilla-preview">
-                <div class="plantilla-icono">📝</div>
-            </div>
-            <div class="plantilla-info">
-                <h3 class="plantilla-nombre" data-lang-es="Blog Básico" data-lang-en="Básic Blog">Blog Básico</h3>
-                <p class="plantilla-desc" data-lang-es="Sistema de posts, información y contactos" data-lang-en="Posts, information and contact system">Sistema de posts, información y contactos.</p>
-                <div class="plantilla-features">
-                    <span class="feature" data-lang-es="Blog" data-lang-en="Blog">Blog</span>
-                    <span class="feature" data-lang-es="Newsletter" data-lang-en="Newsletter">Newsletter</span>
-                    <span class="feature" data-lang-es="Comentarios" data-lang-en="Comments">Comentarios</span>
-                </div>
-                <div class="plantilla-footer">
-                    <span class="plantilla-precio">$80.000</span>
-                     <span class="plantilla-precio">$130.000 con el dominio</span>
-                    <span class="plantilla-btn" data-lang-es="Configurar" data-lang-en="Configure">Configurar →</span>
-                </div>
-            </div>
-        </a>
+                <!-- Plantilla 2: Ejecutivo -->
+                <a href="https://nalialma.github.io/plantilla-abogado/" class="plantilla-card" data-image="https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&h=400&fit=crop">
+                    <div class="plantilla-preview">
+                        <img class="plantilla-imagen" src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&h=400&fit=crop" alt="Plantilla Ejecutivo" loading="lazy">
+                        <div class="plantilla-overlay">
+                            <span class="plantilla-btn-hover" data-lang-es="Ver" data-lang-en="View">Ver</span>
+                        </div>
+                    </div>
+                    <div class="plantilla-info">
+                        <h3 class="plantilla-nombre" data-lang-es="Ejecutivo" data-lang-en="Executive">Ejecutivo</h3>
+                        <p class="plantilla-desc" data-lang-es="Plantilla sobria lista para modificar, colores, tipografia, información, imágenes." data-lang-en="Plantilla lista para modificar, colores, tipografía, información, imagenes.">Plantilla lista para modificar, colores, tipografía, información, imágenes</p>
+                        <div class="plantilla-features">
+                            <span class="feature" data-lang-es="Responsiva" data-lang-en="Responsive">Responsiva</span>
+                            <span class="feature" data-lang-es="Contactos" data-lang-en="Contact">Contacto</span>
+                            <span class="feature" data-lang-es="SEO" data-lang-en="SEO">SEO</span>
+                        </div>
+                        <div class="plantilla-footer">
+                            <span class="plantilla-precio">$80.000</span>
+                            <span class="plantilla-precio-dominio">$130.000 con dominio</span>
+                        </div>
+                    </div>
+                </a>
 
-            <!-- Plantilla 4 -->
-        <a href="https://nalialma.github.io/arte-basic/" class="plantilla-card fade-in">
-            <div class="plantilla-preview">
-                <div class="plantilla-icono">🎨</div>
-            </div>
-            <div class="plantilla-info">
-                <h3 class="plantilla-nombre" data-lang-es="Catálogo para artistas" data-lang-en="Catalog for artists">Catálogo para artistas</h3>
-                <p class="plantilla-desc" data-lang-es="Pagina Básica, responsiva, con SEO incluido  " data-lang-en="Basic, responsive page, with SEO included">Pagina Básica, responsiva, con SEO incluido </p>
-                <div class="plantilla-features">
-                    <span class="feature" data-lang-es="Reservas" data-lang-en="Bookings">Reservas</span>
-                    <span class="feature" data-lang-es="Testimonios" data-lang-en="Testimonials">Testimonios</span>
-                    <span class="feature" data-lang-es="Calendario" data-lang-en="Calendar">Calendario</span>
-                </div>
-                <div class="plantilla-footer">
-                    <span class="plantilla-precio">$80.000</span>
-                     <span class="plantilla-precio">$130.0000 con el dominio</span>
-                    <span class="plantilla-btn" data-lang-es="Configurar" data-lang-en="Configure">Configurar →</span>
-                </div>
-            </div>
-        </a>
+                <!-- Plantilla 3: Blog Básico -->
+                <a href="https://nalialma.github.io/Blog-escritor/" class="plantilla-card" data-image="https://images.unsplash.com/photo-1599720013354-63bb171e9e96?w=500&h=400&fit=crop">
+                    <div class="plantilla-preview">
+                        <img class="plantilla-imagen" src="https://images.unsplash.com/photo-1599720013354-63bb171e9e96?w=500&h=400&fit=crop" alt="Plantilla Blog" loading="lazy">
+                        <div class="plantilla-overlay">
+                            <span class="plantilla-btn-hover" data-lang-es="Ver" data-lang-en="View">Ver</span>
+                        </div>
+                    </div>
+                    <div class="plantilla-info">
+                        <h3 class="plantilla-nombre" data-lang-es="Blog Básico" data-lang-en="Básic Blog">Blog Básico</h3>
+                        <p class="plantilla-desc" data-lang-es="Sistema de posts, información y contactos" data-lang-en="Posts, information and contact system">Sistema de posts, información y contactos.</p>
+                        <div class="plantilla-features">
+                            <span class="feature" data-lang-es="Blog" data-lang-en="Blog">Blog</span>
+                            <span class="feature" data-lang-es="Newsletter" data-lang-en="Newsletter">Newsletter</span>
+                            <span class="feature" data-lang-es="Comentarios" data-lang-en="Comments">Comentarios</span>
+                        </div>
+                        <div class="plantilla-footer">
+                            <span class="plantilla-precio">$80.000</span>
+                            <span class="plantilla-precio-dominio">$130.000 con dominio</span>
+                        </div>
+                    </div>
+                </a>
 
-        <!-- Plantilla 5 -->
-        <a href="plantilla-agencia.html" class="plantilla-card fade-in">
-            <div class="plantilla-preview">
-                <div class="plantilla-icono">🚀</div>
-            </div>
-            <div class="plantilla-info">
-                <h3 class="plantilla-nombre" data-lang-es="Sitio de Agencia" data-lang-en="Agency Website">Sitio de Agencia</h3>
-                <p class="plantilla-desc" data-lang-es="Portafolio de casos, equipo y propuesta de valor destacada." data-lang-en="Case portfolio, team and highlighted value proposition.">Disponible muy Pronto.</p>
-                <div class="plantilla-features">
-                    <span class="feature" data-lang-es="Casos" data-lang-en="Cases">Casos</span>
-                    <span class="feature" data-lang-es="Equipo" data-lang-en="Team">Equipo</span>
-                    <span class="feature" data-lang-es="Presupuestos" data-lang-en="Quotes">Presupuestos</span>
-                </div>
-                <div class="plantilla-footer">
-                    <span class="plantilla-precio">$80.000</span>
-                  <span class="plantilla-precio">$130.000 con el dominio</span>
-                    <span class="plantilla-btn" data-lang-es="Configurar" data-lang-en="Configure">Configurar →</span>
-                </div>
-            </div>
-        </a>
+                <!-- Plantilla 4: Catálogo para artistas -->
+                <a href="https://nalialma.github.io/arte-basic/" class="plantilla-card" data-image="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=500&h=400&fit=crop">
+                    <div class="plantilla-preview">
+                        <img class="plantilla-imagen" src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=500&h=400&fit=crop" alt="Plantilla Catálogo" loading="lazy">
+                        <div class="plantilla-overlay">
+                            <span class="plantilla-btn-hover" data-lang-es="Ver" data-lang-en="View">Ver</span>
+                        </div>
+                    </div>
+                    <div class="plantilla-info">
+                        <h3 class="plantilla-nombre" data-lang-es="Catálogo para artistas" data-lang-en="Catalog for artists">Catálogo para artistas</h3>
+                        <p class="plantilla-desc" data-lang-es="Pagina Básica, responsiva, con SEO incluido" data-lang-en="Basic, responsive page, with SEO included">Pagina Básica, responsiva, con SEO incluido</p>
+                        <div class="plantilla-features">
+                            <span class="feature" data-lang-es="Reservas" data-lang-en="Bookings">Reservas</span>
+                            <span class="feature" data-lang-es="Testimonios" data-lang-en="Testimonials">Testimonios</span>
+                            <span class="feature" data-lang-es="Calendario" data-lang-en="Calendar">Calendario</span>
+                        </div>
+                        <div class="plantilla-footer">
+                            <span class="plantilla-precio">$80.000</span>
+                            <span class="plantilla-precio-dominio">$130.000 con dominio</span>
+                        </div>
+                    </div>
+                </a>
 
-        <!-- Plantilla 6 -->
-        <a href="plantilla-evento.html" class="plantilla-card fade-in">
-            <div class="plantilla-preview">
-                <div class="plantilla-icono">🎪</div>
+                <!-- Plantilla 5: Agencia -->
+                <a href="plantilla-agencia.html" class="plantilla-card" data-image="https://images.unsplash.com/photo-1460925895917-adf4198897c2?w=500&h=400&fit=crop">
+                    <div class="plantilla-preview">
+                        <img class="plantilla-imagen" src="https://images.unsplash.com/photo-1460925895917-adf4198897c2?w=500&h=400&fit=crop" alt="Plantilla Agencia" loading="lazy">
+                        <div class="plantilla-overlay">
+                            <span class="plantilla-btn-hover" data-lang-es="Ver" data-lang-en="View">Ver</span>
+                        </div>
+                    </div>
+                    <div class="plantilla-info">
+                        <h3 class="plantilla-nombre" data-lang-es="Sitio de Agencia" data-lang-en="Agency Website">Sitio de Agencia</h3>
+                        <p class="plantilla-desc" data-lang-es="Portafolio de casos, equipo y propuesta de valor destacada." data-lang-en="Case portfolio, team and highlighted value proposition.">Disponible muy Pronto.</p>
+                        <div class="plantilla-features">
+                            <span class="feature" data-lang-es="Casos" data-lang-en="Cases">Casos</span>
+                            <span class="feature" data-lang-es="Equipo" data-lang-en="Team">Equipo</span>
+                            <span class="feature" data-lang-es="Presupuestos" data-lang-en="Quotes">Presupuestos</span>
+                        </div>
+                        <div class="plantilla-footer">
+                            <span class="plantilla-precio">$80.000</span>
+                            <span class="plantilla-precio-dominio">$130.000 con dominio</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Plantilla 6: Evento -->
+                <a href="plantilla-evento.html" class="plantilla-card" data-image="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=500&h=400&fit=crop">
+                    <div class="plantilla-preview">
+                        <img class="plantilla-imagen" src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=500&h=400&fit=crop" alt="Plantilla Evento" loading="lazy">
+                        <div class="plantilla-overlay">
+                            <span class="plantilla-btn-hover" data-lang-es="Ver" data-lang-en="View">Ver</span>
+                        </div>
+                    </div>
+                    <div class="plantilla-info">
+                        <h3 class="plantilla-nombre" data-lang-es="Página de Evento" data-lang-en="Event Page">Página de Evento</h3>
+                        <p class="plantilla-desc" data-lang-es="Información del evento, registro de asistentes y cronograma." data-lang-en="Event info, attendee registration and schedule.">Disponible muy pronto</p>
+                        <div class="plantilla-features">
+                            <span class="feature" data-lang-es="Registro" data-lang-en="Registration">Registro</span>
+                            <span class="feature" data-lang-es="Cronograma" data-lang-en="Schedule">Cronograma</span>
+                            <span class="feature" data-lang-es="Ubicación" data-lang-en="Location">Ubicación</span>
+                        </div>
+                        <div class="plantilla-footer">
+                            <span class="plantilla-precio">$80.000</span>
+                            <span class="plantilla-precio-dominio">$130.000 con dominio</span>
+                        </div>
+                    </div>
+                </a>
+
             </div>
-            <div class="plantilla-info">
-                <h3 class="plantilla-nombre" data-lang-es="Página de Evento" data-lang-en="Event Page">Página de Evento</h3>
-                <p class="plantilla-desc" data-lang-es="Información del evento, registro de asistentes y cronograma." data-lang-en="Event info, attendee registration and schedule.">Disponible muy pronto</p>
-                <div class="plantilla-features">
-                    <span class="feature" data-lang-es="Registro" data-lang-en="Registration">Registro</span>
-                    <span class="feature" data-lang-es="Cronograma" data-lang-en="Schedule">Cronograma</span>
-                    <span class="feature" data-lang-es="Ubicación" data-lang-en="Location">Ubicación</span>
-                </div>
-                <div class="plantilla-footer">
-                    <span class="plantilla-precio">$80.000</span>
-                 <span class="plantilla-precio">$130.000 con el dominio</span>
-                    <span class="plantilla-btn" data-lang-es="Configurar" data-lang-en="Configure">Configurar →</span>
-                </div>
-            </div>
-        </a>
+        </div>
+
+        <!-- Botón siguiente -->
+        <button class="carrusel-btn carrusel-next" id="carruselNext">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+        </button>
     </div>
+
+    <!-- Indicadores de posición -->
+    <div class="carrusel-indicators" id="carruselIndicators"></div>
 </section>
-<!-- Sección 3: Plantillas -->
-    
+
+
+<!-- ==========================================
+     SECCIÓN PLANTILLAS PREMIUM - CARRUSEL
+     ========================================== -->
+
 <section class="plantillas" id="plantilla">
-    <h2 class="section-title fade-in" data-lang-es="Plantillas Listas para Transformar" data-lang-en="Templates Ready to Transform">Plantillas Listas para Transformar</h2>
+    <h2 class="section-title fade-in" data-lang-es="Plantillas Premium Listas para Transformar" data-lang-en="Premium Templates Ready to Transform">Plantillas Premium Listas para Transformar</h2>
     <p class="plantillas-subtitulo fade-in" data-lang-es="Páginas web estáticas, responsivas y personalizables. Elige tu favorita y hazla tuya." data-lang-en="Static, responsive and customizable web pages. Choose your favorite and make it yours.">Páginas web estáticas, responsivas y personalizables. Elige tu favorita y hazla tuya.</p>
     
-    <div class="plantillas-grid">
-        <!-- Plantilla 1 -->
-        <a href="https://nalialma.github.io/Plantilla-art./" class="plantilla-card fade-in">
-            <div class="plantilla-preview">
-                <div class="plantilla-icono">🎨</div>
-            </div>
-            <div class="plantilla-info">
-                <h3 class="plantilla-nombre" data-lang-es="Portfolio Minimalista" data-lang-en="Minimalist Portfolio">Portfolio Minimalista</h3>
-                <p class="plantilla-desc" data-lang-es="Galería, proyectos destacados y contacto. Perfecto para artistas." data-lang-en="Gallery, featured projects and contact. Perfect for artists.">Galería, proyectos destacados y contacto. Perfecto para artistas.</p>
-                <div class="plantilla-features">
-                    <span class="feature" data-lang-es="Responsiva" data-lang-en="Responsive">Responsiva</span>
-                    <span class="feature" data-lang-es="Animada" data-lang-en="Animated">Animada</span>
-                    <span class="feature" data-lang-es="SEO" data-lang-en="SEO">SEO</span>
-                </div>
-                <div class="plantilla-footer">
-                    <span class="plantilla-precio">$350.000</span>
-                    <span class="plantilla-btn" data-lang-es="Configurar" data-lang-en="Configure">Configurar →</span>
-                </div>
-            </div>
-        </a>
+    <!-- Carrusel Container -->
+    <div class="carrusel-container">
+        <!-- Botón anterior -->
+        <button class="carrusel-btn carrusel-prev" id="carruselPrevPremium">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+        </button>
 
-        <!-- Plantilla 2 -->
-        <a href="https://nalialma.github.io/Plantilla-Tienda/" class="plantilla-card fade-in">
-            <div class="plantilla-preview">
-                <div class="plantilla-icono">🛍️</div>
-            </div>
-            <div class="plantilla-info">
-                <h3 class="plantilla-nombre" data-lang-es="Tienda Artesanal" data-lang-en="Artisanal Shop">Tienda Artesanal</h3>
-                <p class="plantilla-desc" data-lang-es="Catálogo de productos, carrito y checkout integrado." data-lang-en="Product catalog, shopping cart and integrated checkout.">Catálogo de productos, carrito y checkout integrado.</p>
-                <div class="plantilla-features">
-                    <span class="feature" data-lang-es="E-commerce" data-lang-en="E-commerce">E-commerce</span>
-                    <span class="feature" data-lang-es="Pagos" data-lang-en="Payments">Pagos</span>
-                    <span class="feature" data-lang-es="Inventario" data-lang-en="Inventory">Inventario</span>
-                </div>
-                <div class="plantilla-footer">
-                    <span class="plantilla-precio">$550.000</span>
-                    <span class="plantilla-btn" data-lang-es="Configurar" data-lang-en="Configure">Configurar →</span>
-                </div>
-            </div>
-        </a>
-           <!-- Plantilla 3 -->
-        <a href="https://nalialma.github.io/Inspira/" class="plantilla-card fade-in">
-            <div class="plantilla-preview">
-                <div class="plantilla-icono">📝</div>
-            </div>
-            <div class="plantilla-info">
-                <h3 class="plantilla-nombre" data-lang-es="Blog Inspirador" data-lang-en="Inspiring Blog">Blog Inspirador</h3>
-                <p class="plantilla-desc" data-lang-es="Sistema de posts, categorías y suscripción a newsletter." data-lang-en="Post system, categories and newsletter subscription.">Sistema de posts, categorías y suscripción a newsletter.</p>
-                <div class="plantilla-features">
-                    <span class="feature" data-lang-es="Blog" data-lang-en="Blog">Blog</span>
-                    <span class="feature" data-lang-es="Newsletter" data-lang-en="Newsletter">Newsletter</span>
-                    <span class="feature" data-lang-es="Comentarios" data-lang-en="Comments">Comentarios</span>
-                </div>
-                <div class="plantilla-footer">
-                    <span class="plantilla-precio">$400.000</span>
-                    <span class="plantilla-btn" data-lang-es="Configurar" data-lang-en="Configure">Configurar →</span>
-                </div>
-            </div>
-        </a>
-       
+        <!-- Carrusel wrapper -->
+        <div class="carrusel-wrapper">
+            <div class="plantillas-grid carrusel" id="carruselPremium">
+                
+                <!-- Plantilla 1: Portfolio Minimalista -->
+                <a href="https://nalialma.github.io/Plantilla-art./" class="plantilla-card" data-image="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=500&h=400&fit=crop">
+                    <div class="plantilla-preview">
+                        <img class="plantilla-imagen" src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=500&h=400&fit=crop" alt="Portfolio Minimalista" loading="lazy">
+                        <div class="plantilla-overlay">
+                            <span class="plantilla-btn-hover" data-lang-es="Ver" data-lang-en="View">Ver</span>
+                        </div>
+                    </div>
+                    <div class="plantilla-info">
+                        <h3 class="plantilla-nombre" data-lang-es="Portfolio Minimalista" data-lang-en="Minimalist Portfolio">Portfolio Minimalista</h3>
+                        <p class="plantilla-desc" data-lang-es="Galería, proyectos destacados y contacto. Perfecto para artistas." data-lang-en="Gallery, featured projects and contact. Perfect for artists.">Galería, proyectos destacados y contacto. Perfecto para artistas.</p>
+                        <div class="plantilla-features">
+                            <span class="feature" data-lang-es="Responsiva" data-lang-en="Responsive">Responsiva</span>
+                            <span class="feature" data-lang-es="Animada" data-lang-en="Animated">Animada</span>
+                            <span class="feature" data-lang-es="SEO" data-lang-en="SEO">SEO</span>
+                        </div>
+                        <div class="plantilla-footer">
+                            <span class="plantilla-precio">$350.000</span>
+                        </div>
+                    </div>
+                </a>
 
-        <!-- Plantilla 4 -->
-        <a href="plantilla-servicios.html" class="plantilla-card fade-in">
-            <div class="plantilla-preview">
-                <div class="plantilla-icono">✨</div>
-            </div>
-            <div class="plantilla-info">
-                <h3 class="plantilla-nombre" data-lang-es="Catálogo de Servicios" data-lang-en="Services Catalog">Catálogo de Servicios</h3>
-                <p class="plantilla-desc" data-lang-es="Presentación de servicios, testimonios y reservas online." data-lang-en="Service presentation, testimonials and online booking.">Disponible muy pronto</p>
-                <div class="plantilla-features">
-                    <span class="feature" data-lang-es="Reservas" data-lang-en="Bookings">Reservas</span>
-                    <span class="feature" data-lang-es="Testimonios" data-lang-en="Testimonials">Testimonios</span>
-                    <span class="feature" data-lang-es="Calendario" data-lang-en="Calendar">Calendario</span>
-                </div>
-                <div class="plantilla-footer">
-                    <span class="plantilla-precio">$480.000</span>
-                    <span class="plantilla-btn" data-lang-es="Configurar" data-lang-en="Configure">Configurar →</span>
-                </div>
-            </div>
-        </a>
+                <!-- Plantilla 2: Tienda Artesanal -->
+                <a href="https://nalialma.github.io/Plantilla-Tienda/" class="plantilla-card" data-image="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?w=500&h=400&fit=crop">
+                    <div class="plantilla-preview">
+                        <img class="plantilla-imagen" src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?w=500&h=400&fit=crop" alt="Tienda Artesanal" loading="lazy">
+                        <div class="plantilla-overlay">
+                            <span class="plantilla-btn-hover" data-lang-es="Ver" data-lang-en="View">Ver</span>
+                        </div>
+                    </div>
+                    <div class="plantilla-info">
+                        <h3 class="plantilla-nombre" data-lang-es="Tienda Artesanal" data-lang-en="Artisanal Shop">Tienda Artesanal</h3>
+                        <p class="plantilla-desc" data-lang-es="Catálogo de productos, carrito y checkout integrado." data-lang-en="Product catalog, shopping cart and integrated checkout.">Catálogo de productos, carrito y checkout integrado.</p>
+                        <div class="plantilla-features">
+                            <span class="feature" data-lang-es="E-commerce" data-lang-en="E-commerce">E-commerce</span>
+                            <span class="feature" data-lang-es="Pagos" data-lang-en="Payments">Pagos</span>
+                            <span class="feature" data-lang-es="Inventario" data-lang-en="Inventory">Inventario</span>
+                        </div>
+                        <div class="plantilla-footer">
+                            <span class="plantilla-precio">$550.000</span>
+                        </div>
+                    </div>
+                </a>
 
-        <!-- Plantilla 5 -->
-        <a href="plantilla-agencia.html" class="plantilla-card fade-in">
-            <div class="plantilla-preview">
-                <div class="plantilla-icono">🚀</div>
-            </div>
-            <div class="plantilla-info">
-                <h3 class="plantilla-nombre" data-lang-es="Sitio de Agencia" data-lang-en="Agency Website">Sitio de Agencia</h3>
-                <p class="plantilla-desc" data-lang-es="Portafolio de casos, equipo y propuesta de valor destacada." data-lang-en="Case portfolio, team and highlighted value proposition.">Disponible muy pronto</p>
-                <div class="plantilla-features">
-                    <span class="feature" data-lang-es="Casos" data-lang-en="Cases">Casos</span>
-                    <span class="feature" data-lang-es="Equipo" data-lang-en="Team">Equipo</span>
-                    <span class="feature" data-lang-es="Presupuestos" data-lang-en="Quotes">Presupuestos</span>
-                </div>
-                <div class="plantilla-footer">
-                    <span class="plantilla-precio">$600.000</span>
-                    <span class="plantilla-btn" data-lang-es="Configurar" data-lang-en="Configure">Configurar →</span>
-                </div>
-            </div>
-        </a>
+                <!-- Plantilla 3: Blog Inspirador -->
+                <a href="https://nalialma.github.io/Inspira/" class="plantilla-card" data-image="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=500&h=400&fit=crop">
+                    <div class="plantilla-preview">
+                        <img class="plantilla-imagen" src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=500&h=400&fit=crop" alt="Blog Inspirador" loading="lazy">
+                        <div class="plantilla-overlay">
+                            <span class="plantilla-btn-hover" data-lang-es="Ver" data-lang-en="View">Ver</span>
+                        </div>
+                    </div>
+                    <div class="plantilla-info">
+                        <h3 class="plantilla-nombre" data-lang-es="Blog Inspirador" data-lang-en="Inspiring Blog">Blog Inspirador</h3>
+                        <p class="plantilla-desc" data-lang-es="Sistema de posts, categorías y suscripción a newsletter." data-lang-en="Post system, categories and newsletter subscription.">Sistema de posts, categorías y suscripción a newsletter.</p>
+                        <div class="plantilla-features">
+                            <span class="feature" data-lang-es="Blog" data-lang-en="Blog">Blog</span>
+                            <span class="feature" data-lang-es="Newsletter" data-lang-en="Newsletter">Newsletter</span>
+                            <span class="feature" data-lang-es="Comentarios" data-lang-en="Comments">Comentarios</span>
+                        </div>
+                        <div class="plantilla-footer">
+                            <span class="plantilla-precio">$400.000</span>
+                        </div>
+                    </div>
+                </a>
 
-        <!-- Plantilla 6 -->
-        <a href="plantilla-evento.html" class="plantilla-card fade-in">
-            <div class="plantilla-preview">
-                <div class="plantilla-icono">🎪</div>
+                <!-- Plantilla 4: Catálogo de Servicios -->
+                <a href="plantilla-servicios.html" class="plantilla-card" data-image="https://images.unsplash.com/photo-1460925895917-adf4198897c2?w=500&h=400&fit=crop">
+                    <div class="plantilla-preview">
+                        <img class="plantilla-imagen" src="https://images.unsplash.com/photo-1460925895917-adf4198897c2?w=500&h=400&fit=crop" alt="Servicios" loading="lazy">
+                        <div class="plantilla-overlay">
+                            <span class="plantilla-btn-hover" data-lang-es="Ver" data-lang-en="View">Ver</span>
+                        </div>
+                    </div>
+                    <div class="plantilla-info">
+                        <h3 class="plantilla-nombre" data-lang-es="Catálogo de Servicios" data-lang-en="Services Catalog">Catálogo de Servicios</h3>
+                        <p class="plantilla-desc" data-lang-es="Presentación de servicios, testimonios y reservas online." data-lang-en="Service presentation, testimonials and online booking.">Disponible muy pronto</p>
+                        <div class="plantilla-features">
+                            <span class="feature" data-lang-es="Reservas" data-lang-en="Bookings">Reservas</span>
+                            <span class="feature" data-lang-es="Testimonios" data-lang-en="Testimonials">Testimonios</span>
+                            <span class="feature" data-lang-es="Calendario" data-lang-en="Calendar">Calendario</span>
+                        </div>
+                        <div class="plantilla-footer">
+                            <span class="plantilla-precio">$480.000</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Plantilla 5: Agencia -->
+                <a href="plantilla-agencia.html" class="plantilla-card" data-image="https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&h=400&fit=crop">
+                    <div class="plantilla-preview">
+                        <img class="plantilla-imagen" src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&h=400&fit=crop" alt="Agencia" loading="lazy">
+                        <div class="plantilla-overlay">
+                            <span class="plantilla-btn-hover" data-lang-es="Ver" data-lang-en="View">Ver</span>
+                        </div>
+                    </div>
+                    <div class="plantilla-info">
+                        <h3 class="plantilla-nombre" data-lang-es="Sitio de Agencia" data-lang-en="Agency Website">Sitio de Agencia</h3>
+                        <p class="plantilla-desc" data-lang-es="Portafolio de casos, equipo y propuesta de valor destacada." data-lang-en="Case portfolio, team and highlighted value proposition.">Disponible muy pronto</p>
+                        <div class="plantilla-features">
+                            <span class="feature" data-lang-es="Casos" data-lang-en="Cases">Casos</span>
+                            <span class="feature" data-lang-es="Equipo" data-lang-en="Team">Equipo</span>
+                            <span class="feature" data-lang-es="Presupuestos" data-lang-en="Quotes">Presupuestos</span>
+                        </div>
+                        <div class="plantilla-footer">
+                            <span class="plantilla-precio">$600.000</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Plantilla 6: Evento -->
+                <a href="plantilla-evento.html" class="plantilla-card" data-image="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=500&h=400&fit=crop">
+                    <div class="plantilla-preview">
+                        <img class="plantilla-imagen" src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=500&h=400&fit=crop" alt="Evento" loading="lazy">
+                        <div class="plantilla-overlay">
+                            <span class="plantilla-btn-hover" data-lang-es="Ver" data-lang-en="View">Ver</span>
+                        </div>
+                    </div>
+                    <div class="plantilla-info">
+                        <h3 class="plantilla-nombre" data-lang-es="Página de Evento" data-lang-en="Event Page">Página de Evento</h3>
+                        <p class="plantilla-desc" data-lang-es="Información del evento, registro de asistentes y cronograma." data-lang-en="Event info, attendee registration and schedule.">Disponible muy pronto.</p>
+                        <div class="plantilla-features">
+                            <span class="feature" data-lang-es="Registro" data-lang-en="Registration">Registro</span>
+                            <span class="feature" data-lang-es="Cronograma" data-lang-en="Schedule">Cronograma</span>
+                            <span class="feature" data-lang-es="Ubicación" data-lang-en="Location">Ubicación</span>
+                        </div>
+                        <div class="plantilla-footer">
+                            <span class="plantilla-precio">$420.000</span>
+                        </div>
+                    </div>
+                </a>
+
             </div>
-            <div class="plantilla-info">
-                <h3 class="plantilla-nombre" data-lang-es="Página de Evento" data-lang-en="Event Page">Página de Evento</h3>
-                <p class="plantilla-desc" data-lang-es="Información del evento, registro de asistentes y cronograma." data-lang-en="Event info, attendee registration and schedule.">Disponible muy pronto.</p>
-                <div class="plantilla-features">
-                    <span class="feature" data-lang-es="Registro" data-lang-en="Registration">Registro</span>
-                    <span class="feature" data-lang-es="Cronograma" data-lang-en="Schedule">Cronograma</span>
-                    <span class="feature" data-lang-es="Ubicación" data-lang-en="Location">Ubicación</span>
-                </div>
-                <div class="plantilla-footer">
-                    <span class="plantilla-precio">$420.000</span>
-                    <span class="plantilla-btn" data-lang-es="Configurar" data-lang-en="Configure">Configurar →</span>
-                </div>
-            </div>
-        </a>
+        </div>
+
+        <!-- Botón siguiente -->
+        <button class="carrusel-btn carrusel-next" id="carruselNextPremium">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+        </button>
     </div>
+
+    <!-- Indicadores de posición -->
+    <div class="carrusel-indicators" id="carruselIndicatorsPremium"></div>
 </section>
  
     <!-- 3: Camino de Creaciones -->
@@ -700,6 +781,7 @@
      <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
