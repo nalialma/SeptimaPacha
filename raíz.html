@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Raíz | Séptima Pacha Co.</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -43,17 +42,6 @@
             mix-blend-mode: difference;
         }
 
-        .cursor-trail {
-            position: fixed;
-            width: 4px;
-            height: 4px;
-            background: var(--tierra);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9998;
-            opacity: 0.6;
-        }
-
         .language-toggle {
             position: fixed;
             top: 2rem;
@@ -63,7 +51,7 @@
             backdrop-filter: blur(10px);
             border: 1px solid var(--tierra);
             border-radius: 50px;
-            padding: 0.5rem 1rem;
+            padding: 0.7rem 1.2rem;
             color: var(--oro);
             cursor: pointer;
             transition: all 0.3s ease;
@@ -85,7 +73,7 @@
             backdrop-filter: blur(10px);
             border: 1px solid var(--tierra);
             border-radius: 50px;
-            padding: 0.5rem 1rem;
+            padding: 0.7rem 1.2rem;
             color: var(--oro);
             cursor: pointer;
             transition: all 0.3s ease;
@@ -102,8 +90,9 @@
             transform: scale(1.05);
         }
 
+        /* HEADER */
         .header {
-            height: 60vh;
+            height: 50vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -111,25 +100,6 @@
             position: relative;
             background: radial-gradient(ellipse at center, rgba(139, 69, 19, 0.2) 0%, transparent 70%);
             overflow: hidden;
-        }
-
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 30% 40%, var(--tierra) 0%, transparent 50%),
-                radial-gradient(circle at 70% 60%, var(--oro) 0%, transparent 50%);
-            opacity: 0.1;
-            animation: earthPulse 6s ease-in-out infinite alternate;
-        }
-
-        @keyframes earthPulse {
-            0% { transform: scale(1) rotate(0deg); }
-            100% { transform: scale(1.1) rotate(1deg); }
         }
 
         .page-title {
@@ -171,206 +141,345 @@
             50% { transform: translateY(-10px); }
         }
 
-        .gallery-section {
+        /* CARRUSEL CONTAINER */
+        .carousel-section {
             min-height: 100vh;
             padding: 4rem 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             background: linear-gradient(180deg, rgba(139, 69, 19, 0.05) 0%, transparent 100%);
         }
 
-        .gallery-intro {
+        .carousel-intro {
             text-align: center;
             max-width: 800px;
-            margin: 0 auto 4rem auto;
+            margin-bottom: 4rem;
         }
 
-        .gallery-intro h2 {
+        .carousel-intro h2 {
             font-family: 'Playfair Display', serif;
             font-size: clamp(2rem, 5vw, 3rem);
             color: var(--oro);
             margin-bottom: 1rem;
         }
 
-        .gallery-intro p {
+        .carousel-intro p {
             font-size: clamp(1rem, 2.5vw, 1.2rem);
             line-height: 1.6;
             opacity: 0.9;
         }
 
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 1.5rem;
-            max-width: 1200px;
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            height: 600px;
             margin: 0 auto;
         }
 
-        .gallery-item {
+        .carousel-track {
             position: relative;
-            border-radius: 12px;
-            overflow: hidden;
-            background: rgba(139, 69, 19, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(139, 69, 19, 0.3);
-            transition: all 0.4s ease;
-            cursor: pointer;
-            opacity: 0;
-            transform: translateY(50px);
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-
-        .gallery-item:hover {
-            transform: translateY(-8px) scale(1.03);
-            box-shadow: 0 15px 35px rgba(139, 69, 19, 0.3);
-            border-color: var(--oro);
-        }
-
-        .gallery-image {
             width: 100%;
-            height: 200px;
-            background: linear-gradient(135deg, 
-                var(--tierra) 0%, 
-                rgba(139, 69, 19, 0.8) 50%, 
-                var(--oro) 100%);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-size: cover;
-            background-position: center;
+            height: 100%;
+            perspective: 1000px;
         }
 
-        .gallery-image img {
+        .carousel-item {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform-origin: center;
+            cursor: pointer;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .carousel-item.active {
+            opacity: 1;
+            z-index: 10;
+        }
+
+        /* Animación alternada de entrada */
+        .carousel-item.entering-left {
+            animation: slideInFromLeft 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        .carousel-item.entering-right {
+            animation: slideInFromRight 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        .carousel-item.leaving-left {
+            animation: slideOutToLeft 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        .carousel-item.leaving-right {
+            animation: slideOutToRight 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        @keyframes slideInFromLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-100%) rotateY(-20deg) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) rotateY(0deg) scale(1);
+            }
+        }
+
+        @keyframes slideInFromRight {
+            from {
+                opacity: 0;
+                transform: translateX(100%) rotateY(20deg) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) rotateY(0deg) scale(1);
+            }
+        }
+
+        @keyframes slideOutToLeft {
+            from {
+                opacity: 1;
+                transform: translateX(0) rotateY(0deg) scale(1);
+            }
+            to {
+                opacity: 0;
+                transform: translateX(-100%) rotateY(-20deg) scale(0.8);
+            }
+        }
+
+        @keyframes slideOutToRight {
+            from {
+                opacity: 1;
+                transform: translateX(0) rotateY(0deg) scale(1);
+            }
+            to {
+                opacity: 0;
+                transform: translateX(100%) rotateY(20deg) scale(0.8);
+            }
+        }
+
+        .carousel-image-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--tierra) 0%, var(--oro) 100%);
+        }
+
+        .carousel-image {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: all 0.4s ease;
+            display: block;
         }
 
-        .gallery-item:hover .gallery-image img {
-            transform: scale(1.08);
+        .carousel-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.5), transparent);
+            padding: 3rem 2rem 2rem;
+            color: #fff;
+            transform: translateY(100%);
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        .gallery-image.emoji-placeholder {
-            font-size: 3rem;
-            text-shadow: 0 0 20px rgba(0,0,0,0.3);
+        .carousel-item.active .carousel-info {
+            transform: translateY(0);
         }
 
-        .gallery-caption {
-            position: relative;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(10px);
-            padding: 1rem;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .caption-title {
+        .carousel-title {
             font-family: 'Playfair Display', serif;
-            font-size: 1rem;
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
             color: var(--oro);
-            margin-bottom: 0.4rem;
-            line-height: 1.2;
+            margin-bottom: 0.8rem;
+            font-weight: 700;
         }
 
-        .caption-text {
-            font-size: 0.75rem;
-            line-height: 1.3;
-            opacity: 0.85;
-            margin-bottom: 0.5rem;
+        .carousel-description {
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            line-height: 1.6;
+            opacity: 0.95;
+            margin-bottom: 1.2rem;
         }
 
-        .instagram-badge {
+        .carousel-instagram-link {
             display: inline-flex;
             align-items: center;
-            gap: 0.3rem;
-            color: var(--fuego);
+            gap: 0.6rem;
+            background: linear-gradient(135deg, var(--fuego), var(--tierra));
+            color: white;
+            padding: 0.8rem 1.6rem;
+            border-radius: 30px;
+            text-decoration: none;
             font-weight: 600;
-            font-size: 0.7rem;
-            margin-top: auto;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
         }
 
-        .image-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(20px);
-            z-index: 10000;
-            display: none;
-            align-items: center;
+        .carousel-instagram-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(243, 156, 18, 0.4);
+            background: linear-gradient(135deg, var(--tierra), var(--fuego));
+        }
+
+        /* CONTROLES */
+        .carousel-controls {
+            display: flex;
             justify-content: center;
-            padding: 2rem;
+            align-items: center;
+            gap: 2rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
         }
 
-        .modal-content {
-            position: relative;
-            max-width: 90vw;
-            max-height: 90vh;
-            border-radius: 15px;
-            overflow: hidden;
-            background: rgba(139, 69, 19, 0.1);
-            border: 1px solid var(--tierra);
-        }
-
-        .modal-image {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .modal-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: rgba(0, 0, 0, 0.7);
-            border: none;
-            color: #fff;
-            font-size: 1.5rem;
-            width: 40px;
-            height: 40px;
+        .carousel-button {
+            background: rgba(139, 69, 19, 0.3);
+            border: 2px solid var(--oro);
+            color: var(--oro);
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 1.5rem;
             transition: all 0.3s ease;
+            font-weight: bold;
         }
 
-        .modal-close:hover {
-            background: var(--tierra);
+        .carousel-button:hover {
+            background: var(--oro);
+            color: #1a1a1a;
             transform: scale(1.1);
         }
 
-        .modal-caption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(0, 0, 0, 0.9);
-            padding: 2rem;
-            color: #fff;
+        .carousel-button:active {
+            transform: scale(0.95);
         }
 
-        .modal-caption h3 {
-            font-family: 'Playfair Display', serif;
+        .carousel-counter {
             color: var(--oro);
-            margin-bottom: 0.5rem;
-            font-size: 1.5rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            min-width: 100px;
+            text-align: center;
+        }
+
+        .carousel-dots {
+            display: flex;
+            gap: 0.8rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(243, 156, 18, 0.3);
+            border: 2px solid var(--oro);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-dot.active {
+            background: var(--oro);
+            transform: scale(1.3);
+        }
+
+        .carousel-dot:hover {
+            background: var(--oro);
+            transform: scale(1.1);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .carousel-container {
+                height: 400px;
+            }
+
+            .carousel-info {
+                padding: 2rem 1.5rem 1.5rem;
+            }
+
+            .carousel-controls {
+                gap: 1rem;
+                margin-top: 2rem;
+            }
+
+            .carousel-button {
+                width: 45px;
+                height: 45px;
+                font-size: 1.2rem;
+            }
+
+            .carousel-counter {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .carousel-section {
+                padding: 2rem 1rem;
+            }
+
+            .carousel-container {
+                height: 300px;
+            }
+
+            .carousel-info {
+                padding: 1.5rem 1rem 1rem;
+            }
+
+            .carousel-title {
+                font-size: 1.3rem;
+                margin-bottom: 0.6rem;
+            }
+
+            .carousel-description {
+                font-size: 0.9rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .carousel-instagram-link {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+
+            .carousel-controls {
+                gap: 0.8rem;
+            }
+
+            .carousel-button {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+
+            .carousel-dot {
+                width: 10px;
+                height: 10px;
+            }
+
+            .page-title {
+                font-size: 2.5rem;
+            }
+
+            .back-button,
+            .language-toggle {
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+            }
         }
 
         .fade-in {
@@ -378,95 +487,10 @@
             transform: translateY(30px);
         }
 
-        @media (max-width: 768px) {
-            .language-toggle,
-            .back-button {
-                top: 1rem;
-                padding: 0.4rem 0.8rem;
-                font-size: 0.8rem;
-            }
-
-            .back-button {
-                left: 1rem;
-            }
-
-            .language-toggle {
-                right: 1rem;
-            }
-
-            .gallery-section {
-                padding: 2rem 1rem;
-            }
-
-            .gallery-grid {
-                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-                gap: 1rem;
-            }
-
-            .gallery-image {
-                height: 160px;
-            }
-
-            .caption-title {
-                font-size: 0.9rem;
-            }
-
-            .caption-text {
-                font-size: 0.7rem;
-            }
-
-            .modal-content {
-                max-width: 95vw;
-                max-height: 85vh;
-            }
-
-            .modal-caption {
-                position: static;
-                background: rgba(0, 0, 0, 0.8);
-            }
-        }
-
-        @media (max-width: 480px) {
-            .header {
-                height: 50vh;
-                padding: 0 1rem;
-            }
-
-            .page-title {
-                font-size: 3rem;
-            }
-
-            .page-subtitle {
-                font-size: 1rem;
-            }
-
-            .gallery-intro {
-                margin-bottom: 2rem;
-            }
-
-            .gallery-grid {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-                gap: 0.8rem;
-            }
-
-            .gallery-image {
-                height: 130px;
-            }
-
-            .gallery-caption {
-                padding: 0.8rem;
-            }
-
-            .caption-title {
-                font-size: 0.85rem;
-            }
-
-            .caption-text {
-                font-size: 0.65rem;
-            }
-
-            .instagram-badge {
-                font-size: 0.65rem;
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
     </style>
@@ -493,32 +517,236 @@
         <p class="page-subtitle fade-in" data-lang-es="Inspiración ancestral, conexión con la tierra, arte que nace del corazón" data-lang-en="Ancestral inspiration, connection with the earth, art born from the heart">Inspiración ancestral, conexión con la tierra, arte que nace del corazón</p>
     </section>
 
-    <!-- Galería -->
-    <section class="gallery-section">
-        <div class="gallery-intro fade-in">
+    <!-- Carrusel -->
+    <section class="carousel-section">
+        <div class="carousel-intro fade-in">
             <h2 data-lang-es="Semillas de Creación" data-lang-en="Seeds of Creation">Semillas de Creación</h2>
-            <p data-lang-es="Cada trazo nace de la tierra, cada línea es un susurro del viento andino. Aquí reposan las primeras chispas, los bocetos que danzan entre lo sagrado y lo humano, donde la mano encuentra su voz ancestral." data-lang-en="Each stroke is born from the earth, each line is a whisper of the Andean wind. Here rest the first sparks, the sketches that dance between the sacred and the human, where the hand finds its ancestral voice.">Cada trazo nace de la tierra, cada línea es un susurro del viento andino. Aquí reposan las primeras chispas, los bocetos que danzan entre lo sagrado y lo humano, donde la mano encuentra su voz ancestral.</p>
+            <p data-lang-es="Cada trazo nace de la tierra. Navega por las obras que danzan entre lo sagrado y lo humano, donde la mano encuentra su voz ancestral." data-lang-en="Each stroke is born from the earth. Navigate through works that dance between the sacred and the human, where the hand finds its ancestral voice.">Cada trazo nace de la tierra. Navega por las obras que danzan entre lo sagrado y lo humano, donde la mano encuentra su voz ancestral.</p>
         </div>
 
-        <div class="gallery-grid" id="galleryGrid">
-            <!-- Las imágenes se cargarán aquí con JavaScript -->
+        <div class="carousel-container">
+            <div class="carousel-track" id="carouselTrack">
+                <!-- Items se generarán con JavaScript -->
+            </div>
+        </div>
+
+        <div class="carousel-controls">
+            <button class="carousel-button" id="prevBtn" onclick="previousSlide()">‹</button>
+            <span class="carousel-counter"><span id="currentSlide">1</span> / <span id="totalSlides">12</span></span>
+            <button class="carousel-button" id="nextBtn" onclick="nextSlide()">›</button>
+        </div>
+
+        <div class="carousel-dots" id="dotsContainer">
+            <!-- Dots se generarán con JavaScript -->
         </div>
     </section>
 
-    <!-- Modal img-->
-    <div class="image-modal" id="imageModal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal()">×</button>
-            <div class="modal-image" id="modalImage"></div>
-            <div class="modal-caption">
-                <h3 id="modalTitle"></h3>
-                <p id="modalDescription"></p>
-            </div>
-        </div>
-    </div>
-
     <script>
         let currentLang = 'es';
+        let currentSlide = 0;
+        let isAnimating = false;
+        let direction = 1;
+
+        // Datos de las obras
+        const artworks = [
+            {
+                title: { es: "Identidad Pacha", en: "Pacha Identity" },
+                description: { es: "Rostro de la Pacha a lápiz y bolígrafo, digitalizado. Un retrato que captura la esencia ancestral andina.", en: "Pacha's face in pencil and pen, digitalized. A portrait capturing ancestral Andean essence." },
+                instagram: "https://www.instagram.com/p/DF1bPJFOs_P/",
+                instaId: "DF1bPJFOs_P"
+            },
+            {
+                title: { es: "Proceso Pacha", en: "Pacha Process" },
+                description: { es: "Video del proceso de creación del rostro de Pacha. Observa cómo nace la obra.", en: "Video of the creation process of Pacha's face. Watch how the artwork is born." },
+                instagram: "https://www.instagram.com/reel/DFmMvzZusjM/",
+                instaId: "DFmMvzZusjM"
+            },
+            {
+                title: { es: "Pretty Ñusta", en: "Pretty Ñusta" },
+                description: { es: "Pretty Ñusta: lápiz y bolígrafo digitalizado. Una joven princesa andina reimaginada.", en: "Pretty Ñusta: pencil and pen digitalized. An Andean princess reimagined." },
+                instagram: "https://www.instagram.com/p/DFmIpZeu-A-/",
+                instaId: "DFmIpZeu-A-"
+            },
+            {
+                title: { es: "Proceso Pretty Ñusta", en: "Pretty Ñusta Process" },
+                description: { es: "Video del proceso creativo de Pretty Ñusta desde el boceto hasta la versión final.", en: "Video of Pretty Ñusta's creative process from sketch to final version." },
+                instagram: "https://www.instagram.com/reel/DFmGSpIukP1/",
+                instaId: "DFmGSpIukP1"
+            },
+            {
+                title: { es: "Yuraj Dog", en: "Yuraj Dog" },
+                description: { es: "Retrato de un perrito capturado con sensibilidad y detalle. Honrando la belleza animal.", en: "Portrait of a dog captured with sensitivity and detail. Honoring animal beauty." },
+                instagram: "https://www.instagram.com/p/DH9N86PS14l/",
+                instaId: "DH9N86PS14l"
+            },
+            {
+                title: { es: "Munay Dog", en: "Munay Dog" },
+                description: { es: "Mi perrito rescatado encontrado bajo un puente. Su mirada refleja resiliencia y amor.", en: "My rescued dog found under a bridge. His gaze reflects resilience and love." },
+                instagram: "https://www.instagram.com/p/DHwAe8aO3PP/",
+                instaId: "DHwAe8aO3PP"
+            },
+            {
+                title: { es: "Ñawi Strange", en: "Ñawi Strange" },
+                description: { es: "Ñawi Strange: bolígrafo y lápices de colores, digitalizado. Una obra que explora lo extraño.", en: "Ñawi Strange: pen and colored pencils, digitalized. Exploring the strange." },
+                instagram: "https://www.instagram.com/p/DF6HkC-SOxO/",
+                instaId: "DF6HkC-SOxO"
+            },
+            {
+                title: { es: "Editado Computadora", en: "Computer Edited" },
+                description: { es: "Dibujo a bolígrafo editado en computadora. La fusión entre lo analógico y digital.", en: "Pen drawing edited on computer. Fusion of analog and digital." },
+                instagram: "https://www.instagram.com/p/CzcA1V5RD3t/",
+                instaId: "CzcA1V5RD3t"
+            },
+            {
+                title: { es: "Compañeros Greenpeace", en: "Greenpeace Companions" },
+                description: { es: "Dibujo digital de mis compañeros de Greenpeace. Un homenaje a quienes luchan por el planeta.", en: "Digital drawing of my Greenpeace companions. Tribute to environmental defenders." },
+                instagram: "https://www.instagram.com/p/C0bnOMwOIRj/",
+                instaId: "C0bnOMwOIRj"
+            },
+            {
+                title: { es: "Johnson - Padre del Blues", en: "Johnson - Father of Blues" },
+                description: { es: "Dibujo digital de Johnson, el padre del blues. Un artista legendario que admiro profundamente.", en: "Digital drawing of Johnson, father of blues. A legendary artist I deeply admire." },
+                instagram: "https://www.instagram.com/p/CzcEP4uR7rh/",
+                instaId: "CzcEP4uR7rh"
+            },
+            {
+                title: { es: "Chanchoman", en: "Chanchoman" },
+                description: { es: "Chanchoman: político ecocida de mi ciudad. Una crítica visual a la corrupción ambiental.", en: "Chanchoman: an ecocidal politician. Visual critique of environmental corruption." },
+                instagram: "https://www.instagram.com/p/CjCcmkrO6qY/",
+                instaId: "CjCcmkrO6qY"
+            },
+            {
+                title: { es: "Illa", en: "Illa" },
+                description: { es: "Illa: dibujo a lápiz y bolígrafo, digitalizado. Una obra que refleja la identidad digital.", en: "Illa: pencil and pen drawing, digitalized. Reflecting digital identity." },
+                instagram: "https://www.instagram.com/p/DF4WsWkuZMA/",
+                instaId: "DF4WsWkuZMA"
+            }
+        ];
+
+        function getInstagramImageUrl(shortcode) {
+            return `https://www.instagram.com/p/${shortcode}/media/?size=l`;
+        }
+
+        function initCarousel() {
+            const track = document.getElementById('carouselTrack');
+            const dotsContainer = document.getElementById('dotsContainer');
+            
+            artworks.forEach((art, index) => {
+                const item = document.createElement('div');
+                item.className = 'carousel-item';
+                if (index === 0) item.classList.add('active');
+                
+                const imageUrl = getInstagramImageUrl(art.instaId);
+                
+                item.innerHTML = `
+                    <div class="carousel-image-wrapper">
+                        <img src="${imageUrl}" alt="${art.title[currentLang]}" class="carousel-image" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 400%22%3E%3Crect fill=%22%238B4513%22 width=%22400%22 height=%22400%22/%3E%3Ctext x=%22200%22 y=%22200%22 font-size=%2240%22 fill=%22%23fff%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3EObra de Arte%3C/text%3E%3C/svg%3E'">
+                    </div>
+                    <div class="carousel-info">
+                        <h3 class="carousel-title">${art.title[currentLang]}</h3>
+                        <p class="carousel-description">${art.description[currentLang]}</p>
+                        <a href="${art.instagram}" target="_blank" class="carousel-instagram-link">
+                            <span>📸</span>
+                            <span data-lang-es="Ver en Instagram" data-lang-en="View on Instagram">${currentLang === 'es' ? 'Ver en Instagram' : 'View on Instagram'}</span>
+                        </a>
+                    </div>
+                `;
+                
+                track.appendChild(item);
+
+                // Crear dots
+                const dot = document.createElement('div');
+                dot.className = 'carousel-dot';
+                if (index === 0) dot.classList.add('active');
+                dot.onclick = () => goToSlide(index);
+                dotsContainer.appendChild(dot);
+            });
+
+            document.getElementById('totalSlides').textContent = artworks.length;
+            updateCarousel();
+        }
+
+        function updateCarousel() {
+            const items = document.querySelectorAll('.carousel-item');
+            const dots = document.querySelectorAll('.carousel-dot');
+            
+            items.forEach((item, index) => {
+                item.classList.remove('active', 'entering-left', 'entering-right', 'leaving-left', 'leaving-right');
+                if (index === currentSlide) {
+                    item.classList.add('active');
+                }
+            });
+
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+        }
+
+        function nextSlide() {
+            if (isAnimating) return;
+            isAnimating = true;
+            direction = 1;
+            
+            const items = document.querySelectorAll('.carousel-item');
+            items[currentSlide].classList.add('leaving-left');
+            
+            setTimeout(() => {
+                currentSlide = (currentSlide + 1) % artworks.length;
+                items.forEach(item => item.classList.remove('leaving-left', 'leaving-right', 'entering-left', 'entering-right'));
+                items[currentSlide].classList.add('entering-right');
+                
+                updateCarousel();
+                
+                setTimeout(() => {
+                    isAnimating = false;
+                }, 800);
+            }, 400);
+        }
+
+        function previousSlide() {
+            if (isAnimating) return;
+            isAnimating = true;
+            direction = -1;
+            
+            const items = document.querySelectorAll('.carousel-item');
+            items[currentSlide].classList.add('leaving-right');
+            
+            setTimeout(() => {
+                currentSlide = (currentSlide - 1 + artworks.length) % artworks.length;
+                items.forEach(item => item.classList.remove('leaving-left', 'leaving-right', 'entering-left', 'entering-right'));
+                items[currentSlide].classList.add('entering-left');
+                
+                updateCarousel();
+                
+                setTimeout(() => {
+                    isAnimating = false;
+                }, 800);
+            }, 400);
+        }
+
+        function goToSlide(index) {
+            if (isAnimating || index === currentSlide) return;
+            isAnimating = true;
+            
+            const items = document.querySelectorAll('.carousel-item');
+            const newDirection = index > currentSlide ? 1 : -1;
+            
+            items[currentSlide].classList.add(newDirection > 0 ? 'leaving-left' : 'leaving-right');
+            
+            setTimeout(() => {
+                currentSlide = index;
+                items.forEach(item => item.classList.remove('leaving-left', 'leaving-right', 'entering-left', 'entering-right'));
+                items[currentSlide].classList.add(newDirection > 0 ? 'entering-right' : 'entering-left');
+                
+                updateCarousel();
+                
+                setTimeout(() => {
+                    isAnimating = false;
+                }, 800);
+            }, 400);
+        }
 
         function toggleLanguage() {
             currentLang = currentLang === 'es' ? 'en' : 'es';
@@ -531,216 +759,33 @@
                     element.textContent = text;
                 }
             });
-        }
 
-        gsap.registerPlugin(ScrollTrigger);
-        document.getElementById('languageToggle').addEventListener('click', toggleLanguage);
-
-        // Datos de las obras con información de Instagram
-        const artworks = [
-            {
-                title: { es: "Identidad Pacha", en: "Pacha Identity" },
-                description: { es: "Rostro de la Pacha a lápiz y bolígrafo, digitalizado. Un retrato que captura la esencia ancestral andina.", en: "Pacha's face in pencil and pen, digitalized. A portrait that captures ancestral Andean essence." },
-                instagram: "https://www.instagram.com/p/DF1bPJFOs_P/",
-                instaId: "DF1bPJFOs_P",
-                emoji: "👵"
-            },
-            {
-                title: { es: "Proceso Pacha", en: "Pacha Process" },
-                description: { es: "Video del proceso de creación del rostro de Pacha. Observa cómo nace la obra.", en: "Video of the creation process of Pacha's face. Watch how the artwork is born." },
-                instagram: "https://www.instagram.com/reel/DFmMvzZusjM/",
-                instaId: "DFmMvzZusjM",
-                emoji: "🎬"
-            },
-            {
-                title: { es: "Pretty Ñusta", en: "Pretty Ñusta" },
-                description: { es: "Pretty Ñusta: lápiz y bolígrafo digitalizado. Una joven princesa andina reimaginada.", en: "Pretty Ñusta: pencil and pen digitalized. An Andean princess reimagined." },
-                instagram: "https://www.instagram.com/p/DFmIpZeu-A-/",
-                instaId: "DFmIpZeu-A-",
-                emoji: "👸"
-            },
-            {
-                title: { es: "Proceso Pretty Ñusta", en: "Pretty Ñusta Process" },
-                description: { es: "Video del proceso creativo de Pretty Ñusta, desde el boceto hasta lo final.", en: "Video of Pretty Ñusta's creative process, from sketch to final version." },
-                instagram: "https://www.instagram.com/reel/DFmGSpIukP1/",
-                instaId: "DFmGSpIukP1",
-                emoji: "🎨"
-            },
-            {
-                title: { es: "Yuraj Dog", en: "Yuraj Dog" },
-                description: { es: "Retrato de un perrito capturado con sensibilidad y detalle. Una obra que honra la belleza animal.", en: "Portrait of a dog captured with sensitivity and detail. A work honoring animal beauty." },
-                instagram: "https://www.instagram.com/p/DH9N86PS14l/",
-                instaId: "DH9N86PS14l",
-                emoji: "🐕"
-            },
-            {
-                title: { es: "Munay Dog", en: "Munay Dog" },
-                description: { es: "Mi perrito rescatado encontrado abandonado bajo un puente. Su mirada refleja resiliencia y amor.", en: "My rescued dog found abandoned under a bridge. His gaze reflects resilience and love." },
-                instagram: "https://www.instagram.com/p/DHwAe8aO3PP/",
-                instaId: "DHwAe8aO3PP",
-                emoji: "🐾"
-            },
-            {
-                title: { es: "Ñawi Strange", en: "Ñawi Strange" },
-                description: { es: "Ñawi Strange: bolígrafo y lápices de colores, digitalizado. Una obra que explora lo extraño.", en: "Ñawi Strange: pen and colored pencils, digitalized. Exploring the strange and everyday." },
-                instagram: "https://www.instagram.com/p/DF6HkC-SOxO/",
-                instaId: "DF6HkC-SOxO",
-                emoji: "👁️"
-            },
-            {
-                title: { es: "Editado Computadora", en: "Computer Edited" },
-                description: { es: "Dibujo a bolígrafo editado en computadora. La fusión entre lo analógico y digital.", en: "Pen drawing edited on computer. Fusion of analog and digital art." },
-                instagram: "https://www.instagram.com/p/CzcA1V5RD3t/",
-                instaId: "CzcA1V5RD3t",
-                emoji: "💻"
-            },
-            {
-                title: { es: "Compañeros Greenpeace", en: "Greenpeace Companions" },
-                description: { es: "Dibujo digital de mis compañeros de Greenpeace. Un homenaje a quienes luchan por el planeta.", en: "Digital drawing of my Greenpeace companions. A tribute to environmental defenders." },
-                instagram: "https://www.instagram.com/p/C0bnOMwOIRj/",
-                instaId: "C0bnOMwOIRj",
-                emoji: "🌍"
-            },
-            {
-                title: { es: "Johnson - Padre del Blues", en: "Johnson - Father of Blues" },
-                description: { es: "Dibujo digital de Johnson, el padre del blues. Un artista legendario que admiro profundamente.", en: "Digital drawing of Johnson, the father of blues. A legendary artist I deeply admire." },
-                instagram: "https://www.instagram.com/p/CzcEP4uR7rh/",
-                instaId: "CzcEP4uR7rh",
-                emoji: "🎵"
-            },
-            {
-                title: { es: "Chanchoman", en: "Chanchoman" },
-                description: { es: "Chanchoman: político ecocida de mi ciudad. Una crítica visual a la corrupción ambiental.", en: "Chanchoman: an ecocidal politician from my city. A critique of environmental corruption." },
-                instagram: "https://www.instagram.com/p/CjCcmkrO6qY/",
-                instaId: "CjCcmkrO6qY",
-                emoji: "🔥"
-            },
-            {
-                title: { es: "Illa", en: "Illa" },
-                description: { es: "Illa: dibujo a lápiz y bolígrafo, digitalizado. Una obra que refleja la identidad digital.", en: "Illa: pencil and pen drawing, digitalized. Reflecting digital identity in transformation." },
-                instagram: "https://www.instagram.com/p/DF4WsWkuZMA/",
-                instaId: "DF4WsWkuZMA",
-                emoji: "✨"
-            }
-        ];
-
-        // Función para obtener imagen de Instagram
-        function getInstagramImageUrl(shortcode) {
-            return `https://www.instagram.com/p/${shortcode}/media/?size=l`;
-        }
-
-        // Renderizar galería
-        function renderGallery() {
-            const gallery = document.getElementById('galleryGrid');
-            gallery.innerHTML = '';
-
-            artworks.forEach((art, index) => {
-                const item = document.createElement('a');
-                item.href = art.instagram;
-                item.target = '_blank';
-                item.className = 'gallery-item fade-in';
-                item.style.pointerEvents = 'auto';
-                
-                const imageUrl = getInstagramImageUrl(art.instaId);
-                
-                item.innerHTML = `
-                    <div class="gallery-image" onclick="event.preventDefault(); openModal(${index})">
-                        <img src="${imageUrl}" alt="${art.title[currentLang]}" onerror="this.style.display='none'; this.parentElement.classList.add('emoji-placeholder'); this.parentElement.innerHTML='${art.emoji}';" style="width: 100%; height: 100%; object-fit: cover;">
-                    </div>
-                    <div class="gallery-caption">
-                        <div>
-                            <h3 class="caption-title">${art.title[currentLang]}</h3>
-                            <p class="caption-text">${art.description[currentLang].substring(0, 60)}...</p>
-                        </div>
-                        <div class="instagram-badge">
-                            <span>📸</span>
-                            <span>${currentLang === 'es' ? 'Ver' : 'View'}</span>
-                        </div>
-                    </div>
-                `;
-
-                gallery.appendChild(item);
-            });
-
-            // Animar items
-            gsap.utils.toArray('.gallery-item').forEach((item, idx) => {
-                gsap.fromTo(item,
-                    { y: 50, opacity: 0 },
-                    {
-                        y: 0,
-                        opacity: 1,
-                        duration: 0.8,
-                        delay: idx * 0.1,
-                        ease: "power2.out",
-                        scrollTrigger: {
-                            trigger: item,
-                            start: "top 90%",
-                            toggleActions: "play none none none"
-                        }
-                    }
-                );
+            const items = document.querySelectorAll('.carousel-item');
+            items.forEach((item, index) => {
+                const art = artworks[index];
+                item.querySelector('.carousel-title').textContent = art.title[currentLang];
+                item.querySelector('.carousel-description').textContent = art.description[currentLang];
+                const link = item.querySelector('.carousel-instagram-link span:last-child');
+                link.textContent = currentLang === 'es' ? 'Ver en Instagram' : 'View on Instagram';
             });
         }
-
-        function openModal(index) {
-            const modal = document.getElementById('imageModal');
-            const modalImage = document.getElementById('modalImage');
-            const modalTitle = document.getElementById('modalTitle');
-            const modalDescription = document.getElementById('modalDescription');
-            
-            const art = artworks[index];
-            const imageUrl = getInstagramImageUrl(art.instaId);
-            
-            modalImage.innerHTML = `
-                <img src="${imageUrl}" alt="${art.title[currentLang]}" style="max-width: 100%; max-height: 100%; object-fit: contain;" onerror="this.outerHTML='<div style=\"font-size: 5rem; display: flex; align-items: center; justify-content: center; height: 400px; background: linear-gradient(135deg, var(--tierra) 0%, var(--oro) 100%);\">${art.emoji}</div>'">
-            `;
-            modalTitle.textContent = art.title[currentLang];
-            modalDescription.textContent = art.description[currentLang];
-            
-            modal.style.display = 'flex';
-            
-            gsap.fromTo(modal, 
-                { opacity: 0 },
-                { opacity: 1, duration: 0.3 }
-            );
-            
-            gsap.fromTo('.modal-content', 
-                { scale: 0.8, y: 50 },
-                { scale: 1, y: 0, duration: 0.4, ease: "power2.out" }
-            );
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('imageModal');
-            
-            gsap.to(modal, {
-                opacity: 0,
-                duration: 0.3,
-                onComplete: () => {
-                    modal.style.display = 'none';
-                }
-            });
-        }
-
-        document.getElementById('imageModal').addEventListener('click', (e) => {
-            if (e.target === e.currentTarget) {
-                closeModal();
-            }
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closeModal();
-            }
-        });
 
         // Cursor personalizado
         const cursor = document.querySelector('.custom-cursor');
         let trails = [];
         
-        for (let i = 0; i < 8; i++) {
+        for (let i = 0; i < 6; i++) {
             const trail = document.createElement('div');
-            trail.className = 'cursor-trail';
+            trail.style.cssText = `
+                position: fixed;
+                width: 4px;
+                height: 4px;
+                background: var(--tierra);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 9998;
+                opacity: 0.6;
+            `;
             document.body.appendChild(trail);
             trails.push(trail);
         }
@@ -751,12 +796,7 @@
         document.addEventListener('mousemove', (e) => {
             mouseX = e.clientX;
             mouseY = e.clientY;
-            
-            gsap.to(cursor, {
-                x: mouseX - 10,
-                y: mouseY - 10,
-                duration: 0.1
-            });
+            cursor.style.transform = `translate(${mouseX - 10}px, ${mouseY - 10}px)`;
         });
 
         function animateTrails() {
@@ -770,12 +810,7 @@
 
             trails.forEach((trail, index) => {
                 if (trailX[index] !== undefined) {
-                    gsap.to(trail, {
-                        x: trailX[index] - 2,
-                        y: trailY[index] - 2,
-                        duration: 0.3,
-                        ease: "power2.out"
-                    });
+                    trail.style.transform = `translate(${trailX[index] - 2}px, ${trailY[index] - 2}px)`;
                 }
             });
 
@@ -783,63 +818,28 @@
         }
         animateTrails();
 
-        // Animaciones de entrada
-        gsap.utils.toArray('.fade-in').forEach(element => {
-            gsap.fromTo(element, 
-                { y: 50, opacity: 0 },
-                {
-                    y: 0,
-                    opacity: 1,
-                    duration: 1,
-                    ease: "power2.out",
-                    scrollTrigger: {
-                        trigger: element,
-                        start: "top 80%",
-                        toggleActions: "play none none none"
-                    }
-                }
-            );
+        // Teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') previousSlide();
         });
+
+        document.getElementById('languageToggle').addEventListener('click', toggleLanguage);
 
         // Inicializar
         window.addEventListener('load', () => {
-            renderGallery();
+            initCarousel();
             
-            gsap.fromTo('.phase-icon', 
-                { scale: 0, rotation: -180 },
-                { scale: 1, rotation: 0, duration: 1, ease: "back.out(1.7)" }
-            );
-            
-            gsap.fromTo('.page-title', 
-                { y: 100, opacity: 0 },
-                { y: 0, opacity: 1, duration: 1, delay: 0.3, ease: "power2.out" }
-            );
-            
-            gsap.fromTo('.page-subtitle', 
-                { y: 50, opacity: 0 },
-                { y: 0, opacity: 1, duration: 1, delay: 0.6, ease: "power2.out" }
-            );
-        });
-
-        // Hover effects
-        document.addEventListener('mousemove', () => {
-            document.querySelectorAll('.gallery-item').forEach(item => {
-                item.addEventListener('mouseenter', () => {
-                    gsap.to(item.querySelector('.gallery-image'), {
-                        scale: 1.1,
-                        duration: 0.3,
-                        ease: "power2.out"
-                    });
+            setTimeout(() => {
+                document.querySelectorAll('.fade-in').forEach((el, i) => {
+                    el.style.cssText = `
+                        opacity: 0;
+                        transform: translateY(30px);
+                        animation: fadeInUp 0.8s ease forwards;
+                        animation-delay: ${i * 0.2}s;
+                    `;
                 });
-
-                item.addEventListener('mouseleave', () => {
-                    gsap.to(item.querySelector('.gallery-image'), {
-                        scale: 1,
-                        duration: 0.3,
-                        ease: "power2.out"
-                    });
-                });
-            });
+            }, 100);
         });
     </script>
 </body>
