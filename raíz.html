@@ -7,8 +7,441 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
-     <link rel="stylesheet" href="styles.css">
-   
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --tierra: #8B4513;
+            --fuego: #FF6B35;
+            --aire: #4A90E2;
+            --agua: #2ECC71;
+            --oro: #F39C12;
+            --sombra: #2C3E50;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #fff;
+            cursor: none;
+        }
+
+        .custom-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: var(--tierra);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.2s ease;
+            mix-blend-mode: difference;
+        }
+
+        .cursor-trail {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: var(--tierra);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0.6;
+        }
+
+        .language-toggle {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            z-index: 9999;
+            background: rgba(139, 69, 19, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--tierra);
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            color: var(--oro);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .language-toggle:hover {
+            background: rgba(139, 69, 19, 0.4);
+            transform: scale(1.05);
+        }
+
+        .back-button {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            z-index: 9999;
+            background: rgba(139, 69, 19, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--tierra);
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            color: var(--oro);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-button:hover {
+            background: rgba(139, 69, 19, 0.4);
+            transform: scale(1.05);
+        }
+
+        .header {
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background: radial-gradient(ellipse at center, rgba(139, 69, 19, 0.2) 0%, transparent 70%);
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 40%, var(--tierra) 0%, transparent 50%),
+                radial-gradient(circle at 70% 60%, var(--oro) 0%, transparent 50%);
+            opacity: 0.1;
+            animation: earthPulse 6s ease-in-out infinite alternate;
+        }
+
+        @keyframes earthPulse {
+            0% { transform: scale(1) rotate(0deg); }
+            100% { transform: scale(1.1) rotate(1deg); }
+        }
+
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 10vw, 8rem);
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--tierra), var(--oro), var(--tierra));
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: earthGradient 4s ease-in-out infinite;
+            position: relative;
+        }
+
+        @keyframes earthGradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .page-subtitle {
+            font-size: clamp(1rem, 3vw, 1.8rem);
+            font-weight: 300;
+            text-align: center;
+            margin-bottom: 2rem;
+            opacity: 0.8;
+            max-width: 90%;
+        }
+
+        .phase-icon {
+            font-size: clamp(3rem, 8vw, 5rem);
+            margin-bottom: 2rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .gallery-section {
+            min-height: 100vh;
+            padding: 4rem 2rem;
+            background: linear-gradient(180deg, rgba(139, 69, 19, 0.05) 0%, transparent 100%);
+        }
+
+        .gallery-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 4rem auto;
+        }
+
+        .gallery-intro h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            color: var(--oro);
+            margin-bottom: 1rem;
+        }
+
+        .gallery-intro p {
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 15px;
+            overflow: hidden;
+            background: rgba(139, 69, 19, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(139, 69, 19, 0.3);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(50px);
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(139, 69, 19, 0.3);
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 70%;
+            background: linear-gradient(135deg, 
+                var(--tierra) 0%, 
+                rgba(139, 69, 19, 0.8) 50%, 
+                var(--oro) 100%);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .gallery-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.4s ease;
+        }
+
+        .gallery-item:hover .gallery-image img {
+            transform: scale(1.1);
+        }
+
+        .gallery-caption {
+            position: relative;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .caption-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            color: var(--oro);
+            margin-bottom: 0.5rem;
+        }
+
+        .caption-text {
+            font-size: 0.9rem;
+            line-height: 1.4;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+
+        .instagram-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: var(--fuego);
+            font-weight: 600;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        .image-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .modal-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+            border-radius: 15px;
+            overflow: hidden;
+            background: rgba(139, 69, 19, 0.1);
+            border: 1px solid var(--tierra);
+        }
+
+        .modal-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .modal-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(0, 0, 0, 0.7);
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: var(--tierra);
+            transform: scale(1.1);
+        }
+
+        .modal-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 2rem;
+            color: #fff;
+        }
+
+        .modal-caption h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--oro);
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        @media (max-width: 768px) {
+            .language-toggle,
+            .back-button {
+                top: 1rem;
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+
+            .back-button {
+                left: 1rem;
+            }
+
+            .language-toggle {
+                right: 1rem;
+            }
+
+            .gallery-section {
+                padding: 2rem 1rem;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .gallery-item {
+                aspect-ratio: 4/3;
+            }
+
+            .modal-content {
+                max-width: 95vw;
+                max-height: 85vh;
+            }
+
+            .modal-caption {
+                position: static;
+                background: rgba(0, 0, 0, 0.8);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                height: 50vh;
+                padding: 0 1rem;
+            }
+
+            .page-title {
+                font-size: 3rem;
+            }
+
+            .page-subtitle {
+                font-size: 1rem;
+            }
+
+            .gallery-intro {
+                margin-bottom: 2rem;
+            }
+
+            .gallery-caption {
+                padding: 1rem;
+            }
+
+            .caption-title {
+                font-size: 1rem;
+            }
+
+            .caption-text {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Cursor -->
@@ -39,94 +472,8 @@
             <p data-lang-es="Cada trazo nace de la tierra, cada línea es un susurro del viento andino. Aquí reposan las primeras chispas, los bocetos que danzan entre lo sagrado y lo humano, donde la mano encuentra su voz ancestral." data-lang-en="Each stroke is born from the earth, each line is a whisper of the Andean wind. Here rest the first sparks, the sketches that dance between the sacred and the human, where the hand finds its ancestral voice.">Cada trazo nace de la tierra, cada línea es un susurro del viento andino. Aquí reposan las primeras chispas, los bocetos que danzan entre lo sagrado y lo humano, donde la mano encuentra su voz ancestral.</p>
         </div>
 
-        <div class="gallery-grid">
-            <!-- Imagen 1 -->
-            <div class="gallery-item" onclick="openModal(1)">
-                <div class="gallery-image">
-                    <div class="gallery-placeholder">🎨</div>
-                </div>
-                <div class="gallery-caption">
-                    <h3 class="caption-title" data-lang-es="Chakana Primordial" data-lang-en="Primordial Chakana">Chakana Primordial</h3>
-                    <p class="caption-text" data-lang-es="Primer boceto de la cruz andina que guía todas las creaciones. Carboncillo sobre papel de algodón, 2024." data-lang-en="First sketch of the Andean cross that guides all creations. Charcoal on cotton paper, 2024.">Primer boceto de la cruz andina que guía todas las creaciones. Carboncillo sobre papel de algodón, 2024.</p>
-                </div>
-            </div>
-
-            <!-- Imagen 2 -->
-            <div class="gallery-item" onclick="openModal(2)">
-                <div class="gallery-image">
-                    <div class="gallery-placeholder">🏔️</div>
-                </div>
-                <div class="gallery-caption">
-                    <h3 class="caption-title" data-lang-es="Apus Dormidos" data-lang-en="Sleeping Apus">Apus Dormidos</h3>
-                    <p class="caption-text" data-lang-es="Los espíritus de las montañas en su eterno descanso. Dibujo en tinta sepia, inspirado en los cerros de Salta." data-lang-en="The spirits of the mountains in their eternal rest. Sepia ink drawing, inspired by the hills of Salta.">Los espíritus de las montañas en su eterno descanso. Dibujo en tinta sepia, inspirado en los cerros de Salta.</p>
-                </div>
-            </div>
-
-            <!-- Imagen 3 -->
-            <div class="gallery-item" onclick="openModal(3)">
-                <div class="gallery-image">
-                    <div class="gallery-placeholder">🌿</div>
-                </div>
-                <div class="gallery-caption">
-                    <h3 class="caption-title" data-lang-es="Medicina Ancestral" data-lang-en="Ancestral Medicine">Medicina Ancestral</h3>
-                    <p class="caption-text" data-lang-es="Estudio botánico de plantas sagradas del norte argentino. Acuarela y grafito, 2024." data-lang-en="Botanical study of sacred plants from northern Argentina. Watercolor and graphite, 2024.">Estudio botánico de plantas sagradas del norte argentino. Acuarela y grafito, 2024.</p>
-                </div>
-            </div>
-
-            <!-- Imagen 4 -->
-            <div class="gallery-item" onclick="openModal(4)">
-                <div class="gallery-image">
-                    <div class="gallery-placeholder">🌙</div>
-                </div>
-                <div class="gallery-caption">
-                    <h3 class="caption-title" data-lang-es="Ciclos Lunares" data-lang-en="Lunar Cycles">Ciclos Lunares</h3>
-                    <p class="caption-text" data-lang-es="Mandala lunar que honra los tiempos femeninos y los ritmos cósmicos. Tinta china sobre papel de arroz." data-lang-en="Lunar mandala that honors feminine times and cosmic rhythms. Chinese ink on rice paper.">Mandala lunar que honra los tiempos femeninos y los ritmos cósmicos. Tinta china sobre papel de arroz.</p>
-                </div>
-            </div>
-
-            <!-- Imagen 5 -->
-            <div class="gallery-item" onclick="openModal(5)">
-                <div class="gallery-image">
-                    <div class="gallery-placeholder">🦎</div>
-                </div>
-                <div class="gallery-caption">
-                    <h3 class="caption-title" data-lang-es="Espíritu Lagarto" data-lang-en="Lizard Spirit">Espíritu Lagarto</h3>
-                    <p class="caption-text" data-lang-es="El lagarto como símbolo de regeneración y conexión telúrica. Boceto en carbón vegetal." data-lang-en="The lizard as a symbol of regeneration and telluric connection. Sketch in vegetal charcoal.">El lagarto como símbolo de regeneración y conexión telúrica. Boceto en carbón vegetal.</p>
-                </div>
-            </div>
-
-            <!-- Imagen 6 -->
-            <div class="gallery-item" onclick="openModal(6)">
-                <div class="gallery-image">
-                    <div class="gallery-placeholder">🌾</div>
-                </div>
-                <div class="gallery-caption">
-                    <h3 class="caption-title" data-lang-es="Cosecha de Quinoa" data-lang-en="Quinoa Harvest">Cosecha de Quinoa</h3>
-                    <p class="caption-text" data-lang-es="Manos que cosechan el oro de los Andes. Estudio gestual en sanguina sobre papel kraft." data-lang-en="Hands that harvest the gold of the Andes. Gestural study in sanguine on kraft paper.">Manos que cosechan el oro de los Andes. Estudio gestual en sanguina sobre papel kraft.</p>
-                </div>
-            </div>
-
-            <!-- Imagen 7 -->
-            <div class="gallery-item" onclick="openModal(7)">
-                <div class="gallery-image">
-                    <div class="gallery-placeholder">🕊️</div>
-                </div>
-                <div class="gallery-caption">
-                    <h3 class="caption-title" data-lang-es="Vuelo Sagrado" data-lang-en="Sacred Flight">Vuelo Sagrado</h3>
-                    <p class="caption-text" data-lang-es="El cóndor como mensajero entre mundos. Dibujo en grafito sobre papel texturado, 2024." data-lang-en="The condor as messenger between worlds. Graphite drawing on textured paper, 2024.">El cóndor como mensajero entre mundos. Dibujo en grafito sobre papel texturado, 2024.</p>
-                </div>
-            </div>
-
-            <!-- Imagen 8 -->
-            <div class="gallery-item" onclick="openModal(8)">
-                <div class="gallery-image">
-                    <div class="gallery-placeholder">🔥</div>
-                </div>
-                <div class="gallery-caption">
-                    <h3 class="caption-title" data-lang-es="Fuego Ceremonial" data-lang-en="Ceremonial Fire">Fuego Ceremonial</h3>
-                    <p class="caption-text" data-lang-es="Llamas danzantes en ritual de purificación. Pastel seco sobre papel negro, capturando la energía del fuego sagrado." data-lang-en="Dancing flames in purification ritual. Dry pastel on black paper, capturing the energy of sacred fire.">Llamas danzantes en ritual de purificación. Pastel seco sobre papel negro, capturando la energía del fuego sagrado.</p>
-                </div>
-            </div>
+        <div class="gallery-grid" id="galleryGrid">
+            <!-- Las imágenes se cargarán aquí con JavaScript -->
         </div>
     </section>
 
@@ -142,6 +489,320 @@
         </div>
     </div>
 
-     <script src="script-raiz.js"></script>
+    <script>
+        let currentLang = 'es';
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'es' ? 'en' : 'es';
+            document.documentElement.lang = currentLang;
+            
+            const elements = document.querySelectorAll('[data-lang-es], [data-lang-en]');
+            elements.forEach(element => {
+                const text = element.getAttribute(`data-lang-${currentLang}`);
+                if (text) {
+                    element.textContent = text;
+                }
+            });
+        }
+
+        gsap.registerPlugin(ScrollTrigger);
+        document.getElementById('languageToggle').addEventListener('click', toggleLanguage);
+
+        // Datos de las obras con información de Instagram
+        const artworks = [
+            {
+                title: { es: "Identidad Pacha", en: "Pacha Identity" },
+                description: { es: "Rostro de la Pacha a lápiz y bolígrafo, digitalizado. Un retrato que captura la esencia ancestral andina con técnicas clásicas combinadas con lo digital.", en: "Pacha's face in pencil and pen, digitalized. A portrait that captures the ancestral Andean essence with classical techniques combined with digital art." },
+                instagram: "https://www.instagram.com/p/DF1bPJFOs_P/",
+                image: "https://instagram.com/p/DF1bPJFOs_P/media/?size=l",
+                emoji: "👵"
+            },
+            {
+                title: { es: "Proceso Pacha", en: "Pacha Process" },
+                description: { es: "Video del proceso de creación del rostro de Pacha. Observa cómo nace una obra desde el trazo inicial hasta la composición final.", en: "Video of the creation process of Pacha's face. Watch how an artwork is born from the initial stroke to the final composition." },
+                instagram: "https://www.instagram.com/reel/DFmMvzZusjM/",
+                image: "https://instagram.com/reel/DFmMvzZusjM/media/?size=l",
+                emoji: "🎬"
+            },
+            {
+                title: { es: "Pretty Ñusta", en: "Pretty Ñusta" },
+                description: { es: "Pretty Ñusta: lápiz y bolígrafo digitalizado. Una joven princesa andina reimaginada con técnicas mixtas tradicionales y digitales.", en: "Pretty Ñusta: pencil and pen digitalized. A young Andean princess reimagined with traditional and digital mixed techniques." },
+                instagram: "https://www.instagram.com/p/DFmIpZeu-A-/",
+                image: "https://instagram.com/p/DFmIpZeu-A-/media/?size=l",
+                emoji: "👸"
+            },
+            {
+                title: { es: "Proceso Pretty Ñusta", en: "Pretty Ñusta Process" },
+                description: { es: "Video del proceso creativo de Pretty Ñusta, desde el boceto inicial hasta la versión digitalizada final.", en: "Video of the creative process of Pretty Ñusta, from initial sketch to final digitalized version." },
+                instagram: "https://www.instagram.com/reel/DFmGSpIukP1/",
+                image: "https://instagram.com/reel/DFmGSpIukP1/media/?size=l",
+                emoji: "🎨"
+            },
+            {
+                title: { es: "Yuraj Dog", en: "Yuraj Dog" },
+                description: { es: "Retrato de un perrito capturado con sensibilidad y detalle. Una obra que honra la belleza animal y su conexión espiritual.", en: "Portrait of a little dog captured with sensitivity and detail. A work that honors animal beauty and its spiritual connection." },
+                instagram: "https://www.instagram.com/p/DH9N86PS14l/",
+                image: "https://instagram.com/p/DH9N86PS14l/media/?size=l",
+                emoji: "🐕"
+            },
+            {
+                title: { es: "Munay Dog", en: "Munay Dog" },
+                description: { es: "Mi perrito rescatado: un anciano encontrado abandonado bajo un puente. Su mirada refleja resiliencia, amor y la segunda oportunidad que se merece.", en: "My rescued dog: an elder found abandoned under a bridge. His gaze reflects resilience, love, and the second chance he deserves." },
+                instagram: "https://www.instagram.com/p/DHwAe8aO3PP/",
+                image: "https://instagram.com/p/DHwAe8aO3PP/media/?size=l",
+                emoji: "🐾"
+            },
+            {
+                title: { es: "Ñawi Strange", en: "Ñawi Strange" },
+                description: { es: "Ñawi Strange: bolígrafo y lápices de colores, digitalizado. Una obra que explora lo extraño y lo cotidiano en la mirada andina.", en: "Ñawi Strange: pen and colored pencils, digitalized. A work that explores the strange and the everyday in the Andean gaze." },
+                instagram: "https://www.instagram.com/p/DF6HkC-SOxO/",
+                image: "https://instagram.com/p/DF6HkC-SOxO/media/?size=l",
+                emoji: "👁️"
+            },
+            {
+                title: { es: "Editado Computadora", en: "Computer Edited" },
+                description: { es: "Dibujo a bolígrafo editado en computadora. La fusión perfecta entre lo analógico y lo digital, creando nuevas dimensiones visuales.", en: "Pen drawing edited on computer. The perfect fusion between analog and digital, creating new visual dimensions." },
+                instagram: "https://www.instagram.com/p/CzcA1V5RD3t/",
+                image: "https://instagram.com/p/CzcA1V5RD3t/media/?size=l",
+                emoji: "💻"
+            },
+            {
+                title: { es: "Compañeros Greenpeace", en: "Greenpeace Companions" },
+                description: { es: "Dibujo digital de mis compañeros de Greenpeace. Un homenaje a quienes luchan por la protección del planeta y la justicia ambiental.", en: "Digital drawing of my Greenpeace companions. A tribute to those who fight for planet protection and environmental justice." },
+                instagram: "https://www.instagram.com/p/C0bnOMwOIRj/",
+                image: "https://instagram.com/p/C0bnOMwOIRj/media/?size=l",
+                emoji: "🌍"
+            },
+            {
+                title: { es: "Johnson - Padre del Blues", en: "Johnson - Father of Blues" },
+                description: { es: "Dibujo digital de Johnson, el padre del blues. Un artista legendario que admiro profundamente y cuya música ha transformado culturas.", en: "Digital drawing of Johnson, the father of blues. A legendary artist I deeply admire and whose music has transformed cultures." },
+                instagram: "https://www.instagram.com/p/CzcEP4uR7rh/",
+                image: "https://instagram.com/p/CzcEP4uR7rh/media/?size=l",
+                emoji: "🎵"
+            },
+            {
+                title: { es: "Chanchoman", en: "Chanchoman" },
+                description: { es: "Chanchoman: político ecocida de mi ciudad sin escrúpulos. Una crítica visual a la corrupción ambiental y la negligencia política.", en: "Chanchoman: an unscrupulous ecocidal politician from my city. A visual critique of environmental corruption and political negligence." },
+                instagram: "https://www.instagram.com/p/CjCcmkrO6qY/",
+                image: "https://instagram.com/p/CjCcmkrO6qY/media/?size=l",
+                emoji: "🔥"
+            },
+            {
+                title: { es: "Illa", en: "Illa" },
+                description: { es: "Illa: dibujo a lápiz y bolígrafo, digitalizado. Una obra que refleja la identidad digital en tiempos de transformación cultural.", en: "Illa: pencil and pen drawing, digitalized. A work that reflects digital identity in times of cultural transformation." },
+                instagram: "https://www.instagram.com/p/DF4WsWkuZMA/",
+                image: "https://instagram.com/p/DF4WsWkuZMA/media/?size=l",
+                emoji: "✨"
+            }
+        ];
+
+        // Renderizar galería
+        function renderGallery() {
+            const gallery = document.getElementById('galleryGrid');
+            gallery.innerHTML = '';
+
+            artworks.forEach((art, index) => {
+                const item = document.createElement('a');
+                item.href = art.instagram;
+                item.target = '_blank';
+                item.className = 'gallery-item fade-in';
+                item.style.pointerEvents = 'auto';
+                
+                item.innerHTML = `
+                    <div class="gallery-image" onclick="event.preventDefault(); openModal(${index})">
+                        <div style="font-size: 4rem; text-shadow: 0 0 20px rgba(0,0,0,0.3);">${art.emoji}</div>
+                    </div>
+                    <div class="gallery-caption">
+                        <div>
+                            <h3 class="caption-title">${art.title[currentLang]}</h3>
+                            <p class="caption-text">${art.description[currentLang].substring(0, 80)}...</p>
+                        </div>
+                        <div class="instagram-badge">
+                            <span>📸</span>
+                            <span>${currentLang === 'es' ? 'Ver en Instagram' : 'View on Instagram'}</span>
+                        </div>
+                    </div>
+                `;
+
+                gallery.appendChild(item);
+            });
+
+            // Animar items
+            gsap.utils.toArray('.gallery-item').forEach((item, idx) => {
+                gsap.fromTo(item,
+                    { y: 50, opacity: 0 },
+                    {
+                        y: 0,
+                        opacity: 1,
+                        duration: 0.8,
+                        delay: idx * 0.1,
+                        ease: "power2.out",
+                        scrollTrigger: {
+                            trigger: item,
+                            start: "top 90%",
+                            toggleActions: "play none none none"
+                        }
+                    }
+                );
+            });
+        }
+
+        function openModal(index) {
+            const modal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalDescription = document.getElementById('modalDescription');
+            
+            const art = artworks[index];
+            
+            modalImage.innerHTML = `<div style="font-size: 6rem; display: flex; align-items: center; justify-content: center; height: 400px; background: linear-gradient(135deg, var(--tierra) 0%, var(--oro) 100%);">${art.emoji}</div>`;
+            modalTitle.textContent = art.title[currentLang];
+            modalDescription.textContent = art.description[currentLang];
+            
+            modal.style.display = 'flex';
+            
+            gsap.fromTo(modal, 
+                { opacity: 0 },
+                { opacity: 1, duration: 0.3 }
+            );
+            
+            gsap.fromTo('.modal-content', 
+                { scale: 0.8, y: 50 },
+                { scale: 1, y: 0, duration: 0.4, ease: "power2.out" }
+            );
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            
+            gsap.to(modal, {
+                opacity: 0,
+                duration: 0.3,
+                onComplete: () => {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+
+        document.getElementById('imageModal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                closeModal();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Cursor personalizado
+        const cursor = document.querySelector('.custom-cursor');
+        let trails = [];
+        
+        for (let i = 0; i < 8; i++) {
+            const trail = document.createElement('div');
+            trail.className = 'cursor-trail';
+            document.body.appendChild(trail);
+            trails.push(trail);
+        }
+
+        let mouseX = 0, mouseY = 0;
+        let trailX = [], trailY = [];
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            
+            gsap.to(cursor, {
+                x: mouseX - 10,
+                y: mouseY - 10,
+                duration: 0.1
+            });
+        });
+
+        function animateTrails() {
+            trailX.unshift(mouseX);
+            trailY.unshift(mouseY);
+            
+            if (trailX.length > trails.length) {
+                trailX.pop();
+                trailY.pop();
+            }
+
+            trails.forEach((trail, index) => {
+                if (trailX[index] !== undefined) {
+                    gsap.to(trail, {
+                        x: trailX[index] - 2,
+                        y: trailY[index] - 2,
+                        duration: 0.3,
+                        ease: "power2.out"
+                    });
+                }
+            });
+
+            requestAnimationFrame(animateTrails);
+        }
+        animateTrails();
+
+        // Animaciones de entrada
+        gsap.utils.toArray('.fade-in').forEach(element => {
+            gsap.fromTo(element, 
+                { y: 50, opacity: 0 },
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: 1,
+                    ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: element,
+                        start: "top 80%",
+                        toggleActions: "play none none none"
+                    }
+                }
+            );
+        });
+
+        // Inicializar
+        window.addEventListener('load', () => {
+            renderGallery();
+            
+            gsap.fromTo('.phase-icon', 
+                { scale: 0, rotation: -180 },
+                { scale: 1, rotation: 0, duration: 1, ease: "back.out(1.7)" }
+            );
+            
+            gsap.fromTo('.page-title', 
+                { y: 100, opacity: 0 },
+                { y: 0, opacity: 1, duration: 1, delay: 0.3, ease: "power2.out" }
+            );
+            
+            gsap.fromTo('.page-subtitle', 
+                { y: 50, opacity: 0 },
+                { y: 0, opacity: 1, duration: 1, delay: 0.6, ease: "power2.out" }
+            );
+        });
+
+        // Hover effects
+        document.addEventListener('mousemove', () => {
+            document.querySelectorAll('.gallery-item').forEach(item => {
+                item.addEventListener('mouseenter', () => {
+                    gsap.to(item.querySelector('.gallery-image'), {
+                        scale: 1.1,
+                        duration: 0.3,
+                        ease: "power2.out"
+                    });
+                });
+
+                item.addEventListener('mouseleave', () => {
+                    gsap.to(item.querySelector('.gallery-image'), {
+                        scale: 1,
+                        duration: 0.3,
+                        ease: "power2.out"
+                    });
+                });
+            });
+        });
+    </script>
 </body>
 </html>
