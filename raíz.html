@@ -198,16 +198,15 @@
 
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1400px;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
         .gallery-item {
             position: relative;
-            aspect-ratio: 1;
-            border-radius: 15px;
+            border-radius: 12px;
             overflow: hidden;
             background: rgba(139, 69, 19, 0.1);
             backdrop-filter: blur(10px);
@@ -220,16 +219,18 @@
             color: inherit;
             display: flex;
             flex-direction: column;
+            height: 100%;
         }
 
         .gallery-item:hover {
-            transform: translateY(-10px) scale(1.05);
-            box-shadow: 0 20px 40px rgba(139, 69, 19, 0.3);
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 15px 35px rgba(139, 69, 19, 0.3);
+            border-color: var(--oro);
         }
 
         .gallery-image {
             width: 100%;
-            height: 70%;
+            height: 200px;
             background: linear-gradient(135deg, 
                 var(--tierra) 0%, 
                 rgba(139, 69, 19, 0.8) 50%, 
@@ -251,14 +252,19 @@
         }
 
         .gallery-item:hover .gallery-image img {
-            transform: scale(1.1);
+            transform: scale(1.08);
+        }
+
+        .gallery-image.emoji-placeholder {
+            font-size: 3rem;
+            text-shadow: 0 0 20px rgba(0,0,0,0.3);
         }
 
         .gallery-caption {
             position: relative;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(10px);
-            padding: 1.5rem;
+            padding: 1rem;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
@@ -267,15 +273,16 @@
 
         .caption-title {
             font-family: 'Playfair Display', serif;
-            font-size: 1.2rem;
+            font-size: 1rem;
             color: var(--oro);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem;
+            line-height: 1.2;
         }
 
         .caption-text {
-            font-size: 0.9rem;
-            line-height: 1.4;
-            opacity: 0.9;
+            font-size: 0.75rem;
+            line-height: 1.3;
+            opacity: 0.85;
             margin-bottom: 0.5rem;
         }
 
@@ -285,8 +292,8 @@
             gap: 0.3rem;
             color: var(--fuego);
             font-weight: 600;
-            font-size: 0.8rem;
-            margin-top: 0.5rem;
+            font-size: 0.7rem;
+            margin-top: auto;
         }
 
         .image-modal {
@@ -392,12 +399,20 @@
             }
 
             .gallery-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+                gap: 1rem;
             }
 
-            .gallery-item {
-                aspect-ratio: 4/3;
+            .gallery-image {
+                height: 160px;
+            }
+
+            .caption-title {
+                font-size: 0.9rem;
+            }
+
+            .caption-text {
+                font-size: 0.7rem;
             }
 
             .modal-content {
@@ -429,16 +444,29 @@
                 margin-bottom: 2rem;
             }
 
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 0.8rem;
+            }
+
+            .gallery-image {
+                height: 130px;
+            }
+
             .gallery-caption {
-                padding: 1rem;
+                padding: 0.8rem;
             }
 
             .caption-title {
-                font-size: 1rem;
+                font-size: 0.85rem;
             }
 
             .caption-text {
-                font-size: 0.8rem;
+                font-size: 0.65rem;
+            }
+
+            .instagram-badge {
+                font-size: 0.65rem;
             }
         }
     </style>
@@ -512,89 +540,94 @@
         const artworks = [
             {
                 title: { es: "Identidad Pacha", en: "Pacha Identity" },
-                description: { es: "Rostro de la Pacha a lápiz y bolígrafo, digitalizado. Un retrato que captura la esencia ancestral andina con técnicas clásicas combinadas con lo digital.", en: "Pacha's face in pencil and pen, digitalized. A portrait that captures the ancestral Andean essence with classical techniques combined with digital art." },
+                description: { es: "Rostro de la Pacha a lápiz y bolígrafo, digitalizado. Un retrato que captura la esencia ancestral andina.", en: "Pacha's face in pencil and pen, digitalized. A portrait that captures ancestral Andean essence." },
                 instagram: "https://www.instagram.com/p/DF1bPJFOs_P/",
-                image: "https://instagram.com/p/DF1bPJFOs_P/media/?size=l",
+                instaId: "DF1bPJFOs_P",
                 emoji: "👵"
             },
             {
                 title: { es: "Proceso Pacha", en: "Pacha Process" },
-                description: { es: "Video del proceso de creación del rostro de Pacha. Observa cómo nace una obra desde el trazo inicial hasta la composición final.", en: "Video of the creation process of Pacha's face. Watch how an artwork is born from the initial stroke to the final composition." },
+                description: { es: "Video del proceso de creación del rostro de Pacha. Observa cómo nace la obra.", en: "Video of the creation process of Pacha's face. Watch how the artwork is born." },
                 instagram: "https://www.instagram.com/reel/DFmMvzZusjM/",
-                image: "https://instagram.com/reel/DFmMvzZusjM/media/?size=l",
+                instaId: "DFmMvzZusjM",
                 emoji: "🎬"
             },
             {
                 title: { es: "Pretty Ñusta", en: "Pretty Ñusta" },
-                description: { es: "Pretty Ñusta: lápiz y bolígrafo digitalizado. Una joven princesa andina reimaginada con técnicas mixtas tradicionales y digitales.", en: "Pretty Ñusta: pencil and pen digitalized. A young Andean princess reimagined with traditional and digital mixed techniques." },
+                description: { es: "Pretty Ñusta: lápiz y bolígrafo digitalizado. Una joven princesa andina reimaginada.", en: "Pretty Ñusta: pencil and pen digitalized. An Andean princess reimagined." },
                 instagram: "https://www.instagram.com/p/DFmIpZeu-A-/",
-                image: "https://instagram.com/p/DFmIpZeu-A-/media/?size=l",
+                instaId: "DFmIpZeu-A-",
                 emoji: "👸"
             },
             {
                 title: { es: "Proceso Pretty Ñusta", en: "Pretty Ñusta Process" },
-                description: { es: "Video del proceso creativo de Pretty Ñusta, desde el boceto inicial hasta la versión digitalizada final.", en: "Video of the creative process of Pretty Ñusta, from initial sketch to final digitalized version." },
+                description: { es: "Video del proceso creativo de Pretty Ñusta, desde el boceto hasta lo final.", en: "Video of Pretty Ñusta's creative process, from sketch to final version." },
                 instagram: "https://www.instagram.com/reel/DFmGSpIukP1/",
-                image: "https://instagram.com/reel/DFmGSpIukP1/media/?size=l",
+                instaId: "DFmGSpIukP1",
                 emoji: "🎨"
             },
             {
                 title: { es: "Yuraj Dog", en: "Yuraj Dog" },
-                description: { es: "Retrato de un perrito capturado con sensibilidad y detalle. Una obra que honra la belleza animal y su conexión espiritual.", en: "Portrait of a little dog captured with sensitivity and detail. A work that honors animal beauty and its spiritual connection." },
+                description: { es: "Retrato de un perrito capturado con sensibilidad y detalle. Una obra que honra la belleza animal.", en: "Portrait of a dog captured with sensitivity and detail. A work honoring animal beauty." },
                 instagram: "https://www.instagram.com/p/DH9N86PS14l/",
-                image: "https://instagram.com/p/DH9N86PS14l/media/?size=l",
+                instaId: "DH9N86PS14l",
                 emoji: "🐕"
             },
             {
                 title: { es: "Munay Dog", en: "Munay Dog" },
-                description: { es: "Mi perrito rescatado: un anciano encontrado abandonado bajo un puente. Su mirada refleja resiliencia, amor y la segunda oportunidad que se merece.", en: "My rescued dog: an elder found abandoned under a bridge. His gaze reflects resilience, love, and the second chance he deserves." },
+                description: { es: "Mi perrito rescatado encontrado abandonado bajo un puente. Su mirada refleja resiliencia y amor.", en: "My rescued dog found abandoned under a bridge. His gaze reflects resilience and love." },
                 instagram: "https://www.instagram.com/p/DHwAe8aO3PP/",
-                image: "https://instagram.com/p/DHwAe8aO3PP/media/?size=l",
+                instaId: "DHwAe8aO3PP",
                 emoji: "🐾"
             },
             {
                 title: { es: "Ñawi Strange", en: "Ñawi Strange" },
-                description: { es: "Ñawi Strange: bolígrafo y lápices de colores, digitalizado. Una obra que explora lo extraño y lo cotidiano en la mirada andina.", en: "Ñawi Strange: pen and colored pencils, digitalized. A work that explores the strange and the everyday in the Andean gaze." },
+                description: { es: "Ñawi Strange: bolígrafo y lápices de colores, digitalizado. Una obra que explora lo extraño.", en: "Ñawi Strange: pen and colored pencils, digitalized. Exploring the strange and everyday." },
                 instagram: "https://www.instagram.com/p/DF6HkC-SOxO/",
-                image: "https://instagram.com/p/DF6HkC-SOxO/media/?size=l",
+                instaId: "DF6HkC-SOxO",
                 emoji: "👁️"
             },
             {
                 title: { es: "Editado Computadora", en: "Computer Edited" },
-                description: { es: "Dibujo a bolígrafo editado en computadora. La fusión perfecta entre lo analógico y lo digital, creando nuevas dimensiones visuales.", en: "Pen drawing edited on computer. The perfect fusion between analog and digital, creating new visual dimensions." },
+                description: { es: "Dibujo a bolígrafo editado en computadora. La fusión entre lo analógico y digital.", en: "Pen drawing edited on computer. Fusion of analog and digital art." },
                 instagram: "https://www.instagram.com/p/CzcA1V5RD3t/",
-                image: "https://instagram.com/p/CzcA1V5RD3t/media/?size=l",
+                instaId: "CzcA1V5RD3t",
                 emoji: "💻"
             },
             {
                 title: { es: "Compañeros Greenpeace", en: "Greenpeace Companions" },
-                description: { es: "Dibujo digital de mis compañeros de Greenpeace. Un homenaje a quienes luchan por la protección del planeta y la justicia ambiental.", en: "Digital drawing of my Greenpeace companions. A tribute to those who fight for planet protection and environmental justice." },
+                description: { es: "Dibujo digital de mis compañeros de Greenpeace. Un homenaje a quienes luchan por el planeta.", en: "Digital drawing of my Greenpeace companions. A tribute to environmental defenders." },
                 instagram: "https://www.instagram.com/p/C0bnOMwOIRj/",
-                image: "https://instagram.com/p/C0bnOMwOIRj/media/?size=l",
+                instaId: "C0bnOMwOIRj",
                 emoji: "🌍"
             },
             {
                 title: { es: "Johnson - Padre del Blues", en: "Johnson - Father of Blues" },
-                description: { es: "Dibujo digital de Johnson, el padre del blues. Un artista legendario que admiro profundamente y cuya música ha transformado culturas.", en: "Digital drawing of Johnson, the father of blues. A legendary artist I deeply admire and whose music has transformed cultures." },
+                description: { es: "Dibujo digital de Johnson, el padre del blues. Un artista legendario que admiro profundamente.", en: "Digital drawing of Johnson, the father of blues. A legendary artist I deeply admire." },
                 instagram: "https://www.instagram.com/p/CzcEP4uR7rh/",
-                image: "https://instagram.com/p/CzcEP4uR7rh/media/?size=l",
+                instaId: "CzcEP4uR7rh",
                 emoji: "🎵"
             },
             {
                 title: { es: "Chanchoman", en: "Chanchoman" },
-                description: { es: "Chanchoman: político ecocida de mi ciudad sin escrúpulos. Una crítica visual a la corrupción ambiental y la negligencia política.", en: "Chanchoman: an unscrupulous ecocidal politician from my city. A visual critique of environmental corruption and political negligence." },
+                description: { es: "Chanchoman: político ecocida de mi ciudad. Una crítica visual a la corrupción ambiental.", en: "Chanchoman: an ecocidal politician from my city. A critique of environmental corruption." },
                 instagram: "https://www.instagram.com/p/CjCcmkrO6qY/",
-                image: "https://instagram.com/p/CjCcmkrO6qY/media/?size=l",
+                instaId: "CjCcmkrO6qY",
                 emoji: "🔥"
             },
             {
                 title: { es: "Illa", en: "Illa" },
-                description: { es: "Illa: dibujo a lápiz y bolígrafo, digitalizado. Una obra que refleja la identidad digital en tiempos de transformación cultural.", en: "Illa: pencil and pen drawing, digitalized. A work that reflects digital identity in times of cultural transformation." },
+                description: { es: "Illa: dibujo a lápiz y bolígrafo, digitalizado. Una obra que refleja la identidad digital.", en: "Illa: pencil and pen drawing, digitalized. Reflecting digital identity in transformation." },
                 instagram: "https://www.instagram.com/p/DF4WsWkuZMA/",
-                image: "https://instagram.com/p/DF4WsWkuZMA/media/?size=l",
+                instaId: "DF4WsWkuZMA",
                 emoji: "✨"
             }
         ];
+
+        // Función para obtener imagen de Instagram
+        function getInstagramImageUrl(shortcode) {
+            return `https://www.instagram.com/p/${shortcode}/media/?size=l`;
+        }
 
         // Renderizar galería
         function renderGallery() {
@@ -608,18 +641,20 @@
                 item.className = 'gallery-item fade-in';
                 item.style.pointerEvents = 'auto';
                 
+                const imageUrl = getInstagramImageUrl(art.instaId);
+                
                 item.innerHTML = `
                     <div class="gallery-image" onclick="event.preventDefault(); openModal(${index})">
-                        <div style="font-size: 4rem; text-shadow: 0 0 20px rgba(0,0,0,0.3);">${art.emoji}</div>
+                        <img src="${imageUrl}" alt="${art.title[currentLang]}" onerror="this.style.display='none'; this.parentElement.classList.add('emoji-placeholder'); this.parentElement.innerHTML='${art.emoji}';" style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                     <div class="gallery-caption">
                         <div>
                             <h3 class="caption-title">${art.title[currentLang]}</h3>
-                            <p class="caption-text">${art.description[currentLang].substring(0, 80)}...</p>
+                            <p class="caption-text">${art.description[currentLang].substring(0, 60)}...</p>
                         </div>
                         <div class="instagram-badge">
                             <span>📸</span>
-                            <span>${currentLang === 'es' ? 'Ver en Instagram' : 'View on Instagram'}</span>
+                            <span>${currentLang === 'es' ? 'Ver' : 'View'}</span>
                         </div>
                     </div>
                 `;
@@ -654,8 +689,11 @@
             const modalDescription = document.getElementById('modalDescription');
             
             const art = artworks[index];
+            const imageUrl = getInstagramImageUrl(art.instaId);
             
-            modalImage.innerHTML = `<div style="font-size: 6rem; display: flex; align-items: center; justify-content: center; height: 400px; background: linear-gradient(135deg, var(--tierra) 0%, var(--oro) 100%);">${art.emoji}</div>`;
+            modalImage.innerHTML = `
+                <img src="${imageUrl}" alt="${art.title[currentLang]}" style="max-width: 100%; max-height: 100%; object-fit: contain;" onerror="this.outerHTML='<div style=\"font-size: 5rem; display: flex; align-items: center; justify-content: center; height: 400px; background: linear-gradient(135deg, var(--tierra) 0%, var(--oro) 100%);\">${art.emoji}</div>'">
+            `;
             modalTitle.textContent = art.title[currentLang];
             modalDescription.textContent = art.description[currentLang];
             
