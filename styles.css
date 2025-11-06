@@ -708,24 +708,25 @@
 }
 
 /* ==========================================
-   TIMELINE DE PROYECTOS
+   TIMELINE DE PROYECTOS - VERSIÓN MEJORADA
    ========================================== */
 
 .timeline {
-    max-width: 1200px;
+    max-width: 900px;
     margin: 0 auto;
     position: relative;
-    padding: 0 1rem;
+    padding: 2rem 0;
 }
 
+/* Línea vertical central */
 .timeline::before {
     content: '';
     position: absolute;
     left: 50%;
     top: 0;
     bottom: 0;
-    width: 2px;
-    background: linear-gradient(to bottom, var(--oro), var(--fuego), var(--aire));
+    width: 3px;
+    background: linear-gradient(to bottom, var(--oro), var(--fuego), var(--agua));
     transform: translateX(-50%);
 }
 
@@ -735,6 +736,9 @@
     opacity: 0;
     transform: translateY(50px);
     animation: fadeInUp 0.6s ease forwards;
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
 }
 
 @keyframes fadeInUp {
@@ -744,17 +748,62 @@
     }
 }
 
+/* Alternancia izquierda-derecha */
+.proyecto:nth-child(odd) {
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
 .proyecto:nth-child(odd) .proyecto-content {
+    width: calc(50% - 2rem);
     margin-left: 0;
-    margin-right: 55%;
     text-align: right;
 }
 
-.proyecto:nth-child(even) .proyecto-content {
-    margin-left: 55%;
-    margin-right: 0;
+.proyecto:nth-child(even) {
+    flex-direction: row-reverse;
+    justify-content: flex-start;
 }
 
+.proyecto:nth-child(even) .proyecto-content {
+    width: calc(50% - 2rem);
+    margin-right: 0;
+    text-align: left;
+}
+
+/* Ícono central */
+.proyecto-icono {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, var(--oro), var(--fuego));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: #1a1a1a;
+    z-index: 5;
+    box-shadow: 0 0 30px rgba(243, 156, 18, 0.5);
+    animation: iconoPulsa 2s ease-in-out infinite;
+    flex-shrink: 0;
+}
+
+@keyframes iconoPulsa {
+    0%, 100% {
+        box-shadow: 0 0 30px rgba(243, 156, 18, 0.5);
+        transform: translateX(-50%) scale(1);
+    }
+    50% {
+        box-shadow: 0 0 50px rgba(243, 156, 18, 0.8);
+        transform: translateX(-50%) scale(1.1);
+    }
+}
+
+/* Contenido del proyecto */
 .proyecto-content {
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
@@ -786,39 +835,9 @@
 }
 
 .proyecto-content:hover {
-    transform: scale(1.05);
+    transform: scale(1.02);
     background: rgba(255, 255, 255, 0.1);
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
-}
-
-.proyecto-icono {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 70px;
-    height: 70px;
-    background: linear-gradient(135deg, var(--oro), var(--fuego));
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-    color: #1a1a1a;
-    z-index: 2;
-    box-shadow: 0 0 30px rgba(243, 156, 18, 0.5);
-    animation: iconoPulsa 2s ease-in-out infinite;
-}
-
-@keyframes iconoPulsa {
-    0%, 100% {
-        box-shadow: 0 0 30px rgba(243, 156, 18, 0.5);
-        transform: translate(-50%, -50%) scale(1);
-    }
-    50% {
-        box-shadow: 0 0 50px rgba(243, 156, 18, 0.8);
-        transform: translate(-50%, -50%) scale(1.1);
-    }
 }
 
 .proyecto h3 {
@@ -834,10 +853,7 @@
     opacity: 0.9;
 }
 
-/* ==========================================
-   ENLACES Y BOTONES
-   ========================================== */
-
+/* Enlaces y botones */
 .proyecto-link {
     display: flex;
     gap: 1rem;
@@ -889,10 +905,7 @@
     scale: 1.05;
 }
 
-/* ==========================================
-   BOTÓN WHATSAPP EN PROYECTOS
-   ========================================== */
-
+/* Botón WhatsApp en proyectos */
 .whatsapp-proyecto {
     background: #25D366 !important;
     padding: 0.7rem !important;
@@ -918,14 +931,7 @@
     box-shadow: 0 8px 25px rgba(37, 211, 102, 0.6) !important;
 }
 
-.whatsapp-proyecto:active {
-    transform: scale(0.95) !important;
-}
-
-/* ==========================================
-   ANIMACIÓN DE CONTENIDO
-   ========================================== */
-
+/* Animación de contenido */
 .proyecto:nth-child(1) {
     animation-delay: 0s;
 }
@@ -947,7 +953,7 @@
 }
 
 /* ==========================================
-   RESPONSIVE - TABLET
+   RESPONSIVE - TABLET (1024px)
    ========================================== */
 
 @media (max-width: 1024px) {
@@ -967,20 +973,8 @@
 
     .proyecto:nth-child(odd) .proyecto-content,
     .proyecto:nth-child(even) .proyecto-content {
-        margin-left: 5%;
-        margin-right: 5%;
-        text-align: center;
-    }
-
-    .timeline::before {
-        left: 20px;
-    }
-
-    .proyecto-icono {
-        left: 20px;
-        width: 60px;
-        height: 60px;
-        font-size: 1.5rem;
+        width: calc(50% - 1.5rem) !important;
+        text-align: center !important;
     }
 
     .proyecto-link {
@@ -989,7 +983,7 @@
 }
 
 /* ==========================================
-   RESPONSIVE - MÓVIL
+   RESPONSIVE - MÓVIL (768px)
    ========================================== */
 
 @media (max-width: 768px) {
@@ -1018,21 +1012,41 @@
         display: none;
     }
 
+    /* Timeline vertical completo en móvil */
+    .timeline::before {
+        left: 30px;
+    }
+
+    /* Todos los proyectos alineados a la izquierda */
+    .proyecto {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-left: 100px;
+        margin-left: 0;
+    }
+
+    .proyecto:nth-child(odd),
+    .proyecto:nth-child(even) {
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
     .proyecto-content {
+        width: 100%;
+        text-align: left !important;
+        margin: 0 !important;
         padding: 1.5rem;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
     }
 
     .proyecto-icono {
         position: relative;
-        left: auto;
+        left: 0;
         top: auto;
         transform: none;
         margin-bottom: 1rem;
-        width: 55px;
-        height: 55px;
-        font-size: 1.3rem;
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
     }
 
     .proyecto h3 {
@@ -1044,7 +1058,7 @@
     }
 
     .proyecto-link {
-        justify-content: center !important;
+        justify-content: flex-start !important;
         gap: 0.8rem;
     }
 
@@ -1053,17 +1067,13 @@
         font-size: 0.85rem;
     }
 
-    .timeline::before {
-        left: 15px;
-    }
-
     .proyecto {
         margin-bottom: 3rem;
     }
 }
 
 /* ==========================================
-   RESPONSIVE - MÓVIL PEQUEÑO
+   RESPONSIVE - MÓVIL PEQUEÑO (480px)
    ========================================== */
 
 @media (max-width: 480px) {
@@ -1086,17 +1096,23 @@
         font-size: 0.8rem;
     }
 
+    .timeline::before {
+        left: 20px;
+    }
+
+    .proyecto {
+        padding-left: 70px;
+    }
+
     .proyecto-content {
         padding: 1.2rem;
-        margin: 0 !important;
         border-radius: 12px;
     }
 
     .proyecto-icono {
-        width: 50px;
-        height: 50px;
-        font-size: 1.2rem;
-        margin-bottom: 1rem;
+        width: 55px;
+        height: 55px;
+        font-size: 1.3rem;
     }
 
     .proyecto h3 {
@@ -1112,6 +1128,7 @@
     .proyecto-link {
         flex-direction: column;
         gap: 0.6rem;
+        width: 100%;
     }
 
     .proyecto-link a {
@@ -1128,43 +1145,16 @@
         font-size: 1rem !important;
     }
 
-    .timeline::before {
-        left: 12px;
-    }
-
     .proyecto {
         margin-bottom: 2.5rem;
     }
 }
 
-/* ==========================================
-   EFECTOS Y TRANSICIONES
-   ========================================== */
-
+/* Fade-in animation */
 .fade-in {
     opacity: 0;
     animation: fadeInUp 0.6s ease forwards;
 }
-
-.proyecto-content:hover h3 {
-    color: var(--fuego);
-    text-shadow: 0 0 10px rgba(255, 107, 53, 0.5);
-}
-
-/* Pulso en los iconos al hover */
-.proyecto:hover .proyecto-icono {
-    animation: iconoPulsaActive 0.6s ease;
-}
-
-@keyframes iconoPulsaActive {
-    0%, 100% {
-        transform: translate(-50%, -50%) scale(1);
-    }
-    50% {
-        transform: translate(-50%, -50%) scale(1.2);
-    }
-}
-
 
         /* === SECCIÓN 3: Las 4 Fases del Arte */
 .fases {
@@ -5105,4 +5095,5 @@ MENÚ SUPERIOR CENTRADO
 .plantillas-grid.carrusel {
     will-change: transform;
 }
+
 
