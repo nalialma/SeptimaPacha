@@ -593,3 +593,172 @@ setTimeout(() => {
         console.error('❌ Verificación final: Menú NO encontrado en el DOM');
     }
 }, 1000);
+
+// ==========================================
+// SISTEMA DE PESTAÑAS DE PROYECTOS
+// ==========================================
+
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('✨ Inicializando sistema de pestañas de proyectos...');
+
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const projectContents = document.querySelectorAll('.proyectos-content');
+
+    if (tabButtons.length === 0) {
+        console.warn('⚠️ No se encontraron botones de pestaña');
+        return;
+    }
+
+    // Función para cambiar de pestaña
+    function switchTab(tabName) {
+        console.log(`📁 Cambiando a pestaña: ${tabName}`);
+
+        // Remover clase active de todos los botones
+        tabButtons.forEach(btn => {
+            btn.classList.remove('active');
+        });
+
+        // Remover clase active de todo el contenido
+        projectContents.forEach(content => {
+            content.classList.remove('active');
+        });
+
+        // Agregar clase active al botón clickeado
+        const activeBtn = document.querySelector(`.tab-btn[data-tab="${tabName}"]`);
+        if (activeBtn) {
+            activeBtn.classList.add('active');
+            console.log('✅ Botón activado:', tabName);
+        }
+
+        // Agregar clase active al contenido correspondiente
+        const activeContent = document.querySelector(`.proyectos-content[data-content="${tabName}"]`);
+        if (activeContent) {
+            activeContent.classList.add('active');
+            console.log('✅ Contenido activado:', tabName);
+
+            // Trigger animation for fade-in elements
+            const fadeInElements = activeContent.querySelectorAll('.proyecto');
+            fadeInElements.forEach((element, index) => {
+                element.style.animationDelay = `${index * 0.15}s`;
+            });
+        } else {
+            console.error('❌ No se encontró contenido para:', tabName);
+        }
+    }
+
+    // Event listeners para los botones
+    tabButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            const tabName = button.getAttribute('data-tab');
+            console.log('🖱️ Click en botón:', tabName);
+            switchTab(tabName);
+
+            // Animar el botón
+            button.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                button.style.transform = '';
+            }, 150);
+        });
+
+        // Efecto al pasar el mouse
+        button.addEventListener('mouseenter', () => {
+            if (!button.classList.contains('active')) {
+                button.style.transform = 'translateY(-2px)';
+            }
+        });
+
+        button.addEventListener('mouseleave', () => {
+            button.style.transform = '';
+        });
+    });
+
+    // Inicializar con la primera pestaña activa
+    switchTab('webs');
+
+    // Soporte de teclado - Navegar con flechas
+    document.addEventListener('keydown', (e) => {
+        const currentActiveBtn = document.querySelector('.tab-btn.active');
+        const allBtns = Array.from(tabButtons);
+        const currentIndex = allBtns.indexOf(currentActiveBtn);
+
+        if (e.key === 'ArrowRight') {
+            const nextIndex = (currentIndex + 1) % allBtns.length;
+            const nextTab = allBtns[nextIndex].getAttribute('data-tab');
+            switchTab(nextTab);
+        } else if (e.key === 'ArrowLeft') {
+            const prevIndex = (currentIndex - 1 + allBtns.length) % allBtns.length;
+            const prevTab = allBtns[prevIndex].getAttribute('data-tab');
+            switchTab(prevTab);
+        }
+    });
+
+    console.log('✅ Sistema de pestañas cargado correctamente');
+});
+
+// ==========================================
+// EFECTO DE SCROLL EN BOTONES WHATSAPP
+// ==========================================
+
+document.addEventListener('DOMContentLoaded', () => {
+    const whatsappBotones = document.querySelectorAll('.whatsapp-proyecto');
+
+    whatsappBotones.forEach(boton => {
+        boton.addEventListener('mouseenter', () => {
+            boton.style.animation = 'whatsappPulse 0.6s ease';
+        });
+
+        boton.addEventListener('click', (e) => {
+            // Crear ripple effect
+            const ripple = document.createElement('span');
+            ripple.style.cssText = `
+                position: absolute;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.6);
+                width: 10px;
+                height: 10px;
+                animation: rippleEffect 0.6s ease-out;
+                pointer-events: none;
+            `;
+
+            boton.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 600);
+        });
+    });
+
+    // Agregar CSS de animación si no existe
+    if (!document.getElementById('whatsapp-animation-style')) {
+        const style = document.createElement('style');
+        style.id = 'whatsapp-animation-style';
+        style.innerHTML = `
+            @keyframes rippleEffect {
+                to {
+                    width: 60px;
+                    height: 60px;
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+});
+
+// ==========================================
+// ANALYTICS - Registrar cambios de pestaña
+// ==========================================
+
+function trackTabChange(tabName) {
+    console.log(`📊 Tab change tracked: ${tabName}`);
+    
+    // Aquí puedes agregar tu código de analytics si lo deseas
+    // Por ejemplo: ga('send', 'event', 'Projects', 'Tab', tabName);
+}
+
+// Integrar tracking con el switch de tabs
+document.addEventListener('click', (e) => {
+    if (e.target.closest('.tab-btn')) {
+        const tabName = e.target.closest('.tab-btn').getAttribute('data-tab');
+        trackTabChange(tabName);
+    }
+});
+
