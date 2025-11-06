@@ -1,3 +1,15 @@
+// Verificar elementos existentes
+window.addEventListener('load', () => {
+    const tabs = document.querySelectorAll('.tab-btn');
+    const contents = document.querySelectorAll('.proyectos-content');
+    
+    console.log(`📊 Pestañas encontradas: ${tabs.length}`);
+    console.log(`📄 Contenidos encontrados: ${contents.length}`);
+    
+    if (tabs.length > 0 && contents.length > 0) {
+        console.log('✅ Sistema de pestañas listo para funcionar');
+    }
+});
 // ==========================================
 // SISTEMA DE TRADUCCIÓN
 // ==========================================
@@ -703,3 +715,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     console.log('✅ Sistema de pestañas cargado correctamente');
 });
+
