@@ -628,6 +628,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (activeBtn) {
             activeBtn.classList.add('active');
             console.log('✅ Botón activado:', tabName);
+        } else {
+            console.error('❌ No se encontró botón para:', tabName);
         }
 
         // Agregar clase active al contenido correspondiente
@@ -646,12 +648,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Event listeners para los botones
+    // Event listeners para los botones - CON PREVENCIÓN DE PROPAGACIÓN
     tabButtons.forEach(button => {
         button.addEventListener('click', (e) => {
             e.preventDefault();
+            e.stopPropagation();
+            
             const tabName = button.getAttribute('data-tab');
             console.log('🖱️ Click en botón:', tabName);
+            
             switchTab(tabName);
 
             // Animar el botón
@@ -674,7 +679,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Inicializar con la primera pestaña activa
-    switchTab('webs');
+    if (tabButtons.length > 0) {
+        const firstTab = tabButtons[0].getAttribute('data-tab');
+        switchTab(firstTab);
+    }
 
     // Soporte de teclado - Navegar con flechas
     document.addEventListener('keydown', (e) => {
@@ -682,11 +690,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const allBtns = Array.from(tabButtons);
         const currentIndex = allBtns.indexOf(currentActiveBtn);
 
-        if (e.key === 'ArrowRight') {
+        if (e.key === 'ArrowRight' && currentIndex !== -1) {
             const nextIndex = (currentIndex + 1) % allBtns.length;
             const nextTab = allBtns[nextIndex].getAttribute('data-tab');
             switchTab(nextTab);
-        } else if (e.key === 'ArrowLeft') {
+        } else if (e.key === 'ArrowLeft' && currentIndex !== -1) {
             const prevIndex = (currentIndex - 1 + allBtns.length) % allBtns.length;
             const prevTab = allBtns[prevIndex].getAttribute('data-tab');
             switchTab(prevTab);
@@ -695,70 +703,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
     console.log('✅ Sistema de pestañas cargado correctamente');
 });
-
-// ==========================================
-// EFECTO DE SCROLL EN BOTONES WHATSAPP
-// ==========================================
-
-document.addEventListener('DOMContentLoaded', () => {
-    const whatsappBotones = document.querySelectorAll('.whatsapp-proyecto');
-
-    whatsappBotones.forEach(boton => {
-        boton.addEventListener('mouseenter', () => {
-            boton.style.animation = 'whatsappPulse 0.6s ease';
-        });
-
-        boton.addEventListener('click', (e) => {
-            // Crear ripple effect
-            const ripple = document.createElement('span');
-            ripple.style.cssText = `
-                position: absolute;
-                border-radius: 50%;
-                background: rgba(255, 255, 255, 0.6);
-                width: 10px;
-                height: 10px;
-                animation: rippleEffect 0.6s ease-out;
-                pointer-events: none;
-            `;
-
-            boton.appendChild(ripple);
-            setTimeout(() => ripple.remove(), 600);
-        });
-    });
-
-    // Agregar CSS de animación si no existe
-    if (!document.getElementById('whatsapp-animation-style')) {
-        const style = document.createElement('style');
-        style.id = 'whatsapp-animation-style';
-        style.innerHTML = `
-            @keyframes rippleEffect {
-                to {
-                    width: 60px;
-                    height: 60px;
-                    opacity: 0;
-                }
-            }
-        `;
-        document.head.appendChild(style);
-    }
-});
-
-// ==========================================
-// ANALYTICS - Registrar cambios de pestaña
-// ==========================================
-
-function trackTabChange(tabName) {
-    console.log(`📊 Tab change tracked: ${tabName}`);
-    
-    // Aquí puedes agregar tu código de analytics si lo deseas
-    // Por ejemplo: ga('send', 'event', 'Projects', 'Tab', tabName);
-}
-
-// Integrar tracking con el switch de tabs
-document.addEventListener('click', (e) => {
-    if (e.target.closest('.tab-btn')) {
-        const tabName = e.target.closest('.tab-btn').getAttribute('data-tab');
-        trackTabChange(tabName);
-    }
-});
-
