@@ -1,24 +1,176 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Séptima Pacha | Arte Multidisciplinario</title>
-
-    <!-- ✨ FAVICONS ✨ -->
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-    <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <meta name="theme-color" content="#F39C12">
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- TÍTULO Y META DESCRIPTIÓN OPTIMIZADOS -->
+  <title>Séptima Pacha | Diseño Web, Música & Arte Visual Ancestral Moderno</title>
+  <meta name="description" content="Agencia creativa multidisciplinaria en Salta. Diseño web responsivo, música andina, arte físico & branding con identidad cultural. Honramos raíces mientras abrazamos futuro.">
+  <meta name="keywords" content="diseño web Salta, música andina, arte ancestral, identidad visual, branding cultural, plantillas web responsivas">
+  <meta name="author" content="Séptima Pacha Co.">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="Spanish">
+  
+  <!-- OPEN GRAPH (REDES SOCIALES) -->
+  <meta property="og:title" content="Séptima Pacha Co. | Creatividad Ancestral-Tecnológica">
+  <meta property="og:description" content="Creamos experiencias que honran el pasado mientras abrazan el futuro.">
+  <meta property="og:image" content="https://septimapacha.com/og-image-home.jpg">
+  <meta property="og:url" content="https://septimapacha.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_AR">
+  
+  <!-- TWITTER CARD -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Séptima Pacha Co. | Creatividad Ancestral">
+  <meta name="twitter:description" content="Diseño web, música andina, arte y branding con identidad cultural.">
+  <meta name="twitter:image" content="https://septimapacha.com/og-image-home.jpg">
+  
+  <!-- CANONICAL (Evita contenido duplicado) -->
+  <link rel="canonical" href="https://septimapacha.com/">
+  
+  <!-- FAVICON -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  <!-- FUENTES GOOGLE FONTS -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+  
+  <!-- STYLESHEET -->
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- PRELOAD (Optimización de velocidad) -->
+  <link rel="preload" as="script" href="script.js">
+  <link rel="preload" as="style" href="styles.css">
+  
+  <!-- PREFETCH (Enlaces probables a clickear) -->
+  <link rel="prefetch" href="/servicios/diseno-web/">
+  <link rel="prefetch" href="/servicios/musica/">
+  <link rel="prefetch" href="/blog/">
 
-    
+  <!-- SCHEMA.ORG - LOCALIZACIÓN + SERVICIOS -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Séptima Pacha Co.",
+    "image": "https://septimapacha.com/logo.svg",
+    "description": "Agencia creativa multidisciplinaria: diseño web, música ancestral, arte visual, branding, animación",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Salta",
+      "addressLocality": "Salta",
+      "addressRegion": "Salta",
+      "postalCode": "4400",
+      "addressCountry": "AR"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "Customer Service",
+      "telephone": "+54-387-447-1122",
+      "email": "hola@septimapacha.com",
+      "areaServed": ["AR", "MX", "CO", "PE", "CL"]
+    },
+    "url": "https://septimapacha.com",
+    "sameAs": [
+      "https://www.instagram.com/nali_alma",
+      "https://www.youtube.com/@nalialma",
+      "https://www.facebook.com/septimapachaco"
+    ],
+    "priceRange": "$80-$600000",
+    "areaServed": ["AR", "MX", "CO", "PE", "CL"],
+    "knowsAbout": [
+      "Web Design",
+      "Brand Identity",
+      "Music Composition",
+      "Digital Animation",
+      "Andean Culture",
+      "Environmental Activism"
+    ]
+  }
+  </script>
+
+  <!-- SCHEMA.ORG - PÁGINA WEB -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Séptima Pacha | Diseño Web, Música & Arte",
+    "url": "https://septimapacha.com/",
+    "description": "Agencia creativa multidisciplinaria con servicios de diseño web, composición musical, arte físico y branding con identidad cultural",
+    "image": "https://septimapacha.com/og-image-home.jpg",
+    "creator": {
+      "@type": "Person",
+      "name": "Nali Alma"
+    },
+    "datePublished": "2024-01-01",
+    "dateModified": "2025-11-08",
+    "inLanguage": "es"
+  }
+  </script>
+
+  <!-- SCHEMA.ORG - AGREGACIÓN DE OFERTAS -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "AggregateOffer",
+    "priceCurrency": "USD",
+    "offers": [
+      {
+        "@type": "Offer",
+        "name": "Plantillas Web Básicas",
+        "price": "80",
+        "description": "Sitios web estáticos responsivos con SEO incluido"
+      },
+      {
+        "@type": "Offer",
+        "name": "Plantillas Premium",
+        "price": "350",
+        "description": "Galería, blog, ecommerce con animaciones"
+      },
+      {
+        "@type": "Offer",
+        "name": "Composición Musical Original",
+        "price": "600",
+        "description": "Música instrumental con fusión ancestral-contemporánea"
+      },
+      {
+        "@type": "Offer",
+        "name": "Identidad Visual Completa",
+        "price": "1200",
+        "description": "Logo, paleta, sistemas de diseño coherentes"
+      }
+    ]
+  }
+  </script>
+
+  <!-- SCHEMA.ORG - MIGAS DE PAN (BREADCRUMB) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Inicio",
+        "item": "https://septimapacha.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Servicios",
+        "item": "https://septimapacha.com/servicios/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Blog",
+        "item": "https://septimapacha.com/blog/"
+      }
+    ]
+  }
+  </script>    
 </head>
 <body>
     <!-- Splash Screen / Logo Animado -->
@@ -890,6 +1042,7 @@
      <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
