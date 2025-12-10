@@ -15,92 +15,78 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <!-- Splash Screen / Logo Animado -->
     <div class="splash-screen" id="splashScreen">
         <div class="logo-container">
             <svg class="logo-svg" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
-                <!--  (cruz andina) -->
                 <path class="logo-path" d="M150 50 L150 20 M130 70 L170 70 M150 50 L150 250 M130 230 L170 230 M50 150 L20 150 M70 130 L70 170 M50 150 L250 150 M230 130 L230 170" />
-                
-                <!-- Círculo  -->
                 <circle class="logo-path" cx="150" cy="150" r="120" />
-                
-                <!-- andinos -->
                 <path class="logo-path" d="M100 100 L120 120 M180 100 L200 120 M100 200 L120 180 M180 200 L200 180" />
-                
-                <!--  (píxeles/código) -->
                 <rect class="logo-path" x="80" y="80" width="15" height="15" />
                 <rect class="logo-path" x="205" y="80" width="15" height="15" />
                 <rect class="logo-path" x="80" y="205" width="15" height="15" />
                 <rect class="logo-path" x="205" y="205" width="15" height="15" />
-                
-                <!--  7 -->
                 <path class="logo-path" d="M130 130 L170 130 L150 170 L150 170" stroke-width="4" />
             </svg>
             <div class="logo-text" data-lang-es="Séptima Pacha " data-lang-en="Seventh Pacha ">Séptima Pacha </div>
         </div>
     </div>
 
-    <!-- idioma -->
+    <!-- Idioma toggle -->
     <div class="language-toggle" id="languageToggle">
         <span data-lang-es="English" data-lang-en="Español">English</span>
     </div>
 
-    <!-- Cursor  -->
+    <!-- Cursor personalizado -->
     <div class="custom-cursor"></div>
     
     <!-- Botón del Menú -->
-<button class="menu-boton" id="menuBoton">
-    <span class="menu-icon">☰</span>
-</button>
+    <button class="menu-boton" id="menuBoton">
+        <span class="menu-icon">☰</span>
+    </button>
 
     <!-- Menú Expandible -->
-<nav class="expandable-menu" id="expandableMenu">
-    <button class="menu-close" id="menuCerrar">✕</button>
-    
-    <div class="menu-content">
+    <nav class="expandable-menu" id="expandableMenu">
+        <button class="menu-close" id="menuCerrar">✕</button>
+        
+        <div class="menu-content">
+            <a href="#umbral" class="menu-item" data-scroll=".umbral" 
+                   data-lang-es="Inicio" data-lang-en="Home">Inicio</a>
+            
+            <a href="#fases" class="menu-item" data-scroll=".fases" 
+               data-lang-es="Las 4 Fases" data-lang-en="The 4 Phases">Las 4 Fases</a>
+            
+            <a href="#plantillas-oferta" class="menu-item" data-scroll=".plantillas-oferta" 
+               data-lang-es="Plantillas Web" data-lang-en="Web Templates">Plantillas Web</a>
+            
+            <a href="#proyectos" class="menu-item" data-scroll=".proyectos" 
+               data-lang-es="Proyectos" data-lang-en="Projects">Proyectos</a>
+            
+            <a href="#servicios" class="menu-item" data-scroll=".servicios" 
+               data-lang-es="Servicios" data-lang-en="Services">Servicios</a>
+            
+            <a href="#sobre-mi" class="menu-item" data-scroll=".sobre-mi" 
+               data-lang-es="Sobre Mí" data-lang-en="About Me">Sobre Mí</a>
+            
+            <a href="#contacto" class="menu-item" data-scroll=".contacto" 
+               data-lang-es="Contacto" data-lang-en="Contact">Contacto</a>
+        </div>
 
-     <a href="#umbral" class="menu-item" data-scroll=".umbral" 
-           data-lang-es="Inicio" data-lang-en="Home">Inicio</a>
-        
-        <a href="#plantillas" class="menu-item" data-scroll=".plantillas" 
-           data-lang-es="Diseño Web" data-lang-en="Web Design">
-           Diseño Web</a>
-        
-        <a href="#proyectos" class="menu-item" data-scroll=".proyectos" 
-           data-lang-es="Proyectos" data-lang-en="Projects">Proyectos</a>
-        
-        <a href="#fases" class="menu-item" data-scroll=".fases" 
-           data-lang-es="Las 4 Fases" data-lang-en="The 4 Phases">Las 4 Fases</a>
-        
-        <a href="#servicios" class="menu-item" data-scroll=".servicios" 
-           data-lang-es="Servicios" data-lang-en="Services">Servicios</a>
-        
-        <a href="#sobre-mi" class="menu-item" data-scroll=".sobre-mi" 
-           data-lang-es="Sobre Mí" data-lang-en="About Me">Sobre Mí</a>
-        
-        <a href="#contacto" class="menu-item" data-scroll=".contacto" 
-           data-lang-es="Contacto" data-lang-en="Contact">Contacto</a>
-    
-</div>
+        <div class="whatsapp-btn-container">
+            <a href="https://wa.me/5493874471122" target="_blank" class="whatsapp-btn">
+                <i class="fab fa-whatsapp"></i>
+                <span data-lang-es="Contáctanos por WhatsApp" data-lang-en="Contact us on WhatsApp">
+                    Contáctanos por WhatsApp
+                </span>
+            </a>
+        </div>
+    </nav>
 
-<div class="whatsapp-btn-container">
-    <a href="https://wa.me/5493874471122" target="_blank" class="whatsapp-btn">
-        <i class="fab fa-whatsapp"></i>
-        <span data-lang-es="Contáctanos por WhatsApp" data-lang-en="Contact us on WhatsApp">
-            Contáctanos por WhatsApp
-        </span>
-    </a>
-</div>
-
-</nav>
-   <!-- HERO -->
+    <!-- HERO SECTION -->
     <section class="umbral" id="umbral">
         <!-- SVGs Decorativos Andinos -->
         <svg class="decorative-svg top-left" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
@@ -131,11 +117,9 @@
         <!-- Chakana Central Animada -->
         <div class="hero-chakana">
             <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-                <!-- Cruz Principal -->
                 <line x1="200" y1="50" x2="200" y2="350" stroke="var(--oro)" stroke-width="3" class="chakana-line"/>
                 <line x1="50" y1="200" x2="350" y2="200" stroke="var(--oro)" stroke-width="3" class="chakana-line"/>
                 
-                <!-- Escalones -->
                 <path d="M200,120 L220,120 L220,140 L240,140 L240,160 L260,160 M200,120 L180,120 L180,140 L160,140 L160,160 L140,160" 
                       stroke="var(--oro)" stroke-width="2" fill="none" class="chakana-detail" opacity="0.7"/>
                 <path d="M200,280 L220,280 L220,260 L240,260 L240,240 L260,240 M200,280 L180,280 L180,260 L160,260 L160,240 L140,240" 
@@ -145,11 +129,9 @@
                 <path d="M280,200 L280,220 L260,220 L260,240 L240,240 L240,260 M280,200 L280,180 L260,180 L260,160 L240,160" 
                       stroke="var(--oro)" stroke-width="2" fill="none" class="chakana-detail" opacity="0.7"/>
                 
-                <!-- Centro -->
                 <circle cx="200" cy="200" r="30" stroke="var(--oro)" stroke-width="3" fill="none" class="chakana-center"/>
                 <circle cx="200" cy="200" r="15" fill="var(--oro)" opacity="0.3" class="chakana-center-fill"/>
                 
-                <!-- Esquinas -->
                 <rect x="60" y="60" width="20" height="20" fill="var(--tierra)" opacity="0.5" class="chakana-corner"/>
                 <rect x="320" y="60" width="20" height="20" fill="var(--fuego)" opacity="0.5" class="chakana-corner"/>
                 <rect x="60" y="320" width="20" height="20" fill="var(--agua)" opacity="0.5" class="chakana-corner"/>
@@ -179,8 +161,8 @@
             </p>
 
             <div class="hero-ctas animate-ctas">
-                <a href="#plantillas" class="cta-primary">
-                    <span data-lang-es="Explorar Plantillas" data-lang-en="Explore Templates">Explorar Plantillas</span>
+                <a href="#fases" class="cta-primary">
+                    <span data-lang-es="Explorar Fases" data-lang-en="Explore Phases">Explorar Fases</span>
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                         <path d="M5 10H15M15 10L10 5M15 10L10 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                     </svg>
@@ -207,522 +189,38 @@
             <div class="particle"></div>
         </div>
     </section>
-    </section>
-    <!-- ==========================================
-     SECCIÓN PLANTILLAS EN OFERTA - CARRUSEL
+
+ <!-- ==========================================
+     SECCIÓN 2: Las 4 Fases del Arte - MEJORADA
      ========================================== -->
-
-<section class="plantillas" id="plantillas">
-    <h2 class="section-title fade-in" data-lang-es="Plantillas en ofertas Listas para Transformar" data-lang-en="Templates Ready to Transform">Plantillas en ofertas Listas para Transformar</h2>
-    <p class="plantillas-subtitulo fade-in" data-lang-es="Páginas web estáticas basica, diseño responsivo (adaptable a celulares y computadoras), secciones básicas (Inicio, Servicios, Contacto), un módulo de WhatsApp." data-lang-en="Basic static web pages, responsive design (adaptable for mobile phones and computers), basic sections (Home, Services, Contact), a WhatsApp module">Páginas web estáticas basica, diseño responsivo (adaptable a celulares y computadoras), secciones básicas (Inicio, Servicios, Contacto), un módulo de WhatsApp</p>
-    
-    <!-- Carrusel Container -->
-    <div class="carrusel-container">
-        <!-- Botón anterior -->
-        <button class="carrusel-btn carrusel-prev" id="carruselPrev">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="15 18 9 12 15 6"></polyline>
-            </svg>
-        </button>
-
-        <!-- Carrusel wrapper -->
-        <div class="carrusel-wrapper">
-            <div class="plantillas-grid carrusel" id="carruselOferta">
-                
-                <!-- Plantilla 1: Servicios -->
-                <a href="https://nalialma.github.io/servicios-plantilla/" class="plantilla-card" data-image="https://i.pinimg.com/736x/56/ce/9e/56ce9ea5c334df6b029f3121415f57a4.jpg">
-                    <div class="plantilla-preview">
-                        <img class="plantilla-imagen" src="https://i.pinimg.com/736x/56/ce/9e/56ce9ea5c334df6b029f3121415f57a4.jpg" alt="Plantilla Servicios" loading="lazy">
-                        <div class="plantilla-overlay">
-                            <span class="plantilla-btn-hover" data-lang-es="Ver" data-lang-en="View">Ver</span>
-                        </div>
-                    </div>
-                    <div class="plantilla-info">
-                        <h3 class="plantilla-nombre" data-lang-es="ServiPro" data-lang-en="ServiPro">ServiPro</h3>
-                        <p class="plantilla-desc" data-lang-es="Catálogo Sencillo: Enfatiza la facilidad de uso y la simplicidad (sobriedad),Structura Web, Construida con HTML y CSS puros, optimizada para SEO, alta performance e integración con WhatsApp. Versátil y fácil de adaptar a cualquier industria." data-lang-en="Simple Catalog: Emphasizes ease of use and simplicity (understated design). Web Structure: Built with pure HTML and CSS, optimized for SEO, high performance, and WhatsApp integration. Versatile and easily adaptable to any industry.">Catálogo Sencillo: Enfatiza la facilidad de uso y la simplicidad (sobriedad),Structura Web, Construida con HTML y CSS puros, optimizada para SEO, alta performance e integración con WhatsApp. Versátil y fácil de adaptar a cualquier industria.</p>
-                        <div class="plantilla-features">
-                            <span class="feature" data-lang-es="Responsiva" data-lang-en="Responsive">Responsiva</span>
-                            <span class="feature" data-lang-es="Contactos" data-lang-en="Contact">Contacto</span>
-                            <span class="feature" data-lang-es="SEO" data-lang-en="SEO">SEO</span>
-                        </div>
-                        <div class="plantilla-footer">
-                            <span class="plantilla-precio">$80.000</span>
-                            <span class="plantilla-precio-dominio">$130.000 con dominio</span>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- Plantilla 2: Ejecutivo -->
-                <a href="https://nalialma.github.io/plantilla-abogado/" class="plantilla-card" data-image="https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&h=400&fit=crop">
-                    <div class="plantilla-preview">
-                        <img class="plantilla-imagen" src="https://i.pinimg.com/736x/e4/bb/d4/e4bbd4523deb12a614e7d33c3ddc06d5.jpg" alt="Plantilla Ejecutivo" loading="lazy">
-                        <div class="plantilla-overlay">
-                            <span class="plantilla-btn-hover" data-lang-es="Ver" data-lang-en="View">Ver</span>
-                        </div>
-                    </div>
-                    <div class="plantilla-info">
-                        <h3 class="plantilla-nombre" data-lang-es="Sobrio Old" data-lang-en="Sober Old">Sobrio Old</h3>
-                        <p class="plantilla-desc" data-lang-es="Plantilla web multipropósito responsive con diseño neomórfico y estética retro. Construida con HTML y CSS puros, optimizada para SEO, alta performance e integración con WhatsApp. Versátil y fácil de adaptar a cualquier industria."data-lang-en= "Responsive multipurpose website template with a neomorphic design and retro aesthetic. Built with pure HTML and CSS, optimized for SEO, high performance, and WhatsApp integration. Versatile and easy to adapt to any industry.">Plantilla web multipropósito responsive con diseño neomórfico y estética retro. Construida con HTML y CSS puros, optimizada para SEO, alta performance e integración con WhatsApp. Versátil y fácil de adaptar a cualquier industria.</p>
-                        <div class="plantilla-features">
-                            <span class="feature" data-lang-es="Responsiva" data-lang-en="Responsive">Responsiva</span>
-                            <span class="feature" data-lang-es="Contactos" data-lang-en="Contact">Contacto</span>
-                            <span class="feature" data-lang-es="SEO" data-lang-en="SEO">SEO</span>
-                        </div>
-                        <div class="plantilla-footer">
-                            <span class="plantilla-precio">$80.000</span>
-                            <span class="plantilla-precio-dominio">$130.000 con dominio</span>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- Plantilla 3: Blog Básico -->
-                <a href="https://nalialma.github.io/Blog-escritor/" class="plantilla-card" data-image="https://i.pinimg.com/736x/dd/c0/ed/ddc0ed09b6bdb459e7f59de89065ddc2.jpg">
-                    <div class="plantilla-preview">
-                        <img class="plantilla-imagen" src="https://i.pinimg.com/736x/dd/c0/ed/ddc0ed09b6bdb459e7f59de89065ddc2.jpg" alt="Plantilla Blog" loading="lazy">
-                        <div class="plantilla-overlay">
-                            <span class="plantilla-btn-hover" data-lang-es="Ver" data-lang-en="View">Ver</span>
-                        </div>
-                    </div>
-                    
-                    <div class="plantilla-info">
-                        <h3 class="plantilla-nombre" data-lang-es="Pluma Basic" data-lang-en="Pluma Básic">Pluma Básic</h3>
-                        <p class="plantilla-desc" data-lang-es="Pagina Básica, responsiva, con SEO incluido. Construida con HTML y CSS puros, e integración con WhatsApp. Versátil y fácil de adaptar a cualquier industria." data-lang-en="Basic, responsive website with built-in SEO. Built with pure HTML and CSS, and integrated with WhatsApp. Versatile and easy to adapt to any industry.">Pagina Básica, responsiva, con SEO incluido. Construida con HTML y CSS puros, e integración con WhatsApp. Versátil y fácil de adaptar a cualquier industria.</p>
-                        <div class="plantilla-features">
-                            <span class="feature" data-lang-es="Blog" data-lang-en="Blog">Blog</span>
-                            <span class="feature" data-lang-es="Newsletter" data-lang-en="Newsletter">Newsletter</span>
-                            <span class="feature" data-lang-es="Comentarios" data-lang-en="Comments">Comentarios</span>
-                        </div>
-                        <div class="plantilla-footer">
-                            <span class="plantilla-precio">$80.000</span>
-                            <span class="plantilla-precio-dominio">$130.000 con dominio</span>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- Plantilla 4: Catálogo para artistas -->
-                <a href="https://nalialma.github.io/arte-basic/" class="plantilla-card" data-image="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=500&h=400&fit=crop">
-                    <div class="plantilla-preview">
-                        <img class="plantilla-imagen" src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=500&h=400&fit=crop" alt="Plantilla Catálogo" loading="lazy">
-                        <div class="plantilla-overlay">
-                            <span class="plantilla-btn-hover" data-lang-es="Ver" data-lang-en="View">Ver</span>
-                        </div>
-                    </div>
-                    <div class="plantilla-info">
-                        <h3 class="plantilla-nombre" data-lang-es="Catálogo para artistas" data-lang-en="Catalog for artists">Catálogo para artistas</h3>
-                        <p class="plantilla-desc" data-lang-es="Pagina Básica, responsiva, con SEO incluido. Construida con HTML y CSS puros, e integración con WhatsApp. Versátil y fácil de adaptar a cualquier industria." data-lang-en="Basic, responsive website with built-in SEO. Built with pure HTML and CSS, and integrated with WhatsApp. Versatile and easy to adapt to any industry.">Pagina Básica, responsiva, con SEO incluido. Construida con HTML y CSS puros, e integración con WhatsApp. Versátil y fácil de adaptar a cualquier industria </p>
-                        <div class="plantilla-features">
-                            <span class="feature" data-lang-es="Contacto" data-lang-en="Contact">Contacto</span>
-                            <span class="feature" data-lang-es="Bio" data-lang-en="Biography">Bio</span>
-                            <span class="feature" data-lang-es="Catálogo" data-lang-en="Catalog">Catálogo</span>
-                        </div>
-                        <div class="plantilla-footer">
-                            <span class="plantilla-precio">$80.000</span>
-                            <span class="plantilla-precio-dominio">$130.000 con dominio</span>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- Plantilla 5: Agencia -->
-                <a href="plantilla-agencia.html" class="plantilla-card" data-image="https://images.unsplash.com/photo-1460925895917-adf4198897c2?w=500&h=400&fit=crop">
-                    <div class="plantilla-preview">
-                        <img class="plantilla-imagen" src="https://images.unsplash.com/photo-1460925895917-adf4198897c2?w=500&h=400&fit=crop" alt="Plantilla Agencia" loading="lazy">
-                        <div class="plantilla-overlay">
-                            <span class="plantilla-btn-hover" data-lang-es="Ver" data-lang-en="View">Ver</span>
-                        </div>
-                    </div>
-                    <div class="plantilla-info">
-                        <h3 class="plantilla-nombre" data-lang-es="Sitio de Agencia" data-lang-en="Agency Website">Sitio de Agencia</h3>
-                        <p class="plantilla-desc" data-lang-es="Portafolio de casos, equipo y propuesta de valor destacada." data-lang-en="Case portfolio, team and highlighted value proposition.">Disponible muy Pronto.</p>
-                        <div class="plantilla-features">
-                            <span class="feature" data-lang-es="Casos" data-lang-en="Cases">Casos</span>
-                            <span class="feature" data-lang-es="Equipo" data-lang-en="Team">Equipo</span>
-                            <span class="feature" data-lang-es="Presupuestos" data-lang-en="Quotes">Presupuestos</span>
-                        </div>
-                        <div class="plantilla-footer">
-                            <span class="plantilla-precio">$80.000</span>
-                            <span class="plantilla-precio-dominio">$130.000 con dominio</span>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- Plantilla 6: Evento -->
-                <a href="plantilla-evento.html" class="plantilla-card" data-image="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=500&h=400&fit=crop">
-                    <div class="plantilla-preview">
-                        <img class="plantilla-imagen" src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=500&h=400&fit=crop" alt="Plantilla Evento" loading="lazy">
-                        <div class="plantilla-overlay">
-                            <span class="plantilla-btn-hover" data-lang-es="Ver" data-lang-en="View">Ver</span>
-                        </div>
-                    </div>
-                    <div class="plantilla-info">
-                        <h3 class="plantilla-nombre" data-lang-es="Página de Evento" data-lang-en="Event Page">Página de Evento</h3>
-                        <p class="plantilla-desc" data-lang-es="Información del evento, registro de asistentes y cronograma." data-lang-en="Event info, attendee registration and schedule.">Disponible muy pronto</p>
-                        <div class="plantilla-features">
-                            <span class="feature" data-lang-es="Registro" data-lang-en="Registration">Registro</span>
-                            <span class="feature" data-lang-es="Cronograma" data-lang-en="Schedule">Cronograma</span>
-                            <span class="feature" data-lang-es="Ubicación" data-lang-en="Location">Ubicación</span>
-                        </div>
-                        <div class="plantilla-footer">
-                            <span class="plantilla-precio">$80.000</span>
-                            <span class="plantilla-precio-dominio">$130.000 con dominio</span>
-                        </div>
-                    </div>
-                </a>
-
-            </div>
-        </div>
-
-        <!-- Botón siguiente -->
-        <button class="carrusel-btn carrusel-next" id="carruselNext">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-        </button>
-    </div>
-
-    <!-- Indicadores de posición -->
-    <div class="carrusel-indicators" id="carruselIndicators"></div>
-</section>
-
-
-<!-- ==========================================
-     SECCIÓN PLANTILLAS PREMIUM - CARRUSEL
-     ========================================== -->
-
-<section class="plantillas" id="plantilla">
-    <h2 class="section-title fade-in" data-lang-es="Plantillas Premium Listas para Transformar" data-lang-en="Premium Templates Ready to Transform">Plantillas Premium Listas para Transformar</h2>
-    <p class="plantillas-subtitulo fade-in" data-lang-es="Páginas web estáticas, responsivas y personalizables. Elige tu favorita y hazla tuya." data-lang-en="Static, responsive and customizable web pages. Choose your favorite and make it yours.">Páginas web estáticas, responsivas y personalizables. Elige tu favorita y hazla tuya.</p>
-    
-    <!-- Carrusel Container -->
-    <div class="carrusel-container">
-        <!-- Botón anterior -->
-        <button class="carrusel-btn carrusel-prev" id="carruselPrevPremium">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="15 18 9 12 15 6"></polyline>
-            </svg>
-        </button>
-
-        <!-- Carrusel wrapper -->
-        <div class="carrusel-wrapper">
-            <div class="plantillas-grid carrusel" id="carruselPremium">
-                
-                <!-- Plantilla 1: Portfolio Minimalista -->
-                <a href="https://nalialma.github.io/Plantilla-art./" class="plantilla-card" data-image="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=500&h=400&fit=crop">
-                    <div class="plantilla-preview">
-                        <img class="plantilla-imagen" src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=500&h=400&fit=crop" alt="Portfolio Minimalista" loading="lazy">
-                        <div class="plantilla-overlay">
-                            <span class="plantilla-btn-hover" data-lang-es="Ver" data-lang-en="View">Ver</span>
-                        </div>
-                    </div>
-                    <div class="plantilla-info">
-                        <h3 class="plantilla-nombre" data-lang-es="Portfolio Minimalista" data-lang-en="Minimalist Portfolio">Portfolio Minimalista</h3>
-                        <p class="plantilla-desc" data-lang-es="Galería, proyectos destacados y contacto. Perfecto para artistas." data-lang-en="Gallery, featured projects and contact. Perfect for artists.">Galería, proyectos destacados y contacto. Perfecto para artistas.</p>
-                        <div class="plantilla-features">
-                            <span class="feature" data-lang-es="Responsiva" data-lang-en="Responsive">Responsiva</span>
-                            <span class="feature" data-lang-es="Animada" data-lang-en="Animated">Animada</span>
-                            <span class="feature" data-lang-es="SEO" data-lang-en="SEO">SEO</span>
-                        </div>
-                        <div class="plantilla-footer">
-                            <span class="plantilla-precio">$350.000</span>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- Plantilla 2: Tienda Artesanal -->
-                <a href="https://nalialma.github.io/Plantilla-Tienda/" class="plantilla-card" data-image="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?w=500&h=400&fit=crop">
-                    <div class="plantilla-preview">
-                        <img class="plantilla-imagen" src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?w=500&h=400&fit=crop" alt="Tienda Artesanal" loading="lazy">
-                        <div class="plantilla-overlay">
-                            <span class="plantilla-btn-hover" data-lang-es="Ver" data-lang-en="View">Ver</span>
-                        </div>
-                    </div>
-                    <div class="plantilla-info">
-                        <h3 class="plantilla-nombre" data-lang-es="Tienda Artesanal" data-lang-en="Artisanal Shop">Tienda Artesanal</h3>
-                        <p class="plantilla-desc" data-lang-es="Catálogo de productos, carrito y checkout integrado." data-lang-en="Product catalog, shopping cart and integrated checkout.">Catálogo de productos, carrito y checkout integrado.</p>
-                        <div class="plantilla-features">
-                            <span class="feature" data-lang-es="E-commerce" data-lang-en="E-commerce">E-commerce</span>
-                            <span class="feature" data-lang-es="Pagos" data-lang-en="Payments">Pagos</span>
-                            <span class="feature" data-lang-es="Inventario" data-lang-en="Inventory">Inventario</span>
-                        </div>
-                        <div class="plantilla-footer">
-                            <span class="plantilla-precio">$550.000</span>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- Plantilla 3: Blog Inspirador -->
-                <a href="https://nalialma.github.io/Inspira/" class="plantilla-card" data-image="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=500&h=400&fit=crop">
-                    <div class="plantilla-preview">
-                        <img class="plantilla-imagen" src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=500&h=400&fit=crop" alt="Blog Inspirador" loading="lazy">
-                        <div class="plantilla-overlay">
-                            <span class="plantilla-btn-hover" data-lang-es="Ver" data-lang-en="View">Ver</span>
-                        </div>
-                    </div>
-                    <div class="plantilla-info">
-                        <h3 class="plantilla-nombre" data-lang-es="Blog Inspirador" data-lang-en="Inspiring Blog">Blog Inspirador</h3>
-                        <p class="plantilla-desc" data-lang-es="Sistema de posts, categorías y suscripción a newsletter." data-lang-en="Post system, categories and newsletter subscription.">Sistema de posts, categorías y suscripción a newsletter.</p>
-                        <div class="plantilla-features">
-                            <span class="feature" data-lang-es="Blog" data-lang-en="Blog">Blog</span>
-                            <span class="feature" data-lang-es="Newsletter" data-lang-en="Newsletter">Newsletter</span>
-                            <span class="feature" data-lang-es="Comentarios" data-lang-en="Comments">Comentarios</span>
-                        </div>
-                        <div class="plantilla-footer">
-                            <span class="plantilla-precio">$400.000</span>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- Plantilla 4: Catálogo de Servicios -->
-                <a href="plantilla-servicios.html" class="plantilla-card" data-image="https://images.unsplash.com/photo-1460925895917-adf4198897c2?w=500&h=400&fit=crop">
-                    <div class="plantilla-preview">
-                        <img class="plantilla-imagen" src="https://images.unsplash.com/photo-1460925895917-adf4198897c2?w=500&h=400&fit=crop" alt="Servicios" loading="lazy">
-                        <div class="plantilla-overlay">
-                            <span class="plantilla-btn-hover" data-lang-es="Ver" data-lang-en="View">Ver</span>
-                        </div>
-                    </div>
-                    <div class="plantilla-info">
-                        <h3 class="plantilla-nombre" data-lang-es="Catálogo de Servicios" data-lang-en="Services Catalog">Catálogo de Servicios</h3>
-                        <p class="plantilla-desc" data-lang-es="Presentación de servicios, testimonios y reservas online." data-lang-en="Service presentation, testimonials and online booking.">Disponible muy pronto</p>
-                        <div class="plantilla-features">
-                            <span class="feature" data-lang-es="Reservas" data-lang-en="Bookings">Reservas</span>
-                            <span class="feature" data-lang-es="Testimonios" data-lang-en="Testimonials">Testimonios</span>
-                            <span class="feature" data-lang-es="Calendario" data-lang-en="Calendar">Calendario</span>
-                        </div>
-                        <div class="plantilla-footer">
-                            <span class="plantilla-precio">$480.000</span>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- Plantilla 5: Agencia -->
-                <a href="plantilla-agencia.html" class="plantilla-card" data-image="https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&h=400&fit=crop">
-                    <div class="plantilla-preview">
-                        <img class="plantilla-imagen" src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&h=400&fit=crop" alt="Agencia" loading="lazy">
-                        <div class="plantilla-overlay">
-                            <span class="plantilla-btn-hover" data-lang-es="Ver" data-lang-en="View">Ver</span>
-                        </div>
-                    </div>
-                    <div class="plantilla-info">
-                        <h3 class="plantilla-nombre" data-lang-es="Sitio de Agencia" data-lang-en="Agency Website">Sitio de Agencia</h3>
-                        <p class="plantilla-desc" data-lang-es="Portafolio de casos, equipo y propuesta de valor destacada." data-lang-en="Case portfolio, team and highlighted value proposition.">Disponible muy pronto</p>
-                        <div class="plantilla-features">
-                            <span class="feature" data-lang-es="Casos" data-lang-en="Cases">Casos</span>
-                            <span class="feature" data-lang-es="Equipo" data-lang-en="Team">Equipo</span>
-                            <span class="feature" data-lang-es="Presupuestos" data-lang-en="Quotes">Presupuestos</span>
-                        </div>
-                        <div class="plantilla-footer">
-                            <span class="plantilla-precio">$600.000</span>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- Plantilla 6: Evento -->
-                <a href="plantilla-evento.html" class="plantilla-card" data-image="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=500&h=400&fit=crop">
-                    <div class="plantilla-preview">
-                        <img class="plantilla-imagen" src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=500&h=400&fit=crop" alt="Evento" loading="lazy">
-                        <div class="plantilla-overlay">
-                            <span class="plantilla-btn-hover" data-lang-es="Ver" data-lang-en="View">Ver</span>
-                        </div>
-                    </div>
-                    <div class="plantilla-info">
-                        <h3 class="plantilla-nombre" data-lang-es="Página de Evento" data-lang-en="Event Page">Página de Evento</h3>
-                        <p class="plantilla-desc" data-lang-es="Información del evento, registro de asistentes y cronograma." data-lang-en="Event info, attendee registration and schedule.">Disponible muy pronto.</p>
-                        <div class="plantilla-features">
-                            <span class="feature" data-lang-es="Registro" data-lang-en="Registration">Registro</span>
-                            <span class="feature" data-lang-es="Cronograma" data-lang-en="Schedule">Cronograma</span>
-                            <span class="feature" data-lang-es="Ubicación" data-lang-en="Location">Ubicación</span>
-                        </div>
-                        <div class="plantilla-footer">
-                            <span class="plantilla-precio">$420.000</span>
-                        </div>
-                    </div>
-                </a>
-
-            </div>
-        </div>
-
-        <!-- Botón siguiente -->
-        <button class="carrusel-btn carrusel-next" id="carruselNextPremium">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-        </button>
-    </div>
-
-    <!-- Indicadores de posición -->
-    <div class="carrusel-indicators" id="carruselIndicatorsPremium"></div>
-</section>
- 
-<!-- 2: Camino de Creaciones -->
-<section class="proyectos" id="proyectos">
-    <h2 class="section-title fade-in" data-lang-es="Camino de Creaciones" data-lang-en="Path of Creations">Camino de Creaciones</h2>
-    
-    <!-- Pestañas de categorías -->
-    <div class="proyectos-tabs fade-in">
-        <button class="tab-btn active" data-tab="webs" data-lang-es="Páginas Web" data-lang-en="Web Pages">
-            🌐 <span data-lang-es="Páginas Web" data-lang-en="Web Pages">Páginas Web</span>
-        </button>
-        <button class="tab-btn" data-tab="musica" data-lang-es="Música" data-lang-en="Music">
-            🎵 <span data-lang-es="Música" data-lang-en="Music">Música</span>
-        </button>
-        <button class="tab-btn" data-tab="videos" data-lang-es="Vídeos" data-lang-en="Videos">
-            🎬 <span data-lang-es="Vídeos" data-lang-en="Videos">Vídeos</span>
-        </button>
-    </div>
-
-    <!-- SVGs decorativos de fondo -->
-    <svg class="proyectos-bg-svg svg-1" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-            <filter id="glow1">
-                <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-                <feMerge>
-                    <feMergeNode in="coloredBlur"/>
-                    <feMergeNode in="SourceGraphic"/>
-                </feMerge>
-            </filter>
-        </defs>
-        <circle cx="100" cy="100" r="80" fill="none" stroke="var(--oro)" stroke-width="1" opacity="0.3" filter="url(#glow1)"/>
-        <path d="M100,20 L120,80 L180,100 L120,120 L100,180 L80,120 L20,100 L80,80 Z" fill="none" stroke="var(--fuego)" stroke-width="1" opacity="0.2"/>
-    </svg>
-
-    <svg class="proyectos-bg-svg svg-2" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-            <filter id="glow2">
-                <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
-                <feMerge>
-                    <feMergeNode in="coloredBlur"/>
-                    <feMergeNode in="SourceGraphic"/>
-                </feMerge>
-            </filter>
-        </defs>
-        <rect x="50" y="50" width="100" height="100" fill="none" stroke="var(--agua)" stroke-width="1" opacity="0.3" transform="rotate(45 100 100)" filter="url(#glow2)"/>
-        <circle cx="100" cy="100" r="40" fill="none" stroke="var(--agua)" stroke-width="0.5" opacity="0.2"/>
-    </svg>
-
-    <svg class="proyectos-bg-svg svg-3" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-            <filter id="glow3">
-                <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
-                <feMerge>
-                    <feMergeNode in="coloredBlur"/>
-                    <feMergeNode in="SourceGraphic"/>
-                </feMerge>
-            </filter>
-        </defs>
-        <path d="M100,50 L150,100 L100,150 L50,100 Z" fill="none" stroke="var(--tierra)" stroke-width="1" opacity="0.3" filter="url(#glow3)"/>
-        <path d="M100,70 L130,100 L100,130 L70,100 Z" fill="none" stroke="var(--tierra)" stroke-width="0.5" opacity="0.2"/>
-    </svg>
-
-    <!-- Contenedor de proyectos por categoría -->
-    
-    <!-- WEBS -->
-    <div class="proyectos-content active" data-content="webs">
-        <div class="timeline">
-            <!-- AllPayFlora -->
-            <div class="proyecto fade-in">
-                <div class="proyecto-icono">🌿</div>
-                <div class="proyecto-content">
-                    <h3 data-lang-es="AllPayFlora - Floristería Digital" data-lang-en="AllPayFlora - Digital Florist">AllPayFlora - Floristería Digital</h3>
-                    <p data-lang-es="Plataforma de e-commerce especializada en venta de flores y plantas. Diseño responsivo con catálogo interactivo, sistema de pedidos integrado y decoraciones florales dinámicas." data-lang-en="E-commerce platform specialized in flower and plant sales. Responsive design with interactive catalog.">Plataforma de e-commerce especializada en venta de flores y plantas. Diseño responsivo con catálogo interactivo, sistema de pedidos integrado.</p>
-                    <div class="proyecto-link">
-                        <a href="https://allpayflora.org/" target="_blank" data-lang-es="Ver Proyecto" data-lang-en="View Project">Ver Proyecto</a>
-                        <a href="https://wa.me/5493874471122" target="_blank" class="whatsapp-proyecto" title="Contactar">💬</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Tribu Rescate -->
-            <div class="proyecto fade-in">
-                <div class="proyecto-icono">🐾</div>
-                <div class="proyecto-content">
-                    <h3 data-lang-es="Tribu Rescate - Refugio Animal" data-lang-en="Tribu Rescate - Animal Shelter">Tribu Rescate - Refugio Animal</h3>
-                    <p data-lang-es="Sitio web para organización de rescate animal. Interfaz dedicada a mostrar animales en adopción, historias de rescate inspiradoras." data-lang-en="Website for animal rescue organization. Interface dedicated to showcasing animals for adoption.">Sitio web para organización de rescate animal. Interfaz dedicada a mostrar animales en adopción.</p>
-                    <div class="proyecto-link">
-                        <a href="https://nalialma.github.io/Tribu-Rescate-/" target="_blank" data-lang-es="Ver Proyecto" data-lang-en="View Project">Ver Proyecto</a>
-                        <a href="https://wa.me/5493874471122" target="_blank" class="whatsapp-proyecto" title="Contactar">💬</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Web de Tarot -->
-            <div class="proyecto fade-in">
-                <div class="proyecto-icono">👁️</div>
-                <div class="proyecto-content">
-                    <h3 data-lang-es="Web de Tarot Interactiva" data-lang-en="Interactive Tarot Web">Web de Tarot Interactiva</h3>
-                    <p data-lang-es="Una experiencia digital que conecta la sabiduría ancestral con interfaces modernas. Cartas que cobran vida al tocarlas." data-lang-en="A digital experience that connects ancestral wisdom with modern interfaces.">Una experiencia digital que conecta la sabiduría ancestral con interfaces modernas.</p>
-                    <div class="proyecto-link">
-                        <a href="https://nalialma.github.io/Tarot-en-Luz/" target="_blank" data-lang-es="Ver Proyecto" data-lang-en="View Project">Ver Proyecto</a>
-                        <a href="https://wa.me/5493874471122" target="_blank" class="whatsapp-proyecto" title="Contactar">💬</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ASTER -->
-            <div class="proyecto fade-in">
-                <div class="proyecto-icono">🌟</div>
-                <div class="proyecto-content">
-                    <h3 data-lang-es="ASTER - Agencia Digital" data-lang-en="ASTER - Digital Agency">ASTER - Agencia Digital</h3>
-                    <p data-lang-es="Plataforma de marketing digital para empresas. Donde la estrategia se encuentra con la creatividad ancestral." data-lang-en="Digital marketing platform for businesses.">Plataforma de marketing digital para empresas.</p>
-                    <div class="proyecto-link">
-                        <a href="https://nalialma.github.io/ASTER/" target="_blank" data-lang-es="Explorar" data-lang-en="Explore">Explorar</a>
-                        <a href="https://wa.me/5493874471122" target="_blank" class="whatsapp-proyecto" title="Contactar">💬</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- MÚSICA -->
-    <div class="proyectos-content" data-content="musica">
-        <div class="timeline">
-            <!-- Videoclip Experimental -->
-            <div class="proyecto fade-in">
-                <div class="proyecto-icono">🎵</div>
-                <div class="proyecto-content">
-                    <h3 data-lang-es="Videoclip Experimental" data-lang-en="Experimental Video">Videoclip Experimental</h3>
-                    <p data-lang-es="Video Clip Artístico con Composición Musical y Canto. Años después, la voz vuelve. Rasgada, profunda, hecha blues." data-lang-en="Artistic Video Clip with Musical Composition and Singing.">Video Clip Artístico con Composición Musical y Canto.</p>
-                    <div class="proyecto-link">
-                        <a href="https://www.youtube.com/watch?v=I-kJxkPrIkg" target="_blank" data-lang-es="Ver Video" data-lang-en="Watch Video">Ver Video</a>
-                        <a href="https://wa.me/5493874471122" target="_blank" class="whatsapp-proyecto" title="Contactar">💬</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Composiciones -->
-            <div class="proyecto fade-in">
-                <div class="proyecto-icono">🎼</div>
-                <div class="proyecto-content">
-                    <h3 data-lang-es="Composiciones Instrumentales" data-lang-en="Instrumental Compositions">Composiciones Instrumentales</h3>
-                    <p data-lang-es="Kullay no es canción, es ritual. Música invocada, no compuesta. Notas lentas, silencios, voz quechua en susurro ancestral." data-lang-en="Kullay isn't a song, it's a ritual.">Kullay no es canción, es ritual. Música invocada.</p>
-                    <div class="proyecto-link">
-                        <a href="https://www.bandlab.com/track/1ff3ce38-162d-f011-8b3d-000d3aa44618" target="_blank" data-lang-es="Escuchar" data-lang-en="Listen">Escuchar</a>
-                        <a href="https://wa.me/5493874471122" target="_blank" class="whatsapp-proyecto" title="Contactar">💬</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- VÍDEOS -->
-    <div class="proyectos-content" data-content="videos">
-        <div class="timeline">
-            <!-- Animación -->
-            <div class="proyecto fade-in">
-                <div class="proyecto-icono">⭕</div>
-                <div class="proyecto-content">
-                    <h3 data-lang-es="Animación Stop Motion Digital" data-lang-en="Digital Stop Motion">Animación Stop Motion Digital</h3>
-                    <p data-lang-es="Circopata – stop motion en plastilina 100% artesanal. Un mundo que se mueve al ritmo de lo hecho a mano." data-lang-en="Circopata – 100% handmade clay stop motion.">Circopata – stop motion en plastilina 100% artesanal.</p>
-                    <div class="proyecto-link">
-                        <a href="https://youtu.be/dRHH-o-Ajto" target="_blank" data-lang-es="Ver Animación" data-lang-en="Watch">Ver Animación</a>
-                        <a href="https://wa.me/5493874471122" target="_blank" class="whatsapp-proyecto" title="Contactar">💬</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-    <!--3: Las 4 Fases del Arte -->
-   <section class="fases" id="fases">
-        <h2 class="section-title fade-in">Las 4 Fases del Arte</h2>
+    <section class="fases" id="fases">
+        <h2 class="section-title fade-in" data-lang-es="Las 4 Fases del Arte" data-lang-en="The 4 Phases of Art">Las 4 Fases del Arte</h2>
+        
+        <!-- SVGs decorativos andinos -->
+        <svg class="fases-decorative-svg fases-top-left" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path class="svg-path" d="M100,20 L120,80 L180,100 L120,120 L100,180 L80,120 L20,100 L80,80 Z" 
+                  fill="none" stroke="var(--tierra)" stroke-width="2" opacity="0.2"/>
+            <circle cx="100" cy="100" r="60" fill="none" stroke="var(--tierra)" stroke-width="1" opacity="0.15"/>
+        </svg>
+        
+        <svg class="fases-decorative-svg fases-top-right" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path class="svg-path" d="M40,40 L160,40 L100,160 Z" 
+                  fill="none" stroke="var(--agua)" stroke-width="2" opacity="0.2"/>
+            <path d="M70,70 L130,70 L100,130 Z" fill="none" stroke="var(--agua)" stroke-width="1" opacity="0.15"/>
+        </svg>
+        
+        <svg class="fases-decorative-svg fases-bottom-left" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <rect x="50" y="50" width="100" height="100" 
+                  fill="none" stroke="var(--fuego)" stroke-width="2" opacity="0.2" transform="rotate(45 100 100)"/>
+            <circle cx="100" cy="100" r="40" fill="none" stroke="var(--fuego)" stroke-width="1" opacity="0.15"/>
+        </svg>
+        
+        <svg class="fases-decorative-svg fases-bottom-right" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path class="svg-path" d="M100,50 L150,100 L100,150 L50,100 Z" 
+                  fill="none" stroke="var(--aire)" stroke-width="2" opacity="0.2"/>
+            <path d="M100,70 L130,100 L100,130 L70,100 Z" 
+                  fill="none" stroke="var(--aire)" stroke-width="1" opacity="0.15"/>
+        </svg>
         
         <div class="chakana-container fade-in">
             <!-- Círculo base con cruz -->
@@ -735,32 +233,307 @@
             </div>
             
             <!-- Las 4 Fases posicionadas en los cuadrantes -->
-            <a href="raíz.html" class="fase raiz">
-                <div class="fase-icono">🌱</div>
-                <h3 class="fase-titulo">Raíz</h3>
-                <p>Inspiración, dibujo a mano, conexión con la tierra</p>
+            <!-- TIERRA - Arriba Izquierda -->
+            <a href="tierra.html" class="fase fase-tierra">
+                <div class="fase-inner">
+                    <div class="fase-circle">
+                        <svg class="fase-svg tierra-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Circulo exterior -->
+                            <circle cx="50" cy="50" r="45" fill="none" stroke="#F39C12" stroke-width="2"/>
+                            
+                            <!-- Montaña con pinceles -->
+                            <path d="M30 70 L50 35 L70 70 Z" fill="none" stroke="#F39C12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            
+                            <!-- Pinceles cruzados -->
+                            <line x1="35" y1="45" x2="65" y2="55" stroke="#F39C12" stroke-width="1.5" stroke-linecap="round"/>
+                            <line x1="65" y1="45" x2="35" y2="55" stroke="#F39C12" stroke-width="1.5" stroke-linecap="round"/>
+                            
+                            <!-- Punto central -->
+                            <circle cx="50" cy="50" r="3" fill="#F39C12"/>
+                        </svg>
+                    </div>
+                    <h3 class="fase-titulo" data-lang-es="Tierra" data-lang-en="Earth">Tierra</h3>
+                    <p class="fase-subtitulo" data-lang-es="ARTE VISUAL" data-lang-en="VISUAL ART">ARTE VISUAL</p>
+                    <p class="fase-epigrafe" data-lang-es="Donde la tierra se convierte en expresión, y cada trazo cuenta una historia ancestral." data-lang-en="Where earth becomes expression, and every stroke tells an ancestral story.">Donde la tierra se convierte en expresión, y cada trazo cuenta una historia ancestral.</p>
+                </div>
             </a>
             
-            <a href="Agua-cód.html" class="fase codigo">
-                <div class="fase-icono">💻</div>
-                <h3 class="fase-titulo">Código</h3>
-                <p>Diseño digital, programación, arquitectura de experiencias</p>
+            <!-- AGUA - Arriba Derecha -->
+            <a href="agua.html" class="fase fase-agua">
+                <div class="fase-inner">
+                    <div class="fase-circle">
+                        <svg class="fase-svg agua-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Circulo exterior -->
+                            <circle cx="50" cy="50" r="45" fill="none" stroke="#F39C12" stroke-width="2"/>
+                            
+                            <!-- Onda del código -->
+                            <path d="M25 50 Q35 40, 45 50 T65 50 T85 50" fill="none" stroke="#F39C12" stroke-width="2" stroke-linecap="round"/>
+                            
+                            <!-- Símbolos de código: < > -->
+                            <text x="35" y="75" font-size="16" fill="#F39C12" font-weight="bold" text-anchor="middle">&lt;</text>
+                            <text x="65" y="75" font-size="16" fill="#F39C12" font-weight="bold" text-anchor="middle">&gt;</text>
+                            
+                            <!-- Punto central -->
+                            <circle cx="50" cy="50" r="3" fill="#F39C12"/>
+                        </svg>
+                    </div>
+                    <h3 class="fase-titulo" data-lang-es="Agua" data-lang-en="Water">Agua</h3>
+                    <p class="fase-subtitulo" data-lang-es="CÓDIGO Y DISEÑO WEB" data-lang-en="CODE & WEB DESIGN">CÓDIGO Y DISEÑO WEB</p>
+                    <p class="fase-epigrafe" data-lang-es="Fluyendo como el agua, creamos experiencias digitales que transforman visiones en realidad." data-lang-en="Flowing like water, we create digital experiences that transform visions into reality.">Fluyendo como el agua, creamos experiencias digitales que transforman visiones en realidad.</p>
+                </div>
             </a>
             
-            <a href="Arte-fuego.html" class="fase fuego">
-                <div class="fase-icono">🔥</div>
-                <h3 class="fase-titulo">Fuego</h3>
-                <p>Cerámica, pintura, escultura, transformación física</p>
+            <!-- FUEGO - Abajo Derecha -->
+            <a href="fuego.html" class="fase fase-fuego">
+                <div class="fase-inner">
+                    <div class="fase-circle">
+                        <svg class="fase-svg fuego-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Circulo exterior -->
+                            <circle cx="50" cy="50" r="45" fill="none" stroke="#F39C12" stroke-width="2"/>
+                            
+                            <!-- Forma de cerámica/fuego -->
+                            <path d="M50 25 C50 25, 35 40, 35 55 C35 65, 42 72, 50 72 C58 72, 65 65, 65 55 C65 40, 50 25, 50 25" fill="none" stroke="#F39C12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            
+                            <!-- Llamas internas -->
+                            <path d="M45 55 Q45 48, 50 45 Q55 48, 55 55" fill="none" stroke="#F39C12" stroke-width="1.5" stroke-linecap="round"/>
+                            
+                            <!-- Punto central -->
+                            <circle cx="50" cy="50" r="3" fill="#F39C12"/>
+                        </svg>
+                    </div>
+                    <h3 class="fase-titulo" data-lang-es="Fuego" data-lang-en="Fire">Fuego</h3>
+                    <p class="fase-subtitulo" data-lang-es="CERÁMICA Y ARTESANÍAS" data-lang-en="CERAMICS & CRAFTS">CERÁMICA Y ARTESANÍAS</p>
+                    <p class="fase-epigrafe" data-lang-es="En el fuego, la materia bruta se transforma en obra maestra, guardando el alma del artista." data-lang-en="In fire, raw matter transforms into masterpiece, holding the artist's soul.">En el fuego, la materia bruta se transforma en obra maestra, guardando el alma del artista.</p>
+                </div>
             </a>
             
-            <a href="Aire.html" class="fase aire">
-                <div class="fase-icono">🎶</div>
-                <h3 class="fase-titulo">Aire</h3>
-                <p>Música, voz, animación, elementos que fluyen</p>
+            <!-- AIRE - Abajo Izquierda -->
+            <a href="aire.html" class="fase fase-aire">
+                <div class="fase-inner">
+                    <div class="fase-circle">
+                        <svg class="fase-svg aire-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Circulo exterior -->
+                            <circle cx="50" cy="50" r="45" fill="none" stroke="#F39C12" stroke-width="2"/>
+                            
+                            <!-- Notas musicales onduladas -->
+                            <path d="M30 55 Q40 50, 50 55 Q60 60, 70 55" fill="none" stroke="#F39C12" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M30 65 Q40 60, 50 65 Q60 70, 70 65" fill="none" stroke="#F39C12" stroke-width="2" stroke-linecap="round"/>
+                            
+                            <!-- Notas musicales pequeñas -->
+                            <circle cx="35" cy="50" r="2" fill="#F39C12"/>
+                            <circle cx="65" cy="50" r="2" fill="#F39C12"/>
+                            
+                            <!-- Punto central -->
+                            <circle cx="50" cy="50" r="3" fill="#F39C12"/>
+                        </svg>
+                    </div>
+                    <h3 class="fase-titulo" data-lang-es="Aire" data-lang-en="Air">Aire</h3>
+                    <p class="fase-subtitulo" data-lang-es="MÚSICA Y POESÍA" data-lang-en="MUSIC & POETRY">MÚSICA Y POESÍA</p>
+                    <p class="fase-epigrafe" data-lang-es="Por el aire viaja la música que conecta almas, la poesía que libera emociones sin límites." data-lang-en="Through the air travels music that connects souls, poetry that frees emotions without limits.">Por el aire viaja la música que conecta almas, la poesía que libera emociones sin límites.</p>
+                </div>
             </a>
         </div>
     </section>
-    <!--  4: Servicios -->
+
+    <!-- ==========================================
+     SECCIÓN: Plantillas en Oferta - NUEVA SECCIÓN CON ENLACE
+     ========================================== -->
+    <section class="plantillas plantillas-oferta" id="plantillas-oferta">
+        <h2 class="section-title fade-in" data-lang-es="Soluciones Web Listas para Transformar" data-lang-en="Web Solutions Ready to Transform">Soluciones Web Listas para Transformar</h2>
+        <p class="plantillas-subtitulo fade-in" data-lang-es="Plantillas profesionales, responsivas y personalizables para impulsar tu negocio digital." data-lang-en="Professional, responsive and customizable templates to boost your digital business.">Plantillas profesionales, responsivas y personalizables para impulsar tu negocio digital.</p>
+        
+        <!-- Botones destacados -->
+        <div class="plantillas-ctas fade-in">
+            <a href="plantillas-basicas.html" class="cta-plantillas cta-basicas">
+                <span class="cta-icon">💎</span>
+                <span data-lang-es="Plantillas Básicas" data-lang-en="Basic Templates">Plantillas Básicas</span>
+                <span class="cta-arrow">→</span>
+            </a>
+            <a href="plantillas-premium.html" class="cta-plantillas cta-premium">
+                <span class="cta-icon">👑</span>
+                <span data-lang-es="Plantillas Premium" data-lang-en="Premium Templates">Plantillas Premium</span>
+                <span class="cta-arrow">→</span>
+            </a>
+        </div>
+
+        <!-- Preview de plantillas destacadas -->
+        <div class="plantillas-preview fade-in">
+            <p data-lang-es="Accede a nuestro catálogo completo de plantillas web diseñadas para negocios, portfolios, tiendas y más." data-lang-en="Access our complete catalog of web templates designed for businesses, portfolios, stores and more.">Accede a nuestro catálogo completo de plantillas web diseñadas para negocios, portfolios, tiendas y más.</p>
+        </div>
+    </section>
+
+    <!-- ==========================================
+     SECCIÓN: Camino de Creaciones (Proyectos)
+     ========================================== -->
+    <section class="proyectos" id="proyectos">
+        <h2 class="section-title fade-in" data-lang-es="Camino de Creaciones" data-lang-en="Path of Creations">Camino de Creaciones</h2>
+        
+        <!-- Pestañas de categorías -->
+        <div class="proyectos-tabs fade-in">
+            <button class="tab-btn active" data-tab="webs" data-lang-es="Páginas Web" data-lang-en="Web Pages">
+                🌐 <span data-lang-es="Páginas Web" data-lang-en="Web Pages">Páginas Web</span>
+            </button>
+            <button class="tab-btn" data-tab="musica" data-lang-es="Música" data-lang-en="Music">
+                🎵 <span data-lang-es="Música" data-lang-en="Music">Música</span>
+            </button>
+            <button class="tab-btn" data-tab="videos" data-lang-es="Vídeos" data-lang-en="Videos">
+                🎬 <span data-lang-es="Vídeos" data-lang-en="Videos">Vídeos</span>
+            </button>
+        </div>
+
+        <!-- SVGs decorativos de fondo -->
+        <svg class="proyectos-bg-svg svg-1" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <filter id="glow1">
+                    <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                    <feMerge>
+                        <feMergeNode in="coloredBlur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+            </defs>
+            <circle cx="100" cy="100" r="80" fill="none" stroke="var(--oro)" stroke-width="1" opacity="0.3" filter="url(#glow1)"/>
+            <path d="M100,20 L120,80 L180,100 L120,120 L100,180 L80,120 L20,100 L80,80 Z" fill="none" stroke="var(--fuego)" stroke-width="1" opacity="0.2"/>
+        </svg>
+
+        <svg class="proyectos-bg-svg svg-2" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <filter id="glow2">
+                    <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                    <feMerge>
+                        <feMergeNode in="coloredBlur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+            </defs>
+            <rect x="50" y="50" width="100" height="100" fill="none" stroke="var(--agua)" stroke-width="1" opacity="0.3" transform="rotate(45 100 100)" filter="url(#glow2)"/>
+            <circle cx="100" cy="100" r="40" fill="none" stroke="var(--agua)" stroke-width="0.5" opacity="0.2"/>
+        </svg>
+
+        <svg class="proyectos-bg-svg svg-3" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <filter id="glow3">
+                    <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+                    <feMerge>
+                        <feMergeNode in="coloredBlur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+            </defs>
+            <path d="M100,50 L150,100 L100,150 L50,100 Z" fill="none" stroke="var(--tierra)" stroke-width="1" opacity="0.3" filter="url(#glow3)"/>
+            <path d="M100,70 L130,100 L100,130 L70,100 Z" fill="none" stroke="var(--tierra)" stroke-width="0.5" opacity="0.2"/>
+        </svg>
+
+        <!-- Contenedor de proyectos por categoría -->
+        <div class="proyectos-content active" data-content="webs">
+            <div class="timeline">
+                <!-- AllPayFlora -->
+                <div class="proyecto fade-in">
+                    <div class="proyecto-icono">🌿</div>
+                    <div class="proyecto-content">
+                        <h3 data-lang-es="AllPayFlora - Floristería Digital" data-lang-en="AllPayFlora - Digital Florist">AllPayFlora - Floristería Digital</h3>
+                        <p data-lang-es="Plataforma de e-commerce especializada en venta de flores y plantas. Diseño responsivo con catálogo interactivo, sistema de pedidos integrado y decoraciones florales dinámicas." data-lang-en="E-commerce platform specialized in flower and plant sales. Responsive design with interactive catalog.">Plataforma de e-commerce especializada en venta de flores y plantas. Diseño responsivo con catálogo interactivo, sistema de pedidos integrado.</p>
+                        <div class="proyecto-link">
+                            <a href="https://allpayflora.org/" target="_blank" data-lang-es="Ver Proyecto" data-lang-en="View Project">Ver Proyecto</a>
+                            <a href="https://wa.me/5493874471122" target="_blank" class="whatsapp-proyecto" title="Contactar">💬</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tribu Rescate -->
+                <div class="proyecto fade-in">
+                    <div class="proyecto-icono">🐾</div>
+                    <div class="proyecto-content">
+                        <h3 data-lang-es="Tribu Rescate - Refugio Animal" data-lang-en="Tribu Rescate - Animal Shelter">Tribu Rescate - Refugio Animal</h3>
+                        <p data-lang-es="Sitio web para organización de rescate animal. Interfaz dedicada a mostrar animales en adopción, historias de rescate inspiradoras." data-lang-en="Website for animal rescue organization. Interface dedicated to showcasing animals for adoption.">Sitio web para organización de rescate animal. Interfaz dedicada a mostrar animales en adopción.</p>
+                        <div class="proyecto-link">
+                            <a href="https://nalialma.github.io/Tribu-Rescate-/" target="_blank" data-lang-es="Ver Proyecto" data-lang-en="View Project">Ver Proyecto</a>
+                            <a href="https://wa.me/5493874471122" target="_blank" class="whatsapp-proyecto" title="Contactar">💬</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Web de Tarot -->
+                <div class="proyecto fade-in">
+                    <div class="proyecto-icono">👁️</div>
+                    <div class="proyecto-content">
+                        <h3 data-lang-es="Web de Tarot Interactiva" data-lang-en="Interactive Tarot Web">Web de Tarot Interactiva</h3>
+                        <p data-lang-es="Una experiencia digital que conecta la sabiduría ancestral con interfaces modernas. Cartas que cobran vida al tocarlas." data-lang-en="A digital experience that connects ancestral wisdom with modern interfaces.">Una experiencia digital que conecta la sabiduría ancestral con interfaces modernas.</p>
+                        <div class="proyecto-link">
+                            <a href="https://nalialma.github.io/Tarot-en-Luz/" target="_blank" data-lang-es="Ver Proyecto" data-lang-en="View Project">Ver Proyecto</a>
+                            <a href="https://wa.me/5493874471122" target="_blank" class="whatsapp-proyecto" title="Contactar">💬</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ASTER -->
+                <div class="proyecto fade-in">
+                    <div class="proyecto-icono">🌟</div>
+                    <div class="proyecto-content">
+                        <h3 data-lang-es="ASTER - Agencia Digital" data-lang-en="ASTER - Digital Agency">ASTER - Agencia Digital</h3>
+                        <p data-lang-es="Plataforma de marketing digital para empresas. Donde la estrategia se encuentra con la creatividad ancestral." data-lang-en="Digital marketing platform for businesses.">Plataforma de marketing digital para empresas.</p>
+                        <div class="proyecto-link">
+                            <a href="https://nalialma.github.io/ASTER/" target="_blank" data-lang-es="Explorar" data-lang-en="Explore">Explorar</a>
+                            <a href="https://wa.me/5493874471122" target="_blank" class="whatsapp-proyecto" title="Contactar">💬</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MÚSICA -->
+        <div class="proyectos-content" data-content="musica">
+            <div class="timeline">
+                <!-- Videoclip Experimental -->
+                <div class="proyecto fade-in">
+                    <div class="proyecto-icono">🎵</div>
+                    <div class="proyecto-content">
+                        <h3 data-lang-es="Videoclip Experimental" data-lang-en="Experimental Video">Videoclip Experimental</h3>
+                        <p data-lang-es="Video Clip Artístico con Composición Musical y Canto. Años después, la voz vuelve. Rasgada, profunda, hecha blues." data-lang-en="Artistic Video Clip with Musical Composition and Singing.">Video Clip Artístico con Composición Musical y Canto.</p>
+                        <div class="proyecto-link">
+                            <a href="https://www.youtube.com/watch?v=I-kJxkPrIkg" target="_blank" data-lang-es="Ver Video" data-lang-en="Watch Video">Ver Video</a>
+                            <a href="https://wa.me/5493874471122" target="_blank" class="whatsapp-proyecto" title="Contactar">💬</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Composiciones -->
+                <div class="proyecto fade-in">
+                    <div class="proyecto-icono">🎼</div>
+                    <div class="proyecto-content">
+                        <h3 data-lang-es="Composiciones Instrumentales" data-lang-en="Instrumental Compositions">Composiciones Instrumentales</h3>
+                        <p data-lang-es="Kullay no es canción, es ritual. Música invocada, no compuesta. Notas lentas, silencios, voz quechua en susurro ancestral." data-lang-en="Kullay isn't a song, it's a ritual.">Kullay no es canción, es ritual. Música invocada.</p>
+                        <div class="proyecto-link">
+                            <a href="https://www.bandlab.com/track/1ff3ce38-162d-f011-8b3d-000d3aa44618" target="_blank" data-lang-es="Escuchar" data-lang-en="Listen">Escuchar</a>
+                            <a href="https://wa.me/5493874471122" target="_blank" class="whatsapp-proyecto" title="Contactar">💬</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VÍDEOS -->
+        <div class="proyectos-content" data-content="videos">
+            <div class="timeline">
+                <!-- Animación -->
+                <div class="proyecto fade-in">
+                    <div class="proyecto-icono">⭕</div>
+                    <div class="proyecto-content">
+                        <h3 data-lang-es="Animación Stop Motion Digital" data-lang-en="Digital Stop Motion">Animación Stop Motion Digital</h3>
+                        <p data-lang-es="Circopata – stop motion en plastilina 100% artesanal. Un mundo que se mueve al ritmo de lo hecho a mano." data-lang-en="Circopata – 100% handmade clay stop motion.">Circopata – stop motion en plastilina 100% artesanal.</p>
+                        <div class="proyecto-link">
+                            <a href="https://youtu.be/dRHH-o-Ajto" target="_blank" data-lang-es="Ver Animación" data-lang-en="Watch">Ver Animación</a>
+                            <a href="https://wa.me/5493874471122" target="_blank" class="whatsapp-proyecto" title="Contactar">💬</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+     SECCIÓN 5: Servicios
+     ========================================== -->
     <section class="servicios" id="servicios">
         <h2 class="section-title fade-in" data-lang-es="Ofrendas Creativas" data-lang-en="Creative Offerings">Ofrendas Creativas</h2>
         <div class="servicios-grid">
@@ -794,80 +567,100 @@
             </div>
         </div>
     </section>
-<!-- 5: Sobre Mí - VERSIÓN CON DESTELLOS -->
-<section class="sobre-mi" id="sobre-mi">
-    <h2 class="section-title fade-in" data-lang-es="Huella" data-lang-en="Footprint">Huella</h2>
-    
-    <div class="huella-container">
-        <!-- Círculo brillante animado -->
-        <div class="huella-circle-nueva">
-            <!-- Anillos pulsantes -->
-            <div class="huella-ring ring-1"></div>
-            <div class="huella-ring ring-2"></div>
-            <div class="huella-ring ring-3"></div>
-            
-            <!-- Gradiente central (EL CÍRCULO BRILLANTE) -->
-            <div class="huella"></div>
-            
-            <!-- Botón central clickeable -->
-            <a href="https://nalialma.github.io/Nali/" target="_blank" class="huella-link">
-                <div class="huella-icon">👤</div>
-                <div class="huella-text-container">
-                    <span class="huella-texto-grande" data-lang-es="Conóceme" data-lang-en="Know Me">Conóceme</span>
-                    <span class="huella-texto-pequeño" data-lang-es="Haz click aquí" data-lang-en="Click here">Haz click aquí</span>
-                </div>
-                <div class="huella-flecha">→</div>
-            </a>
-            
-            <!-- Partículas SVG decorativas -->
-            <svg class="particula-svg particula-svg-1" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="20" cy="20" r="3" fill="var(--oro)" opacity="0.8">
-                    <animate attributeName="r" values="2;4;2" dur="2s" repeatCount="indefinite"/>
-                    <animate attributeName="opacity" values="0.4;0.9;0.4" dur="2s" repeatCount="indefinite"/>
-                </circle>
-            </svg>
-            
-            <svg class="particula-svg particula-svg-2" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-                <polygon points="20,5 25,18 38,18 27,25 32,38 20,30 8,38 13,25 2,18 15,18" fill="var(--oro)" opacity="0.7">
-                    <animate attributeName="opacity" values="0.3;0.8;0.3" dur="3s" repeatCount="indefinite"/>
-                    <animateTransform attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="10s" repeatCount="indefinite"/>
-                </polygon>
-            </svg>
-            
-            <svg class="particula-svg particula-svg-3" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20,10 L22,18 L30,20 L22,22 L20,30 L18,22 L10,20 L18,18 Z" fill="var(--oro)" opacity="0.6">
-                    <animate attributeName="opacity" values="0.3;0.7;0.3" dur="2.5s" repeatCount="indefinite"/>
-                </path>
-            </svg>
-            
-            <svg class="particula-svg particula-svg-4" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="20" cy="20" r="4" fill="none" stroke="var(--oro)" stroke-width="1.5">
-                    <animate attributeName="r" values="3;6;3" dur="3s" repeatCount="indefinite"/>
-                    <animate attributeName="opacity" values="0.5;0.9;0.5" dur="3s" repeatCount="indefinite"/>
-                </circle>
-                <circle cx="20" cy="20" r="2" fill="var(--oro)" opacity="0.8"/>
-            </svg>
-        </div>
+
+    <!-- ==========================================
+     SECCIÓN 6: Sobre Mí (Huella) - MEJORADA
+     ========================================== -->
+    <section class="sobre-mi" id="sobre-mi">
+        <h2 class="section-title fade-in" data-lang-es="Huella de Creación" data-lang-en="Creation Footprint">Huella de Creación</h2>
         
-        <!-- Frases como destellos que aparecen y desaparecen -->
-        <div class="frase-destello frase-destello-1" data-lang-es="Pinto con tierra y CSS" data-lang-en="I paint with earth and CSS">
-            Pinto con tierra y CSS
-        </div>
+        <!-- SVGs decorativos de fondo -->
+        <svg class="huella-decorative-svg huella-top-left" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path class="svg-path" d="M100,20 L120,80 L180,100 L120,120 L100,180 L80,120 L20,100 L80,80 Z" 
+                  fill="none" stroke="var(--oro)" stroke-width="2" opacity="0.15"/>
+            <circle cx="100" cy="100" r="60" fill="none" stroke="var(--oro)" stroke-width="1" opacity="0.1"/>
+        </svg>
         
-        <div class="frase-destello frase-destello-2" data-lang-es="Creo para conectar mundos" data-lang-en="I create to connect worlds">
-            Creo para conectar mundos
-        </div>
+        <svg class="huella-decorative-svg huella-bottom-right" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path class="svg-path" d="M100,50 L150,100 L100,150 L50,100 Z" 
+                  fill="none" stroke="var(--fuego)" stroke-width="2" opacity="0.15"/>
+            <path d="M100,70 L130,100 L100,130 L70,100 Z" 
+                  fill="none" stroke="var(--fuego)" stroke-width="1" opacity="0.1"/>
+        </svg>
         
-        <div class="frase-destello frase-destello-3" data-lang-es="Artista multidisciplinaria" data-lang-en="Multidisciplinary artist">
-            Artista multidisciplinaria
+        <div class="huella-container">
+            <!-- Círculo nuevo contenedor -->
+            <div class="huella-circle-nueva">
+                <!-- Anillos pulsantes -->
+                <div class="huella-ring ring-1"></div>
+                <div class="huella-ring ring-2"></div>
+                <div class="huella-ring ring-3"></div>
+                
+                <!-- El círculo brillante original -->
+                <div class="huella"></div>
+                
+                <!-- Botón central clickeable -->
+                <a href="https://nalialma.github.io/Nali/" target="_blank" class="huella-link">
+                    <div class="huella-icon">👤</div>
+                    <div class="huella-text-container">
+                        <span class="huella-texto-grande" data-lang-es="Conóceme" data-lang-en="Know Me">Conóceme</span>
+                        <span class="huella-texto-pequeño" data-lang-es="Haz click aquí" data-lang-en="Click here">Haz click aquí</span>
+                    </div>
+                    <div class="huella-flecha">→</div>
+                </a>
+                
+                <!-- Partículas SVG decorativas -->
+                <svg class="particula-svg particula-svg-1" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="20" cy="20" r="3" fill="var(--oro)" opacity="0.8">
+                        <animate attributeName="r" values="2;4;2" dur="2s" repeatCount="indefinite"/>
+                        <animate attributeName="opacity" values="0.4;0.9;0.4" dur="2s" repeatCount="indefinite"/>
+                    </circle>
+                </svg>
+                
+                <svg class="particula-svg particula-svg-2" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                    <polygon points="20,5 25,18 38,18 27,25 32,38 20,30 8,38 13,25 2,18 15,18" fill="var(--oro)" opacity="0.7">
+                        <animate attributeName="opacity" values="0.3;0.8;0.3" dur="3s" repeatCount="indefinite"/>
+                        <animateTransform attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="10s" repeatCount="indefinite"/>
+                    </polygon>
+                </svg>
+                
+                <svg class="particula-svg particula-svg-3" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20,10 L22,18 L30,20 L22,22 L20,30 L18,22 L10,20 L18,18 Z" fill="var(--oro)" opacity="0.6">
+                        <animate attributeName="opacity" values="0.3;0.7;0.3" dur="2.5s" repeatCount="indefinite"/>
+                    </path>
+                </svg>
+                
+                <svg class="particula-svg particula-svg-4" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="20" cy="20" r="4" fill="none" stroke="var(--oro)" stroke-width="1.5">
+                        <animate attributeName="r" values="3;6;3" dur="3s" repeatCount="indefinite"/>
+                        <animate attributeName="opacity" values="0.5;0.9;0.5" dur="3s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="20" cy="20" r="2" fill="var(--oro)" opacity="0.8"/>
+                </svg>
+            </div>
+            
+            <!-- Frases como destellos que aparecen y desaparecen -->
+            <div class="frase-destello frase-destello-1" data-lang-es="Pinto con tierra y CSS" data-lang-en="I paint with earth and CSS">
+                Pinto con tierra y CSS
+            </div>
+            
+            <div class="frase-destello frase-destello-2" data-lang-es="Creo para conectar mundos" data-lang-en="I create to connect worlds">
+                Creo para conectar mundos
+            </div>
+            
+            <div class="frase-destello frase-destello-3" data-lang-es="Artista multidisciplinaria" data-lang-en="Multidisciplinary artist">
+                Artista multidisciplinaria
+            </div>
+            
+            <div class="frase-destello frase-destello-4" data-lang-es="Arte ancestral-tecnológico" data-lang-en="Ancestral-tech art">
+                Arte ancestral-tecnológico
+            </div>
         </div>
-        
-        <div class="frase-destello frase-destello-4" data-lang-es="Arte ancestral-tecnológico" data-lang-en="Ancestral-tech art">
-            Arte ancestral-tecnológico
-        </div>
-    </div>
-</section>
-    <!-- 6: Contacto -->
+    </section>
+
+    <!-- ==========================================
+     SECCIÓN 7: Contacto
+     ========================================== -->
     <section class="contacto" id="contacto">
         <h2 class="section-title fade-in" data-lang-es="Conexión" data-lang-en="Connection">Conexión</h2>
         <form class="formulario fade-in">
@@ -875,7 +668,7 @@
                 <label for="nombre" data-lang-es="Nombre" data-lang-en="Name">Nombre</label>
                 <input type="text" id="nombre" name="nombre" required>
             </div>
-           <div class="campo">
+            <div class="campo">
                 <label for="email" data-lang-es="Email" data-lang-en="Email">Email</label>
                 <input type="email" id="email" name="email" required>
             </div>
@@ -886,56 +679,8 @@
             <button type="submit" class="btn-enviar" data-lang-es="Sembrar Mensaje" data-lang-en="Plant Message">Sembrar Mensaje</button>
         </form>
     </section>
-<script src="carrusel-horizontal.js"></script>
-     <script src="script.js"></script>
+
+    <script src="carrusel-horizontal.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
