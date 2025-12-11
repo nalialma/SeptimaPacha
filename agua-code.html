@@ -1,0 +1,1817 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Código | Séptima Pacha Co.</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --agua-primary: #2ECC71;
+            --agua-secondary: #3498DB;
+            --agua-accent: #1ABC9C;
+            --agua-deep: #2C3E50;
+            --agua-light: #85C1E9;
+            --oro: #F39C12;
+            --sombra: #2C3E50;
+            --fuego: #FF6B35;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #0a1a2a 0%, #1a2a3a 50%, #0a2a1a 100%);
+            color: #fff;
+            cursor: none;
+        }
+
+        /* CURSOR PERSONALIZADO */
+        .custom-cursor {
+            position: fixed;
+            width: 24px;
+            height: 24px;
+            background: radial-gradient(circle, var(--agua-accent) 0%, var(--agua-primary) 70%, transparent 100%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.2s ease;
+            box-shadow: 0 0 20px var(--agua-primary);
+        }
+
+        /* WATER PARTICLES */
+        .water-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: var(--agua-primary);
+            border-radius: 50%;
+            animation: float-water 6s linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes float-water {
+            0% { 
+                opacity: 0;
+                transform: translateY(100vh) translateX(0) scale(0);
+            }
+            10% { 
+                opacity: 1;
+                transform: translateY(90vh) translateX(10px) scale(1);
+            }
+            50% { 
+                opacity: 0.8;
+                transform: translateY(50vh) translateX(-10px) scale(0.8);
+            }
+            90% { 
+                opacity: 0.3;
+                transform: translateY(10vh) translateX(15px) scale(0.5);
+            }
+            100% { 
+                opacity: 0;
+                transform: translateY(-10vh) translateX(0) scale(0);
+            }
+        }
+
+        /* MENÚ HAMBURGUESA */
+        .menu-btn {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            width: 60px;
+            height: 60px;
+            background: rgba(46, 204, 113, 0.1);
+            border: 2px solid var(--agua-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 9998;
+            transition: all 0.3s ease;
+        }
+
+        .menu-btn:hover {
+            background: rgba(46, 204, 113, 0.2);
+            transform: scale(1.1);
+        }
+
+        .menu-btn svg {
+            width: 30px;
+            height: 30px;
+            fill: var(--agua-primary);
+            transition: transform 0.3s ease;
+        }
+
+        .menu-btn.active svg {
+            transform: rotate(90deg);
+        }
+
+        /* MENÚ EXPANDIBLE */
+        .nav-menu {
+            position: fixed;
+            left: -400px;
+            top: 0;
+            width: 350px;
+            height: 100vh;
+            background: radial-gradient(ellipse at center, rgba(10, 26, 42, 0.95) 0%, rgba(26, 42, 58, 0.98) 100%);
+            backdrop-filter: blur(20px);
+            border-right: 2px solid rgba(46, 204, 113, 0.3);
+            z-index: 9997;
+            padding-top: 6rem;
+            overflow-y: auto;
+            transition: left 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .nav-menu.active {
+            left: 0;
+        }
+
+        .nav-menu::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="30" r="3" fill="rgba(46,204,113,0.1)"/><circle cx="80" cy="50" r="2.5" fill="rgba(46,204,113,0.08)"/><circle cx="50" cy="70" r="2" fill="rgba(46,204,113,0.1)"/><circle cx="30" cy="20" r="2.5" fill="rgba(46,204,113,0.08)"/></svg>');
+            pointer-events: none;
+            animation: rainfallMenu 8s linear infinite;
+        }
+
+        @keyframes rainfallMenu {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+
+        .nav-menu ul {
+            list-style: none;
+            position: relative;
+            z-index: 2;
+        }
+
+        .nav-menu li {
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-menu a {
+            display: block;
+            padding: 1.5rem 2rem;
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+            position: relative;
+        }
+
+        .nav-menu a::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            font-size: 1.5rem;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            background: rgba(46, 204, 113, 0.15);
+            border-left-color: var(--agua-primary);
+            color: var(--agua-primary);
+            padding-left: 3rem;
+        }
+
+        .nav-menu a:hover::before {
+            opacity: 1;
+            animation: dropFall 0.8s ease-in-out;
+        }
+
+        @keyframes dropFall {
+            0% { transform: translateY(-20px); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(20px); opacity: 0; }
+        }
+
+        /* NAV BACK */
+        .nav-back {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            z-index: 9999;
+            background: rgba(46, 204, 113, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(46, 204, 113, 0.3);
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            color: var(--agua-primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .nav-back:hover {
+            background: rgba(46, 204, 113, 0.2);
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(46, 204, 113, 0.3);
+        }
+
+        /* WHATSAPP FLOAT */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #fff;
+            text-decoration: none;
+            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
+            z-index: 8000;
+            transition: all 0.3s ease;
+            animation: whatsappPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes whatsappPulse {
+            0%, 100% { box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4); }
+            50% { box-shadow: 0 5px 30px rgba(37, 211, 102, 0.7); }
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            background: #128C7E;
+        }
+
+        /* HERO SECTION */
+        .hero-codigo {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            background: radial-gradient(ellipse at center, rgba(46, 204, 113, 0.2) 0%, transparent 70%);
+            padding: 2rem;
+            padding-top: 6rem;
+        }
+
+        .codigo-icon {
+            font-size: 8rem;
+            margin-bottom: 2rem;
+            animation: flow 3s ease-in-out infinite alternate;
+            filter: drop-shadow(0 0 30px var(--agua-primary));
+        }
+
+        @keyframes flow {
+            0% { 
+                text-shadow: 0 0 20px var(--agua-primary), 0 0 40px var(--agua-primary);
+                transform: scale(1) rotate(-1deg);
+            }
+            50% { 
+                text-shadow: 0 0 30px var(--agua-secondary), 0 0 60px var(--agua-secondary);
+                transform: scale(1.05) rotate(1deg);
+            }
+            100% { 
+                text-shadow: 0 0 25px var(--agua-accent), 0 0 50px var(--agua-accent);
+                transform: scale(1.02) rotate(-0.5deg);
+            }
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--agua-primary), var(--agua-secondary), var(--agua-accent));
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: waterGradient 4s ease-in-out infinite;
+        }
+
+        @keyframes waterGradient {
+            0%, 100% { background-position: 0% 50%; }
+            33% { background-position: 100% 50%; }
+            66% { background-position: 50% 100%; }
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 3vw, 1.8rem);
+            font-weight: 300;
+            opacity: 0.9;
+            max-width: 800px;
+            margin-bottom: 3rem;
+            text-shadow: 0 0 10px rgba(46, 204, 113, 0.3);
+        }
+
+        .water-quote {
+            background: rgba(46, 204, 113, 0.1);
+            border-left: 4px solid var(--agua-primary);
+            border-radius: 0 15px 15px 0;
+            padding: 2rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-style: italic;
+            color: var(--agua-accent);
+            max-width: 600px;
+            margin: 2rem 0;
+        }
+
+        .hero-preview {
+            margin-top: 3rem;
+            width: clamp(300px, 90vw, 800px);
+            border-radius: 15px;
+            border: 2px solid var(--agua-primary);
+            overflow: hidden;
+            box-shadow: 0 0 40px rgba(46, 204, 113, 0.4);
+            animation: previewFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes previewFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .hero-preview img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* SECTION STYLES */
+        .section {
+            min-height: 80vh;
+            padding: 5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--agua-primary);
+            text-shadow: 0 0 20px rgba(46, 204, 113, 0.5);
+        }
+
+        /* SERVICIOS GRID */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            width: 100%;
+            margin-bottom: 4rem;
+        }
+
+        .service-card {
+            background: rgba(46, 204, 113, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid transparent;
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--agua-primary), var(--agua-secondary), var(--agua-accent));
+            border-radius: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .service-card:hover::before {
+            opacity: 0.3;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(46, 204, 113, 0.4);
+        }
+
+        .service-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            display: block;
+            animation: iconFlow 3s ease-in-out infinite;
+        }
+
+        @keyframes iconFlow {
+            0% { filter: drop-shadow(0 0 10px var(--agua-primary)); }
+            100% { filter: drop-shadow(0 0 20px var(--agua-accent)); }
+        }
+
+        .service-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--agua-accent);
+        }
+
+        .service-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--oro);
+            margin-bottom: 1rem;
+        }
+
+        .service-button {
+            background: linear-gradient(45deg, var(--agua-primary), var(--agua-secondary));
+            border: none;
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .service-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(46, 204, 113, 0.4);
+        }
+
+        /* CLIENTES */
+        .clientes {
+            background: linear-gradient(180deg, rgba(26, 188, 156, 0.08) 0%, #1a1a1a 50%, rgba(26, 188, 156, 0.05) 100%);
+        }
+
+        .clientes-intro {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+        }
+
+        .clientes-intro p {
+            font-size: clamp(0.95rem, 2vw, 1.15rem);
+            opacity: 0.85;
+            line-height: 1.7;
+        }
+
+        .clientes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+        }
+
+        /* CONTENEDOR GOTA */
+        .cliente-card {
+            position: relative;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 220px;
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
+        }
+
+        .cliente-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 30% 30%, rgba(46, 204, 113, 0.2), rgba(26, 188, 156, 0.1));
+            clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 50% 95%, 18% 100%, 0% 38%);
+            z-index: -1;
+            border: 2px solid var(--agua-accent);
+            transition: all 0.4s ease;
+        }
+
+        .cliente-card:hover::before {
+            background: radial-gradient(circle at 30% 30%, rgba(46, 204, 113, 0.4), rgba(26, 188, 156, 0.2));
+            box-shadow: 0 0 30px rgba(46, 204, 113, 0.5);
+        }
+
+        .cliente-card:hover {
+            transform: translateY(-15px) scale(1.05);
+        }
+
+        .cliente-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cliente-icono {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .cliente-nombre {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--agua-accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .cliente-tipo {
+            font-size: 0.85rem;
+            color: var(--oro);
+            margin-bottom: 1rem;
+        }
+
+        .cliente-link {
+            color: var(--agua-accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .cliente-link:hover {
+            color: var(--oro);
+        }
+
+        /* TU WEB */
+        .tu-web {
+            background: linear-gradient(135deg, rgba(74, 144, 226, 0.1) 0%, rgba(46, 204, 113, 0.05) 100%);
+        }
+
+        .tu-web-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .tu-web-subtitle {
+            font-size: clamp(1.3rem, 3vw, 1.8rem);
+            color: var(--agua-secondary);
+            margin-bottom: 2rem;
+            font-weight: 600;
+        }
+
+        .tu-web-text {
+            font-size: clamp(1rem, 2.2vw, 1.2rem);
+            line-height: 1.8;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .tu-web-highlight {
+            color: var(--agua-primary);
+            font-weight: 700;
+            font-size: 1.1em;
+        }
+
+        .tu-web-benefits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .benefit {
+            padding: 1.5rem;
+            background: rgba(46, 204, 113, 0.1);
+            border-radius: 15px;
+            border-left: 4px solid var(--agua-primary);
+        }
+
+        .benefit-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .benefit-title {
+            font-weight: 600;
+            color: var(--agua-accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .benefit-text {
+            font-size: 0.9rem;
+            opacity: 0.85;
+        }
+
+        .tu-web-cta {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: rgba(46, 204, 113, 0.15);
+            border-radius: 20px;
+            border: 2px solid var(--agua-primary);
+        }
+
+        .tu-web-cta-text {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .cta-btn {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-primary {
+            background: linear-gradient(135deg, var(--agua-primary), var(--agua-secondary));
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(46, 204, 113, 0.3);
+        }
+
+        .cta-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(46, 204, 113, 0.5);
+        }
+
+        /* PLANTILLAS */
+        .plantillas {
+            background: linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 100%);
+        }
+
+        .plantillas-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .plantillas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .plantilla-card {
+            background: rgba(46, 204, 113, 0.08);
+            border: 1px solid rgba(46, 204, 113, 0.3);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+        }
+
+        .plantilla-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: var(--agua-accent);
+            box-shadow: 0 25px 50px rgba(46, 204, 113, 0.3);
+        }
+
+        .plantilla-preview {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            background: linear-gradient(135deg, var(--agua-accent) 0%, var(--agua-primary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .plantilla-preview::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .plantilla-oferta {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: linear-gradient(135deg, #FF4500, #DC143C);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            z-index: 5;
+            animation: ofertaPulsa 2s ease-in-out infinite;
+        }
+
+        @keyframes ofertaPulsa {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        .plantilla-info {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .plantilla-nombre {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--agua-accent);
+        }
+
+        .plantilla-categoria {
+            font-size: 0.8rem;
+            color: var(--oro);
+            margin-bottom: 1rem;
+        }
+
+        .plantilla-descripcion {
+            font-size: 0.9rem;
+            opacity: 0.85;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+            line-height: 1.5;
+        }
+
+        .plantilla-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(46, 204, 113, 0.2);
+            margin-top: auto;
+        }
+
+        .plantilla-precio {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--oro);
+        }
+
+        .plantilla-btn {
+            background: linear-gradient(135deg, var(--agua-accent), var(--agua-primary));
+            color: #fff;
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .plantilla-btn:hover {
+            transform: translateX(5px);
+            box-shadow: 0 8px 20px rgba(46, 204, 113, 0.4);
+        }
+
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: rgba(26, 26, 26, 0.9);
+            border: 1px solid rgba(46, 204, 113, 0.3);
+            border-radius: 20px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 45px;
+            height: 45px;
+            background: rgba(46, 204, 113, 0.2);
+            border: none;
+            border-radius: 50%;
+            color: var(--agua-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 10001;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: rgba(46, 204, 113, 0.4);
+            transform: scale(1.1);
+        }
+
+        .modal-preview {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: linear-gradient(135deg, var(--agua-accent) 0%, var(--agua-primary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            border-bottom: 1px solid rgba(46, 204, 113, 0.3);
+        }
+
+        .modal-info {
+            padding: 2rem;
+        }
+
+        .modal-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--agua-accent);
+        }
+
+        .modal-description {
+            font-size: 1rem;
+            line-height: 1.7;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .modal-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .modal-feature {
+            padding: 1rem;
+            background: rgba(46, 204, 113, 0.1);
+            border-radius: 10px;
+            border-left: 3px solid var(--agua-primary);
+        }
+
+        .modal-feature-title {
+            font-weight: 600;
+            color: var(--agua-accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .modal-btn {
+            flex: 1;
+            min-width: 150px;
+            padding: 1rem;
+            border-radius: 10px;
+            font-weight: 600;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn-primary {
+            background: linear-gradient(135deg, var(--agua-primary), var(--agua-secondary));
+            color: white;
+        }
+
+        .modal-btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(46, 204, 113, 0.4);
+        }
+
+        .modal-btn-secondary {
+            background: rgba(46, 204, 113, 0.2);
+            color: var(--agua-accent);
+            border: 2px solid var(--agua-accent);
+        }
+
+        .modal-btn-secondary:hover {
+            background: rgba(46, 204, 113, 0.3);
+        }
+
+        /* PROCESO */
+        .process-timeline {
+            max-width: 800px;
+            width: 100%;
+            position: relative;
+        }
+
+        .process-timeline::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--agua-primary), var(--agua-secondary), var(--agua-accent));
+        }
+
+        .process-step {
+            position: relative;
+            margin-bottom: 3rem;
+            padding-left: 4rem;
+        }
+
+        .process-step::before {
+            content: '';
+            position: absolute;
+            left: 12px;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            background: var(--agua-primary);
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(46, 204, 113, 0.6);
+        }
+
+        .process-number {
+            position: absolute;
+            left: -8px;
+            top: -5px;
+            width: 40px;
+            height: 40px;
+            background: var(--agua-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #fff;
+            box-shadow: 0 0 15px rgba(46, 204, 113, 0.5);
+        }
+
+        .process-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--agua-accent);
+        }
+
+        .process-description {
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        /* PHILOSOPHY */
+        .philosophy-section {
+            background: rgba(46, 204, 113, 0.05);
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+        }
+
+        .philosophy-section::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            right: -1px;
+            bottom: -1px;
+            background: linear-gradient(45deg, var(--agua-primary), transparent, var(--agua-accent));
+            border-radius: 20px;
+            z-index: -1;
+            animation: philosophyGlow 4s ease-in-out infinite;
+        }
+
+        @keyframes philosophyGlow {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        .philosophy-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            line-height: 1.8;
+            color: var(--agua-accent);
+            font-style: italic;
+        }
+
+        /* FADE IN */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        /* AUDIO HIDDEN */
+        audio {
+            display: none;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .nav-menu {
+                width: 280px;
+                left: -280px;
+            }
+
+            .section {
+                padding: 3rem 1rem;
+            }
+
+            .hero-codigo {
+                padding: 1rem;
+                padding-top: 6rem;
+            }
+
+            .services-grid,
+            .clientes-grid,
+            .plantillas-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tu-web-benefits {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                max-height: 95vh;
+            }
+
+            .modal-buttons {
+                flex-direction: column;
+            }
+
+            .modal-btn {
+                width: 100%;
+            }
+
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                font-size: 1.7rem;
+                bottom: 1.5rem;
+                right: 1.5rem;
+            }
+
+            .process-timeline::before {
+                left: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .modal {
+                padding: 1rem;
+            }
+
+            .modal-info {
+                padding: 1rem;
+            }
+
+            .modal-title {
+                font-size: 1.5rem;
+            }
+
+            .whatsapp-float {
+                width: 45px;
+                height: 45px;
+                font-size: 1.5rem;
+            }
+
+            .menu-btn {
+                width: 50px;
+                height: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="custom-cursor"></div>
+    <div class="water-particles" id="waterParticles"></div>
+    
+    <!-- MENÚ HAMBURGUESA -->
+    <button class="menu-btn" id="menuBtn" onclick="toggleMenu()">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <!-- Gotas de agua -->
+            <circle cx="35" cy="25" r="8" fill="currentColor"/>
+            <circle cx="65" cy="30" r="6" fill="currentColor" opacity="0.7"/>
+            <path d="M50 50 L50 75 Q45 85 50 90 Q55 85 50 75 Z" fill="currentColor"/>
+            <circle cx="30" cy="60" r="5" fill="currentColor" opacity="0.6"/>
+        </svg>
+    </button>
+
+    <!-- MENÚ NAVEGACIÓN -->
+    <nav class="nav-menu" id="navMenu">
+        <ul>
+            <li><a href="#clientes" onclick="toggleMenu()">🌊 Nuestros Clientes</a></li>
+            <li><a href="#tu-web" onclick="toggleMenu()">💧 Tu Propia Web</a></li>
+            <li><a href="#plantillas" onclick="toggleMenu()">🎨 Plantillas Editables</a></li>
+            <li><a href="#proceso" onclick="toggleMenu()">⚙️ Flujo de Creación</a></li>
+        </ul>
+    </nav>
+    
+    <a href="index.html" class="nav-back">← Volver al Umbral</a>
+    <a href="https://wa.me/5493865555444?text=Hola%20Séptima%20Pacha,%20me%20interesa%20crear%20mi%20sitio%20web" class="whatsapp-float" target="_blank">💬</a>
+
+    <!-- AUDIOS - Data URLs de sonidos de agua y lluvia -->
+    <audio id="waterSound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAAB9AAACABAAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBg==" type="audio/wav">
+    </audio>
+    <audio id="rainSound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAAB9AAACABAAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBg==" type="audio/wav">
+    </audio>
+
+    <!-- Hero Section -->
+    <section class="hero-codigo">
+        <div class="codigo-icon">💧</div>
+        <h1 class="hero-title">Código</h1>
+        <p class="hero-subtitle">Elemento que fluye y transforma ideas en experiencias digitales. Donde el diseño cobra vida a través de la programación.</p>
+        
+        <div class="water-quote">
+            "Como el agua que toma la forma del recipiente, el código se adapta a cada visión para crear mundos digitales únicos"
+        </div>
+
+        <!-- Previsualización de página -->
+        <div class="hero-preview">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 450'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%231a2a3a;stop-opacity:1'%3E%3C/stop%3E%3Cstop offset='100%25' style='stop-color:%230a1a2a;stop-opacity:1'%3E%3C/stop%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='450' fill='url(%23grad)'/%3E%3Ctext x='400' y='100' font-size='48' font-weight='bold' fill='%232ECC71' text-anchor='middle' font-family='serif'%3ECódigo%3C/text%3E%3Ccircle cx='400' cy='250' r='100' fill='none' stroke='%231ABC9C' stroke-width='2' opacity='0.5'/%3E%3Ccircle cx='300' cy='200' r='8' fill='%232ECC71' opacity='0.7'/%3E%3Ccircle cx='500' cy='280' r='6' fill='%233498DB' opacity='0.6'/%3E%3Cpath d='M 200 320 Q 250 360 300 320' fill='none' stroke='%231ABC9C' stroke-width='2' opacity='0.4'/%3E%3Cpath d='M 500 320 Q 550 360 600 320' fill='none' stroke='%231ABC9C' stroke-width='2' opacity='0.4'/%3E%3Ctext x='400' y='410' font-size='18' fill='%23FFF' text-anchor='middle' opacity='0.8'%3EExperiencias Digitales Fluidas%3C/text%3E%3C/svg%3E" alt="Código - Séptima Pacha">
+        </div>
+    </section>
+
+    <!-- Servicios Digitales -->
+    <section class="section">
+        <h2 class="section-title fade-in">Servicios del Agua Digital</h2>
+        <div class="services-grid">
+            <div class="service-card fade-in">
+                <span class="service-icon">🌐</span>
+                <h3 class="service-title">Páginas Web Responsivas</h3>
+                <p class="service-description">Sitios web adaptativos que fluyen perfectamente en cualquier dispositivo. Diseño moderno con funcionalidad intuitiva.</p>
+                <div class="service-price">Desde $800 USD</div>
+                <a href="https://wa.me/5493865555444?text=Me%20interesa%20crear%20una%20página%20web%20responsiva" class="service-button" target="_blank">Contratar</a>
+            </div>
+            
+            <div class="service-card fade-in">
+                <span class="service-icon">🎨</span>
+                <h3 class="service-title">Identidad Visual Digital</h3>
+                <p class="service-description">Logos, paletas de colores y sistemas de diseño coherentes que reflejan la esencia de tu marca.</p>
+                <div class="service-price">Desde $500 USD</div>
+                <a href="https://wa.me/5493865555444?text=Me%20interesa%20una%20identidad%20visual%20digital" class="service-button" target="_blank">Contratar</a>
+            </div>
+            
+            <div class="service-card fade-in">
+                <span class="service-icon">🚀</span>
+                <h3 class="service-title">Optimización & SEO</h3>
+                <p class="service-description">Mejora el rendimiento de tu sitio web y aumenta su visibilidad en motores de búsqueda.</p>
+                <div class="service-price">Desde $300 USD</div>
+                <a href="https://wa.me/5493865555444?text=Me%20interesa%20optimizar%20mi%20sitio%20web" class="service-button" target="_blank">Contratar</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Clientes Activos -->
+    <section id="clientes" class="section clientes">
+        <h2 class="section-title fade-in">Nuestros Clientes Activos</h2>
+        <div class="clientes-intro">
+            <p>Hemos trabajado con marcas increíbles que confían en nosotros para transformar sus visiones digitales en realidad.</p>
+        </div>
+        <div class="clientes-grid">
+            <div class="cliente-card fade-in">
+                <div class="cliente-content">
+                    <div class="cliente-icono">🏗️</div>
+                    <div class="cliente-nombre">Sinergia Desarrolladora</div>
+                    <div class="cliente-tipo">Inmobiliario</div>
+                    <a href="https://sinergiadesarrolladora.com/" class="cliente-link" target="_blank">Ver sitio →</a>
+                </div>
+            </div>
+            <div class="cliente-card fade-in">
+                <div class="cliente-content">
+                    <div class="cliente-icono">✨</div>
+                    <div class="cliente-nombre">Séptima Pacha Co.</div>
+                    <div class="cliente-tipo">Agencia Creativa</div>
+                    <a href="https://septimapacha.com/" class="cliente-link" target="_blank">Ver sitio →</a>
+                </div>
+            </div>
+            <div class="cliente-card fade-in">
+                <div class="cliente-content">
+                    <div class="cliente-icono">🌿</div>
+                    <div class="cliente-nombre">Allpa y Flora</div>
+                    <div class="cliente-tipo">Sustentabilidad</div>
+                    <a href="https://allpayflora.org/" class="cliente-link" target="_blank">Ver sitio →</a>
+                </div>
+            </div>
+            <div class="cliente-card fade-in">
+                <div class="cliente-content">
+                    <div class="cliente-icono">🎨</div>
+                    <div class="cliente-nombre">Nali - Artista</div>
+                    <div class="cliente-tipo">Portfolio</div>
+                    <a href="https://nalialma.github.io/Nali/" class="cliente-link" target="_blank">Ver sitio →</a>
+                </div>
+            </div>
+            <div class="cliente-card fade-in">
+                <div class="cliente-content">
+                    <div class="cliente-icono">🎭</div>
+                    <div class="cliente-nombre">Agencia Aster</div>
+                    <div class="cliente-tipo">Creativa</div>
+                    <a href="https://nalialma.github.io/ASTER/" class="cliente-link" target="_blank">Ver sitio →</a>
+                </div>
+            </div>
+            <div class="cliente-card fade-in">
+                <div class="cliente-content">
+                    <div class="cliente-icono">🐾</div>
+                    <div class="cliente-nombre">Tribu Rescate</div>
+                    <div class="cliente-tipo">Rescate Animal</div>
+                    <a href="https://nalialma.github.io/Tribu-Rescate-/" class="cliente-link" target="_blank">Ver sitio →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tu Web -->
+    <section id="tu-web" class="section tu-web">
+        <h2 class="section-title fade-in">¿Necesitas Tu Propia Web?</h2>
+        <div class="tu-web-content">
+            <p class="tu-web-subtitle">Es hora de que tu marca brille en el mundo digital</p>
+            <p class="tu-web-text">
+                En el 2025, no tener presencia digital es como no existir para tus clientes potenciales. 
+                <span class="tu-web-highlight">El 92% de los clientes buscan negocios online primero.</span> 
+                Te ayudamos a crear una experiencia digital que no solo atrae, sino que convierte.
+            </p>
+
+            <div class="tu-web-benefits">
+                <div class="benefit">
+                    <div class="benefit-icon">💡</div>
+                    <div class="benefit-title">Diseño Único</div>
+                    <div class="benefit-text">Tu marca merece un sitio tan especial como tu visión.</div>
+                </div>
+                <div class="benefit">
+                    <div class="benefit-icon">📈</div>
+                    <div class="benefit-title">Más Clientes</div>
+                    <div class="benefit-text">Web optimizada para convertir visitantes en clientes.</div>
+                </div>
+                <div class="benefit">
+                    <div class="benefit-icon">⚡</div>
+                    <div class="benefit-title">Super Rápida</div>
+                    <div class="benefit-text">Velocidad de carga optimizada para mejor experiencia.</div>
+                </div>
+                <div class="benefit">
+                    <div class="benefit-icon">🔒</div>
+                    <div class="benefit-title">Segura</div>
+                    <div class="benefit-text">Tu sitio protegido con los mejores estándares.</div>
+                </div>
+            </div>
+
+            <div class="tu-web-cta">
+                <p class="tu-web-cta-text">
+                    <span class="tu-web-highlight">No esperes más.</span> 
+                    Nosotros creamos webs que generan resultados.
+                </p>
+                <a href="https://wa.me/5493865555444?text=Hola%20Séptima%20Pacha,%20necesito%20crear%20mi%20sitio%20web%20profesional" class="cta-btn cta-primary" target="_blank">
+                    Comencemos Hoy 🚀
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Plantillas -->
+    <section id="plantillas" class="section plantillas">
+        <h2 class="section-title fade-in">Plantillas Editables - Black Friday 🎉</h2>
+        <div class="plantillas-container">
+            <div class="plantillas-grid">
+                <!-- 1. Squeeze Page -->
+                <div class="plantilla-card fade-in">
+                    <div class="plantilla-preview" onclick="openModal('squeeze')">
+                        <div class="plantilla-oferta">OFERTA</div>
+                        📩
+                    </div>
+                    <div class="plantilla-info">
+                        <h3 class="plantilla-nombre">Squeeze Page</h3>
+                        <div class="plantilla-categoria">Landing Page</div>
+                        <p class="plantilla-descripcion">Captura de leads de alto rendimiento con llamadas a la acción irresistibles.</p>
+                        <div class="plantilla-footer">
+                            <span class="plantilla-precio">$202.000</span>
+                            <a href="https://nalialma.github.io/Squeeze-page-A/" class="plantilla-btn" target="_blank">Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Nali Travel -->
+                <div class="plantilla-card fade-in">
+                    <div class="plantilla-preview" onclick="openModal('travel')">
+                        <div class="plantilla-oferta">OFERTA</div>
+                        ✈️
+                    </div>
+                    <div class="plantilla-info">
+                        <h3 class="plantilla-nombre">Travel Experience</h3>
+                        <div class="plantilla-categoria">Viajes</div>
+                        <p class="plantilla-descripcion">Diseño cautivador para agencias de viajes con galería interactiva.</p>
+                        <div class="plantilla-footer">
+                            <span class="plantilla-precio">$315.000</span>
+                            <a href="https://nalialma.github.io/Nali.Travel/" class="plantilla-btn" target="_blank">Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Tarot -->
+                <div class="plantilla-card fade-in">
+                    <div class="plantilla-preview" onclick="openModal('tarot')">
+                        <div class="plantilla-oferta">OFERTA</div>
+                        🔮
+                    </div>
+                    <div class="plantilla-info">
+                        <h3 class="plantilla-nombre">Tarot en Luz</h3>
+                        <div class="plantilla-categoria">Servicios Espirituales</div>
+                        <p class="plantilla-descripcion">Atmósfera mística y profesional para lecturas y consultas online.</p>
+                        <div class="plantilla-footer">
+                            <span class="plantilla-precio">$315.000</span>
+                            <a href="https://nalialma.github.io/Tarot-en-Luz/" class="plantilla-btn" target="_blank">Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Landing Premium -->
+                <div class="plantilla-card fade-in">
+                    <div class="plantilla-preview" onclick="openModal('landing')">
+                        <div class="plantilla-oferta">OFERTA</div>
+                        🎯
+                    </div>
+                    <div class="plantilla-info">
+                        <h3 class="plantilla-nombre">Landing Premium</h3>
+                        <div class="plantilla-categoria">Conversión</div>
+                        <p class="plantilla-descripcion">Plantilla de alta conversión con estrategia de marketing integrada.</p>
+                        <div class="plantilla-footer">
+                            <span class="plantilla-precio">$315.000</span>
+                            <a href="https://nalialma.github.io/Landing-Page-A1/" class="plantilla-btn" target="_blank">Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. Servicios -->
+                <div class="plantilla-card fade-in">
+                    <div class="plantilla-preview" onclick="openModal('servicios')">
+                        <div class="plantilla-oferta">OFERTA</div>
+                        💼
+                    </div>
+                    <div class="plantilla-info">
+                        <h3 class="plantilla-nombre">Catálogo Servicios</h3>
+                        <div class="plantilla-categoria">Profesionales</div>
+                        <p class="plantilla-descripcion">Muestra tus servicios con elegancia y profesionalismo.</p>
+                        <div class="plantilla-footer">
+                            <span class="plantilla-precio">$315.000</span>
+                            <a href="https://nalialma.github.io/servicios-plantilla/" class="plantilla-btn" target="_blank">Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. Arte Pluma -->
+                <div class="plantilla-card fade-in">
+                    <div class="plantilla-preview" onclick="openModal('artepluma')">
+                        <div class="plantilla-oferta">OFERTA</div>
+                        🎨
+                    </div>
+                    <div class="plantilla-info">
+                        <h3 class="plantilla-nombre">ArtePluma</h3>
+                        <div class="plantilla-categoria">Portfolio Artístico</div>
+                        <p class="plantilla-descripcion">Galería elegante para artistas y creadores visuales.</p>
+                        <div class="plantilla-footer">
+                            <span class="plantilla-precio">$315.000</span>
+                            <a href="https://nalialma.github.io/ArtePluma/" class="plantilla-btn" target="_blank">Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7. Abogado -->
+                <div class="plantilla-card fade-in">
+                    <div class="plantilla-preview" onclick="openModal('abogado')">
+                        <div class="plantilla-oferta">OFERTA</div>
+                        ⚖️
+                    </div>
+                    <div class="plantilla-info">
+                        <h3 class="plantilla-nombre">Despacho Legal</h3>
+                        <div class="plantilla-categoria">Servicios Legales</div>
+                        <p class="plantilla-descripcion">Profesional y seria, para despachos de abogados.</p>
+                        <div class="plantilla-footer">
+                            <span class="plantilla-precio">$315.000</span>
+                            <a href="https://nalialma.github.io/plantilla-abogado/" class="plantilla-btn" target="_blank">Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 8. Arte Basic -->
+                <div class="plantilla-card fade-in">
+                    <div class="plantilla-preview" onclick="openModal('artebasic')">
+                        <div class="plantilla-oferta">OFERTA</div>
+                        🖼️
+                    </div>
+                    <div class="plantilla-info">
+                        <h3 class="plantilla-nombre">Arte Minimalista</h3>
+                        <div class="plantilla-categoria">Diseño Simple</div>
+                        <p class="plantilla-descripcion">Minimalismo limpio y elegante para artistas contemporáneos.</p>
+                        <div class="plantilla-footer">
+                            <span class="plantilla-precio">$202.000</span>
+                            <a href="https://nalialma.github.io/arte-basic/" class="plantilla-btn" target="_blank">Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 9. Tienda -->
+                <div class="plantilla-card fade-in">
+                    <div class="plantilla-preview" onclick="openModal('tienda')">
+                        <div class="plantilla-oferta">OFERTA</div>
+                        🛍️
+                    </div>
+                    <div class="plantilla-info">
+                        <h3 class="plantilla-nombre">Tienda Online</h3>
+                        <div class="plantilla-categoria">E-commerce</div>
+                        <p class="plantilla-descripcion">Tienda moderna con carrito de compras y checkout integrado.</p>
+                        <div class="plantilla-footer">
+                            <span class="plantilla-precio">$450.000</span>
+                            <a href="https://nalialma.github.io/Plantilla-Tienda/" class="plantilla-btn" target="_blank">Demo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proceso de Creación -->
+    <section id="proceso" class="section">
+        <h2 class="section-title fade-in">El Flujo de Creación</h2>
+        <div class="process-timeline">
+            <div class="process-step fade-in">
+                <div class="process-number">1</div>
+                <h3 class="process-title">Inmersión en tu Visión</h3>
+                <p class="process-description">Nos sumergimos en tu proyecto, entendemos tus objetivos, audiencia y necesidades específicas. Como el agua que explora cada rincón.</p>
+            </div>
+            
+            <div class="process-step fade-in">
+                <div class="process-number">2</div>
+                <h3 class="process-title">Diseño Fluido</h3>
+                <p class="process-description">Creamos wireframes y diseños que fluyen naturalmente, priorizando la experiencia del usuario y la estética visual.</p>
+            </div>
+            
+            <div class="process-step fade-in">
+                <div class="process-number">3</div>
+                <h3 class="process-title">Desarrollo Adaptativo</h3>
+                <p class="process-description">Programamos con código limpio y eficiente, asegurando que tu sitio se adapte perfectamente a cualquier dispositivo.</p>
+            </div>
+            
+            <div class="process-step fade-in">
+                <div class="process-number">4</div>
+                <h3 class="process-title">Optimización y Pulido</h3>
+                <p class="process-description">Refinamos cada detalle, optimizamos el rendimiento y aseguramos la máxima velocidad de carga.</p>
+            </div>
+            
+            <div class="process-step fade-in">
+                <div class="process-number">5</div>
+                <h3 class="process-title">Lanzamiento y Soporte</h3>
+                <p class="process-description">Publicamos tu proyecto y proporcionamos soporte continuo para mantenerlo actualizado y funcionando perfectamente.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filosofía del Código -->
+    <section class="section">
+        <div class="philosophy-section fade-in">
+            <p class="philosophy-text">
+                "El código es agua digital que fluye entre servidores y pantallas, 
+                adaptándose a cada necesidad, tomando la forma de cada sueño. 
+                En cada línea de programación vive la posibilidad infinita de conectar mundos, 
+                de crear puentes entre ideas y realidades. 
+                Programar es dar vida a lo invisible, es el arte de hacer que lo imposible sea clickeable."
+            </p>
+        </div>
+    </section>
+
+    <!-- MODAL -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <div class="modal-preview" id="modalPreview"></div>
+            <div class="modal-info">
+                <h2 class="modal-title" id="modalTitle"></h2>
+                <p class="modal-description" id="modalDescription"></p>
+                <div class="modal-features" id="modalFeatures"></div>
+                <div class="modal-buttons">
+                    <a id="modalDemoBtn" class="modal-btn modal-btn-primary" target="_blank">Ver Demo en Vivo</a>
+                    <a href="https://wa.me/5493865555444?text=Me%20interesa%20esta%20plantilla%21" class="modal-btn modal-btn-secondary" target="_blank">Consultar Precio</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // CURSOR
+        const cursor = document.querySelector('.custom-cursor');
+        document.addEventListener('mousemove', (e) => {
+            gsap.to(cursor, {
+                x: e.clientX - 12,
+                y: e.clientY - 12,
+                duration: 0.1
+            });
+        });
+
+        // TOGGLE MENU
+        function toggleMenu() {
+            const menu = document.getElementById('navMenu');
+            const btn = document.getElementById('menuBtn');
+            menu.classList.toggle('active');
+            btn.classList.toggle('active');
+            
+            // Play sound
+            playSound('waterSound');
+        }
+
+        // WATER PARTICLES
+        function createWaterParticles() {
+            const container = document.getElementById('waterParticles');
+            
+            function createParticle() {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (4 + Math.random() * 3) + 's';
+                
+                const colors = ['#2ECC71', '#3498DB', '#1ABC9C', '#85C1E9'];
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
+                container.appendChild(particle);
+                
+                setTimeout(() => {
+                    if (particle.parentNode) {
+                        particle.parentNode.removeChild(particle);
+                    }
+                }, 8000);
+            }
+            
+            setInterval(createParticle, 400);
+        }
+        createWaterParticles();
+
+        // FADE IN ANIMATIONS
+        gsap.utils.toArray('.fade-in').forEach(element => {
+            gsap.fromTo(element, 
+                { y: 50, opacity: 0 },
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: 1,
+                    ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: element,
+                        start: "top 80%",
+                        toggleActions: "play none none none"
+                    }
+                }
+            );
+        });
+
+        // HOVER EFFECTS
+        document.querySelectorAll('.service-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                gsap.to(card.querySelector('.service-icon'), {
+                    scale: 1.3,
+                    rotation: 5,
+                    duration: 0.3
+                });
+                playSound('waterSound');
+            });
+
+            card.addEventListener('mouseleave', () => {
+                gsap.to(card.querySelector('.service-icon'), {
+                    scale: 1,
+                    rotation: 0,
+                    duration: 0.3
+                });
+            });
+        });
+
+        // PROCESS ANIMATION
+        gsap.utils.toArray('.process-number').forEach(number => {
+            gsap.fromTo(number, 
+                { scale: 0, rotation: 180 },
+                {
+                    scale: 1,
+                    rotation: 0,
+                    duration: 0.6,
+                    ease: "back.out(1.7)",
+                    scrollTrigger: {
+                        trigger: number,
+                        start: "top 80%",
+                        toggleActions: "play none none none"
+                    }
+                }
+            );
+        });
+
+        // HERO ANIMATION
+        window.addEventListener('load', () => {
+            gsap.fromTo('.codigo-icon', 
+                { scale: 0, rotation: -180 },
+                { scale: 1, rotation: 0, duration: 1, ease: "back.out(1.7)" }
+            );
+            
+            gsap.fromTo('.hero-title', 
+                { y: 100, opacity: 0 },
+                { y: 0, opacity: 1, duration: 1, delay: 0.3, ease: "power2.out" }
+            );
+            
+            gsap.fromTo('.hero-subtitle', 
+                { y: 50, opacity: 0 },
+                { y: 0, opacity: 1, duration: 1, delay: 0.6, ease: "power2.out" }
+            );
+
+            gsap.fromTo('.water-quote', 
+                { x: -100, opacity: 0 },
+                { x: 0, opacity: 1, duration: 1, delay: 0.9, ease: "power2.out" }
+            );
+
+            gsap.fromTo('.hero-preview', 
+                { y: 50, opacity: 0, scale: 0.9 },
+                { y: 0, opacity: 1, scale: 1, duration: 1, delay: 1.2, ease: "power2.out" }
+            );
+        });
+
+        // MODAL DATA
+        const modals = {
+            squeeze: {
+                title: 'Squeeze Page',
+                description: 'Página de captura de leads optimizada para convertir visitantes en contactos. Incluye formulario, integraciones de email y estrategia de copywriting de alto rendimiento.',
+                features: ['Formulario Avanzado', 'Integraciones Email', 'Optimizado SEO', 'Responsive Design'],
+                demo: 'https://nalialma.github.io/Squeeze-page-A/',
+                icon: '📩'
+            },
+            travel: {
+                title: 'Travel Experience',
+                description: 'Diseño cautivador especialmente para agencias de viajes. Galería interactiva de destinos, carrusel de ofertas y sistema de reservas integrado.',
+                features: ['Galería Interactiva', 'Carrusel Dinámico', 'Reservas Online', 'Mapas Integrados'],
+                demo: 'https://nalialma.github.io/Nali.Travel/',
+                icon: '✈️'
+            },
+            tarot: {
+                title: 'Tarot en Luz',
+                description: 'Atmósfera mística y profesional. Perfecto para lectores y consultores espirituales que buscan presencia online elevada.',
+                features: ['Diseño Místico', 'Testimonios Cliente', 'Booking Online', 'Blog Integrado'],
+                demo: 'https://nalialma.github.io/Tarot-en-Luz/',
+                icon: '🔮'
+            },
+            landing: {
+                title: 'Landing Premium',
+                description: 'Plantilla de alto impacto diseñada para maximizar conversiones. Incluye copy persuasivo, videos y llamadas a la acción estratégicas.',
+                features: ['Alta Conversión', 'Vídeos Integrados', 'A/B Testing', 'Analytics'],
+                demo: 'https://nalialma.github.io/Landing-Page-A1/',
+                icon: '🎯'
+            },
+            servicios: {
+                title: 'Catálogo Servicios',
+                description: 'Muestra tus servicios con profesionalismo y elegancia. Ideal para consultores, coaches y profesionales independientes.',
+                features: ['Portafolio', 'Precios', 'FAQ', 'Testimonios'],
+                demo: 'https://nalialma.github.io/servicios-plantilla/',
+                icon: '💼'
+            },
+            artepluma: {
+                title: 'ArtePluma',
+                description: 'Galería elegante para artistas visuales. Presenta tu trabajo con la importancia que merece con un diseño limpio y sofisticado.',
+                features: ['Galería Premium', 'Lightbox', 'Filtros', 'Contacto Artistas'],
+                demo: 'https://nalialma.github.io/ArtePluma/',
+                icon: '🎨'
+            },
+            abogado: {
+                title: 'Despacho Legal',
+                description: 'Solución profesional para despachos de abogados. Transmite confianza, seriedad y expertise en derecho.',
+                features: ['Áreas Práctica', 'Perfiles Abogados', 'Blog Legal', 'Contacto 24/7'],
+                demo: 'https://nalialma.github.io/plantilla-abogado/',
+                icon: '⚖️'
+            },
+            artebasic: {
+                title: 'Arte Minimalista',
+                description: 'Diseño minimalista y limpio para artistas contemporáneos. Menos es más: enfoque total en tu obra.',
+                features: ['Minimalismo', 'Galería Simple', 'Limpio', 'Rápido'],
+                demo: 'https://nalialma.github.io/arte-basic/',
+                icon: '🖼️'
+            },
+            tienda: {
+                title: 'Tienda Online',
+                description: 'Solución e-commerce completa para vender online. Carrito, pagos, inventario y todo lo que necesitas para tu tienda digital.',
+                features: ['Carrito Completo', 'Pagos', 'Inventario', 'Envíos'],
+                demo: 'https://nalialma.github.io/Plantilla-Tienda/',
+                icon: '🛍️'
+            }
+        };
+
+        function openModal(type) {
+            const data = modals[type];
+            document.getElementById('modalPreview').innerHTML = data.icon;
+            document.getElementById('modalTitle').textContent = data.title;
+            document.getElementById('modalDescription').textContent = data.description;
+            
+            const featuresHtml = data.features.map(f => 
+                `<div class="modal-feature"><div class="modal-feature-title">✓ ${f}</div></div>`
+            ).join('');
+            document.getElementById('modalFeatures').innerHTML = featuresHtml;
+            
+            document.getElementById('modalDemoBtn').href = data.demo;
+            document.getElementById('modal').classList.add('active');
+            playSound('rainSound');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        document.getElementById('modal').addEventListener('click', (e) => {
+            if (e.target.id === 'modal') closeModal();
+        });
+
+        // PLAY SOUND
+        function playSound(soundId) {
+            const sound = document.getElementById(soundId);
+            sound.currentTime = 0;
+            sound.play().catch(() => {});
+        }
+
+        // CLICK SOUNDS
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.service-card') || e.target.closest('.plantilla-card')) {
+                playSound('waterSound');
+            }
+        });
+    </script>
+</body>
+</html>
