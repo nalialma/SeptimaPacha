@@ -717,763 +717,388 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-/* ==========================================
-   SECCIÓN: Las 4 Fases del Arte - ESTILOS MEJORADOS
-   ========================================== */
+// ==========================================
+// SCRIPT PARA LAS 4 FASES - ANIMACIONES COMPLETAS
+// ==========================================
 
-:root {
-    --tierra: #8B4513;
-    --fuego: #FF6B35;
-    --aire: #4A90E2;
-    --agua: #2ECC71;
-    --oro: #F39C12;
-    --sombra: #2C3E50;
-}
+// Registrar ScrollTrigger plugin
+gsap.registerPlugin(ScrollTrigger);
 
-/* ========== FASES SECTION ========== */
-.fases {
-    min-height: 100vh;
-    padding: 4rem 2rem;
-    background: radial-gradient(ellipse at center, #2d2d2d 0%, #1a1a1a 100%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: visible;
-}
+// ========== SPLASH SCREEN ==========
+window.addEventListener('load', () => {
+    const splashScreen = document.getElementById('splashScreen');
+    const logo = document.querySelector('.logo-path');
+    const logoText = document.querySelector('.logo-text');
 
-/* SVGs decorativos en fases */
-.fases-decorative-svg {
-    position: absolute;
-    width: 250px;
-    height: 250px;
-    opacity: 0.08;
-    pointer-events: none;
-    z-index: 0;
-    animation: floatDecorativeFases 8s ease-in-out infinite;
-}
-
-.fases-top-left {
-    top: 5%;
-    left: 5%;
-    animation-delay: 0s;
-}
-
-.fases-top-right {
-    top: 5%;
-    right: 5%;
-    animation-delay: 1.5s;
-}
-
-.fases-bottom-left {
-    bottom: 5%;
-    left: 5%;
-    animation-delay: 3s;
-}
-
-.fases-bottom-right {
-    bottom: 5%;
-    right: 5%;
-    animation-delay: 4.5s;
-}
-
-@keyframes floatDecorativeFases {
-    0%, 100% { 
-        transform: translateY(0) rotate(0deg); 
-    }
-    50% { 
-        transform: translateY(-20px) rotate(2deg); 
-    }
-}
-
-.fases .section-title {
-    position: relative;
-    z-index: 10;
-    margin-bottom: 3rem;
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    color: var(--oro);
-    text-align: center;
-    animation: fadeInDown 0.8s ease;
-}
-
-/* ========== CHAKANA CONTAINER ========== */
-.chakana-container {
-    position: relative;
-    width: clamp(280px, 90vw, 700px);
-    height: clamp(280px, 90vw, 700px);
-    margin: 0 auto;
-    z-index: 10;
-    animation: fadeInScale 1s ease 0.2s both;
-}
-
-@keyframes fadeInScale {
-    from {
-        opacity: 0;
-        transform: scale(0.8);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-/* ========== CHAKANA CIRCLE ========== */
-.chakana-circle {
-    width: 100%;
-    height: 100%;
-    border: 4px solid var(--oro);
-    border-radius: 50%;
-    position: relative;
-    background: radial-gradient(circle at center, 
-        rgba(139, 69, 19, 0.1) 0%, 
-        rgba(255, 107, 53, 0.1) 25%,
-        rgba(74, 144, 226, 0.1) 50%,
-        rgba(46, 204, 113, 0.1) 75%,
-        transparent 100%);
-    backdrop-filter: blur(10px);
-    box-shadow: 
-        0 0 40px rgba(243, 156, 18, 0.4),
-        inset 0 0 40px rgba(243, 156, 18, 0.15),
-        0 0 80px rgba(243, 156, 18, 0.2);
-    animation: pulseCircle 6s ease-in-out infinite;
-}
-
-@keyframes pulseCircle {
-    0%, 100% {
-        box-shadow: 
-            0 0 40px rgba(243, 156, 18, 0.4),
-            inset 0 0 40px rgba(243, 156, 18, 0.15),
-            0 0 80px rgba(243, 156, 18, 0.2);
-    }
-    50% {
-        box-shadow: 
-            0 0 60px rgba(243, 156, 18, 0.6),
-            inset 0 0 50px rgba(243, 156, 18, 0.2),
-            0 0 100px rgba(243, 156, 18, 0.35);
-    }
-}
-
-/* ========== CHAKANA CROSS ========== */
-.chakana-cross {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-}
-
-.cross-line {
-    position: absolute;
-    background: linear-gradient(90deg, 
-        transparent 0%, 
-        var(--oro) 20%, 
-        var(--oro) 80%, 
-        transparent 100%);
-    box-shadow: 0 0 15px rgba(243, 156, 18, 0.6);
-    animation: glowPulse 3s ease-in-out infinite;
-}
-
-.cross-horizontal {
-    width: 100%;
-    height: 3px;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
-}
-
-.cross-vertical {
-    width: 3px;
-    height: 100%;
-    left: 50%;
-    top: 0;
-    transform: translateX(-50%);
-    background: linear-gradient(180deg, 
-        transparent 0%, 
-        var(--oro) 20%, 
-        var(--oro) 80%, 
-        transparent 100%);
-}
-
-.cross-vertical {
-    animation-delay: 1.5s;
-}
-
-@keyframes glowPulse {
-    0%, 100% {
-        opacity: 0.5;
-        box-shadow: 0 0 15px rgba(243, 156, 18, 0.6);
-    }
-    50% {
-        opacity: 1;
-        box-shadow: 0 0 25px rgba(243, 156, 18, 1);
-    }
-}
-
-/* ========== CHAKANA CENTER ========== */
-.chakana-center {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 50px;
-    height: 50px;
-    background: radial-gradient(circle, var(--oro) 0%, var(--sombra) 100%);
-    border-radius: 50%;
-    border: 3px solid var(--oro);
-    box-shadow: 
-        0 0 30px rgba(243, 156, 18, 0.8),
-        inset 0 0 15px rgba(243, 156, 18, 0.4);
-    z-index: 20;
-    animation: rotatePulse 8s linear infinite;
-}
-
-@keyframes rotatePulse {
-    0% {
-        transform: translate(-50%, -50%) rotate(0deg) scale(1);
-        box-shadow: 0 0 30px rgba(243, 156, 18, 0.8), inset 0 0 15px rgba(243, 156, 18, 0.4);
-    }
-    50% {
-        transform: translate(-50%, -50%) rotate(180deg) scale(1.1);
-        box-shadow: 0 0 50px rgba(243, 156, 18, 1), inset 0 0 25px rgba(243, 156, 18, 0.6);
-    }
-    100% {
-        transform: translate(-50%, -50%) rotate(360deg) scale(1);
-        box-shadow: 0 0 30px rgba(243, 156, 18, 0.8), inset 0 0 15px rgba(243, 156, 18, 0.4);
-    }
-}
-
-/* ========== FASES - POSICIONAMIENTO Y ESTILOS ========== */
-.fase {
-    position: absolute;
-    width: clamp(140px, 25vw, 220px);
-    height: clamp(140px, 25vw, 220px);
-    border-radius: 20px;
-    padding: 1.2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    text-align: center;
-    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    cursor: pointer;
-    backdrop-filter: blur(25px);
-    border: 2px solid;
-    background-clip: padding-box;
-    z-index: 5;
-    text-decoration: none;
-    color: inherit;
-    transform-origin: center;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    overflow: hidden;
-}
-
-.fase::before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    border-radius: 20px;
-    z-index: -1;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    background: linear-gradient(135deg, currentColor, var(--oro));
-}
-
-/* TIERRA - Arriba Izquierda */
-.fase-tierra {
-    top: clamp(5%, 5vw, 12%);
-    left: clamp(5%, 5vw, 12%);
-    background: rgba(139, 69, 19, 0.25);
-    border-color: var(--tierra);
-    color: #FFE5CC;
-    animation: slideInTierra 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.3s both;
-}
-
-.fase-tierra::before {
-    background: linear-gradient(135deg, var(--tierra), var(--oro));
-}
-
-@keyframes slideInTierra {
-    from {
-        opacity: 0;
-        transform: translate(-50px, -50px) scale(0.5);
-    }
-    to {
-        opacity: 1;
-        transform: translate(0, 0) scale(1);
-    }
-}
-
-/* AGUA - Arriba Derecha */
-.fase-agua {
-    top: clamp(5%, 5vw, 12%);
-    right: clamp(5%, 5vw, 12%);
-    background: rgba(74, 144, 226, 0.25);
-    border-color: var(--aire);
-    color: #B3E5FF;
-    animation: slideInAguaTop 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.4s both;
-}
-
-.fase-agua::before {
-    background: linear-gradient(135deg, var(--aire), var(--oro));
-}
-
-@keyframes slideInAguaTop {
-    from {
-        opacity: 0;
-        transform: translate(50px, -50px) scale(0.5);
-    }
-    to {
-        opacity: 1;
-        transform: translate(0, 0) scale(1);
-    }
-}
-
-/* FUEGO - Abajo Derecha */
-.fase-fuego {
-    bottom: clamp(5%, 5vw, 12%);
-    right: clamp(5%, 5vw, 12%);
-    background: rgba(255, 107, 53, 0.25);
-    border-color: var(--fuego);
-    color: #FFD4B3;
-    animation: slideInFuego 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s both;
-}
-
-.fase-fuego::before {
-    background: linear-gradient(135deg, var(--fuego), var(--oro));
-}
-
-@keyframes slideInFuego {
-    from {
-        opacity: 0;
-        transform: translate(50px, 50px) scale(0.5);
-    }
-    to {
-        opacity: 1;
-        transform: translate(0, 0) scale(1);
-    }
-}
-
-/* AIRE - Abajo Izquierda */
-.fase-aire {
-    bottom: clamp(5%, 5vw, 12%);
-    left: clamp(5%, 5vw, 12%);
-    background: rgba(46, 204, 113, 0.25);
-    border-color: var(--agua);
-    color: #B3FFD4;
-    animation: slideInAireBottom 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.6s both;
-}
-
-.fase-aire::before {
-    background: linear-gradient(135deg, var(--agua), var(--oro));
-}
-
-@keyframes slideInAireBottom {
-    from {
-        opacity: 0;
-        transform: translate(-50px, 50px) scale(0.5);
-    }
-    to {
-        opacity: 1;
-        transform: translate(0, 0) scale(1);
-    }
-}
-
-/* ========== HOVER EFFECTS ========== */
-.fase:hover {
-    transform: scale(1.15);
-    z-index: 15;
-    filter: brightness(1.15);
-    backdrop-filter: blur(35px);
-}
-
-.fase:hover::before {
-    opacity: 0.35;
-}
-
-.fase-tierra:hover {
-    box-shadow: 0 20px 60px rgba(139, 69, 19, 0.5);
-    background: rgba(139, 69, 19, 0.4);
-}
-
-.fase-agua:hover {
-    box-shadow: 0 20px 60px rgba(74, 144, 226, 0.5);
-    background: rgba(74, 144, 226, 0.4);
-}
-
-.fase-fuego:hover {
-    box-shadow: 0 20px 60px rgba(255, 107, 53, 0.5);
-    background: rgba(255, 107, 53, 0.4);
-}
-
-.fase-aire:hover {
-    box-shadow: 0 20px 60px rgba(46, 204, 113, 0.5);
-    background: rgba(46, 204, 113, 0.4);
-}
-
-.fase:hover .fase-inner {
-    transform: translateY(0);
-}
-
-.fase:hover .fase-circle {
-    animation: rotateSVG 2s linear infinite;
-}
-
-/* ========== FASE INNER STRUCTURE ========== */
-.fase-inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    width: 100%;
-    height: 100%;
-    gap: clamp(0.3rem, 2vw, 0.5rem);
-    transition: transform 0.4s ease;
-}
-
-/* ========== FASE CIRCLE (SVG CONTAINER) ========== */
-.fase-circle {
-    width: clamp(50px, 12vw, 90px);
-    height: clamp(50px, 12vw, 90px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    animation: floatIcon 3s ease-in-out infinite;
-    transition: all 0.4s ease;
-}
-
-@keyframes floatIcon {
-    0%, 100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-6px);
-    }
-}
-
-/* SVG STYLING */
-.fase-svg {
-    width: 100%;
-    height: 100%;
-    filter: drop-shadow(0 0 10px currentColor);
-    opacity: 0.95;
-    transition: all 0.4s ease;
-}
-
-.fase:hover .fase-svg {
-    opacity: 1;
-    filter: drop-shadow(0 0 20px currentColor);
-}
-
-@keyframes rotateSVG {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-/* ========== FASE TITULO ========== */
-.fase-titulo {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1.1rem, 3.5vw, 1.5rem);
-    font-weight: 700;
-    margin: 0;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    flex-shrink: 0;
-}
-
-.fase:hover .fase-titulo {
-    transform: scale(1.1);
-}
-
-/* ========== FASE SUBTITULO ========== */
-.fase-subtitulo {
-    font-size: clamp(0.6rem, 1.4vw, 0.8rem);
-    font-weight: 700;
-    margin: 0;
-    opacity: 0.95;
-    line-height: 1.25;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    transition: all 0.4s ease;
-    flex-shrink: 0;
-    word-wrap: break-word;
-    word-break: break-word;
-    overflow-wrap: break-word;
-    max-width: 100%;
-}
-
-.fase:hover .fase-subtitulo {
-    opacity: 1;
-    letter-spacing: 1.5px;
-    transform: scale(1.05);
-}
-
-/* ========== FASE EPIGRAFE ========== */
-.fase-epigrafe {
-    font-size: clamp(0.55rem, 1.2vw, 0.75rem);
-    font-weight: 500;
-    margin: 0;
-    opacity: 0;
-    line-height: 1.5;
-    font-style: italic;
-    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    transform: translateY(15px);
-    pointer-events: none;
-    flex-shrink: 0;
-    word-wrap: break-word;
-    word-break: break-word;
-    overflow-wrap: break-word;
-    max-width: 95%;
-    text-align: center;
-}
-
-/* MOSTRAR EPIGRAFE AL HOVER */
-.fase:hover .fase-epigrafe {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* ========== RESPONSIVE DESIGN ========== */
-@media (max-width: 1200px) {
-    .chakana-container {
-        width: clamp(260px, 85vw, 600px);
-        height: clamp(260px, 85vw, 600px);
+    // Animar las líneas del logo
+    if (logo) {
+        gsap.to(logo, {
+            strokeDashoffset: 0,
+            duration: 2,
+            ease: 'power2.out'
+        });
     }
 
-    .fase {
-        width: clamp(130px, 23vw, 200px);
-        height: clamp(130px, 23vw, 200px);
+    // Animar el texto del logo
+    if (logoText) {
+        gsap.to(logoText, {
+            opacity: 1,
+            duration: 1,
+            delay: 1.5,
+            ease: 'power2.out'
+        });
     }
+
+    // Ocultar splash screen después de 3.5 segundos
+    setTimeout(() => {
+        if (splashScreen) {
+            gsap.to(splashScreen, {
+                opacity: 0,
+                duration: 0.8,
+                ease: 'power2.out',
+                onComplete: () => {
+                    splashScreen.classList.add('hide');
+                }
+            });
+        }
+    }, 3000);
+});
+
+// ========== ANIMACIONES DE FASES ==========
+
+// Animar el contenedor de chakana al hacer scroll
+gsap.to('.chakana-container', {
+    scrollTrigger: {
+        trigger: '.fases',
+        start: 'top 70%',
+        end: 'center center',
+        scrub: false,
+        once: true
+    },
+    opacity: 1,
+    duration: 0.8
+});
+
+// Animar cada fase individualmente
+const fases = document.querySelectorAll('.fase');
+fases.forEach((fase, index) => {
+    gsap.from(fase, {
+        scrollTrigger: {
+            trigger: '.fases',
+            start: 'top 60%',
+            toggleActions: 'play none none none',
+            once: true
+        },
+        opacity: 0,
+        duration: 0.8,
+        delay: 0.15 * (index + 1),
+        ease: 'back.out'
+    });
+});
+
+// ========== INTERACTIVIDAD DE FASES ==========
+
+fases.forEach(fase => {
+    const faseCircle = fase.querySelector('.fase-circle');
+    const faseSvg = fase.querySelector('.fase-svg');
+    const faseEpigrafe = fase.querySelector('.fase-epigrafe');
+    const faseSubtitulo = fase.querySelector('.fase-subtitulo');
+    const faseTitulo = fase.querySelector('.fase-titulo');
+
+    // Timeline para hover
+    const hoverTimeline = gsap.timeline({ paused: true });
+
+    // Configurar animaciones del timeline
+    hoverTimeline
+        .to(fase, {
+            scale: 1.25,
+            duration: 0.3,
+            ease: 'power2.out'
+        }, 0)
+        .to(faseTitulo, {
+            transform: 'scale(1.15)',
+            duration: 0.3
+        }, 0)
+        .to(faseSubtitulo, {
+            opacity: 1,
+            letterSpacing: '3px',
+            transform: 'scale(1.05)',
+            duration: 0.3
+        }, 0.05)
+        .to(faseEpigrafe, {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            ease: 'back.out'
+        }, 0.15);
+
+    // Hover enter
+    fase.addEventListener('mouseenter', () => {
+        hoverTimeline.play();
+
+        if (faseCircle) {
+            gsap.to(faseCircle, {
+                rotation: 360,
+                duration: 2,
+                ease: 'none',
+                repeat: -1
+            });
+        }
+
+        // Efecto glow mejorado
+        if (faseSvg) {
+            gsap.to(faseSvg, {
+                filter: 'drop-shadow(0 0 25px currentColor)',
+                duration: 0.3
+            });
+        }
+    });
+
+    // Hover leave
+    fase.addEventListener('mouseleave', () => {
+        hoverTimeline.reverse();
+
+        if (faseCircle) {
+            gsap.killTweensOf(faseCircle);
+            gsap.to(faseCircle, {
+                rotation: 0,
+                duration: 0.5
+            });
+        }
+
+        if (faseSvg) {
+            gsap.to(faseSvg, {
+                filter: 'drop-shadow(0 0 10px currentColor)',
+                duration: 0.3
+            });
+        }
+    });
+
+    // Touch support para móvil
+    fase.addEventListener('touchstart', () => {
+        if (!fase.classList.contains('active')) {
+            // Remover active de otras fases
+            fases.forEach(f => f.classList.remove('active'));
+            fase.classList.add('active');
+            hoverTimeline.play();
+        } else {
+            fase.classList.remove('active');
+            hoverTimeline.reverse();
+        }
+    });
+});
+
+// ========== ANIMACIÓN DE CHAKANA CENTER ==========
+
+// Rotación continua del chakana center
+gsap.to('.chakana-center', {
+    rotation: 360,
+    duration: 10,
+    ease: 'none',
+    repeat: -1
+});
+
+// Pulso del chakana circle
+gsap.fromTo('.chakana-circle', 
+    {
+        boxShadow: '0 0 40px rgba(243, 156, 18, 0.4), inset 0 0 40px rgba(243, 156, 18, 0.15), 0 0 80px rgba(243, 156, 18, 0.2)'
+    },
+    {
+        boxShadow: '0 0 60px rgba(243, 156, 18, 0.6), inset 0 0 50px rgba(243, 156, 18, 0.2), 0 0 100px rgba(243, 156, 18, 0.35)',
+        duration: 3,
+        ease: 'sine.inOut',
+        repeat: -1,
+        yoyo: true
+    }
+);
+
+// ========== ANIMACIÓN DE CRUZ (CROSS LINES) ==========
+
+const crossHorizontal = document.querySelector('.cross-horizontal');
+const crossVertical = document.querySelector('.cross-vertical');
+
+if (crossHorizontal) {
+    gsap.fromTo(crossHorizontal,
+        {
+            opacity: 0.5,
+            boxShadow: '0 0 15px rgba(243, 156, 18, 0.6)'
+        },
+        {
+            opacity: 1,
+            boxShadow: '0 0 25px rgba(243, 156, 18, 1)',
+            duration: 2,
+            ease: 'sine.inOut',
+            repeat: -1,
+            yoyo: true
+        }
+    );
 }
 
-@media (max-width: 768px) {
-    .fases {
-        padding: 3rem 1.5rem;
-        min-height: auto;
-    }
-
-    .fases .section-title {
-        font-size: 2rem;
-        margin-bottom: 2.5rem;
-    }
-
-    .chakana-container {
-        width: min(90vw, 450px);
-        height: min(90vw, 450px);
-        margin: 2rem auto;
-    }
-
-    .fase {
-        width: clamp(120px, 22vw, 180px);
-        height: clamp(120px, 22vw, 180px);
-        padding: 1rem;
-    }
-
-    .fase-circle {
-        width: clamp(50px, 10vw, 75px);
-        height: clamp(50px, 10vw, 75px);
-    }
-
-    .fase-titulo {
-        font-size: clamp(1rem, 3vw, 1.3rem);
-    }
-
-    .fase-subtitulo {
-        font-size: clamp(0.55rem, 1.2vw, 0.75rem);
-    }
-
-    .fase-epigrafe {
-        font-size: clamp(0.5rem, 1.1vw, 0.7rem);
-    }
-
-    /* Ajustes de posicionamiento para tablet */
-    .fase-tierra {
-        top: 8%;
-        left: 8%;
-    }
-
-    .fase-agua {
-        top: 8%;
-        right: 8%;
-    }
-
-    .fase-fuego {
-        bottom: 8%;
-        right: 8%;
-    }
-
-    .fase-aire {
-        bottom: 8%;
-        left: 8%;
-    }
+if (crossVertical) {
+    gsap.fromTo(crossVertical,
+        {
+            opacity: 0.5,
+            boxShadow: '0 0 15px rgba(243, 156, 18, 0.6)'
+        },
+        {
+            opacity: 1,
+            boxShadow: '0 0 25px rgba(243, 156, 18, 1)',
+            duration: 2,
+            ease: 'sine.inOut',
+            repeat: -1,
+            yoyo: true,
+            delay: 1.5
+        }
+    );
 }
 
-@media (max-width: 600px) {
-    .fases {
-        padding: 2.5rem 1rem;
-    }
+// ========== ANIMACIÓN DE ICONOS (SVGs) ==========
 
-    .fases .section-title {
-        font-size: 1.75rem;
-        margin-bottom: 2rem;
-    }
+const faseIcons = document.querySelectorAll('.fase-circle');
+faseIcons.forEach((icon, index) => {
+    gsap.to(icon, {
+        y: -8,
+        duration: 2,
+        ease: 'sine.inOut',
+        repeat: -1,
+        yoyo: true,
+        delay: index * 0.3
+    });
+});
 
-    .chakana-container {
-        width: min(95vw, 350px);
-        height: min(95vw, 350px);
-        margin: 1.5rem auto;
-    }
+// ========== EFECTO PARALLAX DECORATIVO ==========
 
-    .chakana-circle {
-        border-width: 3px;
-    }
+gsap.utils.toArray('.fases-decorative-svg').forEach((svg, index) => {
+    gsap.to(svg, {
+        scrollTrigger: {
+            trigger: '.fases',
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 1
+        },
+        y: -50 * (index % 2 === 0 ? 1 : -1),
+        rotation: 10 * (index % 2 === 0 ? 1 : -1),
+        ease: 'none'
+    });
+});
 
-    .fase {
-        width: clamp(110px, 20vw, 160px);
-        height: clamp(110px, 20vw, 160px);
-        padding: 0.9rem;
-        border-radius: 15px;
-    }
+// ========== ANIMACIÓN AL HACER CLICK EN FASE ==========
 
-    .fase-circle {
-        width: clamp(45px, 9vw, 65px);
-        height: clamp(45px, 9vw, 65px);
-    }
+fases.forEach(fase => {
+    fase.addEventListener('click', (e) => {
+        // Crear efecto ripple
+        const ripple = document.createElement('div');
+        ripple.style.position = 'absolute';
+        ripple.style.width = '100%';
+        ripple.style.height = '100%';
+        ripple.style.borderRadius = '20px';
+        ripple.style.border = '2px solid currentColor';
+        ripple.style.pointerEvents = 'none';
+        
+        fase.style.position = 'relative';
+        fase.appendChild(ripple);
 
-    .fase-titulo {
-        font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-        letter-spacing: 1px;
-    }
+        gsap.to(ripple, {
+            scale: 1.5,
+            opacity: 0,
+            duration: 0.8,
+            ease: 'power2.out',
+            onComplete: () => {
+                ripple.remove();
+            }
+        });
+    });
+});
 
-    .fase-subtitulo {
-        font-size: clamp(0.5rem, 1rem, 0.65rem);
-        letter-spacing: 0.5px;
-        line-height: 1.2;
-    }
+// ========== ANIMACIONES SCROLL TRIGGER PARA SECCIÓN ==========
 
-    .fase-epigrafe {
-        font-size: clamp(0.48rem, 0.9vw, 0.6rem);
-        line-height: 1.4;
-    }
+// Animar el título de la sección
+gsap.to('.fases .section-title', {
+    scrollTrigger: {
+        trigger: '.fases',
+        start: 'top 80%',
+        toggleActions: 'play none none none',
+        once: true
+    },
+    opacity: 1,
+    y: 0,
+    duration: 0.8,
+    ease: 'power2.out'
+});
 
-    .fase-inner {
-        gap: clamp(0.25rem, 1.5vw, 0.4rem);
-    }
+// ========== EFECTO SHINE EN FASES ==========
+
+fases.forEach(fase => {
+    const shineTimeline = gsap.timeline({ paused: true });
+    
+    shineTimeline.to(fase, {
+        backgroundImage: 'linear-gradient(45deg, transparent 0%, rgba(243, 156, 18, 0.2) 50%, transparent 100%)',
+        backgroundPosition: '200% center',
+        duration: 0.6,
+        ease: 'power2.inOut'
+    });
+
+    fase.addEventListener('mouseenter', () => {
+        shineTimeline.play();
+    });
+
+    fase.addEventListener('mouseleave', () => {
+        shineTimeline.reverse();
+    });
+});
+
+// ========== RESPONSIVE ADJUSTMENTS ==========
+
+// Ajustar animaciones en dispositivos móviles
+const isMobile = window.innerWidth < 768;
+
+if (isMobile) {
+    // Reducir duración de animaciones en móvil
+    gsap.globalTimeline.timeScale(0.9);
 }
 
-@media (max-width: 480px) {
-    .fases {
-        padding: 2rem 0.75rem;
-    }
+// Manejar cambios de tamaño de ventana
+window.addEventListener('resize', () => {
+    ScrollTrigger.refresh();
+});
 
-    .fases .section-title {
-        font-size: 1.5rem;
-        margin-bottom: 1.5rem;
-    }
+// ========== ANIMACIÓN CONTINUA DE FASES AL CARGAR ==========
 
-    .chakana-container {
-        width: min(100vw, 300px);
-        height: min(100vw, 300px);
-        margin: 1rem auto;
+// Timeline para animar todo junto
+const phasesTimeline = gsap.timeline({
+    scrollTrigger: {
+        trigger: '.fases',
+        start: 'top 70%',
+        once: true
     }
+});
 
-    .chakana-circle {
-        border-width: 2px;
-    }
+phasesTimeline
+    .to('.chakana-circle', { opacity: 1, duration: 0.6 }, 0)
+    .to('.chakana-center', { scale: 1, opacity: 1, duration: 0.6 }, 0)
+    .staggerTo('.fase', {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: 'back.out'
+    }, 0.1, 0);
 
-    .fase {
-        width: clamp(105px, 18vw, 150px);
-        height: clamp(105px, 18vw, 150px);
-        padding: 0.8rem;
-    }
+// ========== EFECTOS VISUALES ADICIONALES ==========
 
-    .fase-circle {
-        width: clamp(40px, 8vw, 60px);
-        height: clamp(40px, 8vw, 60px);
-    }
+// Brillo en los bordes al hacer hover
+fases.forEach(fase => {
+    fase.addEventListener('mouseenter', () => {
+        gsap.to(fase, {
+            borderColor: getComputedStyle(fase).getPropertyValue('border-color'),
+            boxShadow: `0 0 30px ${getComputedStyle(fase).color}99`,
+            duration: 0.3
+        });
+    });
+});
 
-    .fase-titulo {
-        font-size: clamp(0.85rem, 2.2vw, 1rem);
-    }
+// ========== CONSOLE LOGS PARA DEBUG ==========
 
-    .fase-subtitulo {
-        font-size: clamp(0.48rem, 0.95vw, 0.6rem);
-    }
-
-    .fase-epigrafe {
-        font-size: clamp(0.45rem, 0.85vw, 0.55rem);
-    }
-}
-
-/* ========== ANIMACIONES DE ENTRADA ========== */
-.fade-in {
-    animation: fadeInUp 0.8s ease-out;
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* ========== EFECTOS ADICIONALES ========== */
-.fase::after {
-    content: '';
-    position: absolute;
-    inset: -2px;
-    border-radius: 20px;
-    padding: 2px;
-    background: linear-gradient(45deg, transparent 30%, var(--oro), transparent 70%);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    opacity: 0;
-    animation: shine 3s infinite;
-    pointer-events: none;
-}
-
-@keyframes shine {
-    0% {
-        opacity: 0;
-        transform: translateX(-100%);
-    }
-    50% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-        transform: translateX(100%);
-    }
-}
-
-.fase:hover::after {
-    animation: shine 1.5s infinite;
+if (process.env.NODE_ENV === 'development') {
+    console.log('✨ Animaciones de Las 4 Fases cargadas correctamente');
+    console.log('🎨 Total de fases animadas:', fases.length);
 }
