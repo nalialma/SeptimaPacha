@@ -739,8 +739,8 @@
 
         .plantillas-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
             width: 100%;
         }
 
@@ -766,12 +766,12 @@
         .plantilla-preview {
             position: relative;
             width: 100%;
-            aspect-ratio: 16 / 10;
+            aspect-ratio: 16 / 9;
             background: linear-gradient(135deg, var(--agua-accent) 0%, var(--agua-primary) 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3rem;
+            font-size: 2.5rem;
             overflow: hidden;
         }
 
@@ -795,7 +795,7 @@
         }
 
         .plantilla-info {
-            padding: 1.5rem;
+            padding: 1rem;
             display: flex;
             flex-direction: column;
             flex-grow: 1;
@@ -803,32 +803,32 @@
 
         .plantilla-nombre {
             font-family: 'Playfair Display', serif;
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             font-weight: 600;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem;
             color: var(--agua-accent);
         }
 
         .plantilla-categoria {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: #F39C12;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
         }
 
         .plantilla-precio {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             font-weight: 700;
             color: #F39C12;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
         }
 
         .plantilla-btn {
             background: linear-gradient(135deg, var(--agua-accent), var(--agua-primary));
             color: #fff;
-            padding: 0.6rem 1.2rem;
+            padding: 0.5rem 1rem;
             border-radius: 20px;
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             text-decoration: none;
             transition: all 0.3s ease;
             align-self: flex-start;
@@ -1026,6 +1026,89 @@
             color: var(--agua-accent);
         }
 
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 1.2rem;
+            justify-content: center;
+        }
+
+        .tech-badge {
+            background: rgba(46, 204, 113, 0.15);
+            border: 1px solid rgba(46, 204, 113, 0.4);
+            border-radius: 25px;
+            padding: 0.5rem 1.2rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--agua-primary);
+            transition: all 0.3s ease;
+        }
+
+        .tech-badge:hover {
+            background: rgba(46, 204, 113, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
+        }
+
+        .tools-section {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: rgba(26, 188, 156, 0.08);
+            border-radius: 20px;
+            border: 1px solid rgba(46, 204, 113, 0.2);
+            max-width: 900px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tools-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--agua-primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .tool-item {
+            background: rgba(46, 204, 113, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(46, 204, 113, 0.2);
+        }
+
+        .tool-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--agua-accent);
+            box-shadow: 0 10px 30px rgba(46, 204, 113, 0.2);
+        }
+
+        .tool-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .tool-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--agua-accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .tool-desc {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.75);
+            line-height: 1.5;
+        }
+
         .philosophy-section {
             background: rgba(46, 204, 113, 0.05);
             border-radius: 20px;
@@ -1089,13 +1172,44 @@
             }
 
             .plantillas-grid { 
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.2rem;
             }
             
             .tu-web-benefits { 
                 grid-template-columns: repeat(2, 1fr);
                 gap: 1rem;
+            }
+
+            .tools-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .tools-section {
+                padding: 1.5rem;
+                margin-top: 2rem;
+            }
+
+            .tools-title {
+                font-size: 1.2rem;
+                margin-bottom: 1.2rem;
+            }
+
+            .tool-item {
+                padding: 1rem;
+            }
+
+            .tool-icon {
+                font-size: 2rem;
+            }
+
+            .tool-name {
+                font-size: 0.95rem;
+            }
+
+            .tool-desc {
+                font-size: 0.8rem;
             }
             
             .services-grid {
@@ -1202,6 +1316,39 @@
             .plantilla-preview {
                 aspect-ratio: 16 / 8;
                 font-size: 2rem;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .tools-section {
+                padding: 1.2rem;
+                margin-top: 1.5rem;
+            }
+
+            .tools-title {
+                font-size: 1.1rem;
+                margin-bottom: 1rem;
+            }
+
+            .tool-item {
+                padding: 0.8rem;
+            }
+
+            .tool-icon {
+                font-size: 1.8rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .tool-name {
+                font-size: 0.9rem;
+                margin-bottom: 0.4rem;
+            }
+
+            .tool-desc {
+                font-size: 0.75rem;
             }
         }
     </style>
@@ -1421,14 +1568,14 @@
                 <circle cx="5" cy="60" r="4" fill="#FFD700"/>
                 <circle cx="95" cy="60" r="4" fill="#FFD700"/>
             </svg>
-            <span class="christmas-word red">2025</span>
+            <span class="christmas-word red">2024</span>
             <span class="christmas-word">🎉</span>
         </h2>
 
         <div class="plantillas-container">
             <div class="festive-message fade-in">
                 <div class="festive-title" data-key="festive_title">🎁 Aprovecha el Black Friday</div>
-                <div class="festive-subtitle" data-key="festive_subtitle">Todo el mes de descuentos. Comenzá el 2026 con tu emprendimiento en la web. No esperes más, es el momento de brillar en internet.</div>
+                <div class="festive-subtitle" data-key="festive_subtitle">Todo el mes de descuentos. Comenzá el 2025 con tu emprendimiento en la web. No esperes más, es el momento de brillar en internet.</div>
             </div>
 
             <div class="plantillas-grid">
@@ -1438,7 +1585,7 @@
                         <div class="plantilla-oferta">OFERTA</div>
                         <div class="plantilla-nombre">Squeeze Page</div>
                         <div class="plantilla-categoria">Landing Page</div>
-                        <div class="plantilla-precio">$180.000</div>
+                        <div class="plantilla-precio">$202.000</div>
                         <a href="https://nalialma.github.io/Squeeze-page-A/" class="plantilla-btn" target="_blank">Demo</a>
                     </div>
                 </div>
@@ -1449,7 +1596,7 @@
                         <div class="plantilla-oferta">OFERTA</div>
                         <div class="plantilla-nombre">Travel Experience</div>
                         <div class="plantilla-categoria">Viajes</div>
-                        <div class="plantilla-precio">$250.000</div>
+                        <div class="plantilla-precio">$315.000</div>
                         <a href="https://nalialma.github.io/Nali.Travel/" class="plantilla-btn" target="_blank">Demo</a>
                     </div>
                 </div>
@@ -1460,7 +1607,7 @@
                         <div class="plantilla-oferta">OFERTA</div>
                         <div class="plantilla-nombre">Tarot en Luz</div>
                         <div class="plantilla-categoria">Servicios Espirituales</div>
-                        <div class="plantilla-precio">$200.000</div>
+                        <div class="plantilla-precio">$315.000</div>
                         <a href="https://nalialma.github.io/Tarot-en-Luz/" class="plantilla-btn" target="_blank">Demo</a>
                     </div>
                 </div>
@@ -1471,7 +1618,7 @@
                         <div class="plantilla-oferta">OFERTA</div>
                         <div class="plantilla-nombre">Landing Premium</div>
                         <div class="plantilla-categoria">Conversión</div>
-                        <div class="plantilla-precio">$150.000</div>
+                        <div class="plantilla-precio">$315.000</div>
                         <a href="https://nalialma.github.io/Landing-Page-A1/" class="plantilla-btn" target="_blank">Demo</a>
                     </div>
                 </div>
@@ -1482,7 +1629,7 @@
                         <div class="plantilla-oferta">OFERTA</div>
                         <div class="plantilla-nombre">Catálogo Servicios</div>
                         <div class="plantilla-categoria">Profesionales</div>
-                        <div class="plantilla-precio">$210.000</div>
+                        <div class="plantilla-precio">$315.000</div>
                         <a href="https://nalialma.github.io/servicios-plantilla/" class="plantilla-btn" target="_blank">Demo</a>
                     </div>
                 </div>
@@ -1493,7 +1640,7 @@
                         <div class="plantilla-oferta">OFERTA</div>
                         <div class="plantilla-nombre">ArtePluma</div>
                         <div class="plantilla-categoria">Portfolio Artístico</div>
-                        <div class="plantilla-precio">$150.000</div>
+                        <div class="plantilla-precio">$315.000</div>
                         <a href="https://nalialma.github.io/ArtePluma/" class="plantilla-btn" target="_blank">Demo</a>
                     </div>
                 </div>
@@ -1504,7 +1651,7 @@
                         <div class="plantilla-oferta">OFERTA</div>
                         <div class="plantilla-nombre">Despacho Legal</div>
                         <div class="plantilla-categoria">Servicios Legales</div>
-                        <div class="plantilla-precio">$105.000</div>
+                        <div class="plantilla-precio">$315.000</div>
                         <a href="https://nalialma.github.io/plantilla-abogado/" class="plantilla-btn" target="_blank">Demo</a>
                     </div>
                 </div>
@@ -1515,7 +1662,7 @@
                         <div class="plantilla-oferta">OFERTA</div>
                         <div class="plantilla-nombre">Arte Minimalista</div>
                         <div class="plantilla-categoria">Diseño Simple</div>
-                        <div class="plantilla-precio">$180.000</div>
+                        <div class="plantilla-precio">$202.000</div>
                         <a href="https://nalialma.github.io/arte-basic/" class="plantilla-btn" target="_blank">Demo</a>
                     </div>
                 </div>
@@ -1526,7 +1673,7 @@
                         <div class="plantilla-oferta">OFERTA</div>
                         <div class="plantilla-nombre">Tienda Online</div>
                         <div class="plantilla-categoria">E-commerce</div>
-                        <div class="plantilla-precio">$350.000</div>
+                        <div class="plantilla-precio">$450.000</div>
                         <a href="https://nalialma.github.io/Plantilla-Tienda/" class="plantilla-btn" target="_blank">Demo</a>
                     </div>
                 </div>
@@ -1601,6 +1748,32 @@
                 <p data-key="lanzamiento_desc">Publicamos tu proyecto y proporcionamos soporte continuo.</p>
             </div>
         </div>
+
+        <div class="tools-section fade-in">
+            <h3 class="tools-title" data-key="tools_title">Tecnologías y Herramientas</h3>
+            <div class="tools-grid">
+                <div class="tool-item">
+                    <div class="tool-icon">🎨</div>
+                    <div class="tool-name">HTML5</div>
+                    <div class="tool-desc" data-key="html_desc">Estructura semántica y accesible para tus proyectos web.</div>
+                </div>
+                <div class="tool-item">
+                    <div class="tool-icon">✨</div>
+                    <div class="tool-name">CSS3</div>
+                    <div class="tool-desc" data-key="css_desc">Diseños responsivos y animaciones fluidas que cautivan.</div>
+                </div>
+                <div class="tool-item">
+                    <div class="tool-icon">⚡</div>
+                    <div class="tool-name">JavaScript</div>
+                    <div class="tool-desc" data-key="js_desc">Interactividad dinámica y funcionalidades avanzadas.</div>
+                </div>
+                <div class="tool-item">
+                    <div class="tool-icon">🤖</div>
+                    <div class="tool-name">Inteligencia Artificial</div>
+                    <div class="tool-desc" data-key="ai_desc">Optimización de UX/UI y análisis de datos inteligente.</div>
+                </div>
+            </div>
+        </div>
     </section>
 
     <section class="section">
@@ -1667,9 +1840,14 @@
                 nav_proceso: 'Proceso',
                 nav_volver: '← Volver',
                 festive_title: '🎁 Aprovecha el Black Friday',
-                festive_subtitle: 'Todo el mes de descuentos. Comenzá el 2026 con tu emprendimiento en la web. No esperes más, es el momento de brillar en internet.',
+                festive_subtitle: 'Todo el mes de descuentos. Comenzá el 2025 con tu emprendimiento en la web. No esperes más, es el momento de brillar en internet.',
                 ver_demo: 'Ver Demo en Vivo',
                 consultar_precio: 'Consultar Precio',
+                tools_title: 'Tecnologías y Herramientas',
+                html_desc: 'Estructura semántica y accesible para tus proyectos web.',
+                css_desc: 'Diseños responsivos y animaciones fluidas que cautivan.',
+                js_desc: 'Interactividad dinámica y funcionalidades avanzadas.',
+                ai_desc: 'Optimización inteligente de UX/UI y análisis de datos.',
                 langBtn: 'ES'
             },
             en: {
@@ -1711,9 +1889,14 @@
                 nav_proceso: 'Process',
                 nav_volver: '← Back',
                 festive_title: '🎁 Take Advantage of Black Friday',
-                festive_subtitle: 'All month discounts. Start 2026 with your business on the web. Don\'t wait, it\'s time to shine online.',
+                festive_subtitle: 'All month discounts. Start 2025 with your business on the web. Don\'t wait, it\'s time to shine online.',
                 ver_demo: 'View Live Demo',
                 consultar_precio: 'Ask for Price',
+                tools_title: 'Technologies & Tools',
+                html_desc: 'Semantic and accessible structure for your web projects.',
+                css_desc: 'Responsive design and fluid animations that captivate.',
+                js_desc: 'Dynamic interactivity and advanced functionality.',
+                ai_desc: 'Intelligent UX/UI optimization and smart data analytics.',
                 langBtn: 'EN'
             }
         };
