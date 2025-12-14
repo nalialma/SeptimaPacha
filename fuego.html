@@ -1,11 +1,13 @@
-<html lang="es"><head>
+<!DOCTYPE html>
+<html lang="es">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fuego y Letra | Biblioteca Virtual de Literatura Latinoamericana</title>
     <meta name="description" content="Fuego y Letra: Biblioteca virtual de escritores del norte argentino, Latinoamérica y el mundo. Poesía, cuentos y cómics contemporáneos.">
     <meta name="keywords" content="literatura latinoamericana, escritores argentinos, poesía, cuentos, cómics, Salta, norte argentino">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&amp;family=Montserrat:wght@300;400;600;700&amp;family=Great+Vibes:wght@400&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Montserrat:wght@300;400;600;700&family=Great+Vibes:wght@400&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -34,7 +36,6 @@
             position: relative;
         }
 
-        /* ════════════════════ CANVAS FUEGO ════════════════════ */
         #fireCanvas {
             position: fixed;
             top: 0;
@@ -45,7 +46,6 @@
             pointer-events: none;
         }
 
-        /* ════════════════════ SVG SYMBOLS GIRANDO ════════════════════ */
         .fire-symbols {
             position: fixed;
             width: 100%;
@@ -58,21 +58,55 @@
 
         .fire-symbol {
             position: absolute;
-            opacity: 0.08;
+            opacity: 0.06;
+            filter: drop-shadow(0 0 15px rgba(255, 107, 53, 0.25));
+        }
+
+        /* ════════════════════ BOTÓN VOLVER ════════════════════ */
+        .back-home-btn {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            z-index: 1000;
+            background: rgba(255, 107, 53, 0.15);
+            border: 2px solid rgba(255, 107, 53, 0.4);
+            color: var(--fuego);
+            padding: 0.7rem 1.4rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-decoration: none;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .back-home-btn:hover {
+            background: rgba(255, 107, 53, 0.25);
+            border-color: var(--fuego);
+            transform: translateY(-2px);
         }
 
         .fire-symbol svg {
             width: 100%;
             height: 100%;
-            animation: rotate 20s linear infinite;
+            animation: fireFlicker 2.5s ease-in-out infinite;
+            color: #FF6B35;
         }
 
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        @keyframes fireFlicker {
+            0%, 100% { 
+                opacity: 0.04;
+                transform: scale(0.98);
+            }
+            50% { 
+                opacity: 0.08;
+                transform: scale(1.02);
+            }
         }
 
-        /* ════════════════════ HAMBURGER MENU ════════════════════ */
         .hamburger {
             position: fixed;
             top: 2rem;
@@ -107,7 +141,6 @@
             transform: rotate(-45deg) translate(7px, -6px);
         }
 
-        /* ════════════════════ MENU LATERAL ════════════════════ */
         .side-menu {
             position: fixed;
             top: 0;
@@ -158,14 +191,12 @@
             padding-left: 1.5rem;
         }
 
-        /* ════════════════════ CONTENEDOR PRINCIPAL ════════════════════ */
         .container-main {
             position: relative;
             z-index: 5;
             width: 100%;
         }
 
-        /* ════════════════════ HERO SECTION ════════════════════ */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -297,7 +328,6 @@
             box-shadow: 0 15px 40px rgba(255, 107, 53, 0.3);
         }
 
-        /* ════════════════════ SECCIONES ════════════════════ */
         .section {
             padding: 5rem 2rem;
             max-width: 1200px;
@@ -330,7 +360,6 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* ════════════════════ GRID MINIMALISTA ════════════════════ */
         .works-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -419,7 +448,6 @@
             transform: translateX(3px);
         }
 
-        /* ════════════════════ FOOTER ════════════════════ */
         .footer-section {
             padding: 3.5rem 2rem;
             background: linear-gradient(135deg, rgba(255, 107, 53, 0.06), rgba(255, 159, 67, 0.03));
@@ -438,7 +466,6 @@
             line-height: 1.7;
         }
 
-        /* ════════════════════ MODAL ════════════════════ */
         .modal {
             display: none;
             position: fixed;
@@ -553,19 +580,10 @@
             box-shadow: 0 10px 25px rgba(255, 107, 53, 0.3);
         }
 
-        /* ════════════════════ RESPONSIVE ════════════════════ */
         @media (max-width: 1024px) {
             .hero-content {
                 grid-template-columns: 1fr;
                 gap: 2rem;
-            }
-
-            .fuego-text {
-                font-size: clamp(3rem, 10vw, 6rem);
-            }
-
-            .letra-text {
-                font-size: clamp(1.5rem, 6vw, 3rem);
             }
         }
 
@@ -576,25 +594,8 @@
                 padding-top: 5rem;
             }
 
-            .fuego-text {
-                font-size: 2.5rem;
-            }
-
-            .letra-text {
-                font-size: 1.3rem;
-                margin-left: 0.5rem;
-            }
-
-            .hero-subtitle {
-                font-size: 1rem;
-            }
-
             .section {
                 padding: 3.5rem 1.5rem;
-            }
-
-            .section-title {
-                font-size: 2rem;
             }
 
             .works-grid {
@@ -605,45 +606,15 @@
             .work-card {
                 padding: 1.5rem;
             }
-
-            .modal-content {
-                margin: 30% auto;
-                padding: 1.8rem;
-            }
         }
 
         @media (max-width: 480px) {
-            .hero-title {
-                margin-bottom: 1rem;
-            }
-
             .fuego-text {
                 font-size: 1.8rem;
-                gap: 0.3rem;
-            }
-
-            .flame-icon {
-                font-size: 0.9em;
             }
 
             .letra-text {
                 font-size: 0.9rem;
-                margin-left: 0.3rem;
-                gap: 0.4rem;
-            }
-
-            .pen-icon {
-                font-size: 0.8em;
-            }
-
-            .hero-subtitle {
-                font-size: 0.9rem;
-                margin-bottom: 1.5rem;
-            }
-
-            .btn {
-                padding: 0.8rem 1.5rem;
-                font-size: 0.8rem;
             }
 
             .works-grid {
@@ -663,20 +634,16 @@
     </style>
 </head>
 <body>
-    <!-- CANVAS FUEGO -->
-    <canvas id="fireCanvas" width="982" height="695"></canvas>
+    <canvas id="fireCanvas"></canvas>
+    <div class="fire-symbols" id="fireSymbols"></div>
 
-    <!-- SVG SÍMBOLOS GIRANDO -->
-    <div class="fire-symbols" id="fireSymbols"><div class="fire-symbol" style="top: 5%; left: 5%; width: 150px; height: 150px; color: rgb(255, 107, 53);"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-width="2" opacity="0.3"></circle></svg></div><div class="fire-symbol" style="top: 50%; right: 5%; width: 200px; height: 200px; color: rgb(255, 107, 53);"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 10 L60 40 L90 40 L65 60 L75 90 L50 70 L25 90 L35 60 L10 40 L40 40 Z" fill="none" stroke="currentColor" stroke-width="2" opacity="0.3"></path></svg></div><div class="fire-symbol" style="bottom: 10%; left: 10%; width: 180px; height: 180px; color: rgb(255, 107, 53);"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.2"></circle><circle cx="50" cy="50" r="30" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.2"></circle></svg></div><div class="fire-symbol" style="top: 30%; right: 20%; width: 160px; height: 160px; color: rgb(255, 107, 53);"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 15 Q65 35 60 60 Q50 75 40 60 Q35 35 50 15 Z" fill="none" stroke="currentColor" stroke-width="2" opacity="0.3"></path></svg></div></div>
-
-    <!-- HAMBURGER MENU -->
+    <a href="index.html" class="back-home-btn">← Inicio</a>
     <button class="hamburger" id="hamburger">
         <span></span>
         <span></span>
         <span></span>
     </button>
 
-    <!-- SIDE MENU -->
     <nav class="side-menu" id="sideMenu">
         <div class="menu-section">
             <div class="menu-section-title">📖 Cuentos</div>
@@ -704,7 +671,6 @@
     </nav>
 
     <div class="container-main">
-        <!-- HERO SECTION -->
         <section class="hero" id="inicio">
             <div class="hero-content">
                 <div class="hero-text">
@@ -727,115 +693,21 @@
             </div>
         </section>
 
-        <!-- CUENTOS -->
         <section class="section" id="cuentos">
             <h2 class="section-title"><span>Cuentos</span></h2>
-            <div class="works-grid" id="cuentosGrid"><div class="work-card">
-                    <h3 class="work-title">Historias del Alma</h3>
-                    <div class="work-author">Victoria Barrandeguy</div>
-                    <p class="work-description">Narrativas que exploran los rincones profundos del ser humano.</p>
-                    <a href="autor-victoria-barrandeguy.html" class="read-btn">Leer →</a>
-                </div><div class="work-card">
-                    <h3 class="work-title">Voces Olvidadas</h3>
-                    <div class="work-author">Victoria Barrandeguy</div>
-                    <p class="work-description">Historias de personajes anónimos cuyas voces resuenan con verdad.</p>
-                    <a href="#" class="read-btn">Leer →</a>
-                </div><div class="work-card">
-                    <h3 class="work-title">Umbrales</h3>
-                    <div class="work-author">Ana Flores</div>
-                    <p class="work-description">Donde lo ordinario se vuelve extraordinario en espacios intermedios.</p>
-                    <a href="#" class="read-btn">Leer →</a>
-                </div><div class="work-card">
-                    <h3 class="work-title">Lazos de Tiempo</h3>
-                    <div class="work-author">Diego Reyes</div>
-                    <p class="work-description">Cuentos conectados por el hilo invisible del tiempo.</p>
-                    <a href="#" class="read-btn">Leer →</a>
-                </div><div class="work-card">
-                    <h3 class="work-title">Secretos del Corazón</h3>
-                    <div class="work-author">María Sánchez</div>
-                    <p class="work-description">Exploración íntima de secretos y misterios del amor.</p>
-                    <a href="#" class="read-btn">Leer →</a>
-                </div><div class="work-card">
-                    <h3 class="work-title">Última Página</h3>
-                    <div class="work-author">Carlos López</div>
-                    <p class="work-description">Reflexión sobre finales, comienzos y espacios intermedios.</p>
-                    <a href="#" class="read-btn">Leer →</a>
-                </div></div>
+            <div class="works-grid" id="cuentosGrid"></div>
         </section>
 
-        <!-- POESÍA -->
         <section class="section" id="poesia">
             <h2 class="section-title"><span>Poesía</span></h2>
-            <div class="works-grid" id="poesiaGrid"><div class="work-card">
-                    <h3 class="work-title">Versos de Tierra</h3>
-                    <div class="work-author">Julieta Contreras</div>
-                    <p class="work-description">Conexión con la naturaleza andina y los ancestros.</p>
-                    <a href="autor-julieta-contreras.html" class="read-btn">Leer →</a>
-                </div><div class="work-card">
-                    <h3 class="work-title">Ecos Nocturnos</h3>
-                    <div class="work-author">Juan Morales</div>
-                    <p class="work-description">Versos nocturnos que capturan momentos de silencio.</p>
-                    <a href="#" class="read-btn">Leer →</a>
-                </div><div class="work-card">
-                    <h3 class="work-title">Respirar el Aire</h3>
-                    <div class="work-author">María Sánchez</div>
-                    <p class="work-description">La respiración del alma en espacios sagrados.</p>
-                    <a href="#" class="read-btn">Leer →</a>
-                </div><div class="work-card">
-                    <h3 class="work-title">Ritmo de Agua</h3>
-                    <div class="work-author">Carlos López</div>
-                    <p class="work-description">Poemas que fluyen como el agua explorando ciclos.</p>
-                    <a href="#" class="read-btn">Leer →</a>
-                </div><div class="work-card">
-                    <h3 class="work-title">Corazón de Fuego</h3>
-                    <div class="work-author">Juan Morales</div>
-                    <p class="work-description">Profundidades del sentimiento y transformación personal.</p>
-                    <a href="#" class="read-btn">Leer →</a>
-                </div><div class="work-card">
-                    <h3 class="work-title">Última Página</h3>
-                    <div class="work-author">Ana Flores</div>
-                    <p class="work-description">Una reflexión poética sobre final y comienzo.</p>
-                    <a href="#" class="read-btn">Leer →</a>
-                </div></div>
+            <div class="works-grid" id="poesiaGrid"></div>
         </section>
 
-        <!-- CÓMICS -->
         <section class="section" id="comics">
             <h2 class="section-title"><span>Cómics</span></h2>
-            <div class="works-grid" id="comicsGrid"><div class="work-card">
-                    <h3 class="work-title">Identidad Pacha</h3>
-                    <div class="work-author">Naliart</div>
-                    <p class="work-description">Identidad ancestral y conexión con la Pachamama.</p>
-                    <a href="autor-naliart.html" class="read-btn">Leer →</a>
-                </div><div class="work-card">
-                    <h3 class="work-title">Ñusta Reimaginada</h3>
-                    <div class="work-author">Naliart</div>
-                    <p class="work-description">Reinterpretación de mitos andinos con perspectiva contemporánea.</p>
-                    <a href="#" class="read-btn">Leer →</a>
-                </div><div class="work-card">
-                    <h3 class="work-title">Yuraj Dog</h3>
-                    <div class="work-author">Naliart</div>
-                    <p class="work-description">Vida y resistencia en contextos urbanos latinoamericanos.</p>
-                    <a href="#" class="read-btn">Leer →</a>
-                </div><div class="work-card">
-                    <h3 class="work-title">Munay Dog</h3>
-                    <div class="work-author">Sandra Vega</div>
-                    <p class="work-description">El amor en todas sus formas desde el lente andino.</p>
-                    <a href="#" class="read-btn">Leer →</a>
-                </div><div class="work-card">
-                    <h3 class="work-title">Ñawi Strange</h3>
-                    <div class="work-author">Diego Reyes</div>
-                    <p class="work-description">Cómics surrealistas que desafían la percepción visual.</p>
-                    <a href="#" class="read-btn">Leer →</a>
-                </div><div class="work-card">
-                    <h3 class="work-title">Dibujo Analógico</h3>
-                    <div class="work-author">Sandra Vega</div>
-                    <p class="work-description">Técnica mixta que homenajea el dibujo manual y pintura.</p>
-                    <a href="#" class="read-btn">Leer →</a>
-                </div></div>
+            <div class="works-grid" id="comicsGrid"></div>
         </section>
 
-        <!-- FOOTER -->
         <section class="footer-section">
             <p class="footer-text">
                 "La palabra escrita es fuego que arde en la mente del lector.<br>
@@ -844,46 +716,44 @@
         </section>
     </div>
 
-    <!-- MODAL PARTICIPAR -->
     <div id="participateModal" class="modal">
         <div class="modal-content">
-            <button class="close-btn" onclick="closeModal()">×</button>
+            <button class="close-btn" onclick="closeModal()">&times;</button>
             <h2 class="modal-title">Quiero Formar Parte</h2>
             <p class="modal-text">
                 Comparte tu obra, tu voz y tu historia con la comunidad de Fuego y Letra.
             </p>
             <form class="modal-form" id="participateForm">
-                <input type="text" placeholder="Tu Nombre" required="">
-                <input type="email" placeholder="Tu Email" required="">
-                <input type="text" placeholder="Nombre de tu Obra" required="">
+                <input type="text" placeholder="Tu Nombre" required>
+                <input type="email" placeholder="Tu Email" required>
+                <input type="text" placeholder="Nombre de tu Obra" required>
                 <select style="width: 100%; padding: 0.9rem; margin-bottom: 1rem; background: rgba(255, 107, 53, 0.05); border: 1px solid rgba(255, 107, 53, 0.15); border-radius: 8px; color: var(--text-light); font-family: inherit;">
                     <option value="">Tipo de Obra</option>
                     <option value="cuento">Cuento</option>
                     <option value="poesia">Poesía</option>
                     <option value="comic">Cómics</option>
                 </select>
-                <textarea placeholder="Cuéntanos sobre tu obra..." rows="3" required=""></textarea>
+                <textarea placeholder="Cuéntanos sobre tu obra..." rows="3" required></textarea>
                 <button type="submit">Enviar Solicitud</button>
             </form>
         </div>
     </div>
 
     <script>
-        // ════════════════════ SVG FIRE SYMBOLS ════════════════════
-        const fireSymbolsSvg = [
-            `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-width="2" opacity="0.3"/></svg>`,
-            `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 10 L60 40 L90 40 L65 60 L75 90 L50 70 L25 90 L35 60 L10 40 L40 40 Z" fill="none" stroke="currentColor" stroke-width="2" opacity="0.3"/></svg>`,
-            `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.2"/><circle cx="50" cy="50" r="30" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.2"/></svg>`,
-            `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 15 Q65 35 60 60 Q50 75 40 60 Q35 35 50 15 Z" fill="none" stroke="currentColor" stroke-width="2" opacity="0.3"/></svg>`
-        ];
+        const fireSvg = `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <path d="M50 10 C40 25 35 40 35 55 C35 75 42 85 50 85 C58 85 65 75 65 55 C65 40 60 25 50 10 Z" 
+                  fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
+            <path d="M45 30 C43 38 42 45 42 52 C42 65 46 72 50 72 C54 72 58 65 58 52 C58 45 57 38 55 30 Z" 
+                  fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.6"/>
+        </svg>`;
 
         function createFireSymbols() {
             const container = document.getElementById('fireSymbols');
             const positions = [
-                { top: '5%', left: '5%', size: '150px' },
-                { top: '50%', right: '5%', size: '200px' },
-                { bottom: '10%', left: '10%', size: '180px' },
-                { top: '30%', right: '20%', size: '160px' }
+                { bottom: '5%', left: '8%', size: '120px' },
+                { top: '20%', right: '10%', size: '140px' },
+                { bottom: '35%', right: '5%', size: '160px' },
+                { top: '40%', left: '5%', size: '100px' }
             ];
 
             positions.forEach((pos, idx) => {
@@ -892,12 +762,11 @@
                 el.style.cssText = `${Object.entries(pos).map(([k, v]) => 
                     k === 'size' ? `width: ${v}; height: ${v}` : `${k}: ${v}`
                 ).join('; ')}; color: #FF6B35;`;
-                el.innerHTML = fireSymbolsSvg[idx % fireSymbolsSvg.length];
+                el.innerHTML = fireSvg;
                 container.appendChild(el);
             });
         }
 
-        // ════════════════════ ANIMACIÓN CANVAS FUEGO ════════════════════
         class FireAnimation {
             constructor(canvasId) {
                 this.canvas = document.getElementById(canvasId);
@@ -912,7 +781,7 @@
             }
 
             init() {
-                for (let i = 0; i < 15; i++) {
+                for (let i = 0; i < 20; i++) {
                     this.particles.push(this.createParticle());
                 }
             }
@@ -921,17 +790,17 @@
                 return {
                     x: Math.random() * this.width,
                     y: this.height + Math.random() * 50,
-                    vx: (Math.random() - 0.5) * 0.5,
-                    vy: -Math.random() * 0.5 - 0.3,
+                    vx: (Math.random() - 0.5) * 0.8,
+                    vy: -Math.random() * 0.8 - 0.4,
                     life: Math.random() * 0.8 + 0.5,
                     maxLife: Math.random() * 0.8 + 0.5,
-                    size: Math.random() * 15 + 3,
+                    size: Math.random() * 20 + 5,
                     color: ['#FF6B35', '#FF8C5A', '#FF9F43'][Math.floor(Math.random() * 3)]
                 };
             }
 
             animate() {
-                this.ctx.fillStyle = 'rgba(10, 14, 39, 0.015)';
+                this.ctx.fillStyle = 'rgba(10, 14, 39, 0.02)';
                 this.ctx.fillRect(0, 0, this.width, this.height);
 
                 for (let i = 0; i < this.particles.length; i++) {
@@ -939,13 +808,13 @@
                     
                     p.x += p.vx;
                     p.y += p.vy;
-                    p.vy -= 0.03;
+                    p.vy -= 0.04;
                     p.life -= 0.003;
 
                     const opacity = p.life / p.maxLife;
                     
                     this.ctx.fillStyle = p.color;
-                    this.ctx.globalAlpha = opacity * 0.03;
+                    this.ctx.globalAlpha = opacity * 0.05;
                     this.ctx.beginPath();
                     this.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
                     this.ctx.fill();
@@ -968,125 +837,33 @@
         new FireAnimation('fireCanvas');
         createFireSymbols();
 
-        // ════════════════════ DATOS ════════════════════
         const works = {
             cuentos: [
-                {
-                    title: 'Historias del Alma',
-                    author: 'Victoria Barrandeguy',
-                    description: 'Narrativas que exploran los rincones profundos del ser humano.',
-                    url: 'autor-victoria-barrandeguy.html'
-                },
-                {
-                    title: 'Voces Olvidadas',
-                    author: 'Victoria Barrandeguy',
-                    description: 'Historias de personajes anónimos cuyas voces resuenan con verdad.',
-                    url: '#'
-                },
-                {
-                    title: 'Umbrales',
-                    author: 'Ana Flores',
-                    description: 'Donde lo ordinario se vuelve extraordinario en espacios intermedios.',
-                    url: '#'
-                },
-                {
-                    title: 'Lazos de Tiempo',
-                    author: 'Diego Reyes',
-                    description: 'Cuentos conectados por el hilo invisible del tiempo.',
-                    url: '#'
-                },
-                {
-                    title: 'Secretos del Corazón',
-                    author: 'María Sánchez',
-                    description: 'Exploración íntima de secretos y misterios del amor.',
-                    url: '#'
-                },
-                {
-                    title: 'Última Página',
-                    author: 'Carlos López',
-                    description: 'Reflexión sobre finales, comienzos y espacios intermedios.',
-                    url: '#'
-                }
+                { title: 'Historias del Alma', author: 'Victoria Barrandeguy', description: 'Narrativas que exploran los rincones profundos del ser humano.', url: 'autor-victoria-barrandeguy.html' },
+                { title: 'Voces Olvidadas', author: 'Victoria Barrandeguy', description: 'Historias de personajes anónimos cuyas voces resuenan con verdad.', url: '#' },
+                { title: 'Umbrales', author: 'Ana Flores', description: 'Donde lo ordinario se vuelve extraordinario en espacios intermedios.', url: '#' },
+                { title: 'Lazos de Tiempo', author: 'Diego Reyes', description: 'Cuentos conectados por el hilo invisible del tiempo.', url: '#' },
+                { title: 'Secretos del Corazón', author: 'María Sánchez', description: 'Exploración íntima de secretos y misterios del amor.', url: '#' },
+                { title: 'Última Página', author: 'Carlos López', description: 'Reflexión sobre finales, comienzos y espacios intermedios.', url: '#' }
             ],
             poesia: [
-                {
-                    title: 'Versos de Tierra',
-                    author: 'Julieta Contreras',
-                    description: 'Conexión con la naturaleza andina y los ancestros.',
-                    url: 'autor-julieta-contreras.html'
-                },
-                {
-                    title: 'Ecos Nocturnos',
-                    author: 'Juan Morales',
-                    description: 'Versos nocturnos que capturan momentos de silencio.',
-                    url: '#'
-                },
-                {
-                    title: 'Respirar el Aire',
-                    author: 'María Sánchez',
-                    description: 'La respiración del alma en espacios sagrados.',
-                    url: '#'
-                },
-                {
-                    title: 'Ritmo de Agua',
-                    author: 'Carlos López',
-                    description: 'Poemas que fluyen como el agua explorando ciclos.',
-                    url: '#'
-                },
-                {
-                    title: 'Corazón de Fuego',
-                    author: 'Juan Morales',
-                    description: 'Profundidades del sentimiento y transformación personal.',
-                    url: '#'
-                },
-                {
-                    title: 'Última Página',
-                    author: 'Ana Flores',
-                    description: 'Una reflexión poética sobre final y comienzo.',
-                    url: '#'
-                }
+                { title: 'Versos de Tierra', author: 'Julieta Contreras', description: 'Conexión con la naturaleza andina y los ancestros.', url: 'autor-julieta-contreras.html' },
+                { title: 'Ecos Nocturnos', author: 'Juan Morales', description: 'Versos nocturnos que capturan momentos de silencio.', url: '#' },
+                { title: 'Respirar el Aire', author: 'María Sánchez', description: 'La respiración del alma en espacios sagrados.', url: '#' },
+                { title: 'Ritmo de Agua', author: 'Carlos López', description: 'Poemas que fluyen como el agua explorando ciclos.', url: '#' },
+                { title: 'Corazón de Fuego', author: 'Juan Morales', description: 'Profundidades del sentimiento y transformación personal.', url: '#' },
+                { title: 'Última Página', author: 'Ana Flores', description: 'Una reflexión poética sobre final y comienzo.', url: '#' }
             ],
             comics: [
-                {
-                    title: 'Identidad Pacha',
-                    author: 'Naliart',
-                    description: 'Identidad ancestral y conexión con la Pachamama.',
-                    url: 'autor-naliart.html'
-                },
-                {
-                    title: 'Ñusta Reimaginada',
-                    author: 'Naliart',
-                    description: 'Reinterpretación de mitos andinos con perspectiva contemporánea.',
-                    url: '#'
-                },
-                {
-                    title: 'Yuraj Dog',
-                    author: 'Naliart',
-                    description: 'Vida y resistencia en contextos urbanos latinoamericanos.',
-                    url: '#'
-                },
-                {
-                    title: 'Munay Dog',
-                    author: 'Sandra Vega',
-                    description: 'El amor en todas sus formas desde el lente andino.',
-                    url: '#'
-                },
-                {
-                    title: 'Ñawi Strange',
-                    author: 'Diego Reyes',
-                    description: 'Cómics surrealistas que desafían la percepción visual.',
-                    url: '#'
-                },
-                {
-                    title: 'Dibujo Analógico',
-                    author: 'Sandra Vega',
-                    description: 'Técnica mixta que homenajea el dibujo manual y pintura.',
-                    url: '#'
-                }
+                { title: 'Identidad Pacha', author: 'Naliart', description: 'Identidad ancestral y conexión con la Pachamama.', url: 'autor-naliart.html' },
+                { title: 'Ñusta Reimaginada', author: 'Naliart', description: 'Reinterpretación de mitos andinos con perspectiva contemporánea.', url: '#' },
+                { title: 'Yuraj Dog', author: 'Naliart', description: 'Vida y resistencia en contextos urbanos latinoamericanos.', url: '#' },
+                { title: 'Munay Dog', author: 'Sandra Vega', description: 'El amor en todas sus formas desde el lente andino.', url: '#' },
+                { title: 'Ñawi Strange', author: 'Diego Reyes', description: 'Cómics surrealistas que desafían la percepción visual.', url: '#' },
+                { title: 'Dibujo Analógico', author: 'Sandra Vega', description: 'Técnica mixta que homenajea el dibujo manual y pintura.', url: '#' }
             ]
         };
 
-        // ════════════════════ RENDERIZAR ════════════════════
         function renderWorks(category, gridId) {
             const grid = document.getElementById(gridId);
             grid.innerHTML = '';
@@ -1104,7 +881,6 @@
             });
         }
 
-        // ════════════════════ MENÚ ════════════════════
         const hamburger = document.getElementById('hamburger');
         const sideMenu = document.getElementById('sideMenu');
 
@@ -1127,7 +903,6 @@
             }
         });
 
-        // ════════════════════ MODAL ════════════════════
         function openModal() {
             document.getElementById('participateModal').style.display = 'block';
         }
@@ -1152,7 +927,6 @@
             closeModal();
         });
 
-        // ════════════════════ SCROLL ════════════════════
         document.querySelectorAll('a[href^="#"]').forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -1163,50 +937,11 @@
             });
         });
 
-        // ════════════════════ INIT ════════════════════
         window.addEventListener('load', () => {
             renderWorks('cuentos', 'cuentosGrid');
             renderWorks('poesia', 'poesiaGrid');
             renderWorks('comics', 'comicsGrid');
         });
     </script>
-<!-- Code injected by live-server -->
-<script>
-	// <![CDATA[  <-- For SVG support
-	if ('WebSocket' in window) {
-		(function () {
-			function refreshCSS() {
-				var sheets = [].slice.call(document.getElementsByTagName("link"));
-				var head = document.getElementsByTagName("head")[0];
-				for (var i = 0; i < sheets.length; ++i) {
-					var elem = sheets[i];
-					var parent = elem.parentElement || head;
-					parent.removeChild(elem);
-					var rel = elem.rel;
-					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
-						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
-						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
-					}
-					parent.appendChild(elem);
-				}
-			}
-			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
-			var address = protocol + window.location.host + window.location.pathname + '/ws';
-			var socket = new WebSocket(address);
-			socket.onmessage = function (msg) {
-				if (msg.data == 'reload') window.location.reload();
-				else if (msg.data == 'refreshcss') refreshCSS();
-			};
-			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
-				console.log('Live reload enabled.');
-				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
-			}
-		})();
-	}
-	else {
-		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
-	}
-	// ]]>
-</script>
-
-</body></html>
+</body>
+</html>
