@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tierra Viva | Séptima Pacha Co.</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -16,15 +15,12 @@
         :root {
             --tierra: #8B4513;
             --fuego: #FF6B35;
-            --aire: #4A90E2;
             --agua: #2ECC71;
             --oro: #F39C12;
-            --sombra: #2C3E50;
         }
 
         html, body {
             width: 100%;
-            height: 100%;
             overflow-x: hidden;
         }
 
@@ -32,7 +28,6 @@
             font-family: 'Montserrat', sans-serif;
             background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
             color: #fff;
-            cursor: none;
         }
 
         .custom-cursor {
@@ -46,7 +41,7 @@
             box-shadow: 0 0 15px var(--oro);
         }
 
-        /* NAVEGACIÓN */
+        /* ════════════ NAVEGACIÓN ════════════ */
         nav {
             position: fixed;
             top: 0;
@@ -77,23 +72,23 @@
             transform: scale(1.05);
         }
 
-        .nav-links {
+        .nav-center {
             display: flex;
             gap: 2rem;
             align-items: center;
             list-style: none;
         }
 
-        .nav-links a {
+        .nav-center a {
             color: #fff;
             text-decoration: none;
             font-weight: 500;
             position: relative;
-            transition: all 0.3s ease;
             font-size: 0.95rem;
+            transition: all 0.3s ease;
         }
 
-        .nav-links a::after {
+        .nav-center a::after {
             content: '';
             position: absolute;
             bottom: -5px;
@@ -104,8 +99,32 @@
             transition: width 0.3s ease;
         }
 
-        .nav-links a:hover::after {
+        .nav-center a:hover::after {
             width: 100%;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .back-btn {
+            background: linear-gradient(135deg, var(--tierra), var(--oro));
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(243, 156, 18, 0.3);
         }
 
         .lang-toggle {
@@ -131,6 +150,10 @@
             flex-direction: column;
             gap: 5px;
             cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            width: 30px;
         }
 
         .hamburger span {
@@ -138,9 +161,71 @@
             height: 3px;
             background: var(--oro);
             transition: all 0.3s ease;
+            border-radius: 2px;
         }
 
-        /* HERO */
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(10px, 10px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        .nav-mobile {
+            display: none;
+            position: absolute;
+            top: 60px;
+            left: 0;
+            right: 0;
+            background: rgba(15, 15, 15, 0.99);
+            flex-direction: column;
+            padding: 2rem;
+            gap: 1rem;
+            border-bottom: 2px solid var(--tierra);
+            z-index: 999;
+            animation: slideDown 0.3s ease;
+        }
+
+        .nav-mobile.active {
+            display: flex;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .nav-mobile a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(139, 69, 19, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .nav-mobile a:last-child {
+            border-bottom: none;
+        }
+
+        .nav-mobile a:hover {
+            background: rgba(243, 156, 18, 0.1);
+            padding-left: 1.5rem;
+            color: var(--oro);
+        }
+
+        /* ════════════ HERO ════════════ */
         .hero {
             margin-top: 60px;
             min-height: 100vh;
@@ -175,8 +260,8 @@
         }
 
         @keyframes float-slow {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-30px) rotate(5deg); }
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-30px); }
         }
 
         .hero-title {
@@ -188,7 +273,6 @@
             position: relative;
             z-index: 3;
             text-transform: uppercase;
-            letter-spacing: -2px;
         }
 
         .hero-title span {
@@ -215,12 +299,41 @@
             line-height: 1.6;
         }
 
+        .hero-cta {
+            margin-top: 2rem;
+            position: relative;
+            z-index: 3;
+            text-align: center;
+        }
+
+        .hero-cta p {
+            margin-bottom: 1rem;
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .cta-btn {
+            background: linear-gradient(135deg, var(--fuego), var(--tierra));
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.4);
+        }
+
         .hero-right {
             position: relative;
             overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         .hero-carousel {
@@ -258,7 +371,7 @@
             z-index: 2;
         }
 
-        /* SECCIÓN MEMORIAL */
+        /* ════════════ SECCIÓN MEMORIAL ════════════ */
         .memorial-section {
             min-height: 100vh;
             display: flex;
@@ -268,14 +381,11 @@
             padding: 4rem 2rem;
             background: linear-gradient(135deg, rgba(139, 69, 19, 0.1) 0%, rgba(0, 0, 0, 0.5) 100%);
             border-top: 3px solid var(--tierra);
-            position: relative;
         }
 
         .memorial-header {
             text-align: center;
             margin-bottom: 3rem;
-            position: relative;
-            z-index: 1;
         }
 
         .memorial-badge {
@@ -377,23 +487,13 @@
             text-align: center;
         }
 
-        /* SECCIÓN ARTISTA */
+        /* ════════════ SECCIÓN ARTISTA ════════════ */
         .artist-section {
-            min-height: 100vh;
-            padding: 4rem 2rem;
+            min-height: auto;
+            padding: 6rem 2rem;
             border-top: 3px solid;
-            display: none;
             position: relative;
             overflow: hidden;
-        }
-
-        .artist-section.active {
-            display: block;
-        }
-
-        .artist-section.naliart {
-            border-color: var(--fuego);
-            background: linear-gradient(135deg, rgba(255, 107, 53, 0.08) 0%, transparent 100%);
         }
 
         .artist-section.alhua {
@@ -401,40 +501,15 @@
             background: linear-gradient(135deg, rgba(46, 204, 113, 0.08) 0%, transparent 100%);
         }
 
-        .svg-decorator {
-            position: absolute;
-            opacity: 0.08;
-            pointer-events: none;
-            z-index: 0;
-            color: currentColor;
-        }
-
-        .svg-top-left {
-            top: 2%;
-            left: 2%;
-            width: 250px;
-            height: 250px;
-        }
-
-        .svg-bottom-right {
-            bottom: 2%;
-            right: 2%;
-            width: 300px;
-            height: 300px;
-        }
-
-        .artist-section.naliart .svg-decorator {
-            color: var(--fuego);
-        }
-
-        .artist-section.alhua .svg-decorator {
-            color: var(--agua);
+        .artist-section.naliart {
+            border-color: var(--fuego);
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.08) 0%, transparent 100%);
         }
 
         .artist-container {
             position: relative;
             z-index: 1;
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
@@ -447,11 +522,6 @@
             justify-content: center;
         }
 
-        .artist-profile {
-            position: relative;
-            flex-shrink: 0;
-        }
-
         .artist-profile-pic {
             width: 180px;
             height: 180px;
@@ -462,14 +532,14 @@
             animation: profileFloat 3s ease-in-out infinite;
         }
 
-        .artist-section.naliart .artist-profile-pic {
-            border-color: var(--fuego);
-            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.3);
-        }
-
         .artist-section.alhua .artist-profile-pic {
             border-color: var(--agua);
             box-shadow: 0 15px 40px rgba(46, 204, 113, 0.3);
+        }
+
+        .artist-section.naliart .artist-profile-pic {
+            border-color: var(--fuego);
+            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.3);
         }
 
         @keyframes profileFloat {
@@ -490,18 +560,18 @@
             margin-bottom: 0.8rem;
         }
 
-        .artist-section.naliart .artist-name {
-            color: var(--fuego);
-        }
-
         .artist-section.alhua .artist-name {
             color: var(--agua);
+        }
+
+        .artist-section.naliart .artist-name {
+            color: var(--fuego);
         }
 
         .artist-bio {
             font-size: 1rem;
             opacity: 0.85;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             line-height: 1.8;
             max-width: 600px;
         }
@@ -511,103 +581,79 @@
             gap: 1rem;
             justify-content: center;
             flex-wrap: wrap;
+            margin-bottom: 1.5rem;
         }
 
-        .contact-btn {
-            display: inline-flex;
+        .icon-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 2px solid;
+            background: transparent;
+            cursor: pointer;
+            display: flex;
             align-items: center;
-            gap: 0.8rem;
-            padding: 0.9rem 1.8rem;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
+            justify-content: center;
+            font-size: 1.3rem;
             transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .artist-section.alhua .icon-btn {
+            border-color: var(--agua);
+            color: var(--agua);
+        }
+
+        .artist-section.alhua .icon-btn:hover {
+            background: var(--agua);
             color: white;
-            border: 2px solid transparent;
+            transform: scale(1.1);
         }
 
-        .contact-btn.whatsapp {
-            background: linear-gradient(135deg, #25D366, #20BA5A);
-        }
-
-        .contact-btn.whatsapp:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(37, 211, 102, 0.4);
-        }
-
-        .contact-btn.instagram {
-            background: linear-gradient(135deg, #E1306C, #C13584);
-        }
-
-        .contact-btn.instagram:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(225, 48, 108, 0.4);
-        }
-
-        .contact-btn.facebook {
-            background: linear-gradient(135deg, #1877F2, #0A66C2);
-        }
-
-        .contact-btn.facebook:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(24, 119, 242, 0.4);
-        }
-
-        /* GALERÍA Y TIENDA */
-        .gallery-shop-title {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2rem, 5vw, 2.5rem);
-            text-align: center;
-            margin: 4rem 0 3rem;
-            position: relative;
-            padding-bottom: 1.5rem;
-        }
-
-        .gallery-shop-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, currentColor, transparent);
-        }
-
-        .artist-section.naliart .gallery-shop-title {
+        .artist-section.naliart .icon-btn {
+            border-color: var(--fuego);
             color: var(--fuego);
         }
 
-        .artist-section.alhua .gallery-shop-title {
+        .artist-section.naliart .icon-btn:hover {
+            background: var(--fuego);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        /* ════════════ GALERÍA ════════════ */
+        .gallery-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 4vw, 2.3rem);
+            text-align: center;
+            margin: 3rem 0 2rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .artist-section.alhua .gallery-title {
             color: var(--agua);
+        }
+
+        .artist-section.naliart .gallery-title {
+            color: var(--fuego);
         }
 
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2.5rem;
-            margin-bottom: 4rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
         }
 
         .gallery-item {
             position: relative;
             border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
             transition: all 0.3s ease;
             cursor: pointer;
             border: 2px solid;
-            height: 350px;
-        }
-
-        .artist-section.naliart .gallery-item {
-            border-color: var(--fuego);
-        }
-
-        .artist-section.naliart .gallery-item:hover {
-            box-shadow: 0 20px 50px rgba(255, 107, 53, 0.3);
-            transform: translateY(-10px);
-            border-color: var(--fuego);
+            height: 320px;
         }
 
         .artist-section.alhua .gallery-item {
@@ -617,7 +663,15 @@
         .artist-section.alhua .gallery-item:hover {
             box-shadow: 0 20px 50px rgba(46, 204, 113, 0.3);
             transform: translateY(-10px);
-            border-color: var(--agua);
+        }
+
+        .artist-section.naliart .gallery-item {
+            border-color: var(--fuego);
+        }
+
+        .artist-section.naliart .gallery-item:hover {
+            box-shadow: 0 20px 50px rgba(255, 107, 53, 0.3);
+            transform: translateY(-10px);
         }
 
         .gallery-img {
@@ -631,149 +685,117 @@
             transform: scale(1.05);
         }
 
-        .gallery-button {
+        .gallery-info {
             position: absolute;
-            bottom: 20px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent);
+            padding: 2rem 1rem 1rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
         }
 
-        .artist-section.naliart .gallery-button {
-            background: var(--fuego);
-            color: white;
+        .gallery-item:hover .gallery-info {
+            transform: translateY(0);
         }
 
-        .artist-section.alhua .gallery-button {
-            background: var(--agua);
-            color: white;
-        }
-
-        .gallery-item:hover .gallery-button {
-            opacity: 1;
-        }
-
-        /* TIENDA */
-        .shop-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2.5rem;
-            margin-top: 3rem;
-        }
-
-        .product-card {
-            background: rgba(139, 69, 19, 0.08);
-            border: 2px solid;
-            border-radius: 15px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .artist-section.naliart .product-card {
-            border-color: var(--fuego);
-        }
-
-        .artist-section.naliart .product-card:hover {
-            border-color: var(--fuego);
-            box-shadow: 0 20px 40px rgba(255, 107, 53, 0.3);
-            transform: translateY(-10px);
-        }
-
-        .artist-section.alhua .product-card {
-            border-color: var(--agua);
-        }
-
-        .artist-section.alhua .product-card:hover {
-            border-color: var(--agua);
-            box-shadow: 0 20px 40px rgba(46, 204, 113, 0.3);
-            transform: translateY(-10px);
-        }
-
-        .product-image {
-            width: 100%;
-            height: 250px;
-            background: linear-gradient(135deg, rgba(139, 69, 19, 0.3), rgba(243, 156, 18, 0.2));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-        }
-
-        .product-info {
-            padding: 1.8rem;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .product-name {
+        .gallery-work-title {
             font-family: 'Playfair Display', serif;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             margin-bottom: 0.5rem;
+            font-weight: 600;
         }
 
-        .artist-section.naliart .product-name {
-            color: var(--fuego);
-        }
-
-        .artist-section.alhua .product-name {
+        .artist-section.alhua .gallery-work-title {
             color: var(--agua);
         }
 
-        .product-price {
-            font-size: 1.6rem;
-            font-weight: 700;
+        .artist-section.naliart .gallery-work-title {
+            color: var(--fuego);
+        }
+
+        .gallery-description {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            line-height: 1.5;
+        }
+
+        /* ════════════ INFO ════════════ */
+        .artist-info-box {
+            background: rgba(139, 69, 19, 0.1);
+            border: 2px solid;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+            line-height: 1.8;
+        }
+
+        .artist-section.alhua .artist-info-box {
+            border-color: var(--agua);
+        }
+
+        .artist-section.naliart .artist-info-box {
+            border-color: var(--fuego);
+        }
+
+        .artist-info-box p {
+            margin-bottom: 0.8rem;
+        }
+
+        .artist-info-box strong {
+            display: block;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* ════════════ PIE DE PÁGINA ════════════ */
+        .footer-cta {
+            padding: 4rem 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%);
+            border-top: 3px solid var(--tierra);
+            margin-top: 4rem;
+        }
+
+        .footer-cta-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
             color: var(--oro);
-            margin-bottom: 1.2rem;
+            margin-bottom: 1rem;
         }
 
-        .buy-btn {
-            width: 100%;
-            border: none;
-            padding: 0.9rem;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.95rem;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            margin-top: auto;
+        .footer-cta-text {
+            font-size: 1rem;
+            opacity: 0.85;
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
         }
 
-        .artist-section.naliart .buy-btn {
+        .footer-cta-btn {
             background: linear-gradient(135deg, var(--fuego), var(--tierra));
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
         }
 
-        .artist-section.naliart .buy-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 25px rgba(255, 107, 53, 0.4);
+        .footer-cta-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.4);
         }
 
-        .artist-section.alhua .buy-btn {
-            background: linear-gradient(135deg, var(--agua), #1BA55C);
-        }
-
-        .artist-section.alhua .buy-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 25px rgba(46, 204, 113, 0.4);
-        }
-
-        /* RESPONSIVE */
+        /* ════════════ RESPONSIVE ════════════ */
         @media (max-width: 1024px) {
             .hero {
                 grid-template-columns: 1fr;
@@ -789,41 +811,12 @@
                 padding: 1rem;
             }
 
-            .nav-links {
+            .nav-center {
                 display: none;
             }
 
             .hamburger {
                 display: flex;
-            }
-
-            .nav-links.active {
-                display: flex;
-                position: absolute;
-                top: 60px;
-                left: 0;
-                right: 0;
-                flex-direction: column;
-                background: rgba(15, 15, 15, 0.98);
-                padding: 2rem;
-                gap: 1.5rem;
-                border-bottom: 2px solid var(--tierra);
-                z-index: 999;
-            }
-
-            .hero-title {
-                font-size: 2.5rem;
-            }
-
-            .gallery-grid,
-            .shop-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero-title {
-                font-size: 1.8rem;
             }
 
             .artist-header {
@@ -834,6 +827,32 @@
                 width: 140px;
                 height: 140px;
             }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .back-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav {
+                padding: 0.8rem;
+                gap: 0.5rem;
+            }
+
+            .nav-logo {
+                font-size: 1.4rem;
+            }
+
+            .lang-toggle,
+            .back-btn {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.75rem;
+            }
         }
     </style>
 </head>
@@ -842,18 +861,31 @@
 
     <nav>
         <div class="nav-logo" onclick="scrollToTop()">Séptima Pacha</div>
-        <div class="hamburger" id="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <ul class="nav-links" id="navLinks">
-            <li><a href="#memorial" data-lang-es="Memoria" data-lang-en="Memorial">Memoria</a></li>
-            <li><a href="#naliart" data-lang-es="Naliart" data-lang-en="Naliart">Naliart</a></li>
-            <li><a href="#alhua" data-lang-es="ALHUA Cerámica" data-lang-en="ALHUA Ceramics">ALHUA Cerámica</a></li>
-            <li><button class="lang-toggle" id="langToggle" data-lang-es="English" data-lang-en="Español">English</button></li>
+        
+        <ul class="nav-center">
+            <li><a href="#hero" data-es="Inicio" data-en="Home">Inicio</a></li>
+            <li><a href="#memorial" data-es="Memoria" data-en="Memorial">Memoria</a></li>
+            <li><a href="#alhua" data-es="ALHUA" data-en="ALHUA">ALHUA</a></li>
+            <li><a href="#naliart" data-es="Naliart" data-en="Naliart">Naliart</a></li>
         </ul>
+
+        <div class="nav-right">
+            <button class="lang-toggle" id="langToggle" data-es="English" data-en="Español">English</button>
+            <a href="index.html" class="back-btn" data-es="← Volver" data-en="← Back">← Volver</a>
+            <button class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
     </nav>
+
+    <div class="nav-mobile" id="navMobile">
+        <a href="#hero" data-es="Inicio" data-en="Home">Inicio</a>
+        <a href="#memorial" data-es="Memoria" data-en="Memorial">Memoria</a>
+        <a href="#alhua" data-es="ALHUA" data-en="ALHUA">ALHUA</a>
+        <a href="#naliart" data-es="Naliart" data-en="Naliart">Naliart</a>
+    </div>
 
     <!-- HERO TIERRA VIVA -->
     <section class="hero" id="hero">
@@ -863,18 +895,19 @@
                     <circle cx="50" cy="50" r="30" fill="none" stroke="#8B4513" stroke-width="1.5" opacity="0.4"/>
                     <circle cx="150" cy="150" r="40" fill="none" stroke="#F39C12" stroke-width="1.5" opacity="0.3"/>
                     <path d="M 20 100 Q 50 80 100 100 T 180 100" fill="none" stroke="#8B4513" stroke-width="2" opacity="0.35"/>
-                    <ellipse cx="100" cy="140" rx="50" ry="30" fill="none" stroke="#F39C12" stroke-width="1.5" opacity="0.25"/>
-                    <path d="M 30 30 L 70 30 L 50 70 Z" fill="none" stroke="#8B4513" stroke-width="1.5" opacity="0.35"/>
-                    <path d="M 130 170 L 170 170 L 150 130 Z" fill="none" stroke="#F39C12" stroke-width="1.5" opacity="0.25"/>
-                    <path d="M 80 20 Q 100 10 120 20" fill="none" stroke="#8B4513" stroke-width="1" opacity="0.3"/>
                 </g>
             </svg>
 
             <h1 class="hero-title">
-                <span data-lang-es="Tierra" data-lang-en="Earth">Tierra</span>
-                <span data-lang-es="Viva" data-lang-en="Living">Viva</span>
+                <span>Tierra</span>
+                <span>Viva</span>
             </h1>
-            <p class="hero-subtitle" data-lang-es="Creación ancestral que pulsa con la energía de la vida" data-lang-en="Ancestral creation that pulses with the energy of life">Creación ancestral que pulsa con la energía de la vida</p>
+            <p class="hero-subtitle" data-es="Creación ancestral que pulsa con la energía de la vida" data-en="Ancestral creation that pulses with the energy of life">Creación ancestral que pulsa con la energía de la vida</p>
+            
+            <div class="hero-cta">
+                <p data-es="¿Quieres formar parte del Museo Virtual Tierra Viva de septimapacha.com?" data-en="Want to be part of the Virtual Museum Tierra Viva from septimapacha.com?">¿Quieres formar parte del Museo Virtual Tierra Viva de septimapacha.com?</p>
+                <a href="https://wa.me/5493875000000?text=Hola%2C%20me%20interesa%20formar%20parte%20del%20Museo%20Virtual%20Tierra%20Viva" target="_blank" class="cta-btn" data-es="Contactate" data-en="Contact">Contactate</a>
+            </div>
         </div>
 
         <div class="hero-right">
@@ -886,10 +919,10 @@
     <!-- MEMORIAL -->
     <section class="memorial-section" id="memorial">
         <div class="memorial-header">
-            <div class="memorial-badge" data-lang-es="EN MEMORIA" data-lang-en="IN MEMORY">EN MEMORIA</div>
+            <div class="memorial-badge" data-es="EN MEMORIA" data-en="IN MEMORY">EN MEMORIA</div>
             <h2 class="memorial-title">Osvaldo Antonio López</h2>
-            <p class="memorial-subtitle" data-lang-es="Padre, Amigo, Artista y Escultor" data-lang-en="Father, Friend, Artist and Sculptor">Padre, Amigo, Artista y Escultor</p>
-            <p class="memorial-description" data-lang-es="Su legado perdura en cada obra, en cada gesto de creatividad. Honramos su memoria y su contribución invaluable al arte." data-lang-en="His legacy endures in every work, in every gesture of creativity. We honor his memory and invaluable contribution to art.">Su legado perdura en cada obra, en cada gesto de creatividad. Honramos su memoria y su contribución invaluable al arte.</p>
+            <p class="memorial-subtitle" data-es="Padre, Amigo, Artista y Escultor" data-en="Father, Friend, Artist and Sculptor">Padre, Amigo, Artista y Escultor</p>
+            <p class="memorial-description" data-es="Su legado perdura en cada obra, en cada gesto de creatividad. Honramos su memoria y su contribución invaluable al arte." data-en="His legacy endures in every work, in every gesture of creativity. We honor his memory and invaluable contribution to art.">Su legado perdura en cada obra, en cada gesto de creatividad. Honramos su memoria y su contribución invaluable al arte.</p>
         </div>
 
         <div class="memorial-carousel-container" id="memorialCarousel"></div>
@@ -901,15 +934,70 @@
         </div>
     </section>
 
-    <!-- SECCIONES ARTISTAS -->
-    <div id="artistSections"></div>
+    <!-- ALHUA CERÁMICA -->
+    <section class="artist-section alhua" id="alhua">
+        <div class="artist-container">
+            <div class="artist-header">
+                <img src="https://scontent-gru1-2.xx.fbcdn.net/v/t39.30808-6/285532878_171243158610715_2357787429687437171_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeGCRbV-d0WPKHYGN2yMyaD0jDy4qpGMZJOMPLiqkYxkk0cHur8f40gE68u7AufRGI4&_nc_ohc=vUk49ZiQXe8Q7kNvwEDXF4b&_nc_oc=Admen9vpLEmx6f7M_lRgnusoB5aK7WBjInMML4w7yCPpMCzNbfCdpvwR6SS5GSe-t1zBeyGucPf5ajhtyze7AObU&_nc_zt=23&_nc_ht=scontent-gru1-2.xx&_nc_gid=hdh1Mxd5pLMBGME35I4HnA&oh=00_AfmPuXevAvZ5dI-D6X7ZZr2Re6yTJDZdLeMkUO_ROVKHyg&oe=6944BE9E" alt="ALHUA Cerámica" class="artist-profile-pic">
+                <div class="artist-info">
+                    <h2 class="artist-name">ALHUA Cerámica</h2>
+                    <p class="artist-bio" data-es="Cerámica creativa que combina tradición andina con diseño contemporáneo. Cada pieza es única, handmade con amor y dedicación, transformando barro en arte funcional." data-en="Creative ceramics combining Andean tradition with contemporary design. Each piece is unique, handmade with love and dedication, transforming clay into functional art.">Cerámica creativa que combina tradición andina con diseño contemporáneo. Cada pieza es única, handmade con amor y dedicación, transformando barro en arte funcional.</p>
+                    <div class="artist-buttons">
+                        <a href="https://www.instagram.com/alhua.ceramica/" target="_blank" class="icon-btn" title="Instagram">📸</a>
+                        <a href="https://www.facebook.com/profile.php?id=100072048676762" target="_blank" class="icon-btn" title="Facebook">f</a>
+                        <a href="https://wa.me/5493875654321?text=Hola%20ALHUA%2C%20me%20interesa%20conocer%20vuestras%20creaciones" target="_blank" class="icon-btn" title="WhatsApp">💬</a>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="gallery-title" data-es="Galería de Obras" data-en="Gallery">Galería de Obras</h3>
+            <div class="gallery-grid" id="galleryAlhua"></div>
+
+            <div class="artist-info-box">
+                <strong data-es="Ofrecemos clases de cerámica" data-en="We offer ceramic classes">Ofrecemos clases de cerámica</strong>
+                <p data-es="Si quieres aprender el arte de la cerámica o deseas contratar nuestros servicios, ¡contáctanos!" data-en="If you want to learn the art of ceramics or hire our services, contact us!">Si quieres aprender el arte de la cerámica o deseas contratar nuestros servicios, ¡contáctanos!</p>
+                <a href="https://wa.me/5493875654321?text=Me%20interesa%20en%20las%20clases%20de%20ceramica%20o%20contratar%20sus%20servicios" target="_blank" class="cta-btn" style="margin-top: 1rem;" data-es="Contactar por WhatsApp" data-en="Contact via WhatsApp">Contactar por WhatsApp</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- NALIART -->
+    <section class="artist-section naliart" id="naliart">
+        <div class="artist-container">
+            <div class="artist-header">
+                <img src="https://www.instagram.com/naliart.ok/" alt="Naliart" class="artist-profile-pic" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 180 180%22%3E%3Ccircle cx=%2290%22 cy=%2290%22 r=%2290%22 fill=%22%23FF6B35%22 opacity=%220.3%22/%3E%3C/svg%3E'">
+                <div class="artist-info">
+                    <h2 class="artist-name">Naliart</h2>
+                    <p class="artist-bio" data-es="Artista multidisciplinaria de Salta. Sus obras fusionan la ancestralidad andina con técnicas contemporáneas, explorando la conexión entre lo sagrado y lo humano a través del dibujo, pintura y tatuaje." data-en="Multidisciplinary artist from Salta. Her works merge Andean ancestry with contemporary techniques, exploring the sacred-human connection through drawing, painting and tattoo art.">Artista multidisciplinaria de Salta. Sus obras fusionan la ancestralidad andina con técnicas contemporáneas, explorando la conexión entre lo sagrado y lo humano a través del dibujo, pintura y tatuaje.</p>
+                    <div class="artist-buttons">
+                        <a href="https://www.instagram.com/naliart.ok/" target="_blank" class="icon-btn" title="Instagram">📸</a>
+                        <a href="https://wa.me/5493875123456?text=Hola%20Nali%2C%20me%20interesa%20conocer%20m%C3%A1s%20sobre%20tus%20obras" target="_blank" class="icon-btn" title="WhatsApp">💬</a>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="gallery-title" data-es="Galería de Obras" data-en="Gallery">Galería de Obras</h3>
+            <div class="gallery-grid" id="galleryNaliart"></div>
+
+            <div class="artist-info-box">
+                <strong data-es="¿Quieres un retrato de tu mascota o una artesanía personalizada?" data-en="Want a portrait of your pet or custom craft?">¿Quieres un retrato de tu mascota o una artesanía personalizada?</strong>
+                <p data-es="Naliart crea obras únicas y personalizadas. Cada proyecto es una conexión con tu esencia." data-en="Naliart creates unique and personalized works. Each project is a connection with your essence.">Naliart crea obras únicas y personalizadas. Cada proyecto es una conexión con tu esencia.</p>
+                <a href="https://wa.me/5493875123456?text=Me%20interesa%20un%20retrato%20de%20mi%20mascota%20o%20una%20artesania%20personalizada" target="_blank" class="cta-btn" style="margin-top: 1rem;" data-es="Contactar por WhatsApp" data-en="Contact via WhatsApp">Contactar por WhatsApp</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- PIE DE PÁGINA CTA -->
+    <section class="footer-cta">
+        <h2 class="footer-cta-title" data-es="¿Quieres formar parte del Museo Virtual Tierra Viva?" data-en="Want to be part of the Virtual Museum Tierra Viva?">¿Quieres formar parte del Museo Virtual Tierra Viva?</h2>
+        <p class="footer-cta-text" data-es="Si eres artista y quieres que tus obras sean parte de esta comunidad de creadores, conecta con nosotros y cuéntanos tu historia." data-en="If you are an artist and want your works to be part of this creator community, connect with us and tell us your story.">Si eres artista y quieres que tus obras sean parte de esta comunidad de creadores, conecta con nosotros y cuéntanos tu historia.</p>
+        <a href="https://wa.me/5493875000000?text=Hola%2C%20me%20interesa%20formar%20parte%20del%20Museo%20Virtual%20Tierra%20Viva" target="_blank" class="footer-cta-btn" data-es="Contactate con Séptima Pacha" data-en="Contact Séptima Pacha">Contactate con Séptima Pacha</a>
+    </section>
 
     <script>
         let currentLang = 'es';
         let memorialIdx = 0;
-        const carouselIdx = {};
 
-        // DATOS
         const heroImages = [
             'https://images.unsplash.com/photo-1579783902614-e3fb5141b0cb?w=1000&h=600&fit=crop',
             'https://images.unsplash.com/photo-1578056869-123456789015?w=1000&h=600&fit=crop',
@@ -924,65 +1012,68 @@
             'https://images.unsplash.com/photo-1578301234567-890123456789?w=800&h=500&fit=crop'
         ];
 
-        const naliSvg = '<path d="M50 10 L90 30 L70 70 L30 70 L10 30 Z" stroke="currentColor" fill="none" stroke-width="1.5"/><circle cx="50" cy="40" r="8" fill="currentColor" opacity="0.6"/><path d="M40 60 Q50 70 60 60" stroke="currentColor" fill="none" stroke-width="1.5"/>';
-        
-        const alhuaSvg = '<path d="M25 70 Q25 30 50 20 Q75 30 75 70" stroke="currentColor" fill="none" stroke-width="2"/><path d="M35 70 L65 70" stroke="currentColor" fill="none" stroke-width="2"/><circle cx="50" cy="45" r="12" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="50" cy="50" r="3" fill="currentColor" opacity="0.5"/>';
-
-        const artists = [
-            {
-                id: 'naliart',
-                name: 'Naliart',
-                bio: {
-                    es: 'Artista multidisciplinaria de Salta. Sus obras fusionan la ancestralidad andina con técnicas contemporáneas, explorando la conexión entre lo sagrado y lo humano a través del dibujo, pintura y tatuaje.',
-                    en: 'Multidisciplinary artist from Salta. Her works merge Andean ancestry with contemporary techniques, exploring the sacred-human connection through drawing, painting and tattoo art.'
-                },
-                instagram: 'https://www.instagram.com/naliart.ok/',
-                whatsapp: 'https://wa.me/5493875123456?text=Hola%20Nali%2C%20me%20interesa%20conocer%20m%C3%A1s%20sobre%20tus%20obras',
-                gallery: [
-                    'https://ibb.co/hRDCsMYC',
-                    'https://ibb.co/8CM7hYh',
-                    'https://ibb.co/JRL1nTSk',
-                    'https://ibb.co/wrQpGfk5',
-                    'https://ibb.co/bgP1DLxy',
-                    'https://ibb.co/C3HdTDw7',
-                    'https://ibb.co/21PHX4dz'
-                ],
-                products: [
-                    { name: { es: 'Retrato Personalizado', en: 'Custom Portrait' }, price: '$150', emoji: '🎨' },
-                    { name: { es: 'Dibujo Ancestral', en: 'Ancestral Drawing' }, price: '$120', emoji: '✍️' },
-                    { name: { es: 'Obra Digital', en: 'Digital Artwork' }, price: '$200', emoji: '💻' },
-                    { name: { es: 'Tatuaje Diseño', en: 'Tattoo Design' }, price: '$80', emoji: '🖤' }
-                ],
-                svg: naliSvg
-            },
-            {
-                id: 'alhua',
-                name: 'ALHUA Cerámica',
-                bio: {
-                    es: 'Cerámica creativa que combina tradición andina con diseño contemporáneo. Cada pieza es única, handmade con amor y dedicación, transformando barro en arte funcional.',
-                    en: 'Creative ceramics combining Andean tradition with contemporary design. Each piece is unique, handmade with love and dedication, transforming clay into functional art.'
-                },
-                facebook: 'https://www.facebook.com/profile.php?id=100072048676762&sk=photos',
-                instagram: 'https://www.instagram.com/alhua.ceramica/',
-                whatsapp: 'https://wa.me/5493875654321?text=Hola%20ALHUA%2C%20me%20interesa%20conocer%20vuestras%20creaciones',
-                gallery: [
-                    'https://ibb.co/qL2hcLwM',
-                    'https://ibb.co/hJBSXgfc',
-                    'https://ibb.co/23985rB8',
-                    'https://ibb.co/chsqHHBm',
-                    'https://ibb.co/0R53Z1P9'
-                ],
-                products: [
-                    { name: { es: 'Tazón de Cerámica', en: 'Ceramic Bowl' }, price: '$45', emoji: '🍵' },
-                    { name: { es: 'Maceta Andina', en: 'Andean Planter' }, price: '$60', emoji: '🌱' },
-                    { name: { es: 'Juego de Tazas', en: 'Cup Set' }, price: '$85', emoji: '☕' },
-                    { name: { es: 'Escultura Cerámica', en: 'Ceramic Sculpture' }, price: '$150', emoji: '🏺' }
-                ],
-                svg: alhuaSvg
-            }
+        const alhuaWorks = [
+            { title: 'Tazón Ancestral', desc: 'Cerámica tradicional andina', titleEn: 'Ancestral Bowl', descEn: 'Traditional Andean ceramics' },
+            { title: 'Maceta Única', desc: 'Diseño contemporáneo', titleEn: 'Unique Planter', descEn: 'Contemporary design' },
+            { title: 'Vasija Decorativa', desc: 'Arte funcional', titleEn: 'Decorative Vessel', descEn: 'Functional art' },
+            { title: 'Escultura Cerámica', desc: 'Obra maestra handmade', titleEn: 'Ceramic Sculpture', descEn: 'Handmade masterpiece' },
+            { title: 'Pieza Grabada', desc: 'Detalles ancestrales', titleEn: 'Engraved Piece', descEn: 'Ancestral details' }
         ];
 
-        // INIT HERO
+        const naliartWorks = [
+            { title: 'Identidad Pacha', desc: 'Retrato ancestral', titleEn: 'Identity Pacha', descEn: 'Ancestral portrait' },
+            { title: 'Ñusta Reimaginada', desc: 'Dibujo digital', titleEn: 'Reimagined Ñusta', descEn: 'Digital drawing' },
+            { title: 'Yuraj Dog', desc: 'Retrato sensible', titleEn: 'Yuraj Dog', descEn: 'Sensitive portrait' },
+            { title: 'Munay Dog', desc: 'Amor en líneas', titleEn: 'Munay Dog', descEn: 'Love in lines' },
+            { title: 'Ñawi Strange', desc: 'Exploración artística', titleEn: 'Ñawi Strange', descEn: 'Artistic exploration' },
+            { title: 'Dibujo Analógico', desc: 'Fusión analógica-digital', titleEn: 'Analog Drawing', descEn: 'Analog-digital fusion' },
+            { title: 'Greenpeace', desc: 'Homenaje ambiental', titleEn: 'Greenpeace', descEn: 'Environmental tribute' }
+        ];
+
+        // ════════════ MENÚ HAMBURGER ════════════
+        const hamburger = document.getElementById('hamburger');
+        const navMobile = document.getElementById('navMobile');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMobile.classList.toggle('active');
+        });
+
+        navMobile.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMobile.classList.remove('active');
+            });
+        });
+
+        // ════════════ IDIOMA ════════════
+        function changeLanguage(lang) {
+            currentLang = lang;
+            
+            // Cambiar texto de elementos con data-es y data-en
+            document.querySelectorAll('[data-es][data-en]').forEach(el => {
+                const text = el.getAttribute(`data-${lang}`);
+                if (text && el.tagName !== 'A') {
+                    el.textContent = text;
+                } else if (text) {
+                    el.textContent = text;
+                }
+            });
+
+            // Actualizar galerías
+            updateGalleries();
+
+            // Actualizar botón de idioma
+            const langBtn = document.getElementById('langToggle');
+            langBtn.textContent = currentLang === 'es' ? 'English' : 'Español';
+        }
+
+        document.getElementById('langToggle').addEventListener('click', () => {
+            const newLang = currentLang === 'es' ? 'en' : 'es';
+            changeLanguage(newLang);
+        });
+
+        // ════════════ HERO CAROUSEL ════════════
         function initHero() {
             const carousel = document.getElementById('heroCarousel');
             heroImages.forEach((img, i) => {
@@ -1001,7 +1092,7 @@
             }, 4000);
         }
 
-        // INIT MEMORIAL
+        // ════════════ MEMORIAL CAROUSEL ════════════
         function initMemorial() {
             const carousel = document.getElementById('memorialCarousel');
             memorialImages.forEach((img, i) => {
@@ -1030,155 +1121,65 @@
             document.getElementById('memCurrent').textContent = memorialIdx + 1;
         }
 
-        // INIT ARTISTS
-        function initArtists() {
-            const section = document.getElementById('artistSections');
-            artists.forEach(artist => {
-                const div = document.createElement('div');
-                div.className = `artist-section ${artist.id}`;
-                div.id = artist.id;
-
-                div.innerHTML = `
-                    <svg class="svg-decorator svg-top-left" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                        ${artist.svg}
-                    </svg>
-
-                    <div class="artist-container">
-                        <div class="artist-header">
-                            <div class="artist-profile">
-                                <img src="https://www.instagram.com/${artist.instagram.split('/')[3]}/" alt="${artist.name}" class="artist-profile-pic" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 180 180%22%3E%3Ccircle cx=%2290%22 cy=%2290%22 r=%2290%22 fill=%22%23888%22/%3E%3C/svg%3E'">
-                            </div>
-                            <div class="artist-info">
-                                <h2 class="artist-name">${artist.name}</h2>
-                                <p class="artist-bio">${artist.bio[currentLang]}</p>
-                                <div class="artist-buttons">
-                                    <a href="${artist.instagram}" target="_blank" class="contact-btn instagram">
-                                        <span>📸</span>
-                                        <span>Instagram</span>
-                                    </a>
-                                    ${artist.facebook ? `<a href="${artist.facebook}" target="_blank" class="contact-btn facebook">
-                                        <span>f</span>
-                                        <span>Facebook</span>
-                                    </a>` : ''}
-                                    <a href="${artist.whatsapp}" target="_blank" class="contact-btn whatsapp">
-                                        <span>💬</span>
-                                        <span data-lang-es="Contactar Artista" data-lang-en="Contact Artist">Contactar Artista</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <h3 class="gallery-shop-title" data-lang-es="Galería de Obras" data-lang-en="Gallery">Galería de Obras</h3>
-                        <div class="gallery-grid" id="gallery-${artist.id}"></div>
-
-                        <h3 class="gallery-shop-title" data-lang-es="Tienda Virtual" data-lang-en="Virtual Shop">Tienda Virtual</h3>
-                        <div class="shop-grid" id="shop-${artist.id}"></div>
-                    </div>
-
-                    <svg class="svg-decorator svg-bottom-right" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                        ${artist.svg}
-                    </svg>
-                `;
-
-                section.appendChild(div);
-                initGallery(artist);
-                initShop(artist);
-                carouselIdx[artist.id] = 0;
-            });
+        // ════════════ GALERÍAS ════════════
+        function initGalleries() {
+            updateGalleries();
         }
 
-        function initGallery(artist) {
-            const container = document.getElementById(`gallery-${artist.id}`);
-            artist.gallery.forEach((img, i) => {
+        function updateGalleries() {
+            // Galería ALHUA
+            const alhuaGallery = document.getElementById('galleryAlhua');
+            alhuaGallery.innerHTML = '';
+            alhuaWorks.forEach((work, i) => {
+                const title = currentLang === 'es' ? work.title : work.titleEn;
+                const desc = currentLang === 'es' ? work.desc : work.descEn;
                 const item = document.createElement('div');
                 item.className = 'gallery-item';
                 item.innerHTML = `
-                    <img src="${img}" class="gallery-img" alt="Obra ${i + 1}">
-                    <button class="gallery-button" onclick="contactArtist('${artist.id}')" title="Agregar al carrito">🛒</button>
-                `;
-                container.appendChild(item);
-            });
-        }
-
-        function initShop(artist) {
-            const container = document.getElementById(`shop-${artist.id}`);
-            artist.products.forEach(product => {
-                const card = document.createElement('div');
-                card.className = 'product-card';
-                card.innerHTML = `
-                    <div class="product-image">${product.emoji}</div>
-                    <div class="product-info">
-                        <h4 class="product-name">${product.name[currentLang]}</h4>
-                        <p class="product-price">${product.price}</p>
-                        <a href="${artist.whatsapp}" target="_blank" class="buy-btn">
-                            <span>🛒</span>
-                            <span data-lang-es="Comprar" data-lang-en="Buy">Comprar</span>
-                        </a>
+                    <img src="https://images.unsplash.com/photo-1578056869-${100000 + i}?w=400&h=400&fit=crop" class="gallery-img" alt="${title}">
+                    <div class="gallery-info">
+                        <div class="gallery-work-title">${title}</div>
+                        <div class="gallery-description">${desc}</div>
                     </div>
                 `;
-                container.appendChild(card);
+                alhuaGallery.appendChild(item);
+            });
+
+            // Galería Naliart
+            const naliartGallery = document.getElementById('galleryNaliart');
+            naliartGallery.innerHTML = '';
+            naliartWorks.forEach((work, i) => {
+                const title = currentLang === 'es' ? work.title : work.titleEn;
+                const desc = currentLang === 'es' ? work.desc : work.descEn;
+                const item = document.createElement('div');
+                item.className = 'gallery-item';
+                item.innerHTML = `
+                    <img src="https://images.unsplash.com/photo-1577720643${200000 + i}?w=400&h=400&fit=crop" class="gallery-img" alt="${title}">
+                    <div class="gallery-info">
+                        <div class="gallery-work-title">${title}</div>
+                        <div class="gallery-description">${desc}</div>
+                    </div>
+                `;
+                naliartGallery.appendChild(item);
             });
         }
 
-        function contactArtist(artistId) {
-            const artist = artists.find(a => a.id === artistId);
-            window.open(artist.whatsapp, '_blank');
-        }
-
-        // IDIOMA
-        function toggleLanguage() {
-            currentLang = currentLang === 'es' ? 'en' : 'es';
-            
-            document.querySelectorAll('[data-lang-es], [data-lang-en]').forEach(el => {
-                const text = el.getAttribute(`data-lang-${currentLang}`);
-                if (text && el.tagName !== 'A') el.textContent = text;
-            });
-
-            artists.forEach(artist => {
-                const bioEl = document.querySelector(`#${artist.id} .artist-bio`);
-                if (bioEl) bioEl.textContent = artist.bio[currentLang];
-            });
-
-            artists.forEach(artist => {
-                const shopContainer = document.getElementById(`shop-${artist.id}`);
-                if (shopContainer) {
-                    shopContainer.innerHTML = '';
-                    initShop(artist);
-                }
-            });
-        }
-
-        // MENÚ
-        const hamburger = document.getElementById('hamburger');
-        const navLinks = document.getElementById('navLinks');
-
-        hamburger.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
-
-        navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-            });
-        });
-
-        // CURSOR
+        // ════════════ CURSOR ════════════
         const cursor = document.querySelector('.custom-cursor');
         document.addEventListener('mousemove', e => {
             cursor.style.transform = `translate(${e.clientX - 10}px, ${e.clientY - 10}px)`;
         });
 
-        document.getElementById('langToggle').addEventListener('click', toggleLanguage);
-
+        // ════════════ SCROLL ════════════
         function scrollToTop() {
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
-        // INIT
+        // ════════════ INIT ════════════
         window.addEventListener('load', () => {
             initHero();
             initMemorial();
-            initArtists();
+            initGalleries();
         });
     </script>
 </body>
