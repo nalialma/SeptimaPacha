@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raíz | Séptima Pacha Co.</title>
+    <title>Tierra Viva | Séptima Pacha Co.</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -22,10 +22,15 @@
             --sombra: #2C3E50;
         }
 
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
         body {
             font-family: 'Montserrat', sans-serif;
-            overflow-x: hidden;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
             color: #fff;
             cursor: none;
         }
@@ -38,312 +43,315 @@
             border-radius: 50%;
             pointer-events: none;
             z-index: 9999;
-            transition: all 0.2s ease;
-            mix-blend-mode: difference;
+            box-shadow: 0 0 15px var(--oro);
         }
 
-        .language-toggle {
+        /* NAVEGACIÓN */
+        nav {
             position: fixed;
-            top: 2rem;
-            right: 2rem;
-            z-index: 9999;
-            background: rgba(139, 69, 19, 0.2);
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(15, 15, 15, 0.98);
             backdrop-filter: blur(10px);
-            border: 1px solid var(--tierra);
-            border-radius: 50px;
-            padding: 0.7rem 1.2rem;
-            color: var(--oro);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-
-        .language-toggle:hover {
-            background: rgba(139, 69, 19, 0.4);
-            transform: scale(1.05);
-        }
-
-        .back-button {
-            position: fixed;
-            top: 2rem;
-            left: 2rem;
-            z-index: 9999;
-            background: rgba(139, 69, 19, 0.2);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--tierra);
-            border-radius: 50px;
-            padding: 0.7rem 1.2rem;
-            color: var(--oro);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-            font-weight: 600;
-            text-decoration: none;
+            border-bottom: 2px solid var(--tierra);
+            padding: 1rem 2rem;
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 0.5rem;
         }
 
-        .back-button:hover {
-            background: rgba(139, 69, 19, 0.4);
+        .nav-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--tierra), var(--oro));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-logo:hover {
             transform: scale(1.05);
         }
 
-        /* HEADER */
-        .header {
-            height: 50vh;
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--oro);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .lang-toggle {
+            background: rgba(139, 69, 19, 0.3);
+            border: 2px solid var(--oro);
+            color: var(--oro);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .lang-toggle:hover {
+            background: var(--oro);
+            color: #1a1a1a;
+            transform: scale(1.05);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--oro);
+            transition: all 0.3s ease;
+        }
+
+        /* HERO */
+        .hero {
+            margin-top: 60px;
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+        }
+
+        .hero-left {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            padding: 4rem 2rem;
             position: relative;
-            background: radial-gradient(ellipse at center, rgba(139, 69, 19, 0.2) 0%, transparent 70%);
-            overflow: hidden;
+            z-index: 2;
         }
 
-        .page-title {
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.12;
+            pointer-events: none;
+        }
+
+        .hero-svg {
+            animation: float-slow 20s ease-in-out infinite;
+        }
+
+        @keyframes float-slow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(5deg); }
+        }
+
+        .hero-title {
             font-family: 'Playfair Display', serif;
-            font-size: clamp(3rem, 10vw, 8rem);
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 1rem;
-            background: linear-gradient(45deg, var(--tierra), var(--oro), var(--tierra));
-            background-size: 300% 300%;
+            font-size: clamp(3rem, 12vw, 6.5rem);
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 3;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+        }
+
+        .hero-title span {
+            display: block;
+            background: linear-gradient(135deg, var(--tierra) 0%, var(--oro) 50%, var(--fuego) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: earthGradient 4s ease-in-out infinite;
-            position: relative;
+            animation: gradientShift 6s ease-in-out infinite;
         }
 
-        @keyframes earthGradient {
+        @keyframes gradientShift {
             0%, 100% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
         }
 
-        .page-subtitle {
-            font-size: clamp(1rem, 3vw, 1.8rem);
+        .hero-subtitle {
+            font-size: 1.3rem;
             font-weight: 300;
-            text-align: center;
-            margin-bottom: 2rem;
             opacity: 0.8;
-            max-width: 90%;
-        }
-
-        .phase-icon {
-            font-size: clamp(3rem, 8vw, 5rem);
-            margin-bottom: 2rem;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        /* CARRUSEL CONTAINER */
-        .carousel-section {
-            min-height: 100vh;
-            padding: 4rem 2rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(180deg, rgba(139, 69, 19, 0.05) 0%, transparent 100%);
-        }
-
-        .carousel-intro {
-            text-align: center;
-            max-width: 800px;
-            margin-bottom: 4rem;
-        }
-
-        .carousel-intro h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2rem, 5vw, 3rem);
-            color: var(--oro);
-            margin-bottom: 1rem;
-        }
-
-        .carousel-intro p {
-            font-size: clamp(1rem, 2.5vw, 1.2rem);
-            line-height: 1.6;
-            opacity: 0.9;
-        }
-
-        .carousel-container {
             position: relative;
-            width: 100%;
-            max-width: 900px;
-            height: 600px;
-            margin: 0 auto;
+            z-index: 3;
+            text-align: center;
+            max-width: 400px;
+            line-height: 1.6;
         }
 
-        .carousel-track {
+        .hero-right {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-carousel {
             position: relative;
             width: 100%;
             height: 100%;
-            perspective: 1000px;
         }
 
-        .carousel-item {
+        .hero-carousel-item {
             position: absolute;
             width: 100%;
             height: 100%;
             opacity: 0;
-            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-            transform-origin: center;
-            cursor: pointer;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            transition: opacity 1s ease;
         }
 
-        .carousel-item.active {
+        .hero-carousel-item.active {
             opacity: 1;
-            z-index: 10;
         }
 
-        /* Animación alternada de entrada */
-        .carousel-item.entering-left {
-            animation: slideInFromLeft 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-        }
-
-        .carousel-item.entering-right {
-            animation: slideInFromRight 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-        }
-
-        .carousel-item.leaving-left {
-            animation: slideOutToLeft 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-        }
-
-        .carousel-item.leaving-right {
-            animation: slideOutToRight 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-        }
-
-        @keyframes slideInFromLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-100%) rotateY(-20deg) scale(0.8);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0) rotateY(0deg) scale(1);
-            }
-        }
-
-        @keyframes slideInFromRight {
-            from {
-                opacity: 0;
-                transform: translateX(100%) rotateY(20deg) scale(0.8);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0) rotateY(0deg) scale(1);
-            }
-        }
-
-        @keyframes slideOutToLeft {
-            from {
-                opacity: 1;
-                transform: translateX(0) rotateY(0deg) scale(1);
-            }
-            to {
-                opacity: 0;
-                transform: translateX(-100%) rotateY(-20deg) scale(0.8);
-            }
-        }
-
-        @keyframes slideOutToRight {
-            from {
-                opacity: 1;
-                transform: translateX(0) rotateY(0deg) scale(1);
-            }
-            to {
-                opacity: 0;
-                transform: translateX(100%) rotateY(20deg) scale(0.8);
-            }
-        }
-
-        .carousel-image-wrapper {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, var(--tierra) 0%, var(--oro) 100%);
-        }
-
-        .carousel-image {
+        .hero-carousel-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: block;
         }
 
-        .carousel-info {
+        .hero-overlay {
             position: absolute;
-            bottom: 0;
+            top: 0;
             left: 0;
-            right: 0;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.5), transparent);
-            padding: 3rem 2rem 2rem;
-            color: #fff;
-            transform: translateY(100%);
-            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0.7) 100%);
+            pointer-events: none;
+            z-index: 2;
         }
 
-        .carousel-item.active .carousel-info {
-            transform: translateY(0);
-        }
-
-        .carousel-title {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(1.5rem, 4vw, 2.2rem);
-            color: var(--oro);
-            margin-bottom: 0.8rem;
-            font-weight: 700;
-        }
-
-        .carousel-description {
-            font-size: clamp(0.9rem, 2vw, 1.1rem);
-            line-height: 1.6;
-            opacity: 0.95;
-            margin-bottom: 1.2rem;
-        }
-
-        .carousel-instagram-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6rem;
-            background: linear-gradient(135deg, var(--fuego), var(--tierra));
-            color: white;
-            padding: 0.8rem 1.6rem;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .carousel-instagram-link:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(243, 156, 18, 0.4);
-            background: linear-gradient(135deg, var(--tierra), var(--fuego));
-        }
-
-        /* CONTROLES */
-        .carousel-controls {
+        /* SECCIÓN MEMORIAL */
+        .memorial-section {
+            min-height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            gap: 2rem;
-            margin-top: 3rem;
-            flex-wrap: wrap;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.1) 0%, rgba(0, 0, 0, 0.5) 100%);
+            border-top: 3px solid var(--tierra);
+            position: relative;
         }
 
-        .carousel-button {
-            background: rgba(139, 69, 19, 0.3);
-            border: 2px solid var(--oro);
+        .memorial-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .memorial-badge {
+            display: inline-block;
+            border: 2px solid var(--tierra);
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+            font-weight: 600;
             color: var(--oro);
+        }
+
+        .memorial-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            font-weight: 700;
+            color: var(--tierra);
+            margin-bottom: 0.5rem;
+        }
+
+        .memorial-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+
+        .memorial-description {
+            max-width: 700px;
+            text-align: center;
+            opacity: 0.8;
+            line-height: 1.8;
+            margin-bottom: 3rem;
+        }
+
+        .memorial-carousel-container {
+            position: relative;
+            width: 100%;
+            max-width: 1000px;
+            height: 500px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
+            border: 3px solid var(--tierra);
+        }
+
+        .memorial-carousel-item {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        .memorial-carousel-item.active {
+            opacity: 1;
+        }
+
+        .memorial-carousel-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .memorial-controls {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2.5rem;
+            align-items: center;
+        }
+
+        .carousel-btn {
+            background: rgba(139, 69, 19, 0.3);
+            border: 2px solid var(--tierra);
+            color: var(--tierra);
             width: 50px;
             height: 50px;
             border-radius: 50%;
@@ -352,494 +360,825 @@
             align-items: center;
             justify-content: center;
             font-size: 1.5rem;
-            transition: all 0.3s ease;
             font-weight: bold;
+            transition: all 0.3s ease;
         }
 
-        .carousel-button:hover {
-            background: var(--oro);
-            color: #1a1a1a;
+        .carousel-btn:hover {
+            background: var(--tierra);
+            color: white;
             transform: scale(1.1);
-        }
-
-        .carousel-button:active {
-            transform: scale(0.95);
         }
 
         .carousel-counter {
-            color: var(--oro);
+            color: var(--tierra);
             font-weight: 600;
-            font-size: 1.1rem;
-            min-width: 100px;
+            min-width: 80px;
             text-align: center;
         }
 
-        .carousel-dots {
+        /* SECCIÓN ARTISTA */
+        .artist-section {
+            min-height: 100vh;
+            padding: 4rem 2rem;
+            border-top: 3px solid;
+            display: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .artist-section.active {
+            display: block;
+        }
+
+        .artist-section.naliart {
+            border-color: var(--fuego);
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.08) 0%, transparent 100%);
+        }
+
+        .artist-section.alhua {
+            border-color: var(--agua);
+            background: linear-gradient(135deg, rgba(46, 204, 113, 0.08) 0%, transparent 100%);
+        }
+
+        .svg-decorator {
+            position: absolute;
+            opacity: 0.08;
+            pointer-events: none;
+            z-index: 0;
+            color: currentColor;
+        }
+
+        .svg-top-left {
+            top: 2%;
+            left: 2%;
+            width: 250px;
+            height: 250px;
+        }
+
+        .svg-bottom-right {
+            bottom: 2%;
+            right: 2%;
+            width: 300px;
+            height: 300px;
+        }
+
+        .artist-section.naliart .svg-decorator {
+            color: var(--fuego);
+        }
+
+        .artist-section.alhua .svg-decorator {
+            color: var(--agua);
+        }
+
+        .artist-container {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .artist-header {
             display: flex;
-            gap: 0.8rem;
+            align-items: center;
+            gap: 3rem;
+            margin-bottom: 4rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .artist-profile {
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .artist-profile-pic {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 4px solid;
+            object-fit: cover;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+            animation: profileFloat 3s ease-in-out infinite;
+        }
+
+        .artist-section.naliart .artist-profile-pic {
+            border-color: var(--fuego);
+            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.3);
+        }
+
+        .artist-section.alhua .artist-profile-pic {
+            border-color: var(--agua);
+            box-shadow: 0 15px 40px rgba(46, 204, 113, 0.3);
+        }
+
+        @keyframes profileFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .artist-info {
+            text-align: center;
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .artist-name {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+        }
+
+        .artist-section.naliart .artist-name {
+            color: var(--fuego);
+        }
+
+        .artist-section.alhua .artist-name {
+            color: var(--agua);
+        }
+
+        .artist-bio {
+            font-size: 1rem;
+            opacity: 0.85;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+            max-width: 600px;
+        }
+
+        .artist-buttons {
+            display: flex;
+            gap: 1rem;
             justify-content: center;
             flex-wrap: wrap;
-            margin-top: 1.5rem;
         }
 
-        .carousel-dot {
-            width: 12px;
-            height: 12px;
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.9rem 1.8rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: white;
+            border: 2px solid transparent;
+        }
+
+        .contact-btn.whatsapp {
+            background: linear-gradient(135deg, #25D366, #20BA5A);
+        }
+
+        .contact-btn.whatsapp:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(37, 211, 102, 0.4);
+        }
+
+        .contact-btn.instagram {
+            background: linear-gradient(135deg, #E1306C, #C13584);
+        }
+
+        .contact-btn.instagram:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(225, 48, 108, 0.4);
+        }
+
+        .contact-btn.facebook {
+            background: linear-gradient(135deg, #1877F2, #0A66C2);
+        }
+
+        .contact-btn.facebook:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(24, 119, 242, 0.4);
+        }
+
+        /* GALERÍA Y TIENDA */
+        .gallery-shop-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 2.5rem);
+            text-align: center;
+            margin: 4rem 0 3rem;
+            position: relative;
+            padding-bottom: 1.5rem;
+        }
+
+        .gallery-shop-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, currentColor, transparent);
+        }
+
+        .artist-section.naliart .gallery-shop-title {
+            color: var(--fuego);
+        }
+
+        .artist-section.alhua .gallery-shop-title {
+            color: var(--agua);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid;
+            height: 350px;
+        }
+
+        .artist-section.naliart .gallery-item {
+            border-color: var(--fuego);
+        }
+
+        .artist-section.naliart .gallery-item:hover {
+            box-shadow: 0 20px 50px rgba(255, 107, 53, 0.3);
+            transform: translateY(-10px);
+            border-color: var(--fuego);
+        }
+
+        .artist-section.alhua .gallery-item {
+            border-color: var(--agua);
+        }
+
+        .artist-section.alhua .gallery-item:hover {
+            box-shadow: 0 20px 50px rgba(46, 204, 113, 0.3);
+            transform: translateY(-10px);
+            border-color: var(--agua);
+        }
+
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.05);
+        }
+
+        .gallery-button {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            background: rgba(243, 156, 18, 0.3);
-            border: 2px solid var(--oro);
+            border: none;
+            font-size: 1.5rem;
             cursor: pointer;
             transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
         }
 
-        .carousel-dot.active {
-            background: var(--oro);
-            transform: scale(1.3);
+        .artist-section.naliart .gallery-button {
+            background: var(--fuego);
+            color: white;
         }
 
-        .carousel-dot:hover {
-            background: var(--oro);
-            transform: scale(1.1);
+        .artist-section.alhua .gallery-button {
+            background: var(--agua);
+            color: white;
+        }
+
+        .gallery-item:hover .gallery-button {
+            opacity: 1;
+        }
+
+        /* TIENDA */
+        .shop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .product-card {
+            background: rgba(139, 69, 19, 0.08);
+            border: 2px solid;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .artist-section.naliart .product-card {
+            border-color: var(--fuego);
+        }
+
+        .artist-section.naliart .product-card:hover {
+            border-color: var(--fuego);
+            box-shadow: 0 20px 40px rgba(255, 107, 53, 0.3);
+            transform: translateY(-10px);
+        }
+
+        .artist-section.alhua .product-card {
+            border-color: var(--agua);
+        }
+
+        .artist-section.alhua .product-card:hover {
+            border-color: var(--agua);
+            box-shadow: 0 20px 40px rgba(46, 204, 113, 0.3);
+            transform: translateY(-10px);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.3), rgba(243, 156, 18, 0.2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+        }
+
+        .product-info {
+            padding: 1.8rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .artist-section.naliart .product-name {
+            color: var(--fuego);
+        }
+
+        .artist-section.alhua .product-name {
+            color: var(--agua);
+        }
+
+        .product-price {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--oro);
+            margin-bottom: 1.2rem;
+        }
+
+        .buy-btn {
+            width: 100%;
+            border: none;
+            padding: 0.9rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: auto;
+        }
+
+        .artist-section.naliart .buy-btn {
+            background: linear-gradient(135deg, var(--fuego), var(--tierra));
+        }
+
+        .artist-section.naliart .buy-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(255, 107, 53, 0.4);
+        }
+
+        .artist-section.alhua .buy-btn {
+            background: linear-gradient(135deg, var(--agua), #1BA55C);
+        }
+
+        .artist-section.alhua .buy-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(46, 204, 113, 0.4);
         }
 
         /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-right {
+                min-height: 500px;
+            }
+        }
+
         @media (max-width: 768px) {
-            .carousel-container {
-                height: 400px;
+            nav {
+                padding: 1rem;
             }
 
-            .carousel-info {
-                padding: 2rem 1.5rem 1.5rem;
+            .nav-links {
+                display: none;
             }
 
-            .carousel-controls {
-                gap: 1rem;
-                margin-top: 2rem;
+            .hamburger {
+                display: flex;
             }
 
-            .carousel-button {
-                width: 45px;
-                height: 45px;
-                font-size: 1.2rem;
+            .nav-links.active {
+                display: flex;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background: rgba(15, 15, 15, 0.98);
+                padding: 2rem;
+                gap: 1.5rem;
+                border-bottom: 2px solid var(--tierra);
+                z-index: 999;
             }
 
-            .carousel-counter {
-                font-size: 1rem;
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .gallery-grid,
+            .shop-grid {
+                grid-template-columns: 1fr;
             }
         }
 
         @media (max-width: 480px) {
-            .carousel-section {
-                padding: 2rem 1rem;
+            .hero-title {
+                font-size: 1.8rem;
             }
 
-            .carousel-container {
-                height: 300px;
+            .artist-header {
+                flex-direction: column;
             }
 
-            .carousel-info {
-                padding: 1.5rem 1rem 1rem;
-            }
-
-            .carousel-title {
-                font-size: 1.3rem;
-                margin-bottom: 0.6rem;
-            }
-
-            .carousel-description {
-                font-size: 0.9rem;
-                margin-bottom: 0.8rem;
-            }
-
-            .carousel-instagram-link {
-                padding: 0.6rem 1.2rem;
-                font-size: 0.9rem;
-            }
-
-            .carousel-controls {
-                gap: 0.8rem;
-            }
-
-            .carousel-button {
-                width: 40px;
-                height: 40px;
-                font-size: 1rem;
-            }
-
-            .carousel-dot {
-                width: 10px;
-                height: 10px;
-            }
-
-            .page-title {
-                font-size: 2.5rem;
-            }
-
-            .back-button,
-            .language-toggle {
-                padding: 0.5rem 1rem;
-                font-size: 0.8rem;
-            }
-        }
-
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
+            .artist-profile-pic {
+                width: 140px;
+                height: 140px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Cursor -->
-    <div class="custom-cursor">🌱</div>
+    <div class="custom-cursor">🌿</div>
 
-    <!-- Botón de regreso -->
-    <a href="index.html" class="back-button">
-        <span>←</span>
-        <span data-lang-es="Volver" data-lang-en="Back">Volver</span>
-    </a>
+    <nav>
+        <div class="nav-logo" onclick="scrollToTop()">Séptima Pacha</div>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#memorial" data-lang-es="Memoria" data-lang-en="Memorial">Memoria</a></li>
+            <li><a href="#naliart" data-lang-es="Naliart" data-lang-en="Naliart">Naliart</a></li>
+            <li><a href="#alhua" data-lang-es="ALHUA Cerámica" data-lang-en="ALHUA Ceramics">ALHUA Cerámica</a></li>
+            <li><button class="lang-toggle" id="langToggle" data-lang-es="English" data-lang-en="Español">English</button></li>
+        </ul>
+    </nav>
 
-    <!-- Botón de idioma -->
-    <div class="language-toggle" id="languageToggle">
-        <span data-lang-es="English" data-lang-en="Español">English</span>
-    </div>
+    <!-- HERO TIERRA VIVA -->
+    <section class="hero" id="hero">
+        <div class="hero-left">
+            <svg class="hero-background" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <g class="hero-svg">
+                    <circle cx="50" cy="50" r="30" fill="none" stroke="#8B4513" stroke-width="1.5" opacity="0.4"/>
+                    <circle cx="150" cy="150" r="40" fill="none" stroke="#F39C12" stroke-width="1.5" opacity="0.3"/>
+                    <path d="M 20 100 Q 50 80 100 100 T 180 100" fill="none" stroke="#8B4513" stroke-width="2" opacity="0.35"/>
+                    <ellipse cx="100" cy="140" rx="50" ry="30" fill="none" stroke="#F39C12" stroke-width="1.5" opacity="0.25"/>
+                    <path d="M 30 30 L 70 30 L 50 70 Z" fill="none" stroke="#8B4513" stroke-width="1.5" opacity="0.35"/>
+                    <path d="M 130 170 L 170 170 L 150 130 Z" fill="none" stroke="#F39C12" stroke-width="1.5" opacity="0.25"/>
+                    <path d="M 80 20 Q 100 10 120 20" fill="none" stroke="#8B4513" stroke-width="1" opacity="0.3"/>
+                </g>
+            </svg>
 
-    <!-- Header -->
-    <section class="header">
-        <div class="phase-icon">🌱</div>
-        <h1 class="page-title fade-in" data-lang-es="Raíz" data-lang-en="Root">Raíz</h1>
-        <p class="page-subtitle fade-in" data-lang-es="Inspiración ancestral, conexión con la tierra, arte que nace del corazón" data-lang-en="Ancestral inspiration, connection with the earth, art born from the heart">Inspiración ancestral, conexión con la tierra, arte que nace del corazón</p>
+            <h1 class="hero-title">
+                <span data-lang-es="Tierra" data-lang-en="Earth">Tierra</span>
+                <span data-lang-es="Viva" data-lang-en="Living">Viva</span>
+            </h1>
+            <p class="hero-subtitle" data-lang-es="Creación ancestral que pulsa con la energía de la vida" data-lang-en="Ancestral creation that pulses with the energy of life">Creación ancestral que pulsa con la energía de la vida</p>
+        </div>
+
+        <div class="hero-right">
+            <div class="hero-carousel" id="heroCarousel"></div>
+            <div class="hero-overlay"></div>
+        </div>
     </section>
 
-    <!-- Carrusel -->
-    <section class="carousel-section">
-        <div class="carousel-intro fade-in">
-            <h2 data-lang-es="Semillas de Creación" data-lang-en="Seeds of Creation">Semillas de Creación</h2>
-            <p data-lang-es="Cada trazo nace de la tierra. Navega por las obras que danzan entre lo sagrado y lo humano, donde la mano encuentra su voz ancestral." data-lang-en="Each stroke is born from the earth. Navigate through works that dance between the sacred and the human, where the hand finds its ancestral voice.">Cada trazo nace de la tierra. Navega por las obras que danzan entre lo sagrado y lo humano, donde la mano encuentra su voz ancestral.</p>
+    <!-- MEMORIAL -->
+    <section class="memorial-section" id="memorial">
+        <div class="memorial-header">
+            <div class="memorial-badge" data-lang-es="EN MEMORIA" data-lang-en="IN MEMORY">EN MEMORIA</div>
+            <h2 class="memorial-title">Osvaldo Antonio López</h2>
+            <p class="memorial-subtitle" data-lang-es="Padre, Amigo, Artista y Escultor" data-lang-en="Father, Friend, Artist and Sculptor">Padre, Amigo, Artista y Escultor</p>
+            <p class="memorial-description" data-lang-es="Su legado perdura en cada obra, en cada gesto de creatividad. Honramos su memoria y su contribución invaluable al arte." data-lang-en="His legacy endures in every work, in every gesture of creativity. We honor his memory and invaluable contribution to art.">Su legado perdura en cada obra, en cada gesto de creatividad. Honramos su memoria y su contribución invaluable al arte.</p>
         </div>
 
-        <div class="carousel-container">
-            <div class="carousel-track" id="carouselTrack">
-                <!-- Items se generarán con JavaScript -->
-            </div>
-        </div>
+        <div class="memorial-carousel-container" id="memorialCarousel"></div>
 
-        <div class="carousel-controls">
-            <button class="carousel-button" id="prevBtn" onclick="previousSlide()">‹</button>
-            <span class="carousel-counter"><span id="currentSlide">1</span> / <span id="totalSlides">12</span></span>
-            <button class="carousel-button" id="nextBtn" onclick="nextSlide()">›</button>
-        </div>
-
-        <div class="carousel-dots" id="dotsContainer">
-            <!-- Dots se generarán con JavaScript -->
+        <div class="memorial-controls">
+            <button class="carousel-btn" onclick="memorialPrev()">‹</button>
+            <span class="carousel-counter"><span id="memCurrent">1</span> / <span id="memTotal">5</span></span>
+            <button class="carousel-btn" onclick="memorialNext()">›</button>
         </div>
     </section>
+
+    <!-- SECCIONES ARTISTAS -->
+    <div id="artistSections"></div>
 
     <script>
         let currentLang = 'es';
-        let currentSlide = 0;
-        let isAnimating = false;
-        let direction = 1;
+        let memorialIdx = 0;
+        const carouselIdx = {};
 
-        // Datos de las obras
-        const artworks = [
+        // DATOS
+        const heroImages = [
+            'https://images.unsplash.com/photo-1579783902614-e3fb5141b0cb?w=1000&h=600&fit=crop',
+            'https://images.unsplash.com/photo-1578056869-123456789015?w=1000&h=600&fit=crop',
+            'https://images.unsplash.com/photo-1577720643272-123456789013?w=1000&h=600&fit=crop',
+        ];
+
+        const memorialImages = [
+            'https://images.unsplash.com/photo-1578056869-123456789015?w=800&h=500&fit=crop',
+            'https://images.unsplash.com/photo-1578084938123-456789012345?w=800&h=500&fit=crop',
+            'https://images.unsplash.com/photo-1578189032123-456789012346?w=800&h=500&fit=crop',
+            'https://images.unsplash.com/photo-1578290123456-789012345678?w=800&h=500&fit=crop',
+            'https://images.unsplash.com/photo-1578301234567-890123456789?w=800&h=500&fit=crop'
+        ];
+
+        const naliSvg = '<path d="M50 10 L90 30 L70 70 L30 70 L10 30 Z" stroke="currentColor" fill="none" stroke-width="1.5"/><circle cx="50" cy="40" r="8" fill="currentColor" opacity="0.6"/><path d="M40 60 Q50 70 60 60" stroke="currentColor" fill="none" stroke-width="1.5"/>';
+        
+        const alhuaSvg = '<path d="M25 70 Q25 30 50 20 Q75 30 75 70" stroke="currentColor" fill="none" stroke-width="2"/><path d="M35 70 L65 70" stroke="currentColor" fill="none" stroke-width="2"/><circle cx="50" cy="45" r="12" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="50" cy="50" r="3" fill="currentColor" opacity="0.5"/>';
+
+        const artists = [
             {
-                title: { es: "Identidad Pacha", en: "Pacha Identity" },
-                description: { es: "Rostro de la Pacha a lápiz y bolígrafo, digitalizado. Un retrato que captura la esencia ancestral andina.", en: "Pacha's face in pencil and pen, digitalized. A portrait capturing ancestral Andean essence." },
-                instagram: "https://www.instagram.com/p/DF1bPJFOs_P/",
-                instaId: "DF1bPJFOs_P"
+                id: 'naliart',
+                name: 'Naliart',
+                bio: {
+                    es: 'Artista multidisciplinaria de Salta. Sus obras fusionan la ancestralidad andina con técnicas contemporáneas, explorando la conexión entre lo sagrado y lo humano a través del dibujo, pintura y tatuaje.',
+                    en: 'Multidisciplinary artist from Salta. Her works merge Andean ancestry with contemporary techniques, exploring the sacred-human connection through drawing, painting and tattoo art.'
+                },
+                instagram: 'https://www.instagram.com/naliart.ok/',
+                whatsapp: 'https://wa.me/5493875123456?text=Hola%20Nali%2C%20me%20interesa%20conocer%20m%C3%A1s%20sobre%20tus%20obras',
+                gallery: [
+                    'https://ibb.co/hRDCsMYC',
+                    'https://ibb.co/8CM7hYh',
+                    'https://ibb.co/JRL1nTSk',
+                    'https://ibb.co/wrQpGfk5',
+                    'https://ibb.co/bgP1DLxy',
+                    'https://ibb.co/C3HdTDw7',
+                    'https://ibb.co/21PHX4dz'
+                ],
+                products: [
+                    { name: { es: 'Retrato Personalizado', en: 'Custom Portrait' }, price: '$150', emoji: '🎨' },
+                    { name: { es: 'Dibujo Ancestral', en: 'Ancestral Drawing' }, price: '$120', emoji: '✍️' },
+                    { name: { es: 'Obra Digital', en: 'Digital Artwork' }, price: '$200', emoji: '💻' },
+                    { name: { es: 'Tatuaje Diseño', en: 'Tattoo Design' }, price: '$80', emoji: '🖤' }
+                ],
+                svg: naliSvg
             },
             {
-                title: { es: "Proceso Pacha", en: "Pacha Process" },
-                description: { es: "Video del proceso de creación del rostro de Pacha. Observa cómo nace la obra.", en: "Video of the creation process of Pacha's face. Watch how the artwork is born." },
-                instagram: "https://www.instagram.com/reel/DFmMvzZusjM/",
-                instaId: "DFmMvzZusjM"
-            },
-            {
-                title: { es: "Pretty Ñusta", en: "Pretty Ñusta" },
-                description: { es: "Pretty Ñusta: lápiz y bolígrafo digitalizado. Una joven princesa andina reimaginada.", en: "Pretty Ñusta: pencil and pen digitalized. An Andean princess reimagined." },
-                instagram: "https://www.instagram.com/p/DFmIpZeu-A-/",
-                instaId: "DFmIpZeu-A-"
-            },
-            {
-                title: { es: "Proceso Pretty Ñusta", en: "Pretty Ñusta Process" },
-                description: { es: "Video del proceso creativo de Pretty Ñusta desde el boceto hasta la versión final.", en: "Video of Pretty Ñusta's creative process from sketch to final version." },
-                instagram: "https://www.instagram.com/reel/DFmGSpIukP1/",
-                instaId: "DFmGSpIukP1"
-            },
-            {
-                title: { es: "Yuraj Dog", en: "Yuraj Dog" },
-                description: { es: "Retrato de un perrito capturado con sensibilidad y detalle. Honrando la belleza animal.", en: "Portrait of a dog captured with sensitivity and detail. Honoring animal beauty." },
-                instagram: "https://www.instagram.com/p/DH9N86PS14l/",
-                instaId: "DH9N86PS14l"
-            },
-            {
-                title: { es: "Munay Dog", en: "Munay Dog" },
-                description: { es: "Mi perrito rescatado encontrado bajo un puente. Su mirada refleja resiliencia y amor.", en: "My rescued dog found under a bridge. His gaze reflects resilience and love." },
-                instagram: "https://www.instagram.com/p/DHwAe8aO3PP/",
-                instaId: "DHwAe8aO3PP"
-            },
-            {
-                title: { es: "Ñawi Strange", en: "Ñawi Strange" },
-                description: { es: "Ñawi Strange: bolígrafo y lápices de colores, digitalizado. Una obra que explora lo extraño.", en: "Ñawi Strange: pen and colored pencils, digitalized. Exploring the strange." },
-                instagram: "https://www.instagram.com/p/DF6HkC-SOxO/",
-                instaId: "DF6HkC-SOxO"
-            },
-            {
-                title: { es: "Editado Computadora", en: "Computer Edited" },
-                description: { es: "Dibujo a bolígrafo editado en computadora. La fusión entre lo analógico y digital.", en: "Pen drawing edited on computer. Fusion of analog and digital." },
-                instagram: "https://www.instagram.com/p/CzcA1V5RD3t/",
-                instaId: "CzcA1V5RD3t"
-            },
-            {
-                title: { es: "Compañeros Greenpeace", en: "Greenpeace Companions" },
-                description: { es: "Dibujo digital de mis compañeros de Greenpeace. Un homenaje a quienes luchan por el planeta.", en: "Digital drawing of my Greenpeace companions. Tribute to environmental defenders." },
-                instagram: "https://www.instagram.com/p/C0bnOMwOIRj/",
-                instaId: "C0bnOMwOIRj"
-            },
-            {
-                title: { es: "Johnson - Padre del Blues", en: "Johnson - Father of Blues" },
-                description: { es: "Dibujo digital de Johnson, el padre del blues. Un artista legendario que admiro profundamente.", en: "Digital drawing of Johnson, father of blues. A legendary artist I deeply admire." },
-                instagram: "https://www.instagram.com/p/CzcEP4uR7rh/",
-                instaId: "CzcEP4uR7rh"
-            },
-            {
-                title: { es: "Chanchoman", en: "Chanchoman" },
-                description: { es: "Chanchoman: político ecocida de mi ciudad. Una crítica visual a la corrupción ambiental.", en: "Chanchoman: an ecocidal politician. Visual critique of environmental corruption." },
-                instagram: "https://www.instagram.com/p/CjCcmkrO6qY/",
-                instaId: "CjCcmkrO6qY"
-            },
-            {
-                title: { es: "Illa", en: "Illa" },
-                description: { es: "Illa: dibujo a lápiz y bolígrafo, digitalizado. Una obra que refleja la identidad digital.", en: "Illa: pencil and pen drawing, digitalized. Reflecting digital identity." },
-                instagram: "https://www.instagram.com/p/DF4WsWkuZMA/",
-                instaId: "DF4WsWkuZMA"
+                id: 'alhua',
+                name: 'ALHUA Cerámica',
+                bio: {
+                    es: 'Cerámica creativa que combina tradición andina con diseño contemporáneo. Cada pieza es única, handmade con amor y dedicación, transformando barro en arte funcional.',
+                    en: 'Creative ceramics combining Andean tradition with contemporary design. Each piece is unique, handmade with love and dedication, transforming clay into functional art.'
+                },
+                facebook: 'https://www.facebook.com/profile.php?id=100072048676762&sk=photos',
+                instagram: 'https://www.instagram.com/alhua.ceramica/',
+                whatsapp: 'https://wa.me/5493875654321?text=Hola%20ALHUA%2C%20me%20interesa%20conocer%20vuestras%20creaciones',
+                gallery: [
+                    'https://ibb.co/qL2hcLwM',
+                    'https://ibb.co/hJBSXgfc',
+                    'https://ibb.co/23985rB8',
+                    'https://ibb.co/chsqHHBm',
+                    'https://ibb.co/0R53Z1P9'
+                ],
+                products: [
+                    { name: { es: 'Tazón de Cerámica', en: 'Ceramic Bowl' }, price: '$45', emoji: '🍵' },
+                    { name: { es: 'Maceta Andina', en: 'Andean Planter' }, price: '$60', emoji: '🌱' },
+                    { name: { es: 'Juego de Tazas', en: 'Cup Set' }, price: '$85', emoji: '☕' },
+                    { name: { es: 'Escultura Cerámica', en: 'Ceramic Sculpture' }, price: '$150', emoji: '🏺' }
+                ],
+                svg: alhuaSvg
             }
         ];
 
-        function getInstagramImageUrl(shortcode) {
-            return `https://www.instagram.com/p/${shortcode}/media/?size=l`;
+        // INIT HERO
+        function initHero() {
+            const carousel = document.getElementById('heroCarousel');
+            heroImages.forEach((img, i) => {
+                const item = document.createElement('div');
+                item.className = 'hero-carousel-item' + (i === 0 ? ' active' : '');
+                item.innerHTML = `<img src="${img}" class="hero-carousel-img">`;
+                carousel.appendChild(item);
+            });
+
+            let idx = 0;
+            setInterval(() => {
+                const items = carousel.querySelectorAll('.hero-carousel-item');
+                items[idx].classList.remove('active');
+                idx = (idx + 1) % items.length;
+                items[idx].classList.add('active');
+            }, 4000);
         }
 
-        function initCarousel() {
-            const track = document.getElementById('carouselTrack');
-            const dotsContainer = document.getElementById('dotsContainer');
-            
-            artworks.forEach((art, index) => {
+        // INIT MEMORIAL
+        function initMemorial() {
+            const carousel = document.getElementById('memorialCarousel');
+            memorialImages.forEach((img, i) => {
                 const item = document.createElement('div');
-                item.className = 'carousel-item';
-                if (index === 0) item.classList.add('active');
-                
-                const imageUrl = getInstagramImageUrl(art.instaId);
-                
-                item.innerHTML = `
-                    <div class="carousel-image-wrapper">
-                        <img src="${imageUrl}" alt="${art.title[currentLang]}" class="carousel-image" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 400%22%3E%3Crect fill=%22%238B4513%22 width=%22400%22 height=%22400%22/%3E%3Ctext x=%22200%22 y=%22200%22 font-size=%2240%22 fill=%22%23fff%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3EObra de Arte%3C/text%3E%3C/svg%3E'">
+                item.className = 'memorial-carousel-item' + (i === 0 ? ' active' : '');
+                item.innerHTML = `<img src="${img}" class="memorial-carousel-img">`;
+                carousel.appendChild(item);
+            });
+            document.getElementById('memTotal').textContent = memorialImages.length;
+        }
+
+        function memorialNext() {
+            memorialIdx = (memorialIdx + 1) % memorialImages.length;
+            updateMemorial();
+        }
+
+        function memorialPrev() {
+            memorialIdx = (memorialIdx - 1 + memorialImages.length) % memorialImages.length;
+            updateMemorial();
+        }
+
+        function updateMemorial() {
+            document.querySelectorAll('.memorial-carousel-item').forEach((item, i) => {
+                item.classList.toggle('active', i === memorialIdx);
+            });
+            document.getElementById('memCurrent').textContent = memorialIdx + 1;
+        }
+
+        // INIT ARTISTS
+        function initArtists() {
+            const section = document.getElementById('artistSections');
+            artists.forEach(artist => {
+                const div = document.createElement('div');
+                div.className = `artist-section ${artist.id}`;
+                div.id = artist.id;
+
+                div.innerHTML = `
+                    <svg class="svg-decorator svg-top-left" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        ${artist.svg}
+                    </svg>
+
+                    <div class="artist-container">
+                        <div class="artist-header">
+                            <div class="artist-profile">
+                                <img src="https://www.instagram.com/${artist.instagram.split('/')[3]}/" alt="${artist.name}" class="artist-profile-pic" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 180 180%22%3E%3Ccircle cx=%2290%22 cy=%2290%22 r=%2290%22 fill=%22%23888%22/%3E%3C/svg%3E'">
+                            </div>
+                            <div class="artist-info">
+                                <h2 class="artist-name">${artist.name}</h2>
+                                <p class="artist-bio">${artist.bio[currentLang]}</p>
+                                <div class="artist-buttons">
+                                    <a href="${artist.instagram}" target="_blank" class="contact-btn instagram">
+                                        <span>📸</span>
+                                        <span>Instagram</span>
+                                    </a>
+                                    ${artist.facebook ? `<a href="${artist.facebook}" target="_blank" class="contact-btn facebook">
+                                        <span>f</span>
+                                        <span>Facebook</span>
+                                    </a>` : ''}
+                                    <a href="${artist.whatsapp}" target="_blank" class="contact-btn whatsapp">
+                                        <span>💬</span>
+                                        <span data-lang-es="Contactar Artista" data-lang-en="Contact Artist">Contactar Artista</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 class="gallery-shop-title" data-lang-es="Galería de Obras" data-lang-en="Gallery">Galería de Obras</h3>
+                        <div class="gallery-grid" id="gallery-${artist.id}"></div>
+
+                        <h3 class="gallery-shop-title" data-lang-es="Tienda Virtual" data-lang-en="Virtual Shop">Tienda Virtual</h3>
+                        <div class="shop-grid" id="shop-${artist.id}"></div>
                     </div>
-                    <div class="carousel-info">
-                        <h3 class="carousel-title">${art.title[currentLang]}</h3>
-                        <p class="carousel-description">${art.description[currentLang]}</p>
-                        <a href="${art.instagram}" target="_blank" class="carousel-instagram-link">
-                            <span>📸</span>
-                            <span data-lang-es="Ver en Instagram" data-lang-en="View on Instagram">${currentLang === 'es' ? 'Ver en Instagram' : 'View on Instagram'}</span>
+
+                    <svg class="svg-decorator svg-bottom-right" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        ${artist.svg}
+                    </svg>
+                `;
+
+                section.appendChild(div);
+                initGallery(artist);
+                initShop(artist);
+                carouselIdx[artist.id] = 0;
+            });
+        }
+
+        function initGallery(artist) {
+            const container = document.getElementById(`gallery-${artist.id}`);
+            artist.gallery.forEach((img, i) => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item';
+                item.innerHTML = `
+                    <img src="${img}" class="gallery-img" alt="Obra ${i + 1}">
+                    <button class="gallery-button" onclick="contactArtist('${artist.id}')" title="Agregar al carrito">🛒</button>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        function initShop(artist) {
+            const container = document.getElementById(`shop-${artist.id}`);
+            artist.products.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <div class="product-image">${product.emoji}</div>
+                    <div class="product-info">
+                        <h4 class="product-name">${product.name[currentLang]}</h4>
+                        <p class="product-price">${product.price}</p>
+                        <a href="${artist.whatsapp}" target="_blank" class="buy-btn">
+                            <span>🛒</span>
+                            <span data-lang-es="Comprar" data-lang-en="Buy">Comprar</span>
                         </a>
                     </div>
                 `;
-                
-                track.appendChild(item);
-
-                // Crear dots
-                const dot = document.createElement('div');
-                dot.className = 'carousel-dot';
-                if (index === 0) dot.classList.add('active');
-                dot.onclick = () => goToSlide(index);
-                dotsContainer.appendChild(dot);
+                container.appendChild(card);
             });
-
-            document.getElementById('totalSlides').textContent = artworks.length;
-            updateCarousel();
         }
 
-        function updateCarousel() {
-            const items = document.querySelectorAll('.carousel-item');
-            const dots = document.querySelectorAll('.carousel-dot');
-            
-            items.forEach((item, index) => {
-                item.classList.remove('active', 'entering-left', 'entering-right', 'leaving-left', 'leaving-right');
-                if (index === currentSlide) {
-                    item.classList.add('active');
-                }
-            });
-
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === currentSlide);
-            });
-
-            document.getElementById('currentSlide').textContent = currentSlide + 1;
+        function contactArtist(artistId) {
+            const artist = artists.find(a => a.id === artistId);
+            window.open(artist.whatsapp, '_blank');
         }
 
-        function nextSlide() {
-            if (isAnimating) return;
-            isAnimating = true;
-            direction = 1;
-            
-            const items = document.querySelectorAll('.carousel-item');
-            items[currentSlide].classList.add('leaving-left');
-            
-            setTimeout(() => {
-                currentSlide = (currentSlide + 1) % artworks.length;
-                items.forEach(item => item.classList.remove('leaving-left', 'leaving-right', 'entering-left', 'entering-right'));
-                items[currentSlide].classList.add('entering-right');
-                
-                updateCarousel();
-                
-                setTimeout(() => {
-                    isAnimating = false;
-                }, 800);
-            }, 400);
-        }
-
-        function previousSlide() {
-            if (isAnimating) return;
-            isAnimating = true;
-            direction = -1;
-            
-            const items = document.querySelectorAll('.carousel-item');
-            items[currentSlide].classList.add('leaving-right');
-            
-            setTimeout(() => {
-                currentSlide = (currentSlide - 1 + artworks.length) % artworks.length;
-                items.forEach(item => item.classList.remove('leaving-left', 'leaving-right', 'entering-left', 'entering-right'));
-                items[currentSlide].classList.add('entering-left');
-                
-                updateCarousel();
-                
-                setTimeout(() => {
-                    isAnimating = false;
-                }, 800);
-            }, 400);
-        }
-
-        function goToSlide(index) {
-            if (isAnimating || index === currentSlide) return;
-            isAnimating = true;
-            
-            const items = document.querySelectorAll('.carousel-item');
-            const newDirection = index > currentSlide ? 1 : -1;
-            
-            items[currentSlide].classList.add(newDirection > 0 ? 'leaving-left' : 'leaving-right');
-            
-            setTimeout(() => {
-                currentSlide = index;
-                items.forEach(item => item.classList.remove('leaving-left', 'leaving-right', 'entering-left', 'entering-right'));
-                items[currentSlide].classList.add(newDirection > 0 ? 'entering-right' : 'entering-left');
-                
-                updateCarousel();
-                
-                setTimeout(() => {
-                    isAnimating = false;
-                }, 800);
-            }, 400);
-        }
-
+        // IDIOMA
         function toggleLanguage() {
             currentLang = currentLang === 'es' ? 'en' : 'es';
-            document.documentElement.lang = currentLang;
             
-            const elements = document.querySelectorAll('[data-lang-es], [data-lang-en]');
-            elements.forEach(element => {
-                const text = element.getAttribute(`data-lang-${currentLang}`);
-                if (text) {
-                    element.textContent = text;
-                }
+            document.querySelectorAll('[data-lang-es], [data-lang-en]').forEach(el => {
+                const text = el.getAttribute(`data-lang-${currentLang}`);
+                if (text && el.tagName !== 'A') el.textContent = text;
             });
 
-            const items = document.querySelectorAll('.carousel-item');
-            items.forEach((item, index) => {
-                const art = artworks[index];
-                item.querySelector('.carousel-title').textContent = art.title[currentLang];
-                item.querySelector('.carousel-description').textContent = art.description[currentLang];
-                const link = item.querySelector('.carousel-instagram-link span:last-child');
-                link.textContent = currentLang === 'es' ? 'Ver en Instagram' : 'View on Instagram';
+            artists.forEach(artist => {
+                const bioEl = document.querySelector(`#${artist.id} .artist-bio`);
+                if (bioEl) bioEl.textContent = artist.bio[currentLang];
+            });
+
+            artists.forEach(artist => {
+                const shopContainer = document.getElementById(`shop-${artist.id}`);
+                if (shopContainer) {
+                    shopContainer.innerHTML = '';
+                    initShop(artist);
+                }
             });
         }
 
-        // Cursor personalizado
+        // MENÚ
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // CURSOR
         const cursor = document.querySelector('.custom-cursor');
-        let trails = [];
-        
-        for (let i = 0; i < 6; i++) {
-            const trail = document.createElement('div');
-            trail.style.cssText = `
-                position: fixed;
-                width: 4px;
-                height: 4px;
-                background: var(--tierra);
-                border-radius: 50%;
-                pointer-events: none;
-                z-index: 9998;
-                opacity: 0.6;
-            `;
-            document.body.appendChild(trail);
-            trails.push(trail);
-        }
-
-        let mouseX = 0, mouseY = 0;
-        let trailX = [], trailY = [];
-
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            cursor.style.transform = `translate(${mouseX - 10}px, ${mouseY - 10}px)`;
+        document.addEventListener('mousemove', e => {
+            cursor.style.transform = `translate(${e.clientX - 10}px, ${e.clientY - 10}px)`;
         });
 
-        function animateTrails() {
-            trailX.unshift(mouseX);
-            trailY.unshift(mouseY);
-            
-            if (trailX.length > trails.length) {
-                trailX.pop();
-                trailY.pop();
-            }
+        document.getElementById('langToggle').addEventListener('click', toggleLanguage);
 
-            trails.forEach((trail, index) => {
-                if (trailX[index] !== undefined) {
-                    trail.style.transform = `translate(${trailX[index] - 2}px, ${trailY[index] - 2}px)`;
-                }
-            });
-
-            requestAnimationFrame(animateTrails);
+        function scrollToTop() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
         }
-        animateTrails();
 
-        // Teclado
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight') nextSlide();
-            if (e.key === 'ArrowLeft') previousSlide();
-        });
-
-        document.getElementById('languageToggle').addEventListener('click', toggleLanguage);
-
-        // Inicializar
+        // INIT
         window.addEventListener('load', () => {
-            initCarousel();
-            
-            setTimeout(() => {
-                document.querySelectorAll('.fade-in').forEach((el, i) => {
-                    el.style.cssText = `
-                        opacity: 0;
-                        transform: translateY(30px);
-                        animation: fadeInUp 0.8s ease forwards;
-                        animation-delay: ${i * 0.2}s;
-                    `;
-                });
-            }, 100);
+            initHero();
+            initMemorial();
+            initArtists();
         });
     </script>
 </body>
