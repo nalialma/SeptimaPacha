@@ -1,134 +1,1212 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
+<html lang="es"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fuego | Séptima Pacha Co.</title>
+    <title>Fuego y Letra | Biblioteca Virtual de Literatura Latinoamericana</title>
+    <meta name="description" content="Fuego y Letra: Biblioteca virtual de escritores del norte argentino, Latinoamérica y el mundo. Poesía, cuentos y cómics contemporáneos.">
+    <meta name="keywords" content="literatura latinoamericana, escritores argentinos, poesía, cuentos, cómics, Salta, norte argentino">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&amp;family=Montserrat:wght@300;400;600;700&amp;family=Great+Vibes:wght@400&amp;display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --fuego: #FF6B35;
+            --naranja: #FF9F43;
+            --oro: #F39C12;
+            --dark-bg: #0A0E27;
+            --text-light: #E8E8E8;
+            --text-muted: #B0B0B0;
+        }
+
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-light);
+            position: relative;
+        }
+
+        /* ════════════════════ CANVAS FUEGO ════════════════════ */
+        #fireCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ════════════════════ SVG SYMBOLS GIRANDO ════════════════════ */
+        .fire-symbols {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .fire-symbol {
+            position: absolute;
+            opacity: 0.08;
+        }
+
+        .fire-symbol svg {
+            width: 100%;
+            height: 100%;
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* ════════════════════ HAMBURGER MENU ════════════════════ */
+        .hamburger {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            z-index: 1000;
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding: 0.5rem;
+        }
+
+        .hamburger span {
+            width: 28px;
+            height: 2.5px;
+            background: var(--fuego);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 2px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* ════════════════════ MENU LATERAL ════════════════════ */
+        .side-menu {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100vh;
+            background: rgba(10, 14, 39, 0.98);
+            backdrop-filter: blur(15px);
+            border-left: 1px solid rgba(255, 107, 53, 0.2);
+            z-index: 999;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 6rem 2rem 2rem;
+            overflow-y: auto;
+        }
+
+        .side-menu.active {
+            right: 0;
+        }
+
+        .menu-section {
+            margin-bottom: 3rem;
+        }
+
+        .menu-section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--fuego);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .menu-item {
+            display: block;
+            color: var(--text-light);
+            text-decoration: none;
+            padding: 0.8rem 0;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+            padding-left: 1rem;
+        }
+
+        .menu-item:hover {
+            color: var(--fuego);
+            border-left-color: var(--fuego);
+            padding-left: 1.5rem;
+        }
+
+        /* ════════════════════ CONTENEDOR PRINCIPAL ════════════════════ */
+        .container-main {
+            position: relative;
+            z-index: 5;
+            width: 100%;
+        }
+
+        /* ════════════════════ HERO SECTION ════════════════════ */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 4rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-text {
+            position: relative;
+            z-index: 5;
+        }
+
+        .hero-title {
+            margin-bottom: 2rem;
+            line-height: 0.95;
+            position: relative;
+        }
+
+        .fuego-text {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(4rem, 12vw, 9rem);
+            font-weight: 900;
+            letter-spacing: -2px;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .fuego-word {
+            background: linear-gradient(135deg, var(--fuego), var(--naranja), var(--oro));
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 6s ease infinite;
+        }
+
+        .flame-icon {
+            font-size: 1em;
+            animation: flameFlicker 0.6s ease-in-out infinite;
+        }
+
+        @keyframes flameFlicker {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.05) rotate(-2deg); }
+            50% { transform: scale(0.95) rotate(2deg); }
+            75% { transform: scale(1.02) rotate(-1deg); }
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .letra-text {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(2rem, 8vw, 5rem);
+            color: var(--text-light);
+            font-weight: 400;
+            letter-spacing: 2px;
+            margin-left: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .pen-icon {
+            font-size: 1.2em;
+            animation: penWrite 1s ease-in-out infinite;
+            transform-origin: right center;
+        }
+
+        @keyframes penWrite {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(-5deg); }
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
+            font-weight: 300;
+            max-width: 500px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--fuego), var(--naranja));
+            color: white;
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.3);
+        }
+
+        /* ════════════════════ SECCIONES ════════════════════ */
+        .section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 5;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 3.5rem;
+            letter-spacing: -1px;
+        }
+
+        .section-title::before {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--fuego), transparent);
+            margin: 0 auto 1rem;
+        }
+
+        .section-title span {
+            background: linear-gradient(135deg, var(--fuego), var(--naranja));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* ════════════════════ GRID MINIMALISTA ════════════════════ */
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .work-card {
+            position: relative;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+            background: rgba(255, 107, 53, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 107, 53, 0.12);
+            border-radius: 10px;
+            padding: 2rem;
+            animation: slideUp 0.5s ease-out backwards;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .work-card:nth-child(1) { animation-delay: 0.05s; }
+        .work-card:nth-child(2) { animation-delay: 0.1s; }
+        .work-card:nth-child(3) { animation-delay: 0.15s; }
+        .work-card:nth-child(4) { animation-delay: 0.2s; }
+        .work-card:nth-child(5) { animation-delay: 0.25s; }
+        .work-card:nth-child(6) { animation-delay: 0.3s; }
+
+        .work-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(255, 107, 53, 0.25);
+            background: rgba(255, 107, 53, 0.08);
+            box-shadow: 0 15px 35px rgba(255, 107, 53, 0.1);
+        }
+
+        .work-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-light);
+            margin-bottom: 0.8rem;
+            line-height: 1.3;
+        }
+
+        .work-author {
+            font-size: 0.85rem;
+            color: var(--fuego);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .work-description {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+            height: 50px;
+            overflow: hidden;
+        }
+
+        .read-btn {
+            display: inline-block;
+            padding: 0.6rem 1.2rem;
+            background: rgba(255, 107, 53, 0.2);
+            color: var(--fuego);
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .work-card:hover .read-btn {
+            background: rgba(255, 107, 53, 0.35);
+            transform: translateX(3px);
+        }
+
+        /* ════════════════════ FOOTER ════════════════════ */
+        .footer-section {
+            padding: 3.5rem 2rem;
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.06), rgba(255, 159, 67, 0.03));
+            border-top: 1px solid rgba(255, 107, 53, 0.12);
+            text-align: center;
+            position: relative;
+            z-index: 5;
+        }
+
+        .footer-text {
+            font-size: 1rem;
+            font-style: italic;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* ════════════════════ MODAL ════════════════════ */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: var(--dark-bg);
+            border: 1px solid rgba(255, 107, 53, 0.2);
+            border-radius: 12px;
+            max-width: 500px;
+            margin: 8% auto;
+            padding: 2.5rem;
+            position: relative;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close-btn {
+            position: absolute;
+            right: 1.5rem;
+            top: 1.5rem;
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--fuego);
+            cursor: pointer;
+            background: none;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            transform: scale(1.2);
+        }
+
+        .modal-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--text-light);
+            margin-bottom: 1.2rem;
+            border-bottom: 2px solid rgba(255, 107, 53, 0.15);
+            padding-bottom: 1rem;
+        }
+
+        .modal-text {
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .modal-form input,
+        .modal-form textarea {
+            width: 100%;
+            padding: 0.9rem;
+            margin-bottom: 1rem;
+            background: rgba(255, 107, 53, 0.05);
+            border: 1px solid rgba(255, 107, 53, 0.15);
+            border-radius: 8px;
+            color: var(--text-light);
+            font-family: inherit;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .modal-form input:focus,
+        .modal-form textarea:focus {
+            outline: none;
+            border-color: var(--fuego);
+            background: rgba(255, 107, 53, 0.1);
+        }
+
+        .modal-form button {
+            width: 100%;
+            padding: 0.9rem;
+            background: linear-gradient(135deg, var(--fuego), var(--naranja));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
+        }
+
+        .modal-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 107, 53, 0.3);
+        }
+
+        /* ════════════════════ RESPONSIVE ════════════════════ */
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .fuego-text {
+                font-size: clamp(3rem, 10vw, 6rem);
+            }
+
+            .letra-text {
+                font-size: clamp(1.5rem, 6vw, 3rem);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 2rem 1.5rem;
+                min-height: auto;
+                padding-top: 5rem;
+            }
+
+            .fuego-text {
+                font-size: 2.5rem;
+            }
+
+            .letra-text {
+                font-size: 1.3rem;
+                margin-left: 0.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .section {
+                padding: 3.5rem 1.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .works-grid {
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                gap: 1.5rem;
+            }
+
+            .work-card {
+                padding: 1.5rem;
+            }
+
+            .modal-content {
+                margin: 30% auto;
+                padding: 1.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                margin-bottom: 1rem;
+            }
+
+            .fuego-text {
+                font-size: 1.8rem;
+                gap: 0.3rem;
+            }
+
+            .flame-icon {
+                font-size: 0.9em;
+            }
+
+            .letra-text {
+                font-size: 0.9rem;
+                margin-left: 0.3rem;
+                gap: 0.4rem;
+            }
+
+            .pen-icon {
+                font-size: 0.8em;
+            }
+
+            .hero-subtitle {
+                font-size: 0.9rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.8rem;
+            }
+
+            .works-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .work-card {
+                padding: 1.2rem;
+            }
+
+            .side-menu {
+                width: 280px;
+                right: -280px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="custom-cursor"></div>
-    <div class="fire-particles" id="fireParticles"></div>
-    
-    <a href="index.html" class="nav-back">← Volver al Umbral</a>
+    <!-- CANVAS FUEGO -->
+    <canvas id="fireCanvas" width="982" height="695"></canvas>
 
-    <!-- Hero Section -->
-    <section class="hero-fuego">
-        <div class="fuego-icon">🔥</div>
-        <h1 class="hero-title">Fuego</h1>
-        <p class="hero-subtitle">Elemento transformador que convierte la materia prima en arte. Donde la tierra se vuelve cerámica, el pigmento se vuelve alma.</p>
-        
-        <div class="flame-quote">
-            "En cada llama vive la memoria ancestral de quien transformó el barro en vasija sagrada"
+    <!-- SVG SÍMBOLOS GIRANDO -->
+    <div class="fire-symbols" id="fireSymbols"><div class="fire-symbol" style="top: 5%; left: 5%; width: 150px; height: 150px; color: rgb(255, 107, 53);"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-width="2" opacity="0.3"></circle></svg></div><div class="fire-symbol" style="top: 50%; right: 5%; width: 200px; height: 200px; color: rgb(255, 107, 53);"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 10 L60 40 L90 40 L65 60 L75 90 L50 70 L25 90 L35 60 L10 40 L40 40 Z" fill="none" stroke="currentColor" stroke-width="2" opacity="0.3"></path></svg></div><div class="fire-symbol" style="bottom: 10%; left: 10%; width: 180px; height: 180px; color: rgb(255, 107, 53);"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.2"></circle><circle cx="50" cy="50" r="30" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.2"></circle></svg></div><div class="fire-symbol" style="top: 30%; right: 20%; width: 160px; height: 160px; color: rgb(255, 107, 53);"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 15 Q65 35 60 60 Q50 75 40 60 Q35 35 50 15 Z" fill="none" stroke="currentColor" stroke-width="2" opacity="0.3"></path></svg></div></div>
+
+    <!-- HAMBURGER MENU -->
+    <button class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- SIDE MENU -->
+    <nav class="side-menu" id="sideMenu">
+        <div class="menu-section">
+            <div class="menu-section-title">📖 Cuentos</div>
+            <a href="#cuentos" class="menu-item">Ver Cuentos</a>
+            <a href="#" class="menu-item">Realismo</a>
+            <a href="#" class="menu-item">Fantasía</a>
+            <a href="#" class="menu-item">Terror</a>
         </div>
-    </section>
 
-    <!-- Técnicas Artísticas -->
-    <section class="section">
-        <h2 class="section-title fade-in">Artes del Fuego</h2>
-        <div class="techniques-grid">
-            <div class="technique-card fade-in">
-                <span class="technique-icon">🏺</span>
-                <h3 class="technique-title">Cerámica Ancestral</h3>
-                <p class="technique-description">Trabajo en arcilla inspirado en técnicas precolombinas. Cada pieza lleva la memoria de la tierra y el poder transformador del fuego.</p>
-            </div>
-            
-            <div class="technique-card fade-in">
-                <span class="technique-icon">🎨</span>
-                <h3 class="technique-title">Pintura Textural</h3>
-                <p class="technique-description">Uso de pigmentos naturales y técnicas mixtas. Capas que cuentan historias, texturas que abrazan la luz.</p>
-            </div>
-            
-            <div class="technique-card fade-in">
-                <span class="technique-icon">🗿</span>
-                <h3 class="technique-title">Escultura Orgánica</h3>
-                <p class="technique-description">Formas que nacen del diálogo entre la materia y el espíritu. Esculturas que respiran ancestralidad.</p>
-            </div>
-            
-            <div class="technique-card fade-in">
-                <span class="technique-icon">✨</span>
-                <h3 class="technique-title">Arte Ritual</h3>
-                <p class="technique-description">Piezas creadas para ceremonias y espacios sagrados. Arte que trasciende lo decorativo para convertirse en portal.</p>
-            </div>
+        <div class="menu-section">
+            <div class="menu-section-title">📚 Poesía</div>
+            <a href="#poesia" class="menu-item">Ver Poesías</a>
+            <a href="#" class="menu-item">Lírica</a>
+            <a href="#" class="menu-item">Épica</a>
+            <a href="#" class="menu-item">Vanguardia</a>
         </div>
-    </section>
 
-    <!-- Galería de Obras -->
-    <section class="section">
-        <h2 class="section-title fade-in">Creaciones del Fuego</h2>
-        <div class="gallery-container">
-            <div class="artwork-item fade-in">
-                <h3 class="artwork-title">Serie Pacha Mama</h3>
-                <span class="artwork-medium">Cerámica y Óxidos Naturales</span>
-                <p class="artwork-description">Conjunto de vasijas ceremoniales inspiradas en la cosmovisión andina. Cada pieza representa un elemento de la naturaleza y lleva grabados símbolos que conectan con la energía telúrica. El proceso de cocción se realiza en horno de leña, respetando las técnicas ancestrales.</p>
-            </div>
-            
-            <div class="artwork-item fade-in">
-                <h3 class="artwork-title">Murales de Fuego Interior</h3>
-                <span class="artwork-medium">Pintura Mural y Pigmentos Minerales</span>
-                <p class="artwork-description">Murales que narran la conexión entre lo urbano y lo ancestral. Utilizando pigmentos extraídos de tierras locales, cada trazo es un homenaje a la resistencia cultural y la identidad latinoamericana.</p>
-            </div>
-            
-            <div class="artwork-item fade-in">
-                <h3 class="artwork-title">Totems de Transformación</h3>
-                <span class="artwork-medium">Escultura en Arcilla y Metal</span>
-                <p class="artwork-description">Esculturas verticales que representan el proceso de transformación personal. Cada totem es único y se crea en colaboración con quien lo encarga, siendo un reflejo de su proceso interno de cambio y crecimiento.</p>
-            </div>
+        <div class="menu-section">
+            <div class="menu-section-title">🎨 Cómics</div>
+            <a href="#comics" class="menu-item">Ver Cómics</a>
+            <a href="#" class="menu-item">Superhéroes</a>
+            <a href="#" class="menu-item">Novela Gráfica</a>
+            <a href="#" class="menu-item">Arte Experimental</a>
         </div>
-    </section>
+    </nav>
 
-    <!-- Proceso Creativo -->
-    <section class="section">
-        <h2 class="section-title fade-in">El Ritual de Creación</h2>
-        <div class="process-timeline">
-            <div class="process-step fade-in">
-                <div class="process-number">1</div>
-                <h3 class="process-title">Conexión con la Tierra</h3>
-                <p class="process-description">Todo comienza con la selección de materiales. Busco arcillas locales, pigmentos naturales, elementos que llevan la energía de la región. Es un proceso meditativo de reconexión con los elementos.</p>
+    <div class="container-main">
+        <!-- HERO SECTION -->
+        <section class="hero" id="inicio">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="hero-title">
+                        <div class="fuego-text">
+                            <span class="fuego-word">FUEGO</span>
+                            <span class="flame-icon">🔥</span>
+                        </div>
+                        <div class="letra-text">
+                            Letra
+                            <span class="pen-icon">✒️</span>
+                        </div>
+                    </div>
+                    <p class="hero-subtitle">Biblioteca Virtual de Escritores del Norte Argentino, Latinoamérica y el Mundo</p>
+                    <div class="cta-buttons">
+                        <button class="btn btn-primary" id="joinBtn">Quiero Formar Parte</button>
+                    </div>
+                </div>
+                <div class="hero-visual"></div>
             </div>
-            
-            <div class="process-step fade-in">
-                <div class="process-number">2</div>
-                <h3 class="process-title">Preparación Ritual</h3>
-                <p class="process-description">Antes de crear, preparo el espacio. Enciendo incienso, pongo música ancestral, entro en un estado de contemplación. El arte nace desde un lugar sagrado del ser.</p>
-            </div>
-            
-            <div class="process-step fade-in">
-                <div class="process-number">3</div>
-                <h3 class="process-title">Diálogo con la Materia</h3>
-                <p class="process-description">No impongo formas a la arcilla; dialogo con ella. Escucho lo que quiere ser, siento su resistencia y su entrega. Mis manos son instrumentos de traducción entre la intención y la forma.</p>
-            </div>
-            
-            <div class="process-step fade-in">
-                <div class="process-number">4</div>
-                <h3 class="process-title">Transformación por Fuego</h3>
-                <p class="process-description">El fuego es el gran maestro. En el horno, la pieza pasa por su muerte y renacimiento. Cada cocción es una ceremonia, un acto de fe en el poder transformador del elemento.</p>
-            </div>
-            
-            <div class="process-step fade-in">
-                <div class="process-number">5</div>
-                <h3 class="process-title">Activación Energética</h3>
-                <p class="process-description">Una vez terminada la pieza, la "activo" energéticamente. Mediante cantos, sahumerios y intención, la obra recibe su propósito y se convierte en portadora de energía ancestral.</p>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Filosofía del Fuego -->
-    <section class="section">
-        <div class="philosophy-section fade-in">
-            <p class="philosophy-text">
-                "El fuego no destruye, transforma. En cada llama vive la sabiduría de nuestros ancestros, 
-                que supieron que solo a través del fuego la arcilla se vuelve eterna, 
-                el metal se purifica y el espíritu encuentra su forma más pura. 
-                Crear con fuego es participar en el misterio de la transformación, 
-                es ser cómplice de la magia que convierte lo ordinario en sagrado."
+        <!-- CUENTOS -->
+        <section class="section" id="cuentos">
+            <h2 class="section-title"><span>Cuentos</span></h2>
+            <div class="works-grid" id="cuentosGrid"><div class="work-card">
+                    <h3 class="work-title">Historias del Alma</h3>
+                    <div class="work-author">Victoria Barrandeguy</div>
+                    <p class="work-description">Narrativas que exploran los rincones profundos del ser humano.</p>
+                    <a href="autor-victoria-barrandeguy.html" class="read-btn">Leer →</a>
+                </div><div class="work-card">
+                    <h3 class="work-title">Voces Olvidadas</h3>
+                    <div class="work-author">Victoria Barrandeguy</div>
+                    <p class="work-description">Historias de personajes anónimos cuyas voces resuenan con verdad.</p>
+                    <a href="#" class="read-btn">Leer →</a>
+                </div><div class="work-card">
+                    <h3 class="work-title">Umbrales</h3>
+                    <div class="work-author">Ana Flores</div>
+                    <p class="work-description">Donde lo ordinario se vuelve extraordinario en espacios intermedios.</p>
+                    <a href="#" class="read-btn">Leer →</a>
+                </div><div class="work-card">
+                    <h3 class="work-title">Lazos de Tiempo</h3>
+                    <div class="work-author">Diego Reyes</div>
+                    <p class="work-description">Cuentos conectados por el hilo invisible del tiempo.</p>
+                    <a href="#" class="read-btn">Leer →</a>
+                </div><div class="work-card">
+                    <h3 class="work-title">Secretos del Corazón</h3>
+                    <div class="work-author">María Sánchez</div>
+                    <p class="work-description">Exploración íntima de secretos y misterios del amor.</p>
+                    <a href="#" class="read-btn">Leer →</a>
+                </div><div class="work-card">
+                    <h3 class="work-title">Última Página</h3>
+                    <div class="work-author">Carlos López</div>
+                    <p class="work-description">Reflexión sobre finales, comienzos y espacios intermedios.</p>
+                    <a href="#" class="read-btn">Leer →</a>
+                </div></div>
+        </section>
+
+        <!-- POESÍA -->
+        <section class="section" id="poesia">
+            <h2 class="section-title"><span>Poesía</span></h2>
+            <div class="works-grid" id="poesiaGrid"><div class="work-card">
+                    <h3 class="work-title">Versos de Tierra</h3>
+                    <div class="work-author">Julieta Contreras</div>
+                    <p class="work-description">Conexión con la naturaleza andina y los ancestros.</p>
+                    <a href="autor-julieta-contreras.html" class="read-btn">Leer →</a>
+                </div><div class="work-card">
+                    <h3 class="work-title">Ecos Nocturnos</h3>
+                    <div class="work-author">Juan Morales</div>
+                    <p class="work-description">Versos nocturnos que capturan momentos de silencio.</p>
+                    <a href="#" class="read-btn">Leer →</a>
+                </div><div class="work-card">
+                    <h3 class="work-title">Respirar el Aire</h3>
+                    <div class="work-author">María Sánchez</div>
+                    <p class="work-description">La respiración del alma en espacios sagrados.</p>
+                    <a href="#" class="read-btn">Leer →</a>
+                </div><div class="work-card">
+                    <h3 class="work-title">Ritmo de Agua</h3>
+                    <div class="work-author">Carlos López</div>
+                    <p class="work-description">Poemas que fluyen como el agua explorando ciclos.</p>
+                    <a href="#" class="read-btn">Leer →</a>
+                </div><div class="work-card">
+                    <h3 class="work-title">Corazón de Fuego</h3>
+                    <div class="work-author">Juan Morales</div>
+                    <p class="work-description">Profundidades del sentimiento y transformación personal.</p>
+                    <a href="#" class="read-btn">Leer →</a>
+                </div><div class="work-card">
+                    <h3 class="work-title">Última Página</h3>
+                    <div class="work-author">Ana Flores</div>
+                    <p class="work-description">Una reflexión poética sobre final y comienzo.</p>
+                    <a href="#" class="read-btn">Leer →</a>
+                </div></div>
+        </section>
+
+        <!-- CÓMICS -->
+        <section class="section" id="comics">
+            <h2 class="section-title"><span>Cómics</span></h2>
+            <div class="works-grid" id="comicsGrid"><div class="work-card">
+                    <h3 class="work-title">Identidad Pacha</h3>
+                    <div class="work-author">Naliart</div>
+                    <p class="work-description">Identidad ancestral y conexión con la Pachamama.</p>
+                    <a href="autor-naliart.html" class="read-btn">Leer →</a>
+                </div><div class="work-card">
+                    <h3 class="work-title">Ñusta Reimaginada</h3>
+                    <div class="work-author">Naliart</div>
+                    <p class="work-description">Reinterpretación de mitos andinos con perspectiva contemporánea.</p>
+                    <a href="#" class="read-btn">Leer →</a>
+                </div><div class="work-card">
+                    <h3 class="work-title">Yuraj Dog</h3>
+                    <div class="work-author">Naliart</div>
+                    <p class="work-description">Vida y resistencia en contextos urbanos latinoamericanos.</p>
+                    <a href="#" class="read-btn">Leer →</a>
+                </div><div class="work-card">
+                    <h3 class="work-title">Munay Dog</h3>
+                    <div class="work-author">Sandra Vega</div>
+                    <p class="work-description">El amor en todas sus formas desde el lente andino.</p>
+                    <a href="#" class="read-btn">Leer →</a>
+                </div><div class="work-card">
+                    <h3 class="work-title">Ñawi Strange</h3>
+                    <div class="work-author">Diego Reyes</div>
+                    <p class="work-description">Cómics surrealistas que desafían la percepción visual.</p>
+                    <a href="#" class="read-btn">Leer →</a>
+                </div><div class="work-card">
+                    <h3 class="work-title">Dibujo Analógico</h3>
+                    <div class="work-author">Sandra Vega</div>
+                    <p class="work-description">Técnica mixta que homenajea el dibujo manual y pintura.</p>
+                    <a href="#" class="read-btn">Leer →</a>
+                </div></div>
+        </section>
+
+        <!-- FOOTER -->
+        <section class="footer-section">
+            <p class="footer-text">
+                "La palabra escrita es fuego que arde en la mente del lector.<br>
+                Aquí celebramos a quienes transforman experiencias en historias que perduran."
             </p>
-        </div>
-    </section>
+        </section>
+    </div>
 
-     <script src="script-Code.js"></script>
-</body>
-</html>
+    <!-- MODAL PARTICIPAR -->
+    <div id="participateModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()">×</button>
+            <h2 class="modal-title">Quiero Formar Parte</h2>
+            <p class="modal-text">
+                Comparte tu obra, tu voz y tu historia con la comunidad de Fuego y Letra.
+            </p>
+            <form class="modal-form" id="participateForm">
+                <input type="text" placeholder="Tu Nombre" required="">
+                <input type="email" placeholder="Tu Email" required="">
+                <input type="text" placeholder="Nombre de tu Obra" required="">
+                <select style="width: 100%; padding: 0.9rem; margin-bottom: 1rem; background: rgba(255, 107, 53, 0.05); border: 1px solid rgba(255, 107, 53, 0.15); border-radius: 8px; color: var(--text-light); font-family: inherit;">
+                    <option value="">Tipo de Obra</option>
+                    <option value="cuento">Cuento</option>
+                    <option value="poesia">Poesía</option>
+                    <option value="comic">Cómics</option>
+                </select>
+                <textarea placeholder="Cuéntanos sobre tu obra..." rows="3" required=""></textarea>
+                <button type="submit">Enviar Solicitud</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // ════════════════════ SVG FIRE SYMBOLS ════════════════════
+        const fireSymbolsSvg = [
+            `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-width="2" opacity="0.3"/></svg>`,
+            `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 10 L60 40 L90 40 L65 60 L75 90 L50 70 L25 90 L35 60 L10 40 L40 40 Z" fill="none" stroke="currentColor" stroke-width="2" opacity="0.3"/></svg>`,
+            `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.2"/><circle cx="50" cy="50" r="30" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.2"/></svg>`,
+            `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 15 Q65 35 60 60 Q50 75 40 60 Q35 35 50 15 Z" fill="none" stroke="currentColor" stroke-width="2" opacity="0.3"/></svg>`
+        ];
+
+        function createFireSymbols() {
+            const container = document.getElementById('fireSymbols');
+            const positions = [
+                { top: '5%', left: '5%', size: '150px' },
+                { top: '50%', right: '5%', size: '200px' },
+                { bottom: '10%', left: '10%', size: '180px' },
+                { top: '30%', right: '20%', size: '160px' }
+            ];
+
+            positions.forEach((pos, idx) => {
+                const el = document.createElement('div');
+                el.className = 'fire-symbol';
+                el.style.cssText = `${Object.entries(pos).map(([k, v]) => 
+                    k === 'size' ? `width: ${v}; height: ${v}` : `${k}: ${v}`
+                ).join('; ')}; color: #FF6B35;`;
+                el.innerHTML = fireSymbolsSvg[idx % fireSymbolsSvg.length];
+                container.appendChild(el);
+            });
+        }
+
+        // ════════════════════ ANIMACIÓN CANVAS FUEGO ════════════════════
+        class FireAnimation {
+            constructor(canvasId) {
+                this.canvas = document.getElementById(canvasId);
+                this.ctx = this.canvas.getContext('2d');
+                this.width = this.canvas.width = window.innerWidth;
+                this.height = this.canvas.height = window.innerHeight;
+                this.particles = [];
+                
+                this.init();
+                window.addEventListener('resize', () => this.resize());
+                this.animate();
+            }
+
+            init() {
+                for (let i = 0; i < 15; i++) {
+                    this.particles.push(this.createParticle());
+                }
+            }
+
+            createParticle() {
+                return {
+                    x: Math.random() * this.width,
+                    y: this.height + Math.random() * 50,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: -Math.random() * 0.5 - 0.3,
+                    life: Math.random() * 0.8 + 0.5,
+                    maxLife: Math.random() * 0.8 + 0.5,
+                    size: Math.random() * 15 + 3,
+                    color: ['#FF6B35', '#FF8C5A', '#FF9F43'][Math.floor(Math.random() * 3)]
+                };
+            }
+
+            animate() {
+                this.ctx.fillStyle = 'rgba(10, 14, 39, 0.015)';
+                this.ctx.fillRect(0, 0, this.width, this.height);
+
+                for (let i = 0; i < this.particles.length; i++) {
+                    const p = this.particles[i];
+                    
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.vy -= 0.03;
+                    p.life -= 0.003;
+
+                    const opacity = p.life / p.maxLife;
+                    
+                    this.ctx.fillStyle = p.color;
+                    this.ctx.globalAlpha = opacity * 0.03;
+                    this.ctx.beginPath();
+                    this.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    this.ctx.fill();
+
+                    if (p.life <= 0) {
+                        this.particles[i] = this.createParticle();
+                    }
+                }
+
+                this.ctx.globalAlpha = 1;
+                requestAnimationFrame(() => this.animate());
+            }
+
+            resize() {
+                this.width = this.canvas.width = window.innerWidth;
+                this.height = this.canvas.height = window.innerHeight;
+            }
+        }
+
+        new FireAnimation('fireCanvas');
+        createFireSymbols();
+
+        // ════════════════════ DATOS ════════════════════
+        const works = {
+            cuentos: [
+                {
+                    title: 'Historias del Alma',
+                    author: 'Victoria Barrandeguy',
+                    description: 'Narrativas que exploran los rincones profundos del ser humano.',
+                    url: 'autor-victoria-barrandeguy.html'
+                },
+                {
+                    title: 'Voces Olvidadas',
+                    author: 'Victoria Barrandeguy',
+                    description: 'Historias de personajes anónimos cuyas voces resuenan con verdad.',
+                    url: '#'
+                },
+                {
+                    title: 'Umbrales',
+                    author: 'Ana Flores',
+                    description: 'Donde lo ordinario se vuelve extraordinario en espacios intermedios.',
+                    url: '#'
+                },
+                {
+                    title: 'Lazos de Tiempo',
+                    author: 'Diego Reyes',
+                    description: 'Cuentos conectados por el hilo invisible del tiempo.',
+                    url: '#'
+                },
+                {
+                    title: 'Secretos del Corazón',
+                    author: 'María Sánchez',
+                    description: 'Exploración íntima de secretos y misterios del amor.',
+                    url: '#'
+                },
+                {
+                    title: 'Última Página',
+                    author: 'Carlos López',
+                    description: 'Reflexión sobre finales, comienzos y espacios intermedios.',
+                    url: '#'
+                }
+            ],
+            poesia: [
+                {
+                    title: 'Versos de Tierra',
+                    author: 'Julieta Contreras',
+                    description: 'Conexión con la naturaleza andina y los ancestros.',
+                    url: 'autor-julieta-contreras.html'
+                },
+                {
+                    title: 'Ecos Nocturnos',
+                    author: 'Juan Morales',
+                    description: 'Versos nocturnos que capturan momentos de silencio.',
+                    url: '#'
+                },
+                {
+                    title: 'Respirar el Aire',
+                    author: 'María Sánchez',
+                    description: 'La respiración del alma en espacios sagrados.',
+                    url: '#'
+                },
+                {
+                    title: 'Ritmo de Agua',
+                    author: 'Carlos López',
+                    description: 'Poemas que fluyen como el agua explorando ciclos.',
+                    url: '#'
+                },
+                {
+                    title: 'Corazón de Fuego',
+                    author: 'Juan Morales',
+                    description: 'Profundidades del sentimiento y transformación personal.',
+                    url: '#'
+                },
+                {
+                    title: 'Última Página',
+                    author: 'Ana Flores',
+                    description: 'Una reflexión poética sobre final y comienzo.',
+                    url: '#'
+                }
+            ],
+            comics: [
+                {
+                    title: 'Identidad Pacha',
+                    author: 'Naliart',
+                    description: 'Identidad ancestral y conexión con la Pachamama.',
+                    url: 'autor-naliart.html'
+                },
+                {
+                    title: 'Ñusta Reimaginada',
+                    author: 'Naliart',
+                    description: 'Reinterpretación de mitos andinos con perspectiva contemporánea.',
+                    url: '#'
+                },
+                {
+                    title: 'Yuraj Dog',
+                    author: 'Naliart',
+                    description: 'Vida y resistencia en contextos urbanos latinoamericanos.',
+                    url: '#'
+                },
+                {
+                    title: 'Munay Dog',
+                    author: 'Sandra Vega',
+                    description: 'El amor en todas sus formas desde el lente andino.',
+                    url: '#'
+                },
+                {
+                    title: 'Ñawi Strange',
+                    author: 'Diego Reyes',
+                    description: 'Cómics surrealistas que desafían la percepción visual.',
+                    url: '#'
+                },
+                {
+                    title: 'Dibujo Analógico',
+                    author: 'Sandra Vega',
+                    description: 'Técnica mixta que homenajea el dibujo manual y pintura.',
+                    url: '#'
+                }
+            ]
+        };
+
+        // ════════════════════ RENDERIZAR ════════════════════
+        function renderWorks(category, gridId) {
+            const grid = document.getElementById(gridId);
+            grid.innerHTML = '';
+            
+            works[category].forEach(work => {
+                const card = document.createElement('div');
+                card.className = 'work-card';
+                card.innerHTML = `
+                    <h3 class="work-title">${work.title}</h3>
+                    <div class="work-author">${work.author}</div>
+                    <p class="work-description">${work.description}</p>
+                    <a href="${work.url}" class="read-btn">Leer →</a>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // ════════════════════ MENÚ ════════════════════
+        const hamburger = document.getElementById('hamburger');
+        const sideMenu = document.getElementById('sideMenu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            sideMenu.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.menu-item').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                sideMenu.classList.remove('active');
+            });
+        });
+
+        window.addEventListener('click', (e) => {
+            if (!e.target.closest('.hamburger') && !e.target.closest('.side-menu')) {
+                hamburger.classList.remove('active');
+                sideMenu.classList.remove('active');
+            }
+        });
+
+        // ════════════════════ MODAL ════════════════════
+        function openModal() {
+            document.getElementById('participateModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('participateModal').style.display = 'none';
+        }
+
+        window.onclick = function(e) {
+            const modal = document.getElementById('participateModal');
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        document.getElementById('joinBtn').addEventListener('click', openModal);
+
+        document.getElementById('participateForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('¡Gracias! Tu solicitud ha sido enviada.');
+            this.reset();
+            closeModal();
+        });
+
+        // ════════════════════ SCROLL ════════════════════
+        document.querySelectorAll('a[href^="#"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // ════════════════════ INIT ════════════════════
+        window.addEventListener('load', () => {
+            renderWorks('cuentos', 'cuentosGrid');
+            renderWorks('poesia', 'poesiaGrid');
+            renderWorks('comics', 'comicsGrid');
+        });
+    </script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+
+</body></html>
