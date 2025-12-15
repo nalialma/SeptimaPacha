@@ -36,6 +36,115 @@
             position: relative;
         }
 
+        body.splash-active {
+            overflow: hidden;
+        }
+
+        /* ════════════════════ SPLASH SCREEN ════════════════════ */
+        .splash-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark-bg);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            opacity: 1;
+            transition: opacity 0.6s ease-out 2.5s;
+        }
+
+        .splash-container.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .splash-content {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            z-index: 100;
+        }
+
+        .splash-fire-circle-container {
+            position: relative;
+            width: clamp(280px, 60vw, 500px);
+            height: clamp(280px, 60vw, 500px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .splash-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 10vw, 4rem);
+            font-weight: 900;
+            letter-spacing: -2px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+            z-index: 101;
+            position: absolute;
+            text-align: center;
+        }
+
+        .splash-fuego-word {
+            background: linear-gradient(135deg, var(--fuego), var(--naranja), var(--oro));
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 6s ease infinite;
+        }
+
+        .splash-letra-word {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(1rem, 5vw, 2rem);
+            color: var(--text-light);
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        .splash-fire-ball {
+            position: absolute;
+            width: clamp(30px, 7vw, 55px);
+            height: clamp(30px, 7vw, 55px);
+            filter: drop-shadow(0 0 15px rgba(255, 107, 53, 0.8));
+            animation: fireballIntoCircle 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        @keyframes fireballIntoCircle {
+            0% {
+                opacity: 0;
+                transform: translate(var(--start-x), var(--start-y)) scale(0.3);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(var(--end-x), var(--end-y)) scale(1);
+            }
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes fadeInContent {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
         #fireCanvas {
             position: fixed;
             top: 0;
@@ -183,6 +292,12 @@
             transition: all 0.3s ease;
             border-left: 3px solid transparent;
             padding-left: 1rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+            width: 100%;
+            font-family: inherit;
         }
 
         .menu-item:hover {
@@ -191,10 +306,45 @@
             padding-left: 1.5rem;
         }
 
+        .language-selector {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 107, 53, 0.2);
+        }
+
+        .lang-btn {
+            flex: 1;
+            padding: 0.6rem;
+            background: rgba(255, 107, 53, 0.1);
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            color: var(--text-light);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        .lang-btn.active {
+            background: linear-gradient(135deg, var(--fuego), var(--naranja));
+            color: white;
+            border-color: var(--fuego);
+        }
+
+        .lang-btn:hover:not(.active) {
+            border-color: var(--fuego);
+            background: rgba(255, 107, 53, 0.2);
+        }
+
         .container-main {
             position: relative;
             z-index: 5;
             width: 100%;
+            opacity: 0;
+            animation: fadeInContent 0.8s ease-out 2.5s forwards;
         }
 
         .hero {
@@ -256,12 +406,6 @@
             25% { transform: scale(1.05) rotate(-2deg); }
             50% { transform: scale(0.95) rotate(2deg); }
             75% { transform: scale(1.02) rotate(-1deg); }
-        }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
         }
 
         .letra-text {
@@ -540,7 +684,8 @@
         }
 
         .modal-form input,
-        .modal-form textarea {
+        .modal-form textarea,
+        .modal-form select {
             width: 100%;
             padding: 0.9rem;
             margin-bottom: 1rem;
@@ -554,7 +699,8 @@
         }
 
         .modal-form input:focus,
-        .modal-form textarea:focus {
+        .modal-form textarea:focus,
+        .modal-form select:focus {
             outline: none;
             border-color: var(--fuego);
             background: rgba(255, 107, 53, 0.1);
@@ -606,6 +752,16 @@
             .work-card {
                 padding: 1.5rem;
             }
+
+            .splash-fire-circle-container {
+                width: clamp(150px, 40vw, 300px);
+                height: clamp(150px, 40vw, 300px);
+            }
+
+            .splash-fire-ball {
+                width: clamp(20px, 5vw, 40px);
+                height: clamp(20px, 5vw, 40px);
+            }
         }
 
         @media (max-width: 480px) {
@@ -630,10 +786,43 @@
                 width: 280px;
                 right: -280px;
             }
+
+            .splash-fire-circle-container {
+                width: clamp(120px, 35vw, 200px);
+                height: clamp(120px, 35vw, 200px);
+            }
+
+            .splash-fire-ball {
+                width: clamp(15px, 4vw, 30px);
+                height: clamp(15px, 4vw, 30px);
+            }
+
+            .splash-title {
+                font-size: clamp(1.2rem, 8vw, 2rem);
+            }
+
+            .splash-letra-word {
+                font-size: clamp(0.7rem, 3vw, 1rem);
+            }
+
+            .modal-content {
+                margin: 20% auto;
+                padding: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- SPLASH SCREEN -->
+    <div class="splash-container" id="splashContainer">
+        <div class="splash-fire-circle-container" id="splashFireCircle">
+            <div class="splash-title">
+                <span class="splash-fuego-word">FUEGO</span>
+                <span class="splash-letra-word">Letra</span>
+            </div>
+        </div>
+    </div>
+
     <canvas id="fireCanvas"></canvas>
     <div class="fire-symbols" id="fireSymbols"></div>
 
@@ -645,28 +834,44 @@
     </button>
 
     <nav class="side-menu" id="sideMenu">
-        <div class="menu-section">
-            <div class="menu-section-title">📖 Cuentos</div>
-            <a href="#cuentos" class="menu-item">Ver Cuentos</a>
-            <a href="#" class="menu-item">Realismo</a>
-            <a href="#" class="menu-item">Fantasía</a>
-            <a href="#" class="menu-item">Terror</a>
+        <div class="language-selector">
+            <button class="lang-btn active" data-lang="es">ES</button>
+            <button class="lang-btn" data-lang="en">EN</button>
+            <button class="lang-btn" data-lang="pt">PT</button>
         </div>
 
         <div class="menu-section">
-            <div class="menu-section-title">📚 Poesía</div>
-            <a href="#poesia" class="menu-item">Ver Poesías</a>
-            <a href="#" class="menu-item">Lírica</a>
-            <a href="#" class="menu-item">Épica</a>
-            <a href="#" class="menu-item">Vanguardia</a>
+            <div class="menu-section-title" data-text-key="nav_inicio">🏠 Inicio</div>
+            <a href="index.html" class="menu-item" data-text-key="nav_volver">Volver al Inicio</a>
         </div>
 
         <div class="menu-section">
-            <div class="menu-section-title">🎨 Cómics</div>
-            <a href="#comics" class="menu-item">Ver Cómics</a>
-            <a href="#" class="menu-item">Superhéroes</a>
-            <a href="#" class="menu-item">Novela Gráfica</a>
-            <a href="#" class="menu-item">Arte Experimental</a>
+            <div class="menu-section-title" data-text-key="nav_cuentos">📖 Cuentos</div>
+            <a href="#cuentos" class="menu-item" data-text-key="nav_ver_cuentos">Ver Cuentos</a>
+            <a href="#" class="menu-item" data-text-key="nav_realismo">Realismo</a>
+            <a href="#" class="menu-item" data-text-key="nav_fantasia">Fantasía</a>
+            <a href="#" class="menu-item" data-text-key="nav_terror">Terror</a>
+        </div>
+
+        <div class="menu-section">
+            <div class="menu-section-title" data-text-key="nav_poesia">📚 Poesía</div>
+            <a href="#poesia" class="menu-item" data-text-key="nav_ver_poesia">Ver Poesías</a>
+            <a href="#" class="menu-item" data-text-key="nav_lirica">Lírica</a>
+            <a href="#" class="menu-item" data-text-key="nav_epica">Épica</a>
+            <a href="#" class="menu-item" data-text-key="nav_vanguardia">Vanguardia</a>
+        </div>
+
+        <div class="menu-section">
+            <div class="menu-section-title" data-text-key="nav_comics">🎨 Cómics</div>
+            <a href="#comics" class="menu-item" data-text-key="nav_ver_comics">Ver Cómics</a>
+            <a href="#" class="menu-item" data-text-key="nav_superheroes">Superhéroes</a>
+            <a href="#" class="menu-item" data-text-key="nav_novela_grafica">Novela Gráfica</a>
+            <a href="#" class="menu-item" data-text-key="nav_arte_experimental">Arte Experimental</a>
+        </div>
+
+        <div class="menu-section">
+            <div class="menu-section-title" data-text-key="nav_participar">✨ Participar</div>
+            <button class="menu-item" id="menuJoinBtn" data-text-key="nav_quiero_formar_parte">Quiero Formar Parte</button>
         </div>
     </nav>
 
@@ -680,13 +885,13 @@
                             <span class="flame-icon">🔥</span>
                         </div>
                         <div class="letra-text">
-                            Letra
+                            <span data-text-key="hero_letra">Letra</span>
                             <span class="pen-icon">✒️</span>
                         </div>
                     </div>
-                    <p class="hero-subtitle">Biblioteca Virtual de Escritores del Norte Argentino, Latinoamérica y el Mundo</p>
+                    <p class="hero-subtitle" data-text-key="hero_subtitle">Biblioteca Virtual de Escritores del Norte Argentino, Latinoamérica y el Mundo</p>
                     <div class="cta-buttons">
-                        <button class="btn btn-primary" id="joinBtn">Quiero Formar Parte</button>
+                        <button class="btn btn-primary" id="joinBtn" data-text-key="nav_quiero_formar_parte">Quiero Formar Parte</button>
                     </div>
                 </div>
                 <div class="hero-visual"></div>
@@ -694,22 +899,22 @@
         </section>
 
         <section class="section" id="cuentos">
-            <h2 class="section-title"><span>Cuentos</span></h2>
+            <h2 class="section-title" data-text-key="section_cuentos"><span>Cuentos</span></h2>
             <div class="works-grid" id="cuentosGrid"></div>
         </section>
 
         <section class="section" id="poesia">
-            <h2 class="section-title"><span>Poesía</span></h2>
+            <h2 class="section-title" data-text-key="section_poesia"><span>Poesía</span></h2>
             <div class="works-grid" id="poesiaGrid"></div>
         </section>
 
         <section class="section" id="comics">
-            <h2 class="section-title"><span>Cómics</span></h2>
+            <h2 class="section-title" data-text-key="section_comics"><span>Cómics</span></h2>
             <div class="works-grid" id="comicsGrid"></div>
         </section>
 
         <section class="footer-section">
-            <p class="footer-text">
+            <p class="footer-text" data-text-key="footer_text">
                 "La palabra escrita es fuego que arde en la mente del lector.<br>
                 Aquí celebramos a quienes transforman experiencias en historias que perduran."
             </p>
@@ -719,33 +924,259 @@
     <div id="participateModal" class="modal">
         <div class="modal-content">
             <button class="close-btn" onclick="closeModal()">&times;</button>
-            <h2 class="modal-title">Quiero Formar Parte</h2>
-            <p class="modal-text">
+            <h2 class="modal-title" data-text-key="modal_title">Quiero Formar Parte</h2>
+            <p class="modal-text" data-text-key="modal_subtitle">
                 Comparte tu obra, tu voz y tu historia con la comunidad de Fuego y Letra.
             </p>
             <form class="modal-form" id="participateForm">
-                <input type="text" placeholder="Tu Nombre" required>
-                <input type="email" placeholder="Tu Email" required>
-                <input type="text" placeholder="Nombre de tu Obra" required>
-                <select style="width: 100%; padding: 0.9rem; margin-bottom: 1rem; background: rgba(255, 107, 53, 0.05); border: 1px solid rgba(255, 107, 53, 0.15); border-radius: 8px; color: var(--text-light); font-family: inherit;">
+                <input type="text" placeholder="Tu Nombre" data-placeholder-key="form_nombre" required>
+                <input type="email" placeholder="Tu Email" data-placeholder-key="form_email" required>
+                <input type="text" placeholder="Nombre de tu Obra" data-placeholder-key="form_obra" required>
+                <select data-text-key="form_tipo_obra" required>
                     <option value="">Tipo de Obra</option>
-                    <option value="cuento">Cuento</option>
-                    <option value="poesia">Poesía</option>
-                    <option value="comic">Cómics</option>
+                    <option value="cuento" data-text-key="form_cuento">Cuento</option>
+                    <option value="poesia" data-text-key="form_poesia">Poesía</option>
+                    <option value="comic" data-text-key="form_comic">Cómics</option>
                 </select>
-                <textarea placeholder="Cuéntanos sobre tu obra..." rows="3" required></textarea>
-                <button type="submit">Enviar Solicitud</button>
+                <textarea placeholder="Cuéntanos sobre tu obra..." data-placeholder-key="form_descripcion" rows="3" required></textarea>
+                <button type="submit" data-text-key="form_enviar">Enviar Solicitud</button>
             </form>
         </div>
     </div>
 
     <script>
-        const fireSvg = `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <path d="M50 10 C40 25 35 40 35 55 C35 75 42 85 50 85 C58 85 65 75 65 55 C65 40 60 25 50 10 Z" 
-                  fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
-            <path d="M45 30 C43 38 42 45 42 52 C42 65 46 72 50 72 C54 72 58 65 58 52 C58 45 57 38 55 30 Z" 
-                  fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.6"/>
+        // ════════════════════ TRANSLATIONS ════════════════════
+        const translations = {
+            es: {
+                nav_inicio: "🏠 Inicio",
+                nav_volver: "Volver al Inicio",
+                nav_cuentos: "📖 Cuentos",
+                nav_ver_cuentos: "Ver Cuentos",
+                nav_realismo: "Realismo",
+                nav_fantasia: "Fantasía",
+                nav_terror: "Terror",
+                nav_poesia: "📚 Poesía",
+                nav_ver_poesia: "Ver Poesías",
+                nav_lirica: "Lírica",
+                nav_epica: "Épica",
+                nav_vanguardia: "Vanguardia",
+                nav_comics: "🎨 Cómics",
+                nav_ver_comics: "Ver Cómics",
+                nav_superheroes: "Superhéroes",
+                nav_novela_grafica: "Novela Gráfica",
+                nav_arte_experimental: "Arte Experimental",
+                nav_participar: "✨ Participar",
+                nav_quiero_formar_parte: "Quiero Formar Parte",
+                hero_letra: "Letra",
+                hero_subtitle: "Biblioteca Virtual de Escritores del Norte Argentino, Latinoamérica y el Mundo",
+                section_cuentos: "Cuentos",
+                section_poesia: "Poesía",
+                section_comics: "Cómics",
+                footer_text: "\"La palabra escrita es fuego que arde en la mente del lector.<br>Aquí celebramos a quienes transforman experiencias en historias que perduran.\"",
+                modal_title: "Quiero Formar Parte",
+                modal_subtitle: "Comparte tu obra, tu voz y tu historia con la comunidad de Fuego y Letra.",
+                form_nombre: "Tu Nombre",
+                form_email: "Tu Email",
+                form_obra: "Nombre de tu Obra",
+                form_tipo_obra: "Tipo de Obra",
+                form_cuento: "Cuento",
+                form_poesia: "Poesía",
+                form_comic: "Cómics",
+                form_descripcion: "Cuéntanos sobre tu obra...",
+                form_enviar: "Enviar Solicitud"
+            },
+            en: {
+                nav_inicio: "🏠 Home",
+                nav_volver: "Back to Home",
+                nav_cuentos: "📖 Stories",
+                nav_ver_cuentos: "View Stories",
+                nav_realismo: "Realism",
+                nav_fantasia: "Fantasy",
+                nav_terror: "Horror",
+                nav_poesia: "📚 Poetry",
+                nav_ver_poesia: "View Poetry",
+                nav_lirica: "Lyric",
+                nav_epica: "Epic",
+                nav_vanguardia: "Vanguard",
+                nav_comics: "🎨 Comics",
+                nav_ver_comics: "View Comics",
+                nav_superheroes: "Superheroes",
+                nav_novela_grafica: "Graphic Novel",
+                nav_arte_experimental: "Experimental Art",
+                nav_participar: "✨ Participate",
+                nav_quiero_formar_parte: "I Want to Join",
+                hero_letra: "Letter",
+                hero_subtitle: "Virtual Library of Writers from Northern Argentina, Latin America and the World",
+                section_cuentos: "Stories",
+                section_poesia: "Poetry",
+                section_comics: "Comics",
+                footer_text: "\"Written word is fire that burns in the reader's mind.<br>Here we celebrate those who transform experiences into stories that endure.\"",
+                modal_title: "I Want to Join",
+                modal_subtitle: "Share your work, your voice and your story with the Fuego y Letra community.",
+                form_nombre: "Your Name",
+                form_email: "Your Email",
+                form_obra: "Work Title",
+                form_tipo_obra: "Type of Work",
+                form_cuento: "Story",
+                form_poesia: "Poetry",
+                form_comic: "Comics",
+                form_descripcion: "Tell us about your work...",
+                form_enviar: "Send Request"
+            },
+            pt: {
+                nav_inicio: "🏠 Início",
+                nav_volver: "Voltar ao Início",
+                nav_cuentos: "📖 Histórias",
+                nav_ver_cuentos: "Ver Histórias",
+                nav_realismo: "Realismo",
+                nav_fantasia: "Fantasia",
+                nav_terror: "Terror",
+                nav_poesia: "📚 Poesia",
+                nav_ver_poesia: "Ver Poesias",
+                nav_lirica: "Lírica",
+                nav_epica: "Épica",
+                nav_vanguardia: "Vanguarda",
+                nav_comics: "🎨 Histórias em Quadrinhos",
+                nav_ver_comics: "Ver Quadrinhos",
+                nav_superheroes: "Super-heróis",
+                nav_novela_grafica: "Romance Gráfico",
+                nav_arte_experimental: "Arte Experimental",
+                nav_participar: "✨ Participar",
+                nav_quiero_formar_parte: "Quero Participar",
+                hero_letra: "Letra",
+                hero_subtitle: "Biblioteca Virtual de Escritores do Norte da Argentina, América Latina e o Mundo",
+                section_cuentos: "Histórias",
+                section_poesia: "Poesia",
+                section_comics: "Quadrinhos",
+                footer_text: "\"A palavra escrita é fogo que queima na mente do leitor.<br>Aqui celebramos aqueles que transformam experiências em histórias que perduram.\"",
+                modal_title: "Quero Participar",
+                modal_subtitle: "Compartilhe seu trabalho, sua voz e sua história com a comunidade Fuego y Letra.",
+                form_nombre: "Seu Nome",
+                form_email: "Seu Email",
+                form_obra: "Título da Obra",
+                form_tipo_obra: "Tipo de Trabalho",
+                form_cuento: "História",
+                form_poesia: "Poesia",
+                form_comic: "Quadrinhos",
+                form_descripcion: "Conte-nos sobre seu trabalho...",
+                form_enviar: "Enviar Solicitação"
+            }
+        };
+
+        let currentLanguage = localStorage.getItem('language') || 'es';
+
+        function updateLanguage(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('language', lang);
+
+            // Actualizar textos de elementos con data-text-key
+            document.querySelectorAll('[data-text-key]').forEach(el => {
+                const key = el.getAttribute('data-text-key');
+                if (translations[lang][key]) {
+                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.tagName === 'SELECT') {
+                        el.placeholder = translations[lang][key];
+                    } else {
+                        el.innerHTML = translations[lang][key];
+                    }
+                }
+            });
+
+            // Actualizar placeholders
+            document.querySelectorAll('[data-placeholder-key]').forEach(el => {
+                const key = el.getAttribute('data-placeholder-key');
+                if (translations[lang][key]) {
+                    el.placeholder = translations[lang][key];
+                }
+            });
+
+            // Actualizar botones de idioma
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`.lang-btn[data-lang="${lang}"]`).classList.add('active');
+        }
+
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                updateLanguage(btn.getAttribute('data-lang'));
+            });
+        });
+
+        // ════════════════════ REALISTIC FIRE SVG ════════════════════
+        const fireRealisticSvg = `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <radialGradient id="fireGrad" cx="40%" cy="40%">
+                    <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
+                    <stop offset="50%" style="stop-color:#FFA500;stop-opacity:0.8" />
+                    <stop offset="100%" style="stop-color:#FF4500;stop-opacity:0.6" />
+                </radialGradient>
+                <filter id="fireGlow">
+                    <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                    <feMerge>
+                        <feMergeNode in="coloredBlur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+            </defs>
+            <path d="M 50 10 Q 40 25 38 40 Q 35 55 45 70 Q 50 80 50 85 Q 50 80 55 70 Q 65 55 62 40 Q 60 25 50 10" 
+                  fill="url(#fireGrad)" filter="url(#fireGlow)" opacity="0.95"/>
+            <path d="M 50 20 Q 45 30 44 42 Q 42 55 48 68 Q 50 75 50 78 Q 50 75 52 68 Q 58 55 56 42 Q 55 30 50 20" 
+                  fill="url(#fireGrad)" filter="url(#fireGlow)" opacity="0.7"/>
+            <circle cx="50" cy="45" r="12" fill="#FFD700" filter="url(#fireGlow)" opacity="0.5"/>
         </svg>`;
+
+        // ════════════════════ SPLASH ANIMATION ════════════════════
+        function initSplash() {
+            const splashFireCircle = document.getElementById('splashFireCircle');
+            const numberOfBalls = 14;
+            const circleRadius = 160; // Radio más grande para rodear el título
+
+            for (let i = 0; i < numberOfBalls; i++) {
+                const angle = (i / numberOfBalls) * Math.PI * 2;
+                
+                // Posición final (en el círculo)
+                const endX = Math.cos(angle) * circleRadius;
+                const endY = Math.sin(angle) * circleRadius;
+
+                // Posición inicial (desde los costados más lejanos)
+                let startX, startY;
+                if (angle < Math.PI / 2 || angle > 3 * Math.PI / 2) {
+                    startX = 400;
+                    startY = Math.sin(angle) * 400;
+                } else {
+                    startX = -400;
+                    startY = Math.sin(angle) * 400;
+                }
+
+                const ball = document.createElement('div');
+                ball.className = 'splash-fire-ball';
+                ball.innerHTML = fireRealisticSvg;
+                ball.style.setProperty('--start-x', `${startX}px`);
+                ball.style.setProperty('--start-y', `${startY}px`);
+                ball.style.setProperty('--end-x', `${endX}px`);
+                ball.style.setProperty('--end-y', `${endY}px`);
+                ball.style.animationDelay = `${i * 70}ms`;
+
+                splashFireCircle.appendChild(ball);
+            }
+
+            setTimeout(() => {
+                document.getElementById('splashContainer').classList.add('hidden');
+                document.body.classList.remove('splash-active');
+            }, 2500);
+        }
+
+        window.addEventListener('load', () => {
+            document.body.classList.add('splash-active');
+            updateLanguage(currentLanguage);
+            initSplash();
+            
+            setTimeout(() => {
+                renderWorks('cuentos', 'cuentosGrid');
+                renderWorks('poesia', 'poesiaGrid');
+                renderWorks('comics', 'comicsGrid');
+            }, 2600);
+        });
 
         function createFireSymbols() {
             const container = document.getElementById('fireSymbols');
@@ -756,13 +1187,13 @@
                 { top: '40%', left: '5%', size: '100px' }
             ];
 
-            positions.forEach((pos, idx) => {
+            positions.forEach((pos) => {
                 const el = document.createElement('div');
                 el.className = 'fire-symbol';
                 el.style.cssText = `${Object.entries(pos).map(([k, v]) => 
                     k === 'size' ? `width: ${v}; height: ${v}` : `${k}: ${v}`
                 ).join('; ')}; color: #FF6B35;`;
-                el.innerHTML = fireSvg;
+                el.innerHTML = fireRealisticSvg;
                 container.appendChild(el);
             });
         }
@@ -847,7 +1278,7 @@
                 { title: 'Última Página', author: 'Carlos López', description: 'Reflexión sobre finales, comienzos y espacios intermedios.', url: '#' }
             ],
             poesia: [
-                { title: 'Versos de Tierra', author: 'Julieta ', description: 'Conexión con la naturaleza andina y los ancestros.', url: 'autor-julieta-contreras.html' },
+                { title: 'Versos de Tierra', author: 'Julieta', description: 'Conexión con la naturaleza andina y los ancestros.', url: 'autor-julieta-contreras.html' },
                 { title: 'Ecos Nocturnos', author: 'Juan Morales', description: 'Versos nocturnos que capturan momentos de silencio.', url: '#' },
                 { title: 'Respirar el Aire', author: 'María Sánchez', description: 'La respiración del alma en espacios sagrados.', url: '#' },
                 { title: 'Ritmo de Agua', author: 'Carlos López', description: 'Poemas que fluyen como el agua explorando ciclos.', url: '#' },
@@ -919,6 +1350,7 @@
         }
 
         document.getElementById('joinBtn').addEventListener('click', openModal);
+        document.getElementById('menuJoinBtn').addEventListener('click', openModal);
 
         document.getElementById('participateForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -929,20 +1361,15 @@
 
         document.querySelectorAll('a[href^="#"]').forEach(link => {
             link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
+                if (this.getAttribute('href') !== '#') {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
                 }
             });
-        });
-
-        window.addEventListener('load', () => {
-            renderWorks('cuentos', 'cuentosGrid');
-            renderWorks('poesia', 'poesiaGrid');
-            renderWorks('comics', 'comicsGrid');
         });
     </script>
 </body>
 </html>
-
