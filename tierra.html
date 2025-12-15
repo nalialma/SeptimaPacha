@@ -30,6 +30,82 @@
             font-family: 'Montserrat', sans-serif;
             background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
             color: #fff;
+            transition: background 0.8s ease, color 0.8s ease;
+        }
+
+        body.day-mode {
+            background: linear-gradient(135deg, #87CEEB 0%, #E0F6FF 100%);
+            color: #1a1a1a;
+        }
+
+        /* ════════════ CIELO ESTRELLADO ════════════ */
+        .starry-sky {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* Nubes día */
+        .cloud {
+            position: absolute;
+            background: white;
+            border-radius: 100px;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        body.day-mode .cloud {
+            opacity: 0.6;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateX(0px); }
+            50% { transform: translateX(50px); }
+        }
+
+        .cloud::before,
+        .cloud::after {
+            content: '';
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+        }
+
+        .cloud::before {
+            width: 50px;
+            height: 50px;
+            top: -25px;
+            left: 10px;
+        }
+
+        .cloud::after {
+            width: 40px;
+            height: 40px;
+            top: -20px;
+            right: 10px;
         }
 
         /* ════════════ SPLASH SCREEN CON RAÍCES ANIMADAS ════════════ */
@@ -172,6 +248,11 @@
             box-shadow: 0 15px 40px rgba(243, 156, 18, 0.4);
         }
 
+        body.day-mode .nav-toggle-btn {
+            background: linear-gradient(135deg, #87CEEB, #FFD700);
+            box-shadow: 0 10px 30px rgba(135, 206, 235, 0.3);
+        }
+
         .floating-menu {
             display: none;
             flex-direction: column;
@@ -183,6 +264,11 @@
             border: 2px solid rgba(139, 69, 19, 0.3);
             min-width: 200px;
             animation: slideUp 0.3s ease;
+        }
+
+        body.day-mode .floating-menu {
+            background: rgba(255, 255, 255, 0.95);
+            border-color: rgba(135, 206, 235, 0.3);
         }
 
         .floating-menu.active {
@@ -213,10 +299,22 @@
             font-size: 0.9rem;
         }
 
+        body.day-mode .floating-menu a,
+        body.day-mode .floating-menu button {
+            background: rgba(135, 206, 235, 0.2);
+            color: #1a1a1a;
+        }
+
         .floating-menu a:hover, .floating-menu button:hover {
             background: linear-gradient(135deg, #8B4513, #F39C12);
             color: #fff;
             transform: translateX(-5px);
+        }
+
+        body.day-mode .floating-menu a:hover,
+        body.day-mode .floating-menu button:hover {
+            background: linear-gradient(135deg, #87CEEB, #FFD700);
+            color: #fff;
         }
 
         .lang-btn {
@@ -225,13 +323,36 @@
             color: var(--oro) !important;
         }
 
-        .lang-btn:hover {
+        body.day-mode .lang-btn {
+            color: #FFD700 !important;
+            border-color: #FFD700 !important;
+        }
+
+        .theme-btn {
+            border: 2px solid var(--oro) !important;
+            background: transparent !important;
+            color: var(--oro) !important;
+            font-size: 1.2rem !important;
+            padding: 0.7rem 1.2rem !important;
+        }
+
+        body.day-mode .theme-btn {
+            color: #FFD700 !important;
+            border-color: #FFD700 !important;
+        }
+
+        .lang-btn:hover, .theme-btn:hover {
             background: linear-gradient(135deg, #8B4513, #F39C12) !important;
             color: #fff !important;
         }
 
-        /* ════════════ ANIMACIÓN BOTÁNICA DE FONDO ════════════ */
-        .botanical-background {
+        body.day-mode .lang-btn:hover,
+        body.day-mode .theme-btn:hover {
+            background: linear-gradient(135deg, #87CEEB, #FFD700) !important;
+        }
+
+        /* ════════════ ÁRBOL DE LA VIDA - FONDO ════════════ */
+        .tree-of-life-bg {
             position: fixed;
             top: 0;
             left: 0;
@@ -239,10 +360,10 @@
             height: 100%;
             pointer-events: none;
             z-index: 1;
-            opacity: 0.15;
+            opacity: 0.12;
         }
 
-        .botanical-svg {
+        .tree-svg {
             width: 100%;
             height: 100%;
         }
@@ -263,6 +384,11 @@
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
             position: relative;
             overflow: hidden;
+            transition: background 0.8s ease;
+        }
+
+        body.day-mode .hero {
+            background: linear-gradient(135deg, #87CEEB 0%, #E0F6FF 100%);
         }
 
         .hero-content {
@@ -290,6 +416,12 @@
             letter-spacing: -3px;
             animation: slideInLeftHero 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 4.5s forwards;
             opacity: 0;
+            transition: text-shadow 0.8s ease;
+        }
+
+        body.day-mode .hero-title .palabra-tierra {
+            color: #654321;
+            text-shadow: 0 5px 15px rgba(101, 67, 33, 0.3);
         }
 
         .hero-title .palabra-viva {
@@ -305,6 +437,14 @@
             margin-top: 0.5rem;
             animation: slideInRightHero 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 4.7s forwards;
             opacity: 0;
+            transition: text-shadow 0.8s ease;
+        }
+
+        body.day-mode .hero-title .palabra-viva {
+            background: linear-gradient(135deg, #FFA500 0%, #FF8C00 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .pincel-grande {
@@ -351,6 +491,11 @@
             animation: fadeInUp 1s ease-out 5.2s forwards;
             opacity: 0;
             letter-spacing: 0.5px;
+            transition: color 0.8s ease;
+        }
+
+        body.day-mode .hero-subtitle {
+            color: #333;
         }
 
         @keyframes fadeInUp {
@@ -371,6 +516,13 @@
             position: relative;
             overflow: hidden;
             scroll-margin-top: 100px;
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+            transition: background 0.8s ease;
+        }
+
+        body.day-mode .art-section {
+            background: linear-gradient(135deg, #f0f8ff 0%, #e6f5ff 100%);
+            border-top-color: rgba(135, 206, 235, 0.3);
         }
 
         .art-container {
@@ -396,6 +548,14 @@
             background-clip: text;
             margin-bottom: 1.5rem;
             letter-spacing: -1px;
+            transition: background 0.8s ease;
+        }
+
+        body.day-mode .art-title {
+            background: linear-gradient(135deg, #FF8C00 0%, #FFA500 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .art-description {
@@ -405,6 +565,11 @@
             margin: 0 auto;
             line-height: 1.8;
             letter-spacing: 0.3px;
+            transition: color 0.8s ease;
+        }
+
+        body.day-mode .art-description {
+            color: #333;
         }
 
         /* ════════════ ARTISTAS ════════════ */
@@ -442,10 +607,20 @@
             transition: all 0.4s ease;
         }
 
+        body.day-mode .artist-image {
+            border-color: #FF8C00;
+            box-shadow: 0 15px 40px rgba(255, 140, 0, 0.2);
+        }
+
         .artist-card:hover .artist-image {
             transform: scale(1.08);
             box-shadow: 0 20px 50px rgba(243, 156, 18, 0.4);
             border-color: #F39C12;
+        }
+
+        body.day-mode .artist-card:hover .artist-image {
+            box-shadow: 0 20px 50px rgba(255, 165, 0, 0.4);
+            border-color: #FFA500;
         }
 
         .artist-badge {
@@ -463,6 +638,11 @@
             font-weight: 700;
             font-size: 1.2rem;
             box-shadow: 0 5px 15px rgba(139, 69, 19, 0.4);
+            transition: background 0.8s ease;
+        }
+
+        body.day-mode .artist-badge {
+            background: linear-gradient(135deg, #FF8C00, #FFA500);
         }
 
         .artist-name {
@@ -475,6 +655,14 @@
             background-clip: text;
             margin-bottom: 0.8rem;
             letter-spacing: -0.5px;
+            transition: background 0.8s ease;
+        }
+
+        body.day-mode .artist-name {
+            background: linear-gradient(135deg, #FF8C00, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .artist-description {
@@ -484,6 +672,12 @@
             line-height: 1.7;
             height: 3.4rem;
             overflow: hidden;
+            transition: color 0.8s ease;
+        }
+
+        body.day-mode .artist-description {
+            color: #333;
+            opacity: 0.7;
         }
 
         .artist-btn {
@@ -502,6 +696,10 @@
             box-shadow: 0 10px 25px rgba(255, 107, 53, 0.2);
         }
 
+        body.day-mode .artist-btn {
+            background: linear-gradient(135deg, #FF8C00, #FFA500);
+        }
+
         .artist-btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 15px 35px rgba(255, 107, 53, 0.4);
@@ -515,6 +713,12 @@
             border-top: 3px solid rgba(139, 69, 19, 0.3);
             position: relative;
             overflow: hidden;
+            transition: background 0.8s ease;
+        }
+
+        body.day-mode .footer-cta {
+            background: linear-gradient(135deg, rgba(255, 165, 0, 0.1) 0%, rgba(255, 200, 100, 0.1) 100%);
+            border-top-color: rgba(255, 165, 0, 0.3);
         }
 
         .footer-cta-title {
@@ -527,6 +731,14 @@
             background-clip: text;
             margin-bottom: 1.5rem;
             letter-spacing: -1px;
+            transition: background 0.8s ease;
+        }
+
+        body.day-mode .footer-cta-title {
+            background: linear-gradient(135deg, #FF8C00, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .footer-cta-text {
@@ -536,6 +748,11 @@
             margin: 0 auto 2.5rem;
             line-height: 1.8;
             letter-spacing: 0.3px;
+            transition: color 0.8s ease;
+        }
+
+        body.day-mode .footer-cta-text {
+            color: #333;
         }
 
         .cta-btn {
@@ -552,6 +769,10 @@
             display: inline-block;
             letter-spacing: 0.5px;
             box-shadow: 0 10px 30px rgba(255, 107, 53, 0.25);
+        }
+
+        body.day-mode .cta-btn {
+            background: linear-gradient(135deg, #FFA500, #FF8C00);
         }
 
         .cta-btn:hover {
@@ -622,6 +843,103 @@
     </style>
 </head>
 <body>
+    <!-- CIELO ESTRELLADO NOCTURNO -->
+    <div class="starry-sky" id="starrySky">
+        <div class="stars" id="starsContainer"></div>
+        <div id="cloudsContainer"></div>
+    </div>
+
+    <!-- ÁRBOL DE LA VIDA - FONDO -->
+    <div class="tree-of-life-bg">
+        <svg class="tree-svg" viewBox="0 0 1000 1200" preserveAspectRatio="none">
+            <defs>
+                <style>
+                    .tree-line { animation: growTree 6s ease-out forwards; }
+                    .tree-leaf { animation: bloomLeaf 4s ease-out forwards; }
+                    .tree-flower { animation: bloomFlower 3.5s ease-out forwards; }
+                    
+                    @keyframes growTree {
+                        from {
+                            stroke-dasharray: 1000;
+                            stroke-dashoffset: 1000;
+                            opacity: 0;
+                        }
+                        to {
+                            stroke-dasharray: 1000;
+                            stroke-dashoffset: 0;
+                            opacity: 1;
+                        }
+                    }
+                    
+                    @keyframes bloomLeaf {
+                        from {
+                            opacity: 0;
+                            r: 0;
+                        }
+                        to {
+                            opacity: 0.8;
+                            r: 20;
+                        }
+                    }
+                    
+                    @keyframes bloomFlower {
+                        from {
+                            opacity: 0;
+                            r: 0;
+                        }
+                        to {
+                            opacity: 0.7;
+                            r: 15;
+                        }
+                    }
+                </style>
+            </defs>
+
+            <!-- RAÍCES (abajo) -->
+            <path class="tree-line" d="M 500 1100 Q 400 900 300 700" fill="none" stroke="#8B4513" stroke-width="4" style="animation-delay: 0s;"/>
+            <path class="tree-line" d="M 500 1100 Q 600 900 700 700" fill="none" stroke="#8B4513" stroke-width="4" style="animation-delay: 0.2s;"/>
+            <path class="tree-line" d="M 500 1100 L 500 900" fill="none" stroke="#8B4513" stroke-width="5" style="animation-delay: 0.4s;"/>
+            <path class="tree-line" d="M 300 700 Q 200 600 150 500" fill="none" stroke="#8B4513" stroke-width="3" style="animation-delay: 0.6s;"/>
+            <path class="tree-line" d="M 700 700 Q 800 600 850 500" fill="none" stroke="#8B4513" stroke-width="3" style="animation-delay: 0.8s;"/>
+
+            <!-- TRONCO (centro) -->
+            <path class="tree-line" d="M 500 900 Q 480 700 500 500 Q 520 300 500 100" fill="none" stroke="#8B4513" stroke-width="6" style="animation-delay: 1s;"/>
+
+            <!-- RAMAS PRINCIPALES (arriba) -->
+            <path class="tree-line" d="M 500 500 Q 350 400 250 300" fill="none" stroke="#8B4513" stroke-width="4" style="animation-delay: 1.2s;"/>
+            <path class="tree-line" d="M 500 500 Q 650 400 750 300" fill="none" stroke="#8B4513" stroke-width="4" style="animation-delay: 1.4s;"/>
+
+            <!-- RAMAS SECUNDARIAS -->
+            <path class="tree-line" d="M 250 300 Q 200 250 150 200" fill="none" stroke="#8B4513" stroke-width="3" style="animation-delay: 1.6s;"/>
+            <path class="tree-line" d="M 250 300 Q 300 250 350 200" fill="none" stroke="#8B4513" stroke-width="3" style="animation-delay: 1.8s;"/>
+            <path class="tree-line" d="M 750 300 Q 700 250 650 200" fill="none" stroke="#8B4513" stroke-width="3" style="animation-delay: 2s;"/>
+            <path class="tree-line" d="M 750 300 Q 800 250 850 200" fill="none" stroke="#8B4513" stroke-width="3" style="animation-delay: 2.2s;"/>
+
+            <!-- RAMAS TERCIARIAS -->
+            <path class="tree-line" d="M 500 300 Q 450 250 400 200" fill="none" stroke="#8B4513" stroke-width="2" style="animation-delay: 2.4s;"/>
+            <path class="tree-line" d="M 500 300 Q 550 250 600 200" fill="none" stroke="#8B4513" stroke-width="2" style="animation-delay: 2.6s;"/>
+
+            <!-- HOJAS (círculos verdes) -->
+            <circle class="tree-leaf" cx="150" cy="200" r="0" fill="#2ECC71" style="animation-delay: 3s;"/>
+            <circle class="tree-leaf" cx="350" cy="200" r="0" fill="#2ECC71" style="animation-delay: 3.1s;"/>
+            <circle class="tree-leaf" cx="650" cy="200" r="0" fill="#2ECC71" style="animation-delay: 3.2s;"/>
+            <circle class="tree-leaf" cx="850" cy="200" r="0" fill="#2ECC71" style="animation-delay: 3.3s;"/>
+            <circle class="tree-leaf" cx="400" cy="200" r="0" fill="#2ECC71" style="animation-delay: 3.4s;"/>
+            <circle class="tree-leaf" cx="600" cy="200" r="0" fill="#2ECC71" style="animation-delay: 3.5s;"/>
+            <circle class="tree-leaf" cx="250" cy="350" r="0" fill="#2ECC71" style="animation-delay: 3.6s;"/>
+            <circle class="tree-leaf" cx="750" cy="350" r="0" fill="#2ECC71" style="animation-delay: 3.7s;"/>
+            <circle class="tree-leaf" cx="300" cy="700" r="0" fill="#2ECC71" style="animation-delay: 3.8s;"/>
+            <circle class="tree-leaf" cx="700" cy="700" r="0" fill="#2ECC71" style="animation-delay: 3.9s;"/>
+
+            <!-- FLORES (círculos naranjas/dorados) -->
+            <circle class="tree-flower" cx="100" cy="200" r="0" fill="#FF6B35" style="animation-delay: 3.5s;"/>
+            <circle class="tree-flower" cx="180" cy="220" r="0" fill="#F39C12" style="animation-delay: 3.6s;"/>
+            <circle class="tree-flower" cx="850" cy="180" r="0" fill="#FF6B35" style="animation-delay: 3.7s;"/>
+            <circle class="tree-flower" cx="920" cy="200" r="0" fill="#F39C12" style="animation-delay: 3.8s;"/>
+            <circle class="tree-flower" cx="500" cy="150" r="0" fill="#FF6B35" style="animation-delay: 3.9s;"/>
+        </svg>
+    </div>
+
     <!-- SPLASH SCREEN CON RAÍCES ANIMADAS -->
     <div class="splash-screen" id="splashScreen">
         <div class="splash-canvas-container">
@@ -639,6 +957,7 @@
     <div class="floating-nav">
         <button class="nav-toggle-btn" id="navToggleBtn" title="Menú">☰</button>
         <div class="floating-menu" id="floatingMenu">
+            <a href="#hero" data-es="Inicio" data-en="Home">Inicio</a>
             <a href="#artesanias" data-es="Artesanías" data-en="Crafts">Artesanías</a>
             <a href="#ceramica" data-es="Cerámica" data-en="Ceramics">Cerámica</a>
             <a href="#dibujo" data-es="Dibujo" data-en="Drawing">Dibujo</a>
@@ -646,90 +965,16 @@
             <a href="#escultura" data-es="Escultura" data-en="Sculpture">Escultura</a>
             <a href="#grabado" data-es="Grabado" data-en="Engraving">Grabado</a>
             <a href="#nps" data-es="NPS" data-en="NPS">NPS</a>
+            <button class="theme-btn" id="themeToggle" title="Cambiar tema día/noche">☀️</button>
             <button class="lang-btn" id="langToggle" data-es="English" data-en="Español">English</button>
             <a href="index.html" style="background: linear-gradient(135deg, #8B4513, #F39C12) !important; color: white !important;" data-es="← Volver" data-en="← Back">← Volver</a>
         </div>
     </div>
 
-    <!-- ANIMACIÓN BOTÁNICA DE FONDO -->
-    <div class="botanical-background">
-        <svg class="botanical-svg" viewBox="0 0 1000 1000" preserveAspectRatio="none">
-            <defs>
-                <style>
-                    .leaf-animate { animation: growLeaf 3s ease-out forwards; }
-                    .flower-animate { animation: bloomFlower 2.5s ease-out forwards; }
-                    .root-animate { animation: growRoot 4s ease-out forwards; }
-                    
-                    @keyframes growLeaf {
-                        from {
-                            stroke-dasharray: 200;
-                            stroke-dashoffset: 200;
-                            opacity: 0;
-                        }
-                        to {
-                            stroke-dasharray: 200;
-                            stroke-dashoffset: 0;
-                            opacity: 1;
-                        }
-                    }
-                    
-                    @keyframes bloomFlower {
-                        from {
-                            r: 0;
-                            opacity: 0;
-                        }
-                        to {
-                            r: 30;
-                            opacity: 0.6;
-                        }
-                    }
-                    
-                    @keyframes growRoot {
-                        from {
-                            stroke-dasharray: 500;
-                            stroke-dashoffset: 500;
-                            opacity: 0;
-                        }
-                        to {
-                            stroke-dasharray: 500;
-                            stroke-dashoffset: 0;
-                            opacity: 0.8;
-                        }
-                    }
-                </style>
-            </defs>
-            <!-- Raíces -->
-            <path class="root-animate" d="M 100 0 Q 80 200 100 400 Q 120 600 150 900" fill="none" stroke="#8B4513" stroke-width="3" style="animation-delay: 0s;"/>
-            <path class="root-animate" d="M 900 0 Q 920 200 900 400 Q 880 600 850 900" fill="none" stroke="#8B4513" stroke-width="3" style="animation-delay: 0.3s;"/>
-            <path class="root-animate" d="M 500 0 L 500 900" fill="none" stroke="#8B4513" stroke-width="4" style="animation-delay: 0.6s;"/>
-            <!-- Ramas laterales -->
-            <path class="root-animate" d="M 500 200 Q 350 250 250 300" fill="none" stroke="#8B4513" stroke-width="2" style="animation-delay: 0.9s;"/>
-            <path class="root-animate" d="M 500 200 Q 650 250 750 300" fill="none" stroke="#8B4513" stroke-width="2" style="animation-delay: 1s;"/>
-            <path class="root-animate" d="M 500 400 Q 300 450 200 500" fill="none" stroke="#8B4513" stroke-width="2" style="animation-delay: 1.2s;"/>
-            <path class="root-animate" d="M 500 400 Q 700 450 800 500" fill="none" stroke="#8B4513" stroke-width="2" style="animation-delay: 1.3s;"/>
-            <path class="root-animate" d="M 500 600 Q 350 650 250 700" fill="none" stroke="#8B4513" stroke-width="2" style="animation-delay: 1.5s;"/>
-            <path class="root-animate" d="M 500 600 Q 650 650 750 700" fill="none" stroke="#8B4513" stroke-width="2" style="animation-delay: 1.6s;"/>
-            
-            <!-- Hojas -->
-            <path class="leaf-animate" d="M 250 300 Q 220 310 230 330" fill="none" stroke="#2ECC71" stroke-width="2" style="animation-delay: 2s;"/>
-            <path class="leaf-animate" d="M 750 300 Q 780 310 770 330" fill="none" stroke="#2ECC71" stroke-width="2" style="animation-delay: 2.1s;"/>
-            <path class="leaf-animate" d="M 200 500 Q 170 510 180 530" fill="none" stroke="#2ECC71" stroke-width="2" style="animation-delay: 2.2s;"/>
-            <path class="leaf-animate" d="M 800 500 Q 830 510 820 530" fill="none" stroke="#2ECC71" stroke-width="2" style="animation-delay: 2.3s;"/>
-            <path class="leaf-animate" d="M 250 700 Q 220 710 230 730" fill="none" stroke="#2ECC71" stroke-width="2" style="animation-delay: 2.4s;"/>
-            <path class="leaf-animate" d="M 750 700 Q 780 710 770 730" fill="none" stroke="#2ECC71" stroke-width="2" style="animation-delay: 2.5s;"/>
-            
-            <!-- Flores -->
-            <circle class="flower-animate" cx="250" cy="280" r="0" fill="#FF6B35" opacity="0.6" style="animation-delay: 2.8s;"/>
-            <circle class="flower-animate" cx="750" cy="280" r="0" fill="#FF6B35" opacity="0.6" style="animation-delay: 2.9s;"/>
-            <circle class="flower-animate" cx="200" cy="480" r="0" fill="#F39C12" opacity="0.6" style="animation-delay: 3s;"/>
-            <circle class="flower-animate" cx="800" cy="480" r="0" fill="#F39C12" opacity="0.6" style="animation-delay: 3.1s;"/>
-        </svg>
-    </div>
-
     <!-- CONTENT -->
     <div class="content-wrapper">
         <!-- HERO -->
-        <section class="hero">
+        <section class="hero" id="hero">
             <div class="hero-content">
                 <h1 class="hero-title">
                     <span class="palabra-tierra">TIERRA</span>
@@ -840,6 +1085,7 @@
 
     <script>
         let currentLang = 'es';
+        let isDayMode = false;
 
         // Datos de artistas
         const artistasData = {
@@ -867,6 +1113,36 @@
             ]
         };
 
+        // CREAR ESTRELLAS
+        function createStars() {
+            const starsContainer = document.getElementById('starsContainer');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = Math.random() * 2 + 1 + 'px';
+                star.style.height = star.style.width;
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // CREAR NUBES
+        function createClouds() {
+            const cloudsContainer = document.getElementById('cloudsContainer');
+            for (let i = 0; i < 5; i++) {
+                const cloud = document.createElement('div');
+                cloud.className = 'cloud';
+                cloud.style.left = Math.random() * 100 + '%';
+                cloud.style.top = Math.random() * 30 + '%';
+                cloud.style.width = Math.random() * 100 + 80 + 'px';
+                cloud.style.height = Math.random() * 40 + 30 + 'px';
+                cloud.style.animationDelay = Math.random() * 5 + 's';
+                cloudsContainer.appendChild(cloud);
+            }
+        }
+
         // SPLASH SCREEN CON CANVAS
         function animateSplash() {
             const canvas = document.getElementById('rootsCanvas');
@@ -887,12 +1163,10 @@
                 
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 
-                // Raíces principales
                 drawLine(ctx, canvas.width / 2, 0, canvas.width / 2, canvas.height * progress, 4);
                 drawLine(ctx, canvas.width / 2, 0, canvas.width / 4, canvas.height * progress * 0.8, 3);
                 drawLine(ctx, canvas.width / 2, 0, canvas.width * 3 / 4, canvas.height * progress * 0.8, 3);
                 
-                // Raíces secundarias
                 if (progress > 0.3) {
                     drawLine(ctx, canvas.width / 2, canvas.height * 0.3, canvas.width / 6, canvas.height * progress * 0.7, 2);
                     drawLine(ctx, canvas.width / 2, canvas.height * 0.3, canvas.width * 5 / 6, canvas.height * progress * 0.7, 2);
@@ -921,6 +1195,8 @@
 
         // OCULTAR SPLASH
         window.addEventListener('load', () => {
+            createStars();
+            createClouds();
             animateSplash();
             setTimeout(() => {
                 const splash = document.getElementById('splashScreen');
@@ -945,6 +1221,22 @@
                 floatingMenu.classList.remove('active');
             });
         });
+
+        // TEMA DÍA/NOCHE
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('click', () => {
+            isDayMode = !isDayMode;
+            document.body.classList.toggle('day-mode');
+            themeToggle.textContent = isDayMode ? '🌙' : '☀️';
+            localStorage.setItem('theme', isDayMode ? 'day' : 'night');
+        });
+
+        // CARGAR TEMA GUARDADO
+        if (localStorage.getItem('theme') === 'day') {
+            isDayMode = true;
+            document.body.classList.add('day-mode');
+            themeToggle.textContent = '🌙';
+        }
 
         // LENGUAJE
         function translatePage() {
