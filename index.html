@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -81,6 +81,18 @@
             font-weight: 700;
             line-height: 0.85;
             letter-spacing: -3px;
+            background: linear-gradient(90deg, var(--oro), var(--fuego), var(--agua), var(--tierra), var(--aire), var(--oro));
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: colorFlow 8s ease infinite;
+        }
+
+        @keyframes colorFlow { 
+            0% { background-position: 0% 50%; } 
+            50% { background-position: 100% 50%; } 
+            100% { background-position: 0% 50%; } 
         }
 
         .subtitulo-container { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2rem; }
@@ -116,69 +128,372 @@
 
         .section-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.5rem); text-align: center; color: var(--oro); margin-bottom: 3rem; text-shadow: 0 0 20px rgba(243, 156, 18, 0.2); }
 
-        /* SERVICIOS CIRCULARES */
+        /* SERVICIOS CIRCULARES MEJORADOS */
         .servicios-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 3rem; max-width: 1200px; width: 100%; margin: 0 auto; place-items: center; position: relative; z-index: 10; }
 
-        .servicio-circulo { width: 240px; height: 240px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 3px solid; transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; cursor: pointer; background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(15px); overflow: hidden; text-decoration: none; color: inherit; }
+        .servicio-circulo { 
+            width: 240px; 
+            height: 240px; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            border: 3px solid; 
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative; 
+            cursor: pointer; 
+            background: rgba(255, 255, 255, 0.08); 
+            backdrop-filter: blur(15px); 
+            overflow: hidden; 
+            text-decoration: none; 
+            color: inherit;
+        }
+
+        .servicio-circulo::before { 
+            content: ''; 
+            position: absolute; 
+            top: 50%; 
+            left: 50%; 
+            width: 0; 
+            height: 0; 
+            background: radial-gradient(circle, rgba(243, 156, 18, 0.3), transparent); 
+            border-radius: 50%; 
+            transform: translate(-50%, -50%); 
+            transition: width 0.6s ease, height 0.6s ease;
+            z-index: 0;
+        }
+
+        .servicio-circulo:hover::before { width: 300px; height: 300px; }
 
         .servicio-agua { background: rgba(46, 204, 113, 0.15); border-color: var(--agua); }
         .servicio-tierra { background: rgba(139, 69, 19, 0.15); border-color: var(--tierra); }
         .servicio-fuego { background: rgba(255, 107, 53, 0.15); border-color: var(--fuego); }
         .servicio-aire { background: rgba(74, 144, 226, 0.15); border-color: var(--aire); }
 
-        .servicio-agua:hover { box-shadow: 0 25px 60px rgba(46, 204, 113, 0.4), inset 0 0 30px rgba(46, 204, 113, 0.2); background: rgba(46, 204, 113, 0.25); }
-        .servicio-tierra:hover { box-shadow: 0 25px 60px rgba(139, 69, 19, 0.4), inset 0 0 30px rgba(139, 69, 19, 0.2); background: rgba(139, 69, 19, 0.25); }
-        .servicio-fuego:hover { box-shadow: 0 25px 60px rgba(255, 107, 53, 0.4), inset 0 0 30px rgba(255, 107, 53, 0.2); background: rgba(255, 107, 53, 0.25); }
-        .servicio-aire:hover { box-shadow: 0 25px 60px rgba(74, 144, 226, 0.4), inset 0 0 30px rgba(74, 144, 226, 0.2); background: rgba(74, 144, 226, 0.25); }
+        .servicio-agua:hover { box-shadow: 0 30px 70px rgba(46, 204, 113, 0.5), inset 0 0 40px rgba(46, 204, 113, 0.25); background: rgba(46, 204, 113, 0.28); }
+        .servicio-tierra:hover { box-shadow: 0 30px 70px rgba(139, 69, 19, 0.5), inset 0 0 40px rgba(139, 69, 19, 0.25); background: rgba(139, 69, 19, 0.28); }
+        .servicio-fuego:hover { box-shadow: 0 30px 70px rgba(255, 107, 53, 0.5), inset 0 0 40px rgba(255, 107, 53, 0.25); background: rgba(255, 107, 53, 0.28); }
+        .servicio-aire:hover { box-shadow: 0 30px 70px rgba(74, 144, 226, 0.5), inset 0 0 40px rgba(74, 144, 226, 0.25); background: rgba(74, 144, 226, 0.28); }
 
-        .servicio-circulo:hover { transform: scale(1.15) translateY(-20px); border-color: var(--oro); }
+        .servicio-circulo:hover { transform: scale(1.18) translateY(-25px); border-color: var(--oro); }
 
-        .circulo-interno { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.8rem; text-align: center; z-index: 1; padding: 1.5rem; }
-        .circulo-simbolo { font-size: 3.5rem; animation: float 3s ease-in-out infinite; }
+        .circulo-interno { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.8rem; text-align: center; z-index: 1; padding: 1.5rem; position: relative; }
+        .circulo-simbolo { font-size: 3.5rem; animation: float 3s ease-in-out infinite; transition: all 0.4s ease; }
         .circulo-nombre { font-size: 1.4rem; font-weight: 700; letter-spacing: 0.05em; margin: 0; font-family: 'Playfair Display', serif; }
         .circulo-desc { font-size: 0.85rem; line-height: 1.4; margin: 0; opacity: 0.9; font-weight: 500; }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
         /* SOBRE SÉPTIMA PACHA */
+        .sobre-septima { position: relative; overflow: hidden; }
         .sobre-container { max-width: 1200px; margin: 0 auto; position: relative; z-index: 10; }
-        .sobre-header { text-align: center; margin-bottom: 4rem; }
-        .sobre-titulo { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.5rem); color: var(--oro); margin-bottom: 2rem; text-shadow: 0 0 20px rgba(243, 156, 18, 0.4); }
-        .sobre-intro-text { font-size: clamp(1rem, 2.5vw, 1.2rem); color: rgba(255, 255, 255, 0.85); max-width: 800px; margin: 0 auto; line-height: 1.8; }
+        .sobre-header { text-align: center; margin-bottom: 5rem; position: relative; z-index: 2; }
+        .sobre-titulo { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 6vw, 4rem); color: var(--oro); margin-bottom: 1.5rem; text-shadow: 0 0 30px rgba(243, 156, 18, 0.3); font-weight: 700; letter-spacing: -1px; animation: slideInDown 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        @keyframes slideInDown { from { opacity: 0; transform: translateY(-40px); } to { opacity: 1; transform: translateY(0); } }
 
-        .sobre-content { display: flex; flex-direction: column; gap: 3rem; }
+        .sobre-content { display: flex; flex-direction: column; gap: 2.5rem; }
 
-        .sobre-seccion { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(243, 156, 18, 0.2); border-radius: 20px; padding: 2.5rem; text-align: center; transition: all 0.4s ease; }
-        .sobre-seccion:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(243, 156, 18, 0.4); transform: translateY(-5px); }
+        /* CARDS DE CONTENIDO PRINCIPAL */
+        .sobre-seccion { 
+            background: linear-gradient(135deg, rgba(243, 156, 18, 0.08), rgba(255, 107, 53, 0.05)); 
+            backdrop-filter: blur(20px); 
+            border: 1px solid rgba(243, 156, 18, 0.25); 
+            border-radius: 24px; 
+            padding: 3rem 2.5rem; 
+            text-align: center; 
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+        }
 
-        .seccion-icono { font-size: 3rem; margin-bottom: 1rem; display: inline-block; animation: float 3s ease-in-out infinite; }
-        .seccion-titulo { font-family: 'Playfair Display', serif; font-size: clamp(1.5rem, 3vw, 2.2rem); color: var(--oro); margin-bottom: 1.5rem; }
-        .sobre-seccion p { font-size: clamp(0.95rem, 2vw, 1.1rem); line-height: 1.7; opacity: 0.9; }
+        .sobre-seccion::before { 
+            content: ''; 
+            position: absolute; 
+            top: -50%; 
+            right: -50%; 
+            width: 200px; 
+            height: 200px; 
+            background: radial-gradient(circle, rgba(243, 156, 18, 0.15), transparent); 
+            border-radius: 50%; 
+            animation: floatingOrb 8s ease-in-out infinite;
+        }
 
-        .sobre-secciones { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin: 3rem 0; }
+        .sobre-seccion::after { 
+            content: ''; 
+            position: absolute; 
+            bottom: -30%; 
+            left: -30%; 
+            width: 150px; 
+            height: 150px; 
+            background: radial-gradient(circle, rgba(255, 107, 53, 0.1), transparent); 
+            border-radius: 50%; 
+            animation: floatingOrb 10s ease-in-out infinite 2s;
+        }
 
-        .seccion-elemento { background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03)); border: 1px solid rgba(243, 156, 18, 0.15); border-radius: 15px; padding: 2rem; text-align: center; transition: all 0.4s ease; }
-        .seccion-elemento:hover { background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.06)); border-color: var(--oro); transform: translateY(-10px); box-shadow: 0 15px 40px rgba(243, 156, 18, 0.2); }
+        @keyframes floatingOrb { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-30px) scale(1.1); } }
 
-        .elemento-icono { font-size: 2.5rem; margin-bottom: 1rem; animation: float 3s ease-in-out infinite; }
-        .elemento-titulo { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--oro); margin-bottom: 1rem; }
-        .seccion-elemento p { font-size: 0.95rem; line-height: 1.6; opacity: 0.9; margin-bottom: 1rem; }
-        .elemento-lema { font-size: 1.1rem; font-weight: 600; color: var(--oro); font-style: italic; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(243, 156, 18, 0.2); }
+        .sobre-seccion:hover { 
+            background: linear-gradient(135deg, rgba(243, 156, 18, 0.15), rgba(255, 107, 53, 0.1)); 
+            border-color: rgba(243, 156, 18, 0.5); 
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(243, 156, 18, 0.2);
+        }
 
-        .sobre-filosofia { background: linear-gradient(135deg, rgba(139, 69, 19, 0.1), rgba(255, 107, 53, 0.08)); border-color: rgba(255, 107, 53, 0.3); }
-        .filosofia-items { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem; text-align: left; }
-        .filosofia-item { display: flex; gap: 1rem; align-items: flex-start; }
-        .item-mark { font-size: 1.5rem; flex-shrink: 0; margin-top: 0.25rem; }
-        .filosofia-item p { font-size: 1rem; line-height: 1.6; opacity: 0.9; }
+        .sobre-seccion p { 
+            font-size: clamp(1rem, 2.2vw, 1.15rem); 
+            line-height: 1.85; 
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+            color: #ffffff;
+        }
 
-        .sobre-cta { background: linear-gradient(135deg, rgba(26, 188, 156, 0.15), rgba(74, 144, 226, 0.1)); border: 2px solid rgba(26, 188, 156, 0.3); border-radius: 20px; padding: 3rem; text-align: center; margin-top: 3rem; }
-        .cta-titulo { font-size: clamp(1.8rem, 4vw, 2.5rem); font-family: 'Playfair Display', serif; color: var(--oro); margin-bottom: 1.5rem; }
-        .sobre-cta p { font-size: clamp(1rem, 2.5vw, 1.2rem); margin-bottom: 2rem; opacity: 0.9; }
+        .sobre-seccion strong { color: var(--oro); font-weight: 600; }
 
-        .cta-buttons { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
-        .cta-btn { padding: 1rem 2.5rem; background: linear-gradient(135deg, var(--oro), var(--fuego)); color: #fff; text-decoration: none; border-radius: 50px; font-weight: 600; font-size: 1.1rem; transition: all 0.3s ease; border: none; cursor: pointer; display: inline-block; }
-        .cta-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(243, 156, 18, 0.4); }
+        .sobre-secciones { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+            gap: 2.5rem; 
+            margin: 4rem 0;
+        }
+
+        .seccion-elemento { 
+            background: linear-gradient(135deg, rgba(243, 156, 18, 0.1), rgba(74, 144, 226, 0.06)); 
+            border: 1px solid rgba(243, 156, 18, 0.2); 
+            border-radius: 20px; 
+            padding: 3rem 2rem; 
+            text-align: center; 
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .seccion-elemento::before { 
+            content: ''; 
+            position: absolute; 
+            top: -40%; 
+            right: -40%; 
+            width: 180px; 
+            height: 180px; 
+            background: radial-gradient(circle, rgba(74, 144, 226, 0.2), transparent); 
+            border-radius: 50%; 
+            animation: floatingOrb 9s ease-in-out infinite;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .seccion-elemento:hover::before { opacity: 1; }
+
+        .seccion-elemento:hover { 
+            background: linear-gradient(135deg, rgba(243, 156, 18, 0.15), rgba(74, 144, 226, 0.12)); 
+            border-color: var(--oro); 
+            transform: translateY(-12px);
+            box-shadow: 0 25px 60px rgba(243, 156, 18, 0.25);
+        }
+
+        .elemento-icono { 
+            font-size: 4rem; 
+            margin-bottom: 1.5rem; 
+            display: inline-block; 
+            animation: iconoPulse 2.5s ease-in-out infinite;
+            transition: all 0.3s ease;
+        }
+
+        @keyframes iconoPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+
+        .seccion-elemento:hover .elemento-icono { animation: none; transform: scale(1.3) rotate(5deg); }
+
+        .elemento-titulo { 
+            font-family: 'Playfair Display', serif; 
+            font-size: clamp(1.4rem, 3vw, 1.8rem); 
+            color: var(--oro); 
+            margin-bottom: 1.2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .seccion-elemento p { 
+            font-size: clamp(0.95rem, 2vw, 1.05rem); 
+            line-height: 1.7; 
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 1rem;
+        }
+
+        .elemento-lema { 
+            font-size: 1.15rem; 
+            font-weight: 700; 
+            color: var(--oro); 
+            margin-top: 1.5rem; 
+            padding-top: 1.5rem; 
+            border-top: 2px solid rgba(243, 156, 18, 0.3); 
+            font-style: italic;
+            animation: slideInUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s backwards;
+        }
+
+        @keyframes slideInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* FILOSOFÍA */
+        .sobre-seccion[style*="background: linear-gradient"] { 
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.12), rgba(255, 107, 53, 0.08)) !important;
+            border-color: rgba(255, 107, 53, 0.35) !important;
+        }
+
+        .filosofia-items { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); 
+            gap: 2rem; 
+            margin-top: 2.5rem; 
+            text-align: left;
+        }
+
+        .filosofia-item { 
+            display: flex; 
+            gap: 1.5rem; 
+            align-items: flex-start;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            border: 1px solid rgba(243, 156, 18, 0.15);
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .filosofia-item:hover { 
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(243, 156, 18, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .item-mark { 
+            font-size: 1.8rem; 
+            flex-shrink: 0; 
+            margin-top: 0.25rem;
+            animation: spin 4s linear infinite;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .filosofia-item p { 
+            font-size: 1.05rem; 
+            line-height: 1.7; 
+            opacity: 0.95;
+        }
+
+        .filosofia-item strong { color: var(--oro); }
+
+        .sobre-cta { 
+            background: linear-gradient(135deg, rgba(26, 188, 156, 0.15), rgba(74, 144, 226, 0.1)); 
+            border: 2px solid rgba(26, 188, 156, 0.4); 
+            border-radius: 28px; 
+            padding: 4rem 3rem; 
+            text-align: center; 
+            margin-top: 5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .sobre-cta::before { 
+            content: ''; 
+            position: absolute; 
+            top: -50%; 
+            left: -50%; 
+            width: 300px; 
+            height: 300px; 
+            background: radial-gradient(circle, rgba(26, 188, 156, 0.2), transparent); 
+            border-radius: 50%; 
+            animation: floatingOrb 12s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        .sobre-cta::after { 
+            content: ''; 
+            position: absolute; 
+            bottom: -60%; 
+            right: -40%; 
+            width: 250px; 
+            height: 250px; 
+            background: radial-gradient(circle, rgba(74, 144, 226, 0.15), transparent); 
+            border-radius: 50%; 
+            animation: floatingOrb 14s ease-in-out infinite 3s;
+            z-index: 0;
+        }
+
+        .sobre-cta:hover { 
+            background: linear-gradient(135deg, rgba(26, 188, 156, 0.2), rgba(74, 144, 226, 0.15)); 
+            border-color: rgba(26, 188, 156, 0.6);
+            transform: translateY(-5px);
+            box-shadow: 0 30px 80px rgba(26, 188, 156, 0.2);
+        }
+
+        .cta-titulo { 
+            font-size: clamp(2rem, 5vw, 3rem); 
+            font-family: 'Playfair Display', serif; 
+            color: var(--oro); 
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .sobre-cta p { 
+            font-size: clamp(1rem, 2.5vw, 1.2rem); 
+            margin-bottom: 2.5rem; 
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+            line-height: 1.8;
+        }
+
+        .cta-buttons { 
+            display: flex; 
+            gap: 1.5rem; 
+            justify-content: center; 
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-btn { 
+            padding: 1.2rem 3rem; 
+            background: linear-gradient(135deg, var(--oro), var(--fuego)); 
+            color: #fff; 
+            text-decoration: none; 
+            border-radius: 50px; 
+            font-weight: 700;
+            font-size: 1.1rem; 
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: none; 
+            cursor: pointer; 
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-btn::before { 
+            content: ''; 
+            position: absolute; 
+            top: 0; 
+            left: -100%; 
+            width: 100%; 
+            height: 100%; 
+            background: rgba(255, 255, 255, 0.2); 
+            transition: left 0.4s ease;
+        }
+
+        .cta-btn:hover::before { left: 100%; }
+
+        .cta-btn:hover { 
+            transform: translateY(-4px);
+            box-shadow: 0 20px 50px rgba(243, 156, 18, 0.5);
+            letter-spacing: 0.5px;
+        }
+
         .cta-whatsapp { background: linear-gradient(135deg, #25D366, #128C7E); }
-        .cta-whatsapp:hover { box-shadow: 0 15px 40px rgba(37, 211, 102, 0.4); }
+        .cta-whatsapp:hover { box-shadow: 0 20px 50px rgba(37, 211, 102, 0.5); }
 
         /* CONTACTO */
         .formulario { max-width: 600px; margin: 3rem auto 0; display: flex; flex-direction: column; gap: 1.5rem; }
@@ -201,7 +516,122 @@
             .filosofia-items { grid-template-columns: 1fr; }
             .cta-buttons { flex-direction: column; }
             .cta-btn { width: 100%; }
+            .decorative-svg-accent.left-top { width: 180px; height: 180px; top: 10%; }
+            .decorative-svg-accent.right-bottom { width: 200px; height: 200px; }
         }
+
+        /* MODAL DE SERVICIOS */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(5px); z-index: 200; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
+        .modal-overlay.active { display: flex; opacity: 1; }
+        .modal-content { background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); border: 2px solid rgba(243, 156, 18, 0.4); border-radius: 20px; padding: 3rem; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; position: relative; animation: modalSlideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        @keyframes modalSlideIn { from { transform: scale(0.9) translateY(-50px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
+        .modal-close { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; font-size: 2rem; color: var(--oro); cursor: pointer; transition: all 0.3s ease; }
+        .modal-close:hover { transform: rotate(90deg); }
+        .modal-icono { 
+            font-size: 4rem; 
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            animation: iconoBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes iconoBounce { 
+            0% { transform: scale(0) rotate(-180deg); opacity: 0; } 
+            100% { transform: scale(1) rotate(0deg); opacity: 1; } 
+        }
+        .modal-titulo { 
+            font-family: 'Playfair Display', serif; 
+            font-size: 2.2rem; 
+            color: var(--oro); 
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+            background: linear-gradient(90deg, var(--oro), var(--fuego), var(--oro));
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: colorFlow 6s ease infinite;
+        }
+        .modal-body { font-size: 1.05rem; line-height: 1.8; color: rgba(255, 255, 255, 0.9); }
+        .modal-body ul { margin: 1.5rem 0; padding-left: 2rem; }
+        .modal-body li { margin-bottom: 0.8rem; }
+        .modal-lema { font-size: 1.3rem; font-weight: 600; color: var(--oro); margin-top: 2rem; padding-top: 2rem; border-top: 2px solid rgba(243, 156, 18, 0.3); font-style: italic; }
+        .modal-cta { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1rem; }
+        .modal-cta-btn { 
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center;
+            padding: 1.1rem 2.5rem; 
+            background: linear-gradient(135deg, var(--oro), var(--fuego)); 
+            color: #fff; 
+            text-decoration: none; 
+            border-radius: 50px; 
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modal-cta-btn::before { 
+            content: ''; 
+            position: absolute; 
+            top: 0; 
+            left: -100%; 
+            width: 100%; 
+            height: 100%; 
+            background: rgba(255, 255, 255, 0.2); 
+            transition: left 0.4s ease;
+        }
+
+        .modal-cta-btn:hover::before { left: 100%; }
+
+        .modal-cta-btn:hover { 
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(243, 156, 18, 0.5);
+            letter-spacing: 0.5px;
+        }
+
+        .modal-nav-btn { background: linear-gradient(135deg, var(--oro), var(--fuego)); }
+        .modal-nav-btn:hover { box-shadow: 0 20px 50px rgba(243, 156, 18, 0.5); }
+
+        .modal-whatsapp-btn { background: linear-gradient(135deg, #25D366, #128C7E); }
+        .modal-whatsapp-btn:hover { box-shadow: 0 20px 50px rgba(37, 211, 102, 0.5); }
+
+        /* DECORATIVE SVGs MEJORADOS */
+        /* SVG CONTAINER */
+        .svg-container { 
+            position: absolute; 
+            width: 100%; 
+            height: 100%; 
+            top: 0; 
+            left: 0; 
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .decorative-svg-accent { 
+            position: absolute; 
+            opacity: 0.2; 
+            animation: floatSvg 8s ease-in-out infinite;
+        }
+
+        .decorative-svg-accent.left-top { 
+            top: 5%; 
+            left: -5%; 
+            width: 250px; 
+            height: 250px;
+        }
+
+        .decorative-svg-accent.right-bottom { 
+            bottom: -10%; 
+            right: -5%; 
+            width: 300px; 
+            height: 300px;
+        }
+
+        @keyframes floatSvg { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-30px) rotate(5deg); } }
 
         @media (max-width: 480px) {
             .servicios-container { grid-template-columns: 1fr; }
@@ -209,6 +639,13 @@
             .circulo-simbolo { font-size: 2rem; }
             .hero-ctas { flex-direction: column; }
             .cta-primary, .cta-secondary { width: 100%; justify-content: center; }
+            .modal-content { padding: 2rem; max-width: 95%; }
+            .modal-titulo { font-size: 1.5rem; }
+            .sobre-seccion { padding: 2rem 1.5rem; }
+            .decorative-svg-accent.left-top { width: 120px; height: 120px; }
+            .decorative-svg-accent.right-bottom { width: 150px; height: 150px; }
+            .cta-titulo { font-size: 1.8rem; }
+            .elemento-icono { font-size: 3rem; }
         }
     </style>
 </head>
@@ -249,22 +686,58 @@
         </div>
     </nav>
 
+    <!-- MODAL DE SERVICIOS -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">✕</button>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
     <!-- HERO -->
     <section class="umbral" id="umbral">
-        <svg class="decorative-svg top-left" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-            <path class="svg-path" d="M100,20 L120,80 L180,100 L120,120 L100,180 L80,120 L20,100 L80,80 Z" stroke-width="2"/>
-            <circle class="svg-path" cx="100" cy="100" r="60" stroke-width="1"/>
-        </svg>
-        
-        <svg class="decorative-svg top-left-2" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-            <path class="svg-path" d="M40,40 L160,40 L100,160 Z" stroke-width="2"/>
-            <path class="svg-path" d="M70,70 L130,70 L100,130 Z" stroke-width="1"/>
-        </svg>
-        
-        <svg class="decorative-svg bottom-left" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-            <rect class="svg-path" x="50" y="50" width="100" height="100" stroke-width="2" transform="rotate(45 100 100)"/>
-            <circle class="svg-path" cx="100" cy="100" r="40" stroke-width="1"/>
-        </svg>
+        <div class="svg-container">
+            <svg class="decorative-svg-accent left-top" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- CHAKANA: Cruz cuadrada andina con escalones -->
+                <g class="svg-path" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <!-- Cruz central -->
+                    <line x1="100" y1="30" x2="100" y2="170"/>
+                    <line x1="30" y1="100" x2="170" y2="100"/>
+                    
+                    <!-- Centro -->
+                    <circle cx="100" cy="100" r="15" stroke-width="2"/>
+                    
+                    <!-- Escalones superior -->
+                    <path d="M85,45 L85,30 M100,20 L100,30 M115,45 L115,30"/>
+                    
+                    <!-- Escalones derecha -->
+                    <path d="M155,85 L170,85 M180,100 L170,100 M155,115 L170,115"/>
+                    
+                    <!-- Escalones inferior -->
+                    <path d="M85,155 L85,170 M100,180 L100,170 M115,155 L115,170"/>
+                    
+                    <!-- Escalones izquierda -->
+                    <path d="M45,85 L30,85 M20,100 L30,100 M45,115 L30,115"/>
+                </g>
+            </svg>
+            
+            <svg class="decorative-svg-accent right-bottom" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- ESPIRAL DE VIDA ANDINA (Pachamama) -->
+                <g class="svg-path" stroke-width="2.5" fill="none" stroke-linecap="round">
+                    <!-- Espiral principal -->
+                    <path d="M100,40 Q140,50 155,90 Q160,120 145,150 Q115,175 75,170 Q45,165 40,135 Q35,105 55,85 Q85,70 100,75"/>
+                    
+                    <!-- Centro sagrado -->
+                    <circle cx="100" cy="100" r="12" stroke-width="2"/>
+                    
+                    <!-- Puntos de los 4 elementos (coloreados) -->
+                    <circle cx="100" cy="45" r="4" fill="var(--agua)" stroke="none"/>
+                    <circle cx="155" cy="100" r="4" fill="var(--fuego)" stroke="none"/>
+                    <circle cx="100" cy="155" r="4" fill="var(--tierra)" stroke="none"/>
+                    <circle cx="45" cy="100" r="4" fill="var(--aire)" stroke="none"/>
+                </g>
+            </svg>
+        </div>
 
         <div class="hero-chakana">
             <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
@@ -304,80 +777,153 @@
 
     <!-- SERVICIOS -->
     <section class="servicios" id="servicios">
+        <div class="svg-container">
+            <svg class="decorative-svg-accent left-top" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- CHAKANA SIMPLE -->
+                <g class="svg-path" stroke-width="2.5" fill="none" stroke-linecap="round">
+                    <line x1="100" y1="30" x2="100" y2="170"/>
+                    <line x1="30" y1="100" x2="170" y2="100"/>
+                    <circle cx="100" cy="100" r="12" stroke-width="2"/>
+                    <path d="M85,40 L85,25 M100,20 L100,30 M115,40 L115,25"/>
+                </g>
+            </svg>
+            
+            <svg class="decorative-svg-accent right-bottom" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- TOCAPU (Patrón andino) -->
+                <g class="svg-path" stroke-width="2" fill="none" stroke-linecap="round">
+                    <rect x="40" y="40" width="120" height="120" rx="10"/>
+                    <line x1="100" y1="40" x2="100" y2="160"/>
+                    <line x1="40" y1="100" x2="160" y2="100"/>
+                    <circle cx="70" cy="70" r="8" stroke-width="1.5"/>
+                    <circle cx="130" cy="70" r="8" stroke-width="1.5"/>
+                    <circle cx="70" cy="130" r="8" stroke-width="1.5"/>
+                    <circle cx="130" cy="130" r="8" stroke-width="1.5"/>
+                </g>
+            </svg>
+        </div>
         <h2 class="section-title">Servicios de la Pacha</h2>
         <div class="servicios-container">
-            <a href="agua-code.html" class="servicio-circulo servicio-agua">
+            <div class="servicio-circulo servicio-agua" data-servicio="agua">
                 <div class="circulo-interno">
                     <div class="circulo-simbolo">💧</div>
                     <h3 class="circulo-nombre">AGUA</h3>
                     <p class="circulo-desc">Código y Diseño</p>
                 </div>
-            </a>
-            <a href="tierra.html" class="servicio-circulo servicio-tierra">
+            </div>
+            <div class="servicio-circulo servicio-tierra" data-servicio="tierra">
                 <div class="circulo-interno">
                     <div class="circulo-simbolo">🌍</div>
                     <h3 class="circulo-nombre">TIERRA</h3>
                     <p class="circulo-desc">Galería Pacha</p>
                 </div>
-            </a>
-            <a href="fuego.html" class="servicio-circulo servicio-fuego">
+            </div>
+            <div class="servicio-circulo servicio-fuego" data-servicio="fuego">
                 <div class="circulo-interno">
                     <div class="circulo-simbolo">🔥</div>
                     <h3 class="circulo-nombre">FUEGO</h3>
                     <p class="circulo-desc">Plumafuego</p>
                 </div>
-            </a>
-            <a href="aire.html" class="servicio-circulo servicio-aire">
+            </div>
+            <div class="servicio-circulo servicio-aire" data-servicio="aire">
                 <div class="circulo-interno">
                     <div class="circulo-simbolo">💨</div>
                     <h3 class="circulo-nombre">AIRE</h3>
                     <p class="circulo-desc">Wayra Sonora</p>
                 </div>
-            </a>
+            </div>
         </div>
     </section>
 
     <!-- SOBRE -->
     <section class="sobre-septima" id="sobre-septima">
+        <div class="svg-container">
+            <svg class="decorative-svg-accent left-top" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- CHAKANA CON DECORACIÓN -->
+                <g class="svg-path" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="100" y1="30" x2="100" y2="170"/>
+                    <line x1="30" y1="100" x2="170" y2="100"/>
+                    <circle cx="100" cy="100" r="15" stroke-width="2"/>
+                    <!-- Escalones en las 4 direcciones -->
+                    <path d="M85,40 L85,25 M100,20 L100,30 M115,40 L115,25"/>
+                    <path d="M160,85 L175,85 M180,100 L170,100 M160,115 L175,115"/>
+                    <path d="M85,160 L85,175 M100,180 L100,170 M115,160 L115,175"/>
+                    <path d="M40,85 L25,85 M20,100 L30,100 M40,115 L25,115"/>
+                </g>
+            </svg>
+            
+            <svg class="decorative-svg-accent right-bottom" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- ESPIRAL SAGRADA -->
+                <g class="svg-path" stroke-width="2.5" fill="none" stroke-linecap="round">
+                    <path d="M100,30 Q150,40 160,100 Q160,150 110,170 Q60,180 45,130 Q40,85 75,70 Q105,60 100,85"/>
+                    <circle cx="100" cy="100" r="10" stroke-width="2"/>
+                </g>
+            </svg>
+        </div>
         <div class="sobre-container">
             <div class="sobre-header">
                 <h2 class="sobre-titulo">🌍 ¿Qué es Séptima Pacha?</h2>
-                <div class="sobre-intro-text">
-                    <p>Un universo digital nacido en el corazón del norte argentino, donde el arte, el sonido y la palabra convergen con los elementos ancestrales.</p>
-                </div>
             </div>
 
             <div class="sobre-content">
                 <div class="sobre-seccion">
-                    <div class="seccion-icono">👩‍🎨</div>
-                    <h3 class="seccion-titulo">La Creadora</h3>
-                    <p>Natalia Jimena Almagro - Artista multidisciplinaria, compositora y desarrolladora. Un sueño: conectar creadores del NOA con el mundo.</p>
+                    <p>Séptima Pacha es un universo digital nacido en el corazón del norte argentino, donde el arte, el sonido, la palabra y el código se encuentran con la tierra, el fuego, el aire y el espíritu.</p>
+                </div>
+
+                <div class="sobre-seccion">
+                    <p>Fue creada por <strong>Natalia Jimena Almagro</strong> —artista multidisciplinaria, compositora, desarrolladora y activista— con un sueño claro: conectar a creadores y emprendedores con alma del NOA con el mundo, sin sacrificar su esencia, su ética ni su sensibilidad.</p>
+                </div>
+
+                <div class="sobre-seccion">
+                    <p>No es solo una galería, ni solo una biblioteca, ni solo una fonoteca. Es un <strong>ecosistema vivo</strong>, donde cada sección honra un elemento ancestral… y a quienes lo habitan con sus manos, sus voces, sus palabras y su lógica creativa.</p>
+                </div>
+
+                <div class="sobre-seccion" style="background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(243, 156, 18, 0.08)); border-color: rgba(255, 107, 53, 0.3);">
+                    <h3 class="seccion-titulo">🌟 ¿Por qué existe Séptima Pacha?</h3>
+                    <p style="text-align: left; margin-bottom: 1rem;">Porque creemos que:</p>
+                    <div class="filosofia-items">
+                        <div class="filosofia-item">
+                            <div class="item-mark">✦</div>
+                            <p><strong>El arte no necesita validación externa</strong> para ser valioso.</p>
+                        </div>
+                        <div class="filosofia-item">
+                            <div class="item-mark">✦</div>
+                            <p><strong>Las voces del interior merecen resonar globalmente.</strong></p>
+                        </div>
+                        <div class="filosofia-item">
+                            <div class="item-mark">✦</div>
+                            <p><strong>La tecnología puede ser cálida,</strong> si la construimos con alma.</p>
+                        </div>
+                        <div class="filosofia-item">
+                            <div class="item-mark">✦</div>
+                            <p><strong>Ningún creador debe elegir</strong> entre pagar las cuentas o honrar su esencia.</p>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="sobre-secciones">
                     <div class="seccion-elemento">
                         <div class="elemento-icono">🌱</div>
-                        <h4 class="elemento-titulo">Galería Pacha</h4>
-                        <p>Arte visual: pintura, cerámica, tatuaje, diseño, video.</p>
-                        <p class="elemento-lema">💚 El arte no se vende: se siembra.</p>
+                        <h4 class="elemento-titulo">Tierra Viva</h4>
+                        <p>Espacio dedicado al arte visual: pintura, cerámica, tatuaje, diseño gráfico, videoarte y más. Obras que brotan como semillas de la tierra salteña, con raíz en lo andino y mirada contemporánea.</p>
+                        <p class="elemento-lema">Porque el arte no se vende: se siembra.</p>
                     </div>
                     <div class="seccion-elemento">
                         <div class="elemento-icono">📜</div>
-                        <h4 class="elemento-titulo">Plumafuego</h4>
-                        <p>Textos, poesía, ensayos que arden con verdad.</p>
-                        <p class="elemento-lema">🔥 Escribir es encender.</p>
+                        <h4 class="elemento-titulo">Fuego y Pluma</h4>
+                        <p>Tu biblioteca de fuego: textos, poesía, manifiestos y relatos que arden con verdad. Palabras que iluminan, transforman y queman lo viejo.</p>
+                        <p class="elemento-lema">Porque escribir es encender.</p>
                     </div>
                     <div class="seccion-elemento">
                         <div class="elemento-icono">🎶</div>
                         <h4 class="elemento-titulo">Wayra Sonora</h4>
-                        <p>Cantos, composiciones, sonidos del monte.</p>
-                        <p class="elemento-lema">💨 El viento también canta.</p>
+                        <p>La fonoteca de Séptima Pacha: cantos en quechua, composiciones originales, sonidos del monte, voces que viajan en el viento.</p>
+                        <p class="elemento-lema">Porque el viento también canta.</p>
                     </div>
                 </div>
 
                 <div class="sobre-cta">
                     <h3 class="cta-titulo">💌 ¿Te sentís en casa?</h3>
-                    <p>Si tu obra nace de la tierra, si tus palabras arden, si tu voz viaja en el viento… este es tu lugar.</p>
+                    <p>Si tu obra nace de la tierra, si tus palabras arden, si tu voz viaja en el viento… o si simplemente necesitás una web que te represente con honestidad y belleza, este es tu lugar.</p>
                     <div class="cta-buttons">
                         <a href="#servicios" class="cta-btn">Explorar</a>
                         <a href="https://wa.me/5493874471122" class="cta-btn cta-whatsapp">Conectar</a>
@@ -389,6 +935,26 @@
 
     <!-- CONTACTO -->
     <section class="contacto" id="contacto">
+        <div class="svg-container">
+            <svg class="decorative-svg-accent left-top" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- CHAKANA ROTADA (Diamante) -->
+                <g class="svg-path" stroke-width="2.5" fill="none" stroke-linecap="round">
+                    <path d="M100,20 L170,100 L100,180 L30,100 Z"/>
+                    <line x1="100" y1="20" x2="100" y2="180"/>
+                    <line x1="30" y1="100" x2="170" y2="100"/>
+                    <circle cx="100" cy="100" r="12" stroke-width="2"/>
+                </g>
+            </svg>
+
+            <svg class="decorative-svg-accent right-bottom" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- APACHETA (Montaña sagrada) -->
+                <g class="svg-path" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M100,30 L150,90 L120,90 L160,150 L40,150 L80,90 L50,90 Z"/>
+                    <line x1="100" y1="60" x2="100" y2="90"/>
+                    <circle cx="100" cy="40" r="6" stroke-width="1.5"/>
+                </g>
+            </svg>
+        </div>
         <h2 class="section-title">Conexión</h2>
         <form class="formulario">
             <div class="campo">
@@ -410,6 +976,63 @@
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
+        // DATA DE SERVICIOS
+        const serviciosData = {
+            agua: {
+                icono: '💻',
+                titulo: 'Códe — el agua',
+                contenido: `Esta es la sección dedicada al desarrollo web con propósito. Diseñamos y construimos sitios web a medida para artistas, emprendedores, fundaciones y proyectos con conciencia:<br><br>
+                <ul>
+                    <li><strong>100 % responsive</strong> (hermosos en celular, tablet y escritorio)</li>
+                    <li><strong>Optimizados para SEO</strong> (para que te encuentren)</li>
+                    <li><strong>Con código limpio, accesible y ético</strong></li>
+                    <li><strong>Diseño que refleja tu identidad,</strong> no una plantilla genérica</li>
+                </ul><br>
+                Cada web es un acto de cuidado: desde el primer boceto hasta la entrega final, trabajamos contigo con transparencia, 2 rondas de revisiones incluidas, y un enfoque en tu tranquilidad y autonomía.`,
+                lema: 'Porque una buena web no solo se ve: se siente. Y funciona.',
+                url: 'agua-code.html'
+            },
+            tierra: {
+                icono: '🌱',
+                titulo: 'Tierra Viva — la tierra',
+                contenido: `Espacio dedicado al arte visual: pintura, cerámica, tatuaje, diseño gráfico, videoarte y más. Aquí, las obras brotan como semillas de la tierra salteña, con raíz en lo andino y mirada contemporánea.`,
+                lema: 'Porque el arte no se vende: se siembra.',
+                url: 'tierra.html'
+            },
+            fuego: {
+                icono: '📜',
+                titulo: 'Fuego y Pluma — el fuego',
+                contenido: `Tu biblioteca de fuego: textos, poesía, manifiestos y relatos que arden con verdad. Un lugar donde las palabras no solo se leen, sino que iluminan, transforman y queman lo viejo.`,
+                lema: 'Porque escribir es encender.',
+                url: 'fuego.html'
+            },
+            aire: {
+                icono: '🎶',
+                titulo: 'Wayra Sonora — el aire',
+                contenido: `La fonoteca de Séptima Pacha: cantos en quechua, composiciones originales, sonidos del monte, voces que viajan en el viento. Aquí, el aire lleva lo que el corazón no puede callar.`,
+                lema: 'Porque el viento también canta.',
+                url: 'aire.html'
+            }
+        };
+
+        // TRADUCCIÓN
+        const translations = {
+            es: {
+                inicio: 'Inicio',
+                servicios: 'Servicios',
+                sobre: 'Sobre Séptima Pacha',
+                contacto: 'Contacto'
+            },
+            en: {
+                inicio: 'Home',
+                servicios: 'Services',
+                sobre: 'About Séptima Pacha',
+                contacto: 'Contact'
+            }
+        };
+
+        let currentLanguage = 'es';
+
         const languageToggle = document.getElementById('languageToggle');
         const menuBoton = document.getElementById('menuBoton');
         const menuCerrar = document.getElementById('menuCerrar');
@@ -417,18 +1040,85 @@
         const menuItems = document.querySelectorAll('.menu-item');
         const splashScreen = document.getElementById('splashScreen');
         const customCursor = document.querySelector('.custom-cursor');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const modalClose = document.getElementById('modalClose');
+        const modalBody = document.getElementById('modalBody');
+        const serviciosCirculos = document.querySelectorAll('.servicio-circulo');
+
+        // LANGUAGE TOGGLE FUNCIONAL
+        languageToggle.addEventListener('click', () => {
+            currentLanguage = currentLanguage === 'es' ? 'en' : 'es';
+            languageToggle.textContent = currentLanguage === 'es' ? 'EN' : 'ES';
+            
+            // Actualizar menú
+            const menuItemsArray = Array.from(menuItems);
+            const labels = ['inicio', 'servicios', 'sobre', 'contacto'];
+            menuItemsArray.forEach((item, idx) => {
+                if (labels[idx]) {
+                    item.textContent = translations[currentLanguage][labels[idx]];
+                }
+            });
+        });
+
+        // MODAL DE SERVICIOS
+        function openModal(servicio) {
+            const data = serviciosData[servicio];
+            if (!data) return;
+            
+            modalBody.innerHTML = `
+                <div class="modal-icono">${data.icono}</div>
+                <h3 class="modal-titulo">${data.titulo}</h3>
+                <div class="modal-body">${data.contenido}</div>
+                <div class="modal-lema">${data.lema}</div>
+                <div class="modal-cta">
+                    <a href="${data.url}" class="modal-cta-btn modal-nav-btn">
+                        Ir a ${data.titulo.split(' —')[0]}
+                        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" style="display: inline-block; margin-left: 8px; vertical-align: middle;">
+                            <path d="M5 10H15M15 10L10 5M15 10L10 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </a>
+                    <a href="https://wa.me/5493874471122" target="_blank" class="modal-cta-btn modal-whatsapp-btn">
+                        Conectar por WhatsApp
+                        <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor" style="display: inline-block; margin-left: 8px; vertical-align: middle;">
+                            <path d="M17.6,2.4C15.7,0.5 13,0 10.2,0C5.1,0 1,4.1 1,9.2c0,1.6 0.4,3.2 1.2,4.6L1,19.4l5.2-1.6c1.3,0.7 2.8,1.1 4.4,1.1c5.1,0 9.2,-4.1 9.2,-9.2C18.8,6.9 18.2,4.3 17.6,2.4M10.2,16.8c-1.4,0 -2.7,-0.3 -4,-1l-0.3,-0.1l-2.8,0.9l0.8,-2.6l-0.2,-0.3c-0.8,-1.3 -1.2,-2.8 -1.2,-4.4c0,-4.3 3.5,-7.8 7.8,-7.8c2.1,0 4,0.8 5.5,2.3c1.5,1.5 2.3,3.4 2.3,5.5C18,13.3 14.5,16.8 10.2,16.8M14.3,11.5c-0.2,-0.1 -1.3,-0.6 -1.5,-0.7c-0.2,-0.1 -0.4,-0.1 -0.6,0.1c-0.2,0.3 -0.6,0.7 -0.8,0.9c-0.2,0.2 -0.4,0.2 -0.6,0.1c-0.2,-0.1 -1,-0.4 -1.9,-1.2c-0.7,-0.6 -1.2,-1.4 -1.3,-1.6c-0.1,-0.2 0,-0.4 0.1,-0.5c0.1,-0.1 0.2,-0.3 0.3,-0.4c0.1,-0.1 0.2,-0.3 0.3,-0.4c0.1,-0.2 0.1,-0.3 0,-0.5c-0.1,-0.2 -0.6,-1.3 -0.8,-1.8c-0.2,-0.5 -0.4,-0.4 -0.6,-0.4c-0.2,0 -0.4,0 -0.6,0c-0.2,0 -0.5,0.1 -0.8,0.4c-0.3,0.3 -1,1 -1,2.4c0,1.4 1,2.8 1.1,3c0.1,0.2 2,3.1 4.9,4.3c0.7,0.3 1.2,0.5 1.6,0.6c0.7,0.2 1.3,0.2 1.8,0.1c0.5,-0.1 1.6,-0.6 1.8,-1.3c0.2,-0.7 0.2,-1.3 0.1,-1.4C14.8,11.7 14.5,11.6 14.3,11.5"/>
+                        </svg>
+                    </a>
+                </div>
+            `;
+            
+            modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            gsap.from(modalBody, { duration: 0.4, y: 20, opacity: 0, ease: 'back.out' });
+        }
+
+        function closeModal() {
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        serviciosCirculos.forEach(circulo => {
+            circulo.style.cursor = 'pointer';
+            circulo.addEventListener('click', () => {
+                const servicio = circulo.dataset.servicio;
+                openModal(servicio);
+            });
+        });
+
+        modalClose.addEventListener('click', closeModal);
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) closeModal();
+        });
+
+        // TECLA ESC PARA CERRAR MODAL
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
 
         // Splash Screen
         window.addEventListener('load', () => {
             if (splashScreen) {
                 gsap.to(splashScreen, { opacity: 0, duration: 1, delay: 1.5, ease: 'power2.inOut', onComplete: () => { splashScreen.style.display = 'none'; } });
             }
-        });
-
-        // Language Toggle
-        languageToggle.addEventListener('click', () => {
-            const text = languageToggle.textContent;
-            languageToggle.textContent = text === 'EN' ? 'ES' : 'EN';
         });
 
         // Menu
@@ -459,8 +1149,7 @@
         gsap.fromTo('.subtitulo', { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: 'power2.out', delay: 0.5 });
         gsap.fromTo('.hero-description', { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: 'power2.out', delay: 0.7 });
 
-        // Servicios
-        const serviciosCirculos = document.querySelectorAll('.servicio-circulo');
+        // Servicios Hover
         serviciosCirculos.forEach((circulo) => {
             circulo.addEventListener('mouseenter', () => {
                 gsap.to(circulo, { duration: 0.4, scale: 1.15, y: -20, ease: 'back.out' });
@@ -474,10 +1163,88 @@
             });
         });
 
-        // SVG Animations
-        gsap.utils.toArray('.decorative-svg').forEach((svg, index) => {
-            gsap.to(svg, { duration: 8 + (index * 2), y: -20, rotation: 5, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+        // SVG Animations - Minimalista y elegante
+        gsap.utils.toArray('.decorative-svg-accent').forEach((svg, index) => {
+            gsap.to(svg, { duration: 10 + (index * 3), y: -20, rotation: 8, repeat: -1, yoyo: true, ease: 'sine.inOut' });
         });
+
+        // Animaciones de entrada para la sección Sobre
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Animar cards de sobre-seccion al scroll
+        gsap.utils.toArray('.sobre-seccion').forEach((element, index) => {
+            gsap.fromTo(element, 
+                { y: 60, opacity: 0 }, 
+                { 
+                    y: 0, 
+                    opacity: 1, 
+                    duration: 0.9,
+                    delay: index * 0.15,
+                    ease: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
+                    scrollTrigger: { 
+                        trigger: element, 
+                        start: 'top 85%', 
+                        toggleActions: 'play none none reverse' 
+                    } 
+                }
+            );
+        });
+
+        // Animar elementos de secciones
+        gsap.utils.toArray('.seccion-elemento').forEach((element, index) => {
+            gsap.fromTo(element, 
+                { y: 50, opacity: 0, rotation: -2 }, 
+                { 
+                    y: 0, 
+                    opacity: 1,
+                    rotation: 0,
+                    duration: 0.8,
+                    delay: index * 0.1,
+                    ease: 'back.out',
+                    scrollTrigger: { 
+                        trigger: element, 
+                        start: 'top 80%', 
+                        toggleActions: 'play none none reverse' 
+                    } 
+                }
+            );
+        });
+
+        // Animar items de filosofía
+        gsap.utils.toArray('.filosofia-item').forEach((element, index) => {
+            gsap.fromTo(element, 
+                { x: -30, opacity: 0 }, 
+                { 
+                    x: 0, 
+                    opacity: 1, 
+                    duration: 0.7,
+                    delay: index * 0.1,
+                    ease: 'power2.out',
+                    scrollTrigger: { 
+                        trigger: element, 
+                        start: 'top 85%', 
+                        toggleActions: 'play none none reverse' 
+                    } 
+                }
+            );
+        });
+
+        // Animar CTA
+        gsap.fromTo('.sobre-cta', 
+            { y: 40, opacity: 0, scale: 0.95 }, 
+            { 
+                y: 0, 
+                opacity: 1, 
+                scale: 1,
+                duration: 1,
+                ease: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
+                scrollTrigger: { 
+                    trigger: '.sobre-cta', 
+                    start: 'top 80%', 
+                    toggleActions: 'play none none reverse' 
+                } 
+            }
+        );
     </script>
 </body>
 </html>
