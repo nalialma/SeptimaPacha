@@ -2392,6 +2392,315 @@
                 }
             });
 
+              
+  
+// Carrusel de elementos
+
+        
+const
+ carousel 
+=
+ 
+document
+.
+getElementById
+(
+'heroCarousel'
+)
+;
+
+        
+const
+ elements 
+=
+ 
+document
+.
+querySelectorAll
+(
+'.carousel-element'
+)
+;
+
+        
+const
+ indicators 
+=
+ 
+document
+.
+querySelectorAll
+(
+'.indicator'
+)
+;
+
+        
+let
+ currentIndex 
+=
+ 
+0
+;
+
+        
+function
+ 
+switchElement
+(
+index
+)
+ 
+{
+
+            
+// Remover active de todos
+
+            elements
+.
+forEach
+(
+el
+ 
+=>
+ el
+.
+classList
+.
+remove
+(
+'active'
+)
+)
+;
+
+            indicators
+.
+forEach
+(
+ind
+ 
+=>
+ ind
+.
+classList
+.
+remove
+(
+'active'
+)
+)
+;
+
+            
+// Agregar active al nuevo
+
+            elements
+[
+index
+]
+.
+classList
+.
+add
+(
+'active'
+)
+;
+
+            indicators
+[
+index
+]
+.
+classList
+.
+add
+(
+'active'
+)
+;
+
+            currentIndex 
+=
+ index
+;
+
+        
+}
+
+        
+// Click en carrusel
+
+        carousel
+.
+addEventListener
+(
+'click'
+,
+ 
+(
+)
+ 
+=>
+ 
+{
+
+            
+const
+ nextIndex 
+=
+ 
+(
+currentIndex 
++
+ 
+1
+)
+ 
+%
+ elements
+.
+length
+;
+
+            
+switchElement
+(
+nextIndex
+)
+;
+
+        
+}
+)
+;
+
+        
+// Click en indicadores
+
+        indicators
+.
+forEach
+(
+(
+indicator
+,
+ index
+)
+ 
+=>
+ 
+{
+
+            indicator
+.
+addEventListener
+(
+'click'
+,
+ 
+(
+e
+)
+ 
+=>
+ 
+{
+
+                e
+.
+stopPropagation
+(
+)
+;
+
+                
+switchElement
+(
+index
+)
+;
+
+            
+}
+)
+;
+
+        
+}
+)
+;
+
+        serviciosCirculos
+.
+forEach
+(
+circulo
+ 
+=>
+ 
+{
+
+            circulo
+.
+style
+.
+cursor
+ 
+=
+ 
+'pointer'
+;
+
+            circulo
+.
+addEventListener
+(
+'click'
+,
+ 
+(
+)
+ 
+=>
+ 
+{
+
+                modalOverlay
+.
+classList
+.
+add
+(
+'active'
+)
+;
+
+                
+document
+.
+body
+.
+style
+.
+overflow
+ 
+=
+ 
+'hidden'
+;
+
+            
+}
+)
+;
+
+        
+}
+)
+;
+
             // Traducir títulos de secciones
             document.querySelectorAll('.section-title').forEach(el => {
                 if (el.textContent.includes('Servicios')) {
@@ -2631,4 +2940,5 @@
     </script>
 </body>
 </html>
+
 
