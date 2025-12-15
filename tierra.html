@@ -3,19 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Tierra Viva - Museo Virtual de Arte que celebra la creatividad ancestral y contemporánea del norte argentino. Artesanías, cerámica, dibujo, pintura, escultura y más de artistas de Salta.">
-    <meta name="keywords" content="arte salta, artesanías argentinas, cerámica salta, artistas norte argentino, arte contemporáneo, Séptima Pacha">
-    <meta name="author" content="Séptima Pacha Co.">
-    <meta name="robots" content="index, follow">
-    <meta property="og:title" content="Tierra Viva - Museo Virtual de Arte">
-    <meta property="og:description" content="Celebra la creatividad ancestral y contemporánea del norte argentino con Tierra Viva">
-    <meta property="og:type" content="website">
-    <meta name="theme-color" content="#0f0f0f">
-    
-    <title>Tierra Viva | Museo Virtual de Arte | Séptima Pacha Co. | Salta</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <title>Fuego y Letra | Biblioteca Virtual de Literatura Latinoamericana</title>
+    <meta name="description" content="Fuego y Letra: Biblioteca virtual de escritores del norte argentino, Latinoamérica y el mundo. Poesía, cuentos y cómics contemporáneos.">
+    <meta name="keywords" content="literatura latinoamericana, escritores argentinos, poesía, cuentos, cómics, Salta, norte argentino">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Montserrat:wght@300;400;600;700&family=Great+Vibes:wght@400&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -24,11 +16,12 @@
         }
 
         :root {
-            --tierra: #8B4513;
             --fuego: #FF6B35;
-            --agua: #2ECC71;
-            --aire: #4A90E2;
+            --naranja: #FF9F43;
             --oro: #F39C12;
+            --dark-bg: #0A0E27;
+            --text-light: #E8E8E8;
+            --text-muted: #B0B0B0;
         }
 
         html, body {
@@ -38,260 +31,405 @@
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
-            color: #fff;
-            transition: background 0.8s ease, color 0.8s ease;
+            background: var(--dark-bg);
+            color: var(--text-light);
+            position: relative;
         }
 
-        body.day-mode {
-            background: linear-gradient(135deg, #87CEEB 0%, #E0F6FF 100%);
-            color: #1a1a1a;
-        }
-
-        /* ════════════ CIELO ESTRELLADO ════════════ */
-        .starry-sky {
+        #fireCanvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none;
             z-index: 0;
+            pointer-events: none;
         }
 
-        .stars {
-            position: absolute;
+        .fire-symbols {
+            position: fixed;
             width: 100%;
             height: 100%;
-        }
-
-        .star {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            animation: twinkle 3s infinite;
-        }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
-        }
-
-        /* Nubes día */
-        .cloud {
-            position: absolute;
-            background: white;
-            border-radius: 100px;
-            opacity: 0;
-            transition: opacity 0.8s ease;
-        }
-
-        body.day-mode .cloud {
-            opacity: 0.6;
-            animation: float 15s infinite ease-in-out;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateX(0px); }
-            50% { transform: translateX(50px); }
-        }
-
-        .cloud::before,
-        .cloud::after {
-            content: '';
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-        }
-
-        .cloud::before {
-            width: 50px;
-            height: 50px;
-            top: -25px;
-            left: 10px;
-        }
-
-        .cloud::after {
-            width: 40px;
-            height: 40px;
-            top: -20px;
-            right: 10px;
-        }
-
-        /* ════════════ SPLASH SCREEN CON RAÍCES ANIMADAS ════════════ */
-        .splash-screen {
-            position: fixed;
             top: 0;
             left: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .fire-symbol {
+            position: absolute;
+            opacity: 0.06;
+            filter: drop-shadow(0 0 15px rgba(255, 107, 53, 0.25));
+        }
+
+        .fire-symbol svg {
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            animation: fireFlicker 2.5s ease-in-out infinite;
+            color: #FF6B35;
+        }
+
+        @keyframes fireFlicker {
+            0%, 100% { 
+                opacity: 0.04;
+                transform: scale(0.98);
+            }
+            50% { 
+                opacity: 0.08;
+                transform: scale(1.02);
+            }
+        }
+
+        /* ════════════════════ CONTROLES FLOTANTES ════════════════════ */
+        .floating-controls {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .control-btn {
+            background: rgba(10, 14, 39, 0.85);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 107, 53, 0.15);
+            color: var(--text-light);
+            padding: 0.6rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 9999;
+            gap: 0.4rem;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            min-width: 44px;
+            min-height: 44px;
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 107, 53, 0.2);
+            border-color: var(--fuego);
+            color: var(--fuego);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.2);
+        }
+
+        .hamburger-menu {
+            background: rgba(10, 14, 39, 0.85);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 107, 53, 0.15);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding: 0.6rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            min-width: 44px;
+            min-height: 44px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hamburger-menu:hover {
+            background: rgba(255, 107, 53, 0.2);
+            border-color: var(--fuego);
+            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.2);
+        }
+
+        .hamburger-menu span {
+            width: 20px;
+            height: 2.5px;
+            background: var(--fuego);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 2px;
+        }
+
+        .hamburger-menu.active {
+            background: rgba(255, 107, 53, 0.2);
+            border-color: var(--fuego);
+        }
+
+        .hamburger-menu.active span:nth-child(1) {
+            transform: rotate(45deg) translate(7px, 7px);
+        }
+
+        .hamburger-menu.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-menu.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        .side-menu {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100vh;
+            background: rgba(10, 14, 39, 0.98);
+            backdrop-filter: blur(15px);
+            border-left: 1px solid rgba(255, 107, 53, 0.2);
+            z-index: 999;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 6rem 2rem 2rem;
+            overflow-y: auto;
+        }
+
+        .side-menu.active {
+            right: 0;
+        }
+
+        .menu-section {
+            margin-bottom: 3rem;
+        }
+
+        .menu-section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--fuego);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .menu-item {
+            display: block;
+            color: var(--text-light);
+            text-decoration: none;
+            padding: 0.8rem 0;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+            padding-left: 1rem;
+        }
+
+        .menu-item:hover {
+            color: var(--fuego);
+            border-left-color: var(--fuego);
+            padding-left: 1.5rem;
+        }
+
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 998;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .menu-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .container-main {
+            position: relative;
+            z-index: 5;
+            width: 100%;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 4rem 2rem;
+            position: relative;
             overflow: hidden;
         }
 
-        .splash-canvas-container {
-            position: absolute;
+        .hero-content {
+            max-width: 1400px;
             width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
         }
 
-        .splash-canvas {
-            width: 100%;
-            height: 100%;
-            display: block;
-        }
-
-        .splash-content {
+        .hero-text {
             position: relative;
-            z-index: 10;
-            text-align: center;
-            font-family: 'Playfair Display', serif;
-            animation: fadeInContent 1.5s ease-out 1s forwards;
-            opacity: 0;
+            z-index: 5;
         }
 
-        .splash-title {
-            font-size: clamp(2.5rem, 15vw, 8rem);
-            font-weight: 900;
+        .hero-title {
+            margin-bottom: 2rem;
             line-height: 0.95;
-            margin: 0;
-            letter-spacing: -2px;
+            position: relative;
         }
 
-        .splash-palabra-tierra {
-            display: block;
-            color: #8B4513;
-            text-shadow: 0 0 40px rgba(139, 69, 19, 0.5);
-            animation: slideInLeft 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s forwards;
-            opacity: 0;
-        }
-
-        .splash-palabra-viva {
-            display: block;
-            background: linear-gradient(135deg, #F39C12, #FF6B35);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 0 40px rgba(243, 156, 18, 0.5);
-            margin-top: 0.5rem;
-            animation: slideInRight 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 0.7s forwards;
-            opacity: 0;
+        .fuego-text {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(4rem, 12vw, 9rem);
             font-weight: 900;
-        }
-
-        .pincel-emoji {
-            display: inline-block;
-            margin-left: 0.8rem;
-            font-size: 1em;
-            animation: paintStroke 2s ease-in-out infinite;
-            filter: drop-shadow(0 0 10px rgba(255, 107, 53, 0.6));
-        }
-
-        @keyframes paintStroke {
-            0% { transform: rotate(0deg) scale(1); }
-            50% { transform: rotate(-15deg) scale(1.1); }
-            100% { transform: rotate(0deg) scale(1); }
-        }
-
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes fadeInContent {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* ════════════ NAVEGACIÓN FLOTANTE ════════════ */
-        .floating-nav {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            align-items: flex-end;
-        }
-
-        .nav-toggle-btn {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #8B4513, #F39C12);
-            border: none;
-            cursor: pointer;
+            letter-spacing: -2px;
+            margin-bottom: 0.5rem;
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(139, 69, 19, 0.3);
+            gap: 0.5rem;
         }
 
-        .nav-toggle-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 15px 40px rgba(243, 156, 18, 0.4);
+        .fuego-word {
+            background: linear-gradient(135deg, var(--fuego), var(--naranja), var(--oro));
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 6s ease infinite;
         }
 
-        body.day-mode .nav-toggle-btn {
-            background: linear-gradient(135deg, #87CEEB, #FFD700);
-            box-shadow: 0 10px 30px rgba(135, 206, 235, 0.3);
+        .flame-icon {
+            font-size: 1em;
+            animation: flameFlicker 0.6s ease-in-out infinite;
         }
 
-        .floating-menu {
-            display: none;
-            flex-direction: column;
-            gap: 0.8rem;
-            background: rgba(15, 15, 15, 0.92);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            padding: 1.5rem;
-            border-radius: 20px;
-            border: 2px solid rgba(139, 69, 19, 0.4);
-            min-width: 220px;
-            animation: slideUp 0.3s ease;
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+        @keyframes flameFlicker {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.05) rotate(-2deg); }
+            50% { transform: scale(0.95) rotate(2deg); }
+            75% { transform: scale(1.02) rotate(-1deg); }
         }
 
-        body.day-mode .floating-menu {
-            background: rgba(255, 255, 255, 0.92);
-            border-color: rgba(135, 206, 235, 0.4);
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        .floating-menu.active {
+        .letra-text {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(2rem, 8vw, 5rem);
+            color: var(--text-light);
+            font-weight: 400;
+            letter-spacing: 2px;
+            margin-left: 1rem;
             display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .pen-icon {
+            font-size: 1.2em;
+            animation: penWrite 1s ease-in-out infinite;
+            transform-origin: right center;
+        }
+
+        @keyframes penWrite {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(-5deg); }
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
+            font-weight: 300;
+            max-width: 500px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--fuego), var(--naranja));
+            color: white;
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.3);
+        }
+
+        .section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 5;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 3.5rem;
+            letter-spacing: -1px;
+        }
+
+        .section-title::before {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--fuego), transparent);
+            margin: 0 auto 1rem;
+        }
+
+        .section-title span {
+            background: linear-gradient(135deg, var(--fuego), var(--naranja));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .work-card {
+            position: relative;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+            background: rgba(255, 107, 53, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 107, 53, 0.12);
+            border-radius: 10px;
+            padding: 2rem;
+            animation: slideUp 0.5s ease-out backwards;
         }
 
         @keyframes slideUp {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(15px);
             }
             to {
                 opacity: 1;
@@ -299,1237 +437,599 @@
             }
         }
 
-        .floating-menu a, .floating-menu button {
-            padding: 0.8rem 1.2rem;
-            border-radius: 10px;
-            border: none;
-            background: rgba(243, 156, 18, 0.1);
-            color: #fff;
-            text-decoration: none;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
+        .work-card:nth-child(1) { animation-delay: 0.05s; }
+        .work-card:nth-child(2) { animation-delay: 0.1s; }
+        .work-card:nth-child(3) { animation-delay: 0.15s; }
+        .work-card:nth-child(4) { animation-delay: 0.2s; }
+        .work-card:nth-child(5) { animation-delay: 0.25s; }
+        .work-card:nth-child(6) { animation-delay: 0.3s; }
+
+        .work-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(255, 107, 53, 0.25);
+            background: rgba(255, 107, 53, 0.08);
+            box-shadow: 0 15px 35px rgba(255, 107, 53, 0.1);
         }
 
-        body.day-mode .floating-menu a,
-        body.day-mode .floating-menu button {
-            background: rgba(135, 206, 235, 0.2);
-            color: #1a1a1a;
-        }
-
-        .floating-menu a:hover, .floating-menu button:hover {
-            background: linear-gradient(135deg, #8B4513, #F39C12);
-            color: #fff;
-            transform: translateX(-5px);
-        }
-
-        body.day-mode .floating-menu a:hover,
-        body.day-mode .floating-menu button:hover {
-            background: linear-gradient(135deg, #87CEEB, #FFD700);
-            color: #fff;
-        }
-
-        .menu-close-btn {
-            align-self: flex-end;
-            background: rgba(255, 107, 53, 0.2) !important;
-            border: 2px solid var(--fuego) !important;
-            color: var(--fuego) !important;
-            width: 45px !important;
-            height: 45px !important;
-            padding: 0 !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            font-size: 1.3rem !important;
-            border-radius: 50% !important;
-            margin-bottom: 0.5rem;
-        }
-
-        body.day-mode .menu-close-btn {
-            background: rgba(255, 165, 0, 0.2) !important;
-            color: #FFA500 !important;
-            border-color: #FFA500 !important;
-        }
-
-        .menu-close-btn:hover {
-            background: var(--fuego) !important;
-            color: #fff !important;
-        }
-
-        body.day-mode .menu-close-btn:hover {
-            background: #FFA500 !important;
-        }
-
-        .lang-btn {
-            border: 2px solid var(--oro) !important;
-            background: transparent !important;
-            color: var(--oro) !important;
-        }
-
-        body.day-mode .lang-btn {
-            color: #FFD700 !important;
-            border-color: #FFD700 !important;
-        }
-
-        .lang-btn:hover {
-            background: linear-gradient(135deg, #8B4513, #F39C12) !important;
-            color: #fff !important;
-        }
-
-        body.day-mode .lang-btn:hover {
-            background: linear-gradient(135deg, #87CEEB, #FFD700) !important;
-        }
-
-        /* ════════════ BOTÓN TEMA FLOTANTE ════════════ */
-        .theme-toggle-btn {
-            position: fixed;
-            top: 30px;
-            right: 30px;
-            z-index: 999;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #8B4513, #F39C12);
-            border: none;
-            cursor: pointer;
+        .work-title {
+            font-family: 'Playfair Display', serif;
             font-size: 1.3rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(139, 69, 19, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            font-weight: 700;
+            color: var(--text-light);
+            margin-bottom: 0.8rem;
+            line-height: 1.3;
         }
 
-        .theme-toggle-btn:hover {
-            transform: scale(1.15);
-            box-shadow: 0 15px 40px rgba(243, 156, 18, 0.4);
+        .work-author {
+            font-size: 0.85rem;
+            color: var(--fuego);
+            font-weight: 600;
+            margin-bottom: 1rem;
         }
 
-        body.day-mode .theme-toggle-btn {
-            background: linear-gradient(135deg, #87CEEB, #FFD700);
-            box-shadow: 0 10px 30px rgba(135, 206, 235, 0.3);
-        }
-
-        /* ════════════ ÁRBOLDELA VIDA - FONDO ════════════ */
-        .tree-of-life-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-            opacity: 0.12;
-        }
-
-        .tree-svg {
-            width: 100%;
-            height: 100%;
-        }
-
-        /* ════════════ CONTENT WRAPPER ════════════ */
-        .content-wrapper {
-            position: relative;
-            z-index: 2;
-        }
-
-        /* ════════════ HERO ════════════ */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 4rem 2rem;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-            position: relative;
+        .work-description {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+            height: 50px;
             overflow: hidden;
-            transition: background 0.8s ease;
         }
 
-        body.day-mode .hero {
-            background: linear-gradient(135deg, #87CEEB 0%, #E0F6FF 100%);
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 10;
-            text-align: center;
-            max-width: 900px;
-        }
-
-        .hero-title {
-            font-family: 'Playfair Display', serif;
-            line-height: 0.85;
-            margin-bottom: 3rem;
-            word-spacing: 9999px;
-        }
-
-        .hero-title .palabra-tierra {
-            display: block;
-            font-size: clamp(4rem, 18vw, 9rem);
-            font-weight: 900;
-            color: #8B4513;
-            text-shadow: 
-                0 0 40px rgba(139, 69, 19, 0.4),
-                0 20px 60px rgba(139, 69, 19, 0.2);
-            letter-spacing: -3px;
-            animation: slideInLeftHero 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 4.5s forwards;
-            opacity: 0;
-            transition: text-shadow 0.8s ease;
-        }
-
-        body.day-mode .hero-title .palabra-tierra {
-            color: #654321;
-            text-shadow: 0 5px 15px rgba(101, 67, 33, 0.3);
-        }
-
-        .hero-title .palabra-viva {
-            display: block;
-            font-size: clamp(3rem, 14vw, 7rem);
-            font-weight: 900;
-            background: linear-gradient(135deg, #F39C12 0%, #FF6B35 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 0 40px rgba(243, 156, 18, 0.3);
-            letter-spacing: -2px;
-            margin-top: 0.5rem;
-            animation: slideInRightHero 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 4.7s forwards;
-            opacity: 0;
-            transition: text-shadow 0.8s ease;
-        }
-
-        body.day-mode .hero-title .palabra-viva {
-            background: linear-gradient(135deg, #FFA500 0%, #FF8C00 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .pincel-grande {
+        .read-btn {
             display: inline-block;
-            font-size: 1.3em;
-            margin-left: 1rem;
-            animation: paintStrokeHero 2.5s ease-in-out infinite;
-            filter: drop-shadow(0 0 15px rgba(255, 107, 53, 0.7));
-            transform-origin: 70% 30%;
-        }
-
-        @keyframes paintStrokeHero {
-            0% { transform: rotate(0deg) scale(1); }
-            50% { transform: rotate(-20deg) scale(1.15); }
-            100% { transform: rotate(0deg) scale(1); }
-        }
-
-        @keyframes slideInLeftHero {
-            from {
-                opacity: 0;
-                transform: translateX(-80px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes slideInRightHero {
-            from {
-                opacity: 0;
-                transform: translateX(80px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .hero-subtitle {
-            font-size: clamp(1rem, 2.5vw, 1.3rem);
-            opacity: 0.85;
-            line-height: 1.8;
-            animation: fadeInUp 1s ease-out 5.2s forwards;
-            opacity: 0;
+            padding: 0.6rem 1.2rem;
+            background: rgba(255, 107, 53, 0.2);
+            color: var(--fuego);
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
             letter-spacing: 0.5px;
-            transition: color 0.8s ease;
         }
 
-        body.day-mode .hero-subtitle {
-            color: #333;
+        .work-card:hover .read-btn {
+            background: rgba(255, 107, 53, 0.35);
+            transform: translateX(3px);
         }
 
-        @keyframes fadeInUp {
+        .footer-section {
+            padding: 3.5rem 2rem;
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.06), rgba(255, 159, 67, 0.03));
+            border-top: 1px solid rgba(255, 107, 53, 0.12);
+            text-align: center;
+            position: relative;
+            z-index: 5;
+        }
+
+        .footer-text {
+            font-size: 1rem;
+            font-style: italic;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: var(--dark-bg);
+            border: 1px solid rgba(255, 107, 53, 0.2);
+            border-radius: 12px;
+            max-width: 500px;
+            margin: 8% auto;
+            padding: 2.5rem;
+            position: relative;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(-30px);
             }
             to {
-                opacity: 0.85;
+                opacity: 1;
                 transform: translateY(0);
             }
         }
 
-        /* ════════════ SECCIONES DE ARTE ════════════ */
-        .art-section {
-            padding: 8rem 2rem;
-            border-top: 3px solid rgba(139, 69, 19, 0.3);
-            position: relative;
-            overflow: hidden;
-            scroll-margin-top: 100px;
-            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
-            transition: background 0.8s ease;
-        }
-
-        body.day-mode .art-section {
-            background: linear-gradient(135deg, #f0f8ff 0%, #e6f5ff 100%);
-            border-top-color: rgba(135, 206, 235, 0.3);
-        }
-
-        .art-container {
-            max-width: 1300px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
-        }
-
-        .art-header {
-            text-align: center;
-            margin-bottom: 5rem;
-            animation: fadeInUp 1s ease-out;
-        }
-
-        .art-title {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2.5rem, 7vw, 4rem);
-            font-weight: 900;
-            background: linear-gradient(135deg, #8B4513 0%, #F39C12 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 1.5rem;
-            letter-spacing: -1px;
-            transition: background 0.8s ease;
-        }
-
-        body.day-mode .art-title {
-            background: linear-gradient(135deg, #FF8C00 0%, #FFA500 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .art-description {
-            font-size: clamp(0.95rem, 2.2vw, 1.15rem);
-            opacity: 0.85;
-            max-width: 800px;
-            margin: 0 auto;
-            line-height: 1.8;
-            letter-spacing: 0.3px;
-            transition: color 0.8s ease;
-        }
-
-        body.day-mode .art-description {
-            color: #333;
-        }
-
-        /* ════════════ ARTISTAS ════════════ */
-        .artists-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 3.5rem;
-            margin-bottom: 3rem;
-        }
-
-        .artist-card {
-            text-align: center;
-            animation: fadeInUp 0.8s ease-out;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .artist-card:hover {
-            transform: translateY(-15px);
-        }
-
-        .artist-image-wrapper {
-            position: relative;
-            width: 180px;
-            height: 180px;
-            margin: 0 auto 2rem;
-        }
-
-        .artist-image {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            border: 4px solid #8B4513;
-            object-fit: cover;
-            box-shadow: 0 15px 40px rgba(139, 69, 19, 0.3);
-            transition: all 0.4s ease;
-        }
-
-        body.day-mode .artist-image {
-            border-color: #FF8C00;
-            box-shadow: 0 15px 40px rgba(255, 140, 0, 0.2);
-        }
-
-        .artist-card:hover .artist-image {
-            transform: scale(1.08);
-            box-shadow: 0 20px 50px rgba(243, 156, 18, 0.4);
-            border-color: #F39C12;
-        }
-
-        body.day-mode .artist-card:hover .artist-image {
-            box-shadow: 0 20px 50px rgba(255, 165, 0, 0.4);
-            border-color: #FFA500;
-        }
-
-        .artist-badge {
+        .close-btn {
             position: absolute;
-            top: -10px;
-            right: -10px;
-            background: linear-gradient(135deg, #8B4513, #F39C12);
-            color: white;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.2rem;
-            box-shadow: 0 5px 15px rgba(139, 69, 19, 0.4);
-            transition: background 0.8s ease;
+            right: 1.5rem;
+            top: 1.5rem;
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--fuego);
+            cursor: pointer;
+            background: none;
+            border: none;
+            transition: all 0.3s ease;
         }
 
-        body.day-mode .artist-badge {
-            background: linear-gradient(135deg, #FF8C00, #FFA500);
+        .close-btn:hover {
+            transform: scale(1.2);
         }
 
-        .artist-name {
+        .modal-title {
             font-family: 'Playfair Display', serif;
-            font-size: clamp(1.4rem, 3.5vw, 1.8rem);
-            font-weight: 900;
-            background: linear-gradient(135deg, #8B4513, #F39C12);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 0.8rem;
-            letter-spacing: -0.5px;
-            transition: background 0.8s ease;
+            font-size: 1.8rem;
+            color: var(--text-light);
+            margin-bottom: 1.2rem;
+            border-bottom: 2px solid rgba(255, 107, 53, 0.15);
+            padding-bottom: 1rem;
         }
 
-        body.day-mode .artist-name {
-            background: linear-gradient(135deg, #FF8C00, #FFA500);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .artist-description {
-            font-size: 0.95rem;
-            opacity: 0.8;
-            margin-bottom: 2rem;
+        .modal-text {
+            color: var(--text-muted);
             line-height: 1.7;
-            height: 3.4rem;
-            overflow: hidden;
-            transition: color 0.8s ease;
-        }
-
-        body.day-mode .artist-description {
-            color: #333;
-            opacity: 0.7;
-        }
-
-        .artist-btn {
-            background: linear-gradient(135deg, #8B4513, #FF6B35);
-            color: white;
-            border: none;
-            padding: 0.9rem 2.2rem;
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: 700;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            text-decoration: none;
-            display: inline-block;
-            font-size: 0.95rem;
-            letter-spacing: 0.5px;
-            box-shadow: 0 10px 25px rgba(255, 107, 53, 0.2);
-        }
-
-        body.day-mode .artist-btn {
-            background: linear-gradient(135deg, #FF8C00, #FFA500);
-        }
-
-        .artist-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(255, 107, 53, 0.4);
-        }
-
-        /* ════════════ CTA FOOTER ════════════ */
-        .footer-cta {
-            padding: 8rem 2rem;
-            text-align: center;
-            background: linear-gradient(135deg, rgba(139, 69, 19, 0.1) 0%, rgba(0, 0, 0, 0.5) 100%);
-            border-top: 3px solid rgba(139, 69, 19, 0.3);
-            position: relative;
-            overflow: hidden;
-            transition: background 0.8s ease;
-        }
-
-        body.day-mode .footer-cta {
-            background: linear-gradient(135deg, rgba(255, 165, 0, 0.1) 0%, rgba(255, 200, 100, 0.1) 100%);
-            border-top-color: rgba(255, 165, 0, 0.3);
-        }
-
-        .footer-cta-title {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2rem, 6vw, 3.5rem);
-            font-weight: 900;
-            background: linear-gradient(135deg, #8B4513, #F39C12);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
             margin-bottom: 1.5rem;
-            letter-spacing: -1px;
-            transition: background 0.8s ease;
+            font-size: 0.95rem;
         }
 
-        body.day-mode .footer-cta-title {
-            background: linear-gradient(135deg, #FF8C00, #FFA500);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .modal-form input,
+        .modal-form textarea {
+            width: 100%;
+            padding: 0.9rem;
+            margin-bottom: 1rem;
+            background: rgba(255, 107, 53, 0.05);
+            border: 1px solid rgba(255, 107, 53, 0.15);
+            border-radius: 8px;
+            color: var(--text-light);
+            font-family: inherit;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
         }
 
-        .footer-cta-text {
-            font-size: clamp(0.95rem, 2.2vw, 1.1rem);
-            opacity: 0.85;
-            max-width: 800px;
-            margin: 0 auto 2.5rem;
-            line-height: 1.8;
-            letter-spacing: 0.3px;
-            transition: color 0.8s ease;
+        .modal-form input:focus,
+        .modal-form textarea:focus {
+            outline: none;
+            border-color: var(--fuego);
+            background: rgba(255, 107, 53, 0.1);
         }
 
-        body.day-mode .footer-cta-text {
-            color: #333;
-        }
-
-        .cta-btn {
-            background: linear-gradient(135deg, #FF6B35, #8B4513);
+        .modal-form button {
+            width: 100%;
+            padding: 0.9rem;
+            background: linear-gradient(135deg, var(--fuego), var(--naranja));
             color: white;
             border: none;
-            padding: 1.2rem 3rem;
-            border-radius: 35px;
+            border-radius: 8px;
+            font-weight: 600;
             cursor: pointer;
-            font-weight: 700;
-            font-size: 1.05rem;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            text-decoration: none;
-            display: inline-block;
-            letter-spacing: 0.5px;
-            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.25);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
         }
 
-        body.day-mode .cta-btn {
-            background: linear-gradient(135deg, #FFA500, #FF8C00);
+        .modal-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 107, 53, 0.3);
         }
 
-        .cta-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 45px rgba(255, 107, 53, 0.4);
-        }
-
-        /* ════════════ RESPONSIVE ════════════ */
-        @media (max-width: 768px) {
-            .artists-grid {
+        @media (max-width: 1024px) {
+            .hero-content {
                 grid-template-columns: 1fr;
-                gap: 3rem;
+                gap: 2rem;
             }
+        }
 
+        @media (max-width: 768px) {
             .hero {
-                padding: 3rem 1.5rem;
+                padding: 2rem 1.5rem;
+                min-height: auto;
+                padding-top: 5rem;
             }
 
-            .art-section {
-                padding: 5rem 1.5rem;
+            .section {
+                padding: 3.5rem 1.5rem;
             }
 
-            .floating-nav {
-                bottom: 20px;
-                right: 20px;
+            .works-grid {
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                gap: 1.5rem;
             }
 
-            .nav-toggle-btn {
-                width: 55px;
-                height: 55px;
+            .work-card {
+                padding: 1.5rem;
             }
 
-            .theme-toggle-btn {
-                top: 20px;
-                right: 20px;
-                width: 45px;
-                height: 45px;
-                font-size: 1.1rem;
+            .floating-controls {
+                top: 1.5rem;
+                right: 1.5rem;
+                gap: 0.6rem;
             }
 
-            .artist-image-wrapper {
-                width: 140px;
-                height: 140px;
+            .control-btn {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.7rem;
             }
         }
 
         @media (max-width: 480px) {
-            .hero-title .palabra-tierra {
-                font-size: 2.5rem;
-            }
-
-            .hero-title .palabra-viva {
-                font-size: 2rem;
-            }
-
-            .art-title {
+            .fuego-text {
                 font-size: 1.8rem;
             }
 
-            .floating-nav {
-                bottom: 15px;
-                right: 15px;
+            .letra-text {
+                font-size: 0.9rem;
             }
 
-            .nav-toggle-btn {
-                width: 50px;
-                height: 50px;
-                font-size: 1.3rem;
+            .works-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
             }
 
-            .floating-menu {
-                min-width: 150px;
-                padding: 1rem;
+            .work-card {
+                padding: 1.2rem;
             }
 
-            .theme-toggle-btn {
-                top: 15px;
-                right: 15px;
-                width: 45px;
-                height: 45px;
+            .side-menu {
+                width: 100%;
+                right: -100%;
+            }
+
+            .floating-controls {
+                top: 1rem;
+                right: 1rem;
+                gap: 0.5rem;
+            }
+
+            .control-btn {
+                padding: 0.5rem 0.6rem;
+                font-size: 0.65rem;
+            }
+
+            .hamburger-menu {
+                min-width: 40px;
+                min-height: 40px;
+            }
+
+            .hamburger-menu span {
+                width: 18px;
+                height: 2px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- CIELO ESTRELLADO NOCTURNO -->
-    <div class="starry-sky" id="starrySky">
-        <div class="stars" id="starsContainer"></div>
-        <div id="cloudsContainer"></div>
+    <canvas id="fireCanvas"></canvas>
+    <div class="fire-symbols" id="fireSymbols"></div>
+
+    <!-- CONTROLES FLOTANTES -->
+    <div class="floating-controls">
+        <a href="index.html" class="control-btn" title="Volver a inicio">🏠</a>
+        <button class="control-btn" id="langToggle" title="Cambiar idioma">🌐</button>
+        <button class="hamburger-menu" id="hamburger" title="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
     </div>
 
-    <!-- ÁRBOL DE LA VIDA - FONDO -->
-    <div class="tree-of-life-bg">
-        <svg class="tree-svg" viewBox="0 0 1000 1200" preserveAspectRatio="none">
-            <defs>
-                <style>
-                    .tree-line { animation: growTree 6s ease-out forwards; }
-                    .tree-leaf { animation: bloomLeaf 4s ease-out forwards; }
-                    .tree-flower { animation: bloomFlower 3.5s ease-out forwards; }
-                    
-                    @keyframes growTree {
-                        from {
-                            stroke-dasharray: 1000;
-                            stroke-dashoffset: 1000;
-                            opacity: 0;
-                        }
-                        to {
-                            stroke-dasharray: 1000;
-                            stroke-dashoffset: 0;
-                            opacity: 1;
-                        }
-                    }
-                    
-                    @keyframes bloomLeaf {
-                        from {
-                            opacity: 0;
-                            r: 0;
-                        }
-                        to {
-                            opacity: 0.8;
-                            r: 20;
-                        }
-                    }
-                    
-                    @keyframes bloomFlower {
-                        from {
-                            opacity: 0;
-                            r: 0;
-                        }
-                        to {
-                            opacity: 0.7;
-                            r: 15;
-                        }
-                    }
-                </style>
-            </defs>
+    <!-- OVERLAY MENÚ -->
+    <div class="menu-overlay" id="menuOverlay"></div>
 
-            <!-- RAÍCES (abajo) -->
-            <path class="tree-line" d="M 500 1100 Q 400 900 300 700" fill="none" stroke="#8B4513" stroke-width="4" style="animation-delay: 0s;"/>
-            <path class="tree-line" d="M 500 1100 Q 600 900 700 700" fill="none" stroke="#8B4513" stroke-width="4" style="animation-delay: 0.2s;"/>
-            <path class="tree-line" d="M 500 1100 L 500 900" fill="none" stroke="#8B4513" stroke-width="5" style="animation-delay: 0.4s;"/>
-            <path class="tree-line" d="M 300 700 Q 200 600 150 500" fill="none" stroke="#8B4513" stroke-width="3" style="animation-delay: 0.6s;"/>
-            <path class="tree-line" d="M 700 700 Q 800 600 850 500" fill="none" stroke="#8B4513" stroke-width="3" style="animation-delay: 0.8s;"/>
-
-            <!-- TRONCO (centro) -->
-            <path class="tree-line" d="M 500 900 Q 480 700 500 500 Q 520 300 500 100" fill="none" stroke="#8B4513" stroke-width="6" style="animation-delay: 1s;"/>
-
-            <!-- RAMAS PRINCIPALES (arriba) -->
-            <path class="tree-line" d="M 500 500 Q 350 400 250 300" fill="none" stroke="#8B4513" stroke-width="4" style="animation-delay: 1.2s;"/>
-            <path class="tree-line" d="M 500 500 Q 650 400 750 300" fill="none" stroke="#8B4513" stroke-width="4" style="animation-delay: 1.4s;"/>
-
-            <!-- RAMAS SECUNDARIAS -->
-            <path class="tree-line" d="M 250 300 Q 200 250 150 200" fill="none" stroke="#8B4513" stroke-width="3" style="animation-delay: 1.6s;"/>
-            <path class="tree-line" d="M 250 300 Q 300 250 350 200" fill="none" stroke="#8B4513" stroke-width="3" style="animation-delay: 1.8s;"/>
-            <path class="tree-line" d="M 750 300 Q 700 250 650 200" fill="none" stroke="#8B4513" stroke-width="3" style="animation-delay: 2s;"/>
-            <path class="tree-line" d="M 750 300 Q 800 250 850 200" fill="none" stroke="#8B4513" stroke-width="3" style="animation-delay: 2.2s;"/>
-
-            <!-- RAMAS TERCIARIAS -->
-            <path class="tree-line" d="M 500 300 Q 450 250 400 200" fill="none" stroke="#8B4513" stroke-width="2" style="animation-delay: 2.4s;"/>
-            <path class="tree-line" d="M 500 300 Q 550 250 600 200" fill="none" stroke="#8B4513" stroke-width="2" style="animation-delay: 2.6s;"/>
-
-            <!-- HOJAS (círculos verdes) -->
-            <circle class="tree-leaf" cx="150" cy="200" r="0" fill="#2ECC71" style="animation-delay: 3s;"/>
-            <circle class="tree-leaf" cx="350" cy="200" r="0" fill="#2ECC71" style="animation-delay: 3.1s;"/>
-            <circle class="tree-leaf" cx="650" cy="200" r="0" fill="#2ECC71" style="animation-delay: 3.2s;"/>
-            <circle class="tree-leaf" cx="850" cy="200" r="0" fill="#2ECC71" style="animation-delay: 3.3s;"/>
-            <circle class="tree-leaf" cx="400" cy="200" r="0" fill="#2ECC71" style="animation-delay: 3.4s;"/>
-            <circle class="tree-leaf" cx="600" cy="200" r="0" fill="#2ECC71" style="animation-delay: 3.5s;"/>
-            <circle class="tree-leaf" cx="250" cy="350" r="0" fill="#2ECC71" style="animation-delay: 3.6s;"/>
-            <circle class="tree-leaf" cx="750" cy="350" r="0" fill="#2ECC71" style="animation-delay: 3.7s;"/>
-            <circle class="tree-leaf" cx="300" cy="700" r="0" fill="#2ECC71" style="animation-delay: 3.8s;"/>
-            <circle class="tree-leaf" cx="700" cy="700" r="0" fill="#2ECC71" style="animation-delay: 3.9s;"/>
-
-            <!-- FLORES (círculos naranjas/dorados) -->
-            <circle class="tree-flower" cx="100" cy="200" r="0" fill="#FF6B35" style="animation-delay: 3.5s;"/>
-            <circle class="tree-flower" cx="180" cy="220" r="0" fill="#F39C12" style="animation-delay: 3.6s;"/>
-            <circle class="tree-flower" cx="850" cy="180" r="0" fill="#FF6B35" style="animation-delay: 3.7s;"/>
-            <circle class="tree-flower" cx="920" cy="200" r="0" fill="#F39C12" style="animation-delay: 3.8s;"/>
-            <circle class="tree-flower" cx="500" cy="150" r="0" fill="#FF6B35" style="animation-delay: 3.9s;"/>
-        </svg>
-    </div>
-
-    <!-- SPLASH SCREEN CON RAÍCES ANIMADAS -->
-    <div class="splash-screen" id="splashScreen">
-        <div class="splash-canvas-container">
-            <canvas class="splash-canvas" id="rootsCanvas"></canvas>
+    <!-- MENÚ LATERAL -->
+    <nav class="side-menu" id="sideMenu">
+        <div class="menu-section">
+            <div class="menu-section-title">📖 Cuentos</div>
+            <a href="#cuentos" class="menu-item">Ver Cuentos</a>
+            <a href="#" class="menu-item">Realismo</a>
+            <a href="#" class="menu-item">Fantasía</a>
+            <a href="#" class="menu-item">Terror</a>
         </div>
-        <div class="splash-content">
-            <h1 class="splash-title">
-                <span class="splash-palabra-tierra">TIERRA</span>
-                <span class="splash-palabra-viva">VIVA <span class="pincel-emoji">🖌️</span></span>
-            </h1>
+
+        <div class="menu-section">
+            <div class="menu-section-title">📚 Poesía</div>
+            <a href="#poesia" class="menu-item">Ver Poesías</a>
+            <a href="#" class="menu-item">Lírica</a>
+            <a href="#" class="menu-item">Épica</a>
+            <a href="#" class="menu-item">Vanguardia</a>
         </div>
-    </div>
 
-    <!-- BOTÓN TEMA FLOTANTE (ARRIBA DERECHA) -->
-    <button class="theme-toggle-btn" id="themeToggleBtn" title="Cambiar tema día/noche">☀️</button>
-
-    <!-- NAVEGACIÓN FLOTANTE -->
-    <div class="floating-nav">
-        <button class="nav-toggle-btn" id="navToggleBtn" title="Menú">☰</button>
-        <div class="floating-menu" id="floatingMenu">
-            <button class="menu-close-btn" id="menuCloseBtn" title="Cerrar menú">✕</button>
-            <a href="#hero" data-es="Inicio" data-en="Home">Inicio</a>
-            <a href="#artesanias" data-es="Artesanías" data-en="Crafts">Artesanías</a>
-            <a href="#ceramica" data-es="Cerámica" data-en="Ceramics">Cerámica</a>
-            <a href="#dibujo" data-es="Dibujo" data-en="Drawing">Dibujo</a>
-            <a href="#pintura" data-es="Pintura" data-en="Painting">Pintura</a>
-            <a href="#escultura" data-es="Escultura" data-en="Sculpture">Escultura</a>
-            <a href="#grabado" data-es="Grabado" data-en="Engraving">Grabado</a>
-            <a href="#nps" data-es="NPS" data-en="NPS">NPS</a>
-            <button class="lang-btn" id="langToggle" data-es="English" data-en="Español">English</button>
-            <a href="index.html" style="background: linear-gradient(135deg, #8B4513, #F39C12) !important; color: white !important;" data-es="← Volver" data-en="← Back">← Volver</a>
+        <div class="menu-section">
+            <div class="menu-section-title">🎨 Cómics</div>
+            <a href="#comics" class="menu-item">Ver Cómics</a>
+            <a href="#" class="menu-item">Superhéroes</a>
+            <a href="#" class="menu-item">Novela Gráfica</a>
+            <a href="#" class="menu-item">Arte Experimental</a>
         </div>
-    </div>
+    </nav>
 
-    <!-- CONTENT -->
-    <div class="content-wrapper">
-        <!-- HERO -->
-        <section class="hero" id="hero">
+    <div class="container-main">
+        <section class="hero" id="inicio">
             <div class="hero-content">
-                <h1 class="hero-title">
-                    <span class="palabra-tierra">TIERRA</span>
-                    <span class="palabra-viva">VIVA <span class="pincel-grande">🖌️</span></span>
-                </h1>
-                <p class="hero-subtitle" data-es="Museo Virtual de Arte que celebra la creatividad ancestral y contemporánea del norte argentino" data-en="Virtual Art Museum celebrating ancestral and contemporary creativity from northern Argentina">
-                    Museo Virtual de Arte que celebra la creatividad ancestral y contemporánea del norte argentino
-                </p>
-            </div>
-        </section>
-
-        <!-- SECCIONES DE ARTE -->
-        <section class="art-section" id="artesanias">
-            <div class="art-container">
-                <div class="art-header">
-                    <h2 class="art-title" data-es="Artesanías" data-en="Crafts">Artesanías</h2>
-                    <p class="art-description" data-es="Creaciones únicas donde la tradición se encuentra con la innovación. Artesanías que cuentan historias de manos hábiles y corazones creativos." data-en="Unique creations where tradition meets innovation. Crafts that tell stories of skilled hands and creative hearts.">
-                        Creaciones únicas donde la tradición se encuentra con la innovación. Artesanías que cuentan historias de manos hábiles y corazones creativos.
-                    </p>
+                <div class="hero-text">
+                    <div class="hero-title">
+                        <div class="fuego-text">
+                            <span class="fuego-word">FUEGO</span>
+                            <span class="flame-icon">🔥</span>
+                        </div>
+                        <div class="letra-text">
+                            Letra
+                            <span class="pen-icon">✒️</span>
+                        </div>
+                    </div>
+                    <p class="hero-subtitle">Biblioteca Virtual de Escritores del Norte Argentino, Latinoamérica y el Mundo</p>
+                    <div class="cta-buttons">
+                        <button class="btn btn-primary" id="joinBtn">Quiero Formar Parte</button>
+                    </div>
                 </div>
-                <div class="artists-grid" id="gridArtesanias"></div>
+                <div class="hero-visual"></div>
             </div>
         </section>
 
-        <section class="art-section" id="ceramica">
-            <div class="art-container">
-                <div class="art-header">
-                    <h2 class="art-title" data-es="Cerámica" data-en="Ceramics">Cerámica</h2>
-                    <p class="art-description" data-es="Arte ancestral transformado en vasijas contemporáneas. Cada pieza es un diálogo entre tierra, agua, fuego y las manos del artista." data-en="Ancient art transformed into contemporary vessels. Each piece is a dialogue between earth, water, fire and the artist's hands.">
-                        Arte ancestral transformado en vasijas contemporáneas. Cada pieza es un diálogo entre tierra, agua, fuego y las manos del artista.
-                    </p>
-                </div>
-                <div class="artists-grid" id="gridCeramica"></div>
-            </div>
+        <section class="section" id="cuentos">
+            <h2 class="section-title"><span>Cuentos</span></h2>
+            <div class="works-grid" id="cuentosGrid"></div>
         </section>
 
-        <section class="art-section" id="dibujo">
-            <div class="art-container">
-                <div class="art-header">
-                    <h2 class="art-title" data-es="Dibujo" data-en="Drawing">Dibujo</h2>
-                    <p class="art-description" data-es="El trazo como lenguaje. Dibujos que capturan la esencia, la emoción y la belleza en cada línea." data-en="The line as language. Drawings that capture essence, emotion and beauty in every stroke.">
-                        El trazo como lenguaje. Dibujos que capturan la esencia, la emoción y la belleza en cada línea.
-                    </p>
-                </div>
-                <div class="artists-grid" id="gridDibujo"></div>
-            </div>
+        <section class="section" id="poesia">
+            <h2 class="section-title"><span>Poesía</span></h2>
+            <div class="works-grid" id="poesiaGrid"></div>
         </section>
 
-        <section class="art-section" id="pintura">
-            <div class="art-container">
-                <div class="art-header">
-                    <h2 class="art-title" data-es="Pintura" data-en="Painting">Pintura</h2>
-                    <p class="art-description" data-es="Colores que danzan en el lienzo. Pintura que expresa mundos interiores y realidades expandidas." data-en="Colors that dance on canvas. Painting that expresses inner worlds and expanded realities.">
-                        Colores que danzan en el lienzo. Pintura que expresa mundos interiores y realidades expandidas.
-                    </p>
-                </div>
-                <div class="artists-grid" id="gridPintura"></div>
-            </div>
+        <section class="section" id="comics">
+            <h2 class="section-title"><span>Cómics</span></h2>
+            <div class="works-grid" id="comicsGrid"></div>
         </section>
 
-        <section class="art-section" id="escultura">
-            <div class="art-container">
-                <div class="art-header">
-                    <h2 class="art-title" data-es="Escultura" data-en="Sculpture">Escultura</h2>
-                    <p class="art-description" data-es="Formas que ocupan el espacio y el tiempo. Esculturas que invitan a la contemplación y la experiencia sensorial." data-en="Forms that occupy space and time. Sculptures that invite contemplation and sensory experience.">
-                        Formas que ocupan el espacio y el tiempo. Esculturas que invitan a la contemplación y la experiencia sensorial.
-                    </p>
-                </div>
-                <div class="artists-grid" id="gridEscultura"></div>
-            </div>
-        </section>
-
-        <section class="art-section" id="grabado">
-            <div class="art-container">
-                <div class="art-header">
-                    <h2 class="art-title" data-es="Grabado" data-en="Engraving">Grabado</h2>
-                    <p class="art-description" data-es="Arte que deja marca profunda. Grabados que preservan momentos, historias y universos personales." data-en="Art that leaves a deep mark. Engravings that preserve moments, stories and personal universes.">
-                        Arte que deja marca profunda. Grabados que preservan momentos, historias y universos personales.
-                    </p>
-                </div>
-                <div class="artists-grid" id="gridGrabado"></div>
-            </div>
-        </section>
-
-        <section class="art-section" id="nps">
-            <div class="art-container">
-                <div class="art-header">
-                    <h2 class="art-title" data-es="NPS" data-en="NPS">Nuevas Prácticas Sustentables</h2>
-                    <p class="art-description" data-es="Innovación con conciencia ambiental. Prácticas artísticas que respetan la tierra y buscan la sostenibilidad." data-en="Innovation with environmental awareness. Artistic practices that respect the earth and seek sustainability.">
-                        Innovación con conciencia ambiental. Prácticas artísticas que respetan la tierra y buscan la sostenibilidad.
-                    </p>
-                </div>
-                <div class="artists-grid" id="gridNPS"></div>
-            </div>
-        </section>
-
-        <!-- FOOTER CTA -->
-        <section class="footer-cta">
-            <h2 class="footer-cta-title" data-es="¿Quieres formar parte de Tierra Viva?" data-en="Want to be part of Tierra Viva?">¿Quieres formar parte de Tierra Viva?</h2>
-            <p class="footer-cta-text" data-es="Si eres artista y deseas que tus obras sean parte de este museo virtual, conecta con nosotros a través de WhatsApp." data-en="If you are an artist and want your works to be part of this virtual museum, connect with us via WhatsApp.">
-                Si eres artista y deseas que tus obras sean parte de este museo virtual, conecta con nosotros a través de WhatsApp.
+        <section class="footer-section">
+            <p class="footer-text">
+                "La palabra escrita es fuego que arde en la mente del lector.<br>
+                Aquí celebramos a quienes transforman experiencias en historias que perduran."
             </p>
-            <a href="https://wa.me/5493874471122?text=Hola%2C%20me%20interesa%20formar%20parte%20de%20Tierra%20Viva" target="_blank" class="cta-btn" data-es="Conectar por WhatsApp" data-en="Connect via WhatsApp">
-                Conectar por WhatsApp
-            </a>
         </section>
+    </div>
+
+    <div id="participateModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+            <h2 class="modal-title">Quiero Formar Parte</h2>
+            <p class="modal-text">
+                Comparte tu obra, tu voz y tu historia con la comunidad de Fuego y Letra.
+            </p>
+            <form class="modal-form" id="participateForm">
+                <input type="text" placeholder="Tu Nombre" required>
+                <input type="email" placeholder="Tu Email" required>
+                <input type="text" placeholder="Nombre de tu Obra" required>
+                <select style="width: 100%; padding: 0.9rem; margin-bottom: 1rem; background: rgba(255, 107, 53, 0.05); border: 1px solid rgba(255, 107, 53, 0.15); border-radius: 8px; color: var(--text-light); font-family: inherit;">
+                    <option value="">Tipo de Obra</option>
+                    <option value="cuento">Cuento</option>
+                    <option value="poesia">Poesía</option>
+                    <option value="comic">Cómics</option>
+                </select>
+                <textarea placeholder="Cuéntanos sobre tu obra..." rows="3" required></textarea>
+                <button type="submit">Enviar Solicitud</button>
+            </form>
+        </div>
     </div>
 
     <script>
-        let currentLang = 'es';
-        let isDayMode = false;
+        const fireSvg = `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <path d="M50 10 C40 25 35 40 35 55 C35 75 42 85 50 85 C58 85 65 75 65 55 C65 40 60 25 50 10 Z" 
+                  fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
+            <path d="M45 30 C43 38 42 45 42 52 C42 65 46 72 50 72 C54 72 58 65 58 52 C58 45 57 38 55 30 Z" 
+                  fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.6"/>
+        </svg>`;
 
-        // SONIDOS
-        const sounds = {
-            click: 'data:audio/wav;base64,UklGRiYAAABXQVZFZm10IBAAAAABAAEAQB8AAAB9AAACABAAZGF0YQIAAAAAAA==',
-            hover: 'data:audio/wav;base64,UklGRiIAAABXQVZFZm10IBAAAAABAAEAQB8AAAB9AAACABAAZGF0YQIAAAAAAA=='
-        };
+        function createFireSymbols() {
+            const container = document.getElementById('fireSymbols');
+            const positions = [
+                { bottom: '5%', left: '8%', size: '120px' },
+                { top: '20%', right: '10%', size: '140px' },
+                { bottom: '35%', right: '5%', size: '160px' },
+                { top: '40%', left: '5%', size: '100px' }
+            ];
 
-        function playSound(type) {
-            try {
-                const audio = new Audio(sounds[type]);
-                audio.volume = 0.3;
-                audio.play().catch(() => {});
-            } catch (e) {}
+            positions.forEach((pos, idx) => {
+                const el = document.createElement('div');
+                el.className = 'fire-symbol';
+                el.style.cssText = `${Object.entries(pos).map(([k, v]) => 
+                    k === 'size' ? `width: ${v}; height: ${v}` : `${k}: ${v}`
+                ).join('; ')}; color: #FF6B35;`;
+                el.innerHTML = fireSvg;
+                container.appendChild(el);
+            });
         }
 
-        // Datos de artistas con meta description para SEO
-        const artistasData = {
-            artesanias: [
-                { 
-                    name: 'ALHUA Cerámica', 
-                    desc: 'Cerámica ancestral con diseño contemporáneo', 
-                    descEn: 'Ancestral ceramics with contemporary design',
-                    seoDesc: 'Artesanías de cerámica única en Salta, Argentina. Diseños ancestrales con técnicas contemporáneas.',
-                    img: 'https://via.placeholder.com/180?text=ALHUA',
-                    keywords: 'artesanía, cerámica, salta, argentina, arte ancestral'
-                },
-                { 
-                    name: 'Artesano Local', 
-                    desc: 'Creaciones de barro y tradición', 
-                    descEn: 'Clay and tradition creations',
-                    seoDesc: 'Artesanías tradicionales de barro trabajadas por artesanos salteños.',
-                    img: 'https://via.placeholder.com/180?text=Artesano',
-                    keywords: 'artesano, barro, tradición, salta'
+        class FireAnimation {
+            constructor(canvasId) {
+                this.canvas = document.getElementById(canvasId);
+                this.ctx = this.canvas.getContext('2d');
+                this.width = this.canvas.width = window.innerWidth;
+                this.height = this.canvas.height = window.innerHeight;
+                this.particles = [];
+                
+                this.init();
+                window.addEventListener('resize', () => this.resize());
+                this.animate();
+            }
+
+            init() {
+                for (let i = 0; i < 20; i++) {
+                    this.particles.push(this.createParticle());
                 }
+            }
+
+            createParticle() {
+                return {
+                    x: Math.random() * this.width,
+                    y: this.height + Math.random() * 50,
+                    vx: (Math.random() - 0.5) * 0.8,
+                    vy: -Math.random() * 0.8 - 0.4,
+                    life: Math.random() * 0.8 + 0.5,
+                    maxLife: Math.random() * 0.8 + 0.5,
+                    size: Math.random() * 20 + 5,
+                    color: ['#FF6B35', '#FF8C5A', '#FF9F43'][Math.floor(Math.random() * 3)]
+                };
+            }
+
+            animate() {
+                this.ctx.fillStyle = 'rgba(10, 14, 39, 0.02)';
+                this.ctx.fillRect(0, 0, this.width, this.height);
+
+                for (let i = 0; i < this.particles.length; i++) {
+                    const p = this.particles[i];
+                    
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.vy -= 0.04;
+                    p.life -= 0.003;
+
+                    const opacity = p.life / p.maxLife;
+                    
+                    this.ctx.fillStyle = p.color;
+                    this.ctx.globalAlpha = opacity * 0.05;
+                    this.ctx.beginPath();
+                    this.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    this.ctx.fill();
+
+                    if (p.life <= 0) {
+                        this.particles[i] = this.createParticle();
+                    }
+                }
+
+                this.ctx.globalAlpha = 1;
+                requestAnimationFrame(() => this.animate());
+            }
+
+            resize() {
+                this.width = this.canvas.width = window.innerWidth;
+                this.height = this.canvas.height = window.innerHeight;
+            }
+        }
+
+        new FireAnimation('fireCanvas');
+        createFireSymbols();
+
+        const works = {
+            cuentos: [
+                { title: 'Historias del Alma', author: 'AMBER', description: 'Narrativas que exploran los rincones profundos del ser humano.', url: 'autor-victoria-barrandeguy.html' },
+                { title: 'Voces Olvidadas', author: 'RECHEL', description: 'Historias de personajes anónimos cuyas voces resuenan con verdad.', url: '#' },
+                { title: 'Umbrales', author: 'Ana Flores', description: 'Donde lo ordinario se vuelve extraordinario en espacios intermedios.', url: '#' },
+                { title: 'Lazos de Tiempo', author: 'Diego Reyes', description: 'Cuentos conectados por el hilo invisible del tiempo.', url: '#' },
+                { title: 'Secretos del Corazón', author: 'María Sánchez', description: 'Exploración íntima de secretos y misterios del amor.', url: '#' },
+                { title: 'Última Página', author: 'Carlos López', description: 'Reflexión sobre finales, comienzos y espacios intermedios.', url: '#' }
             ],
-            ceramica: [
-                { 
-                    name: 'ALHUA Cerámica', 
-                    desc: 'Vasijas únicas handmade', 
-                    descEn: 'Unique handmade vessels',
-                    seoDesc: 'Cerámica artesanal handmade. Vasijas únicas creadas con técnicas ancestrales andinas.',
-                    img: 'https://via.placeholder.com/180?text=ALHUA',
-                    keywords: 'cerámica, vasijas, handmade, andino, salta'
-                }
+            poesia: [
+                { title: 'Versos de Tierra', author: 'Julieta ', description: 'Conexión con la naturaleza andina y los ancestros.', url: 'autor-julieta-contreras.html' },
+                { title: 'Ecos Nocturnos', author: 'Juan Morales', description: 'Versos nocturnos que capturan momentos de silencio.', url: '#' },
+                { title: 'Respirar el Aire', author: 'María Sánchez', description: 'La respiración del alma en espacios sagrados.', url: '#' },
+                { title: 'Ritmo de Agua', author: 'Carlos López', description: 'Poemas que fluyen como el agua explorando ciclos.', url: '#' },
+                { title: 'Corazón de Fuego', author: 'Juan Morales', description: 'Profundidades del sentimiento y transformación personal.', url: '#' },
+                { title: 'Última Página', author: 'Ana Flores', description: 'Una reflexión poética sobre final y comienzo.', url: '#' }
             ],
-            dibujo: [
-                { 
-                    name: 'Naliart', 
-                    desc: 'Retratos con alma y línea', 
-                    descEn: 'Portraits with soul and line',
-                    seoDesc: 'Dibujos y retratos artísticos que capturan la esencia del arte contemporáneo.',
-                    img: 'https://via.placeholder.com/180?text=Naliart',
-                    keywords: 'dibujo, arte, retratos, naliart, salta'
-                }
-            ],
-            pintura: [
-                { 
-                    name: 'Artista Salteño', 
-                    desc: 'Colores del norte argentino', 
-                    descEn: 'Colors of northern Argentina',
-                    seoDesc: 'Pintura contemporánea inspirada en los colores y paisajes del norte argentino.',
-                    img: 'https://via.placeholder.com/180?text=Pintor',
-                    keywords: 'pintura, arte, norte argentino, salta, colores'
-                }
-            ],
-            escultura: [
-                { 
-                    name: 'Escultor Andino', 
-                    desc: 'Formas que respiran', 
-                    descEn: 'Forms that breathe',
-                    seoDesc: 'Esculturas contemporáneas con influencia andina. Arte que respira con la tierra.',
-                    img: 'https://via.placeholder.com/180?text=Escultor',
-                    keywords: 'escultura, arte, andino, salta, formas'
-                }
-            ],
-            grabado: [
-                { 
-                    name: 'Grabador Local', 
-                    desc: 'Marcas profundas en la matriz', 
-                    descEn: 'Deep marks on the matrix',
-                    seoDesc: 'Grabados artísticos que preservan historias y universos personales del artista.',
-                    img: 'https://via.placeholder.com/180?text=Grabador',
-                    keywords: 'grabado, arte, matriz, salta, grabador'
-                }
-            ],
-            nps: [
-                { 
-                    name: 'Artista Sostenible', 
-                    desc: 'Arte y consciencia ambiental', 
-                    descEn: 'Art and environmental consciousness',
-                    seoDesc: 'Arte sustentable con conciencia ambiental. Nuevas prácticas creativas respetuosas con la tierra.',
-                    img: 'https://via.placeholder.com/180?text=NPS',
-                    keywords: 'arte sustentable, ambiental, consciente, salta, nps'
-                }
+            comics: [
+                { title: 'Identidad Pacha', author: 'Naliart', description: 'Identidad ancestral y conexión con la Pachamama.', url: 'autor-naliart.html' },
+                { title: 'Ñusta Reimaginada', author: 'Naliart', description: 'Reinterpretación de mitos andinos con perspectiva contemporánea.', url: '#' },
+                { title: 'Yuraj Dog', author: 'Naliart', description: 'Vida y resistencia en contextos urbanos latinoamericanos.', url: '#' },
+                { title: 'Munay Dog', author: 'Sandra Vega', description: 'El amor en todas sus formas desde el lente andino.', url: '#' },
+                { title: 'Ñawi Strange', author: 'Diego Reyes', description: 'Cómics surrealistas que desafían la percepción visual.', url: '#' },
+                { title: 'Dibujo Analógico', author: 'Sandra Vega', description: 'Técnica mixta que homenajea el dibujo manual y pintura.', url: '#' }
             ]
         };
 
-        // CREAR ESTRELLAS
-        function createStars() {
-            const starsContainer = document.getElementById('starsContainer');
-            for (let i = 0; i < 100; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-                star.style.width = Math.random() * 2 + 1 + 'px';
-                star.style.height = star.style.width;
-                star.style.animationDelay = Math.random() * 3 + 's';
-                starsContainer.appendChild(star);
-            }
+        function renderWorks(category, gridId) {
+            const grid = document.getElementById(gridId);
+            grid.innerHTML = '';
+            
+            works[category].forEach(work => {
+                const card = document.createElement('div');
+                card.className = 'work-card';
+                card.innerHTML = `
+                    <h3 class="work-title">${work.title}</h3>
+                    <div class="work-author">${work.author}</div>
+                    <p class="work-description">${work.description}</p>
+                    <a href="${work.url}" class="read-btn">Leer →</a>
+                `;
+                grid.appendChild(card);
+            });
         }
 
-        // CREAR NUBES
-        function createClouds() {
-            const cloudsContainer = document.getElementById('cloudsContainer');
-            for (let i = 0; i < 5; i++) {
-                const cloud = document.createElement('div');
-                cloud.className = 'cloud';
-                cloud.style.left = Math.random() * 100 + '%';
-                cloud.style.top = Math.random() * 30 + '%';
-                cloud.style.width = Math.random() * 100 + 80 + 'px';
-                cloud.style.height = Math.random() * 40 + 30 + 'px';
-                cloud.style.animationDelay = Math.random() * 5 + 's';
-                cloudsContainer.appendChild(cloud);
-            }
-        }
+        const hamburger = document.getElementById('hamburger');
+        const sideMenu = document.getElementById('sideMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
 
-        // SPLASH SCREEN CON CANVAS
-        function animateSplash() {
-            const canvas = document.getElementById('rootsCanvas');
-            const ctx = canvas.getContext('2d');
-            
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            
-            ctx.strokeStyle = 'rgba(139, 69, 19, 0.6)';
-            ctx.lineWidth = 3;
-            
-            const startTime = Date.now();
-            const duration = 3000;
-            
-            function drawRoots() {
-                const elapsed = Date.now() - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                
-                drawLine(ctx, canvas.width / 2, 0, canvas.width / 2, canvas.height * progress, 4);
-                drawLine(ctx, canvas.width / 2, 0, canvas.width / 4, canvas.height * progress * 0.8, 3);
-                drawLine(ctx, canvas.width / 2, 0, canvas.width * 3 / 4, canvas.height * progress * 0.8, 3);
-                
-                if (progress > 0.3) {
-                    drawLine(ctx, canvas.width / 2, canvas.height * 0.3, canvas.width / 6, canvas.height * progress * 0.7, 2);
-                    drawLine(ctx, canvas.width / 2, canvas.height * 0.3, canvas.width * 5 / 6, canvas.height * progress * 0.7, 2);
-                }
-                
-                if (progress > 0.5) {
-                    drawLine(ctx, canvas.width / 2, canvas.height * 0.5, canvas.width / 8, canvas.height * progress * 0.6, 2);
-                    drawLine(ctx, canvas.width / 2, canvas.height * 0.5, canvas.width * 7 / 8, canvas.height * progress * 0.6, 2);
-                }
-                
-                if (progress < 1) {
-                    requestAnimationFrame(drawRoots);
-                }
-            }
-            
-            function drawLine(ctx, x1, y1, x2, y2, width) {
-                ctx.lineWidth = width;
-                ctx.beginPath();
-                ctx.moveTo(x1, y1);
-                ctx.lineTo(x2, y2);
-                ctx.stroke();
-            }
-            
-            drawRoots();
-        }
-
-        // OCULTAR SPLASH
-        window.addEventListener('load', () => {
-            createStars();
-            createClouds();
-            animateSplash();
-            setTimeout(() => {
-                const splash = document.getElementById('splashScreen');
-                splash.style.opacity = '0';
-                splash.style.transition = 'opacity 0.8s ease-out';
-                setTimeout(() => {
-                    splash.style.display = 'none';
-                }, 800);
-            }, 4500);
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            sideMenu.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
         });
 
-        // MENÚ FLOTANTE
-        const navToggleBtn = document.getElementById('navToggleBtn');
-        const menuCloseBtn = document.getElementById('menuCloseBtn');
-        const floatingMenu = document.getElementById('floatingMenu');
-
-        navToggleBtn.addEventListener('click', () => {
-            playSound('click');
-            floatingMenu.classList.toggle('active');
-        });
-
-        menuCloseBtn.addEventListener('click', () => {
-            playSound('click');
-            floatingMenu.classList.remove('active');
-        });
-
-        floatingMenu.querySelectorAll('a').forEach(link => {
+        document.querySelectorAll('.menu-item').forEach(link => {
             link.addEventListener('click', () => {
-                playSound('click');
-                floatingMenu.classList.remove('active');
+                hamburger.classList.remove('active');
+                sideMenu.classList.remove('active');
+                menuOverlay.classList.remove('active');
             });
         });
 
-        // CERRAR MENÚ AL HACER SCROLL
-        window.addEventListener('scroll', () => {
-            if (floatingMenu.classList.contains('active')) {
-                floatingMenu.classList.remove('active');
-            }
+        menuOverlay.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            sideMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
         });
 
-        // TEMA DÍA/NOCHE
-        const themeToggleBtn = document.getElementById('themeToggleBtn');
-        themeToggleBtn.addEventListener('click', () => {
-            playSound('click');
-            isDayMode = !isDayMode;
-            document.body.classList.toggle('day-mode');
-            themeToggleBtn.textContent = isDayMode ? '🌙' : '☀️';
-            localStorage.setItem('theme', isDayMode ? 'day' : 'night');
-        });
-
-        // CARGAR TEMA GUARDADO (NOCHE POR DEFECTO)
-        const savedTheme = localStorage.getItem('theme') || 'night';
-        if (savedTheme === 'day') {
-            isDayMode = true;
-            document.body.classList.add('day-mode');
-            themeToggleBtn.textContent = '🌙';
-        } else {
-            themeToggleBtn.textContent = '☀️';
+        function openModal() {
+            document.getElementById('participateModal').style.display = 'block';
         }
 
-        // LENGUAJE
-        const langToggle = document.getElementById('langToggle');
-        function translatePage() {
-            document.querySelectorAll('[data-es][data-en]').forEach(el => {
-                const text = el.getAttribute(`data-${currentLang}`);
-                if (text) el.textContent = text;
-            });
-            renderArtistas();
-            langToggle.textContent = currentLang === 'es' ? 'English' : 'Español';
+        function closeModal() {
+            document.getElementById('participateModal').style.display = 'none';
         }
 
-        langToggle.addEventListener('click', () => {
-            playSound('click');
-            currentLang = currentLang === 'es' ? 'en' : 'es';
-            translatePage();
-        });
-
-        // RENDERIZAR ARTISTAS
-        function renderArtistas() {
-            Object.keys(artistasData).forEach(categoria => {
-                const gridId = `grid${categoria.charAt(0).toUpperCase() + categoria.slice(1)}`;
-                const grid = document.getElementById(gridId);
-                if (grid) {
-                    grid.innerHTML = artistasData[categoria].map((artist, idx) => `
-                        <article class="artist-card" data-artist="${artist.name}" data-category="${categoria}">
-                            <div class="artist-image-wrapper">
-                                <img src="${artist.img}" alt="${artist.name} - ${currentLang === 'es' ? 'Artista' : 'Artist'}" title="${artist.seoDesc}" class="artist-image" loading="lazy">
-                                <div class="artist-badge">${idx + 1}</div>
-                            </div>
-                            <h3 class="artist-name">${artist.name}</h3>
-                            <p class="artist-description">${currentLang === 'es' ? artist.desc : artist.descEn}</p>
-                            <a href="#" class="artist-btn" data-keywords="${artist.keywords}">${currentLang === 'es' ? 'Ver Galería' : 'View Gallery'}</a>
-                        </article>
-                    `).join('');
-
-                    // Agregar sonidos a botones
-                    grid.querySelectorAll('.artist-btn').forEach(btn => {
-                        btn.addEventListener('click', (e) => {
-                            e.preventDefault();
-                            playSound('click');
-                        });
-                        btn.addEventListener('mouseenter', () => {
-                            playSound('hover');
-                        });
-                    });
-                }
-            });
-        }
-
-        // SONIDOS EN BOTONES
-        function addSoundsToButtons() {
-            document.querySelectorAll('button, a').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    playSound('click');
-                });
-            });
-        }
-
-        // INIT
-        renderArtistas();
-        addSoundsToButtons();
-
-        // Schema.org Structured Data para SEO
-        function addSchemaMarkup() {
-            const schemaScript = document.createElement('script');
-            schemaScript.type = 'application/ld+json';
-            schemaScript.textContent = JSON.stringify({
-                "@context": "https://schema.org/",
-                "@type": "Museum",
-                "name": "Tierra Viva - Museo Virtual de Arte",
-                "description": "Museo Virtual de Arte que celebra la creatividad ancestral y contemporánea del norte argentino",
-                "url": "https://tierra-viva.com",
-                "address": {
-                    "@type": "PostalAddress",
-                    "addressLocality": "Salta",
-                    "addressCountry": "AR",
-                    "streetAddress": "Salta, Argentina"
-                },
-                "sameAs": [
-                    "https://wa.me/5493874471122"
-                ],
-                "contactPoint": {
-                    "@type": "ContactPoint",
-                    "contactType": "Customer Service",
-                    "telephone": "+54-387-4471122"
-                }
-            });
-            document.head.appendChild(schemaScript);
-        }
-
-        addSchemaMarkup();
-
-        // Analytics y tracking para clientes
-        function trackEvent(category, action, label) {
-            if (typeof gtag !== 'undefined') {
-                gtag('event', action, {
-                    'event_category': category,
-                    'event_label': label
-                });
+        window.onclick = function(e) {
+            const modal = document.getElementById('participateModal');
+            if (e.target === modal) {
+                modal.style.display = 'none';
             }
         }
 
-        // Track cuando usuarios ven secciones
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const sectionId = entry.target.id;
-                    trackEvent('Engagement', 'Section Viewed', sectionId);
+        document.getElementById('joinBtn').addEventListener('click', openModal);
+
+        document.getElementById('participateForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('¡Gracias! Tu solicitud ha sido enviada.');
+            this.reset();
+            closeModal();
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
                 }
             });
         });
 
-        document.querySelectorAll('.art-section, .footer-cta').forEach(section => {
-            observer.observe(section);
-        });
-
-        // Track clicks en artistas
-        document.addEventListener('click', (e) => {
-            if (e.target.closest('.artist-btn')) {
-                const artist = e.target.closest('.artist-card');
-                trackEvent('Artist', 'Gallery Click', artist.dataset.artist);
-            }
-            if (e.target.closest('.cta-btn')) {
-                trackEvent('CTA', 'WhatsApp Click', 'Contact Artist');
-            }
+        window.addEventListener('load', () => {
+            renderWorks('cuentos', 'cuentosGrid');
+            renderWorks('poesia', 'poesiaGrid');
+            renderWorks('comics', 'comicsGrid');
         });
     </script>
 </body>
