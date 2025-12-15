@@ -4,396 +4,473 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Séptima Pacha | Arte Multidisciplinario</title>
-
-    <!-- ✨ FAVICONS ✨ -->
     <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <meta name="theme-color" content="#F39C12">
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --tierra: #8B4513; --fuego: #FF6B35; --aire: #4A90E2; --agua: #2ECC71; --oro: #F39C12; --sombra: #2C3E50; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Montserrat', sans-serif; background-color: #0a0a0a; color: #ffffff; overflow-x: hidden; line-height: 1.6; }
+
+        /* SPLASH SCREEN */
+        .splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); display: flex; align-items: center; justify-content: center; z-index: 9999; }
+        .logo-container { text-align: center; }
+        .logo-svg { width: 200px; height: 200px; margin-bottom: 2rem; animation: logoFloat 3s ease-in-out infinite; }
+        @keyframes logoFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        .logo-path { stroke: var(--oro); fill: none; stroke-linecap: round; stroke-linejoin: round; animation: drawStroke 2s ease-in-out forwards; }
+        @keyframes drawStroke { from { stroke-dasharray: 1000; stroke-dashoffset: 1000; } to { stroke-dasharray: 1000; stroke-dashoffset: 0; } }
+        .logo-text { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--oro); font-weight: 700; letter-spacing: 3px; animation: fadeInUp 1.5s ease-out 0.5s forwards; opacity: 0; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* LANGUAGE TOGGLE */
+        .language-toggle { position: fixed; top: 2rem; right: 2rem; z-index: 100; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(243, 156, 18, 0.3); padding: 0.8rem 1.2rem; border-radius: 50px; cursor: pointer; font-weight: 600; font-size: 0.9rem; backdrop-filter: blur(10px); transition: all 0.3s ease; }
+        .language-toggle:hover { background: rgba(243, 156, 18, 0.2); border-color: var(--oro); }
+
+        /* CUSTOM CURSOR */
+        .custom-cursor { position: fixed; width: 10px; height: 10px; border: 2px solid rgba(255, 255, 255, 0.3); border-radius: 50%; pointer-events: none; z-index: 1000; display: none; }
+
+        /* MENU */
+        .menu-boton { position: fixed; bottom: 2rem; right: 2rem; width: 60px; height: 60px; background: linear-gradient(135deg, var(--oro), var(--fuego)); border: none; border-radius: 50%; font-size: 1.8rem; color: #fff; cursor: pointer; z-index: 90; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; box-shadow: 0 10px 30px rgba(243, 156, 18, 0.3); }
+        .menu-boton:hover { transform: scale(1.1); box-shadow: 0 15px 40px rgba(243, 156, 18, 0.5); }
+
+        .expandable-menu { position: fixed; right: -100%; top: 0; width: 100%; max-width: 400px; height: 100vh; background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); border-left: 2px solid rgba(243, 156, 18, 0.3); z-index: 95; padding: 2rem 1.5rem; overflow-y: auto; transition: right 0.3s ease; }
+        .expandable-menu.open { right: 0; }
+        .menu-close { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; font-size: 1.8rem; color: var(--oro); cursor: pointer; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; }
+        .menu-content { margin-top: 4rem; display: flex; flex-direction: column; gap: 1rem; }
+        .menu-item { display: block; padding: 1rem 1.5rem; text-decoration: none; color: #fff; font-weight: 500; border-left: 3px solid transparent; transition: all 0.3s ease; cursor: pointer; }
+        .menu-item:hover { border-left-color: var(--oro); padding-left: 2rem; color: var(--oro); }
+
+        .whatsapp-btn-container { position: absolute; bottom: 2rem; left: 0; right: 0; padding: 0 1.5rem; }
+        .whatsapp-btn { display: flex; align-items: center; gap: 0.8rem; background: linear-gradient(135deg, #25D366, #128C7E); color: #fff; padding: 1rem; border-radius: 50px; text-decoration: none; font-weight: 600; transition: all 0.3s ease; width: 100%; }
+        .whatsapp-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4); }
+
+        /* HERO */
+        .umbral { min-height: 100vh; display: flex; align-items: center; justify-content: space-between; padding: 4rem 2rem; background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); position: relative; overflow: hidden; }
+        .umbral::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(ellipse at center, rgba(243, 156, 18, 0.1) 0%, transparent 70%); pointer-events: none; }
+
+        .decorative-svg { position: absolute; width: 200px; height: 200px; opacity: 0.5; }
+        .top-left { top: 5%; left: 2%; }
+        .top-left-2 { top: 15%; left: 5%; }
+        .bottom-left { bottom: 10%; left: 3%; }
+        .svg-path { stroke: var(--oro); fill: none; stroke-linecap: round; }
+
+        .hero-chakana { position: absolute; left: 8%; top: 50%; transform: translateY(-50%); width: 300px; height: 300px; animation: chakanaFloat 8s ease-in-out infinite; }
+        @keyframes chakanaFloat { 0%, 100% { transform: translateY(-50%) scale(1); } 50% { transform: translateY(-70%) scale(1.05); } }
+
+        .chakana-line { animation: glowPulse 2s ease-in-out infinite; }
+        @keyframes glowPulse { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+
+        .chakana-center-fill { animation: breathe 2s ease-in-out infinite; }
+        @keyframes breathe { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.8; } }
+
+        .chakana-corner { animation: cornerPulse 1.5s ease-in-out infinite; }
+        @keyframes cornerPulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.7; } }
+
+        .hero-content { flex: 1; margin-left: 10%; position: relative; z-index: 10; max-width: 600px; }
+        .titulo-principal { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 8vw, 4rem); color: var(--oro); margin-bottom: 2rem; font-weight: 700; }
+
+        .subtitulo-container { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2rem; }
+        .line-decoration { flex: 1; height: 2px; background: linear-gradient(90deg, transparent, var(--oro), transparent); }
+        .subtitulo { font-family: 'Playfair Display', serif; font-size: clamp(1.3rem, 3vw, 1.8rem); color: #fff; text-align: center; font-weight: 400; }
+
+        .hero-description { font-size: 1rem; line-height: 1.8; color: rgba(255, 255, 255, 0.8); margin-bottom: 3rem; }
+
+        .hero-ctas { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 3rem; }
+        .cta-primary, .cta-secondary { padding: 1.2rem 2.5rem; border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 1rem; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 0.8rem; border: none; cursor: pointer; }
+        .cta-primary { background: linear-gradient(135deg, var(--oro), var(--fuego)); color: #fff; }
+        .cta-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(243, 156, 18, 0.4); }
+        .cta-secondary { background: transparent; border: 2px solid var(--oro); color: var(--oro); }
+        .cta-secondary:hover { background: var(--oro); color: #000; }
+
+        .scroll-indicator { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); text-align: center; color: rgba(255, 255, 255, 0.6); font-size: 0.9rem; }
+        .scroll-mouse { width: 30px; height: 50px; border: 2px solid rgba(255, 255, 255, 0.3); border-radius: 15px; margin: 0 auto 0.5rem; display: flex; align-items: flex-start; justify-content: center; padding: 8px 0; }
+        .scroll-wheel { width: 4px; height: 8px; background: rgba(255, 255, 255, 0.3); border-radius: 2px; animation: scroll 2s infinite; }
+        @keyframes scroll { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(12px); opacity: 0; } }
+
+        .floating-particles { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+        .particle { position: absolute; width: 4px; height: 4px; background: var(--oro); border-radius: 50%; opacity: 0.3; }
+        .particle:nth-child(1) { top: 20%; left: 10%; animation: floatParticle 8s infinite ease-in-out; }
+        .particle:nth-child(2) { top: 30%; left: 80%; animation: floatParticle 10s infinite ease-in-out 1s; }
+        .particle:nth-child(3) { top: 60%; left: 20%; animation: floatParticle 12s infinite ease-in-out 2s; }
+        @keyframes floatParticle { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-30px); } }
+
+        /* SECCIONES */
+        .servicios, .sobre-septima, .contacto { padding: 4rem 1rem; }
+        .servicios { background: linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%); }
+        .sobre-septima { background: radial-gradient(ellipse at center, #2d2d2d 0%, #1a1a1a 100%); }
+        .contacto { background: linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 100%); }
+
+        .section-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.5rem); text-align: center; color: var(--oro); margin-bottom: 3rem; text-shadow: 0 0 20px rgba(243, 156, 18, 0.2); }
+
+        /* SERVICIOS CIRCULARES */
+        .servicios-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 3rem; max-width: 1200px; width: 100%; margin: 0 auto; place-items: center; position: relative; z-index: 10; }
+
+        .servicio-circulo { width: 240px; height: 240px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 3px solid; transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; cursor: pointer; background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(15px); overflow: hidden; text-decoration: none; color: inherit; }
+
+        .servicio-agua { background: rgba(46, 204, 113, 0.15); border-color: var(--agua); }
+        .servicio-tierra { background: rgba(139, 69, 19, 0.15); border-color: var(--tierra); }
+        .servicio-fuego { background: rgba(255, 107, 53, 0.15); border-color: var(--fuego); }
+        .servicio-aire { background: rgba(74, 144, 226, 0.15); border-color: var(--aire); }
+
+        .servicio-agua:hover { box-shadow: 0 25px 60px rgba(46, 204, 113, 0.4), inset 0 0 30px rgba(46, 204, 113, 0.2); background: rgba(46, 204, 113, 0.25); }
+        .servicio-tierra:hover { box-shadow: 0 25px 60px rgba(139, 69, 19, 0.4), inset 0 0 30px rgba(139, 69, 19, 0.2); background: rgba(139, 69, 19, 0.25); }
+        .servicio-fuego:hover { box-shadow: 0 25px 60px rgba(255, 107, 53, 0.4), inset 0 0 30px rgba(255, 107, 53, 0.2); background: rgba(255, 107, 53, 0.25); }
+        .servicio-aire:hover { box-shadow: 0 25px 60px rgba(74, 144, 226, 0.4), inset 0 0 30px rgba(74, 144, 226, 0.2); background: rgba(74, 144, 226, 0.25); }
+
+        .servicio-circulo:hover { transform: scale(1.15) translateY(-20px); border-color: var(--oro); }
+
+        .circulo-interno { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.8rem; text-align: center; z-index: 1; padding: 1.5rem; }
+        .circulo-simbolo { font-size: 3.5rem; animation: float 3s ease-in-out infinite; }
+        .circulo-nombre { font-size: 1.4rem; font-weight: 700; letter-spacing: 0.05em; margin: 0; font-family: 'Playfair Display', serif; }
+        .circulo-desc { font-size: 0.85rem; line-height: 1.4; margin: 0; opacity: 0.9; font-weight: 500; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+        /* SOBRE SÉPTIMA PACHA */
+        .sobre-container { max-width: 1200px; margin: 0 auto; position: relative; z-index: 10; }
+        .sobre-header { text-align: center; margin-bottom: 4rem; }
+        .sobre-titulo { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.5rem); color: var(--oro); margin-bottom: 2rem; text-shadow: 0 0 20px rgba(243, 156, 18, 0.4); }
+        .sobre-intro-text { font-size: clamp(1rem, 2.5vw, 1.2rem); color: rgba(255, 255, 255, 0.85); max-width: 800px; margin: 0 auto; line-height: 1.8; }
+
+        .sobre-content { display: flex; flex-direction: column; gap: 3rem; }
+
+        .sobre-seccion { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(243, 156, 18, 0.2); border-radius: 20px; padding: 2.5rem; text-align: center; transition: all 0.4s ease; }
+        .sobre-seccion:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(243, 156, 18, 0.4); transform: translateY(-5px); }
+
+        .seccion-icono { font-size: 3rem; margin-bottom: 1rem; display: inline-block; animation: float 3s ease-in-out infinite; }
+        .seccion-titulo { font-family: 'Playfair Display', serif; font-size: clamp(1.5rem, 3vw, 2.2rem); color: var(--oro); margin-bottom: 1.5rem; }
+        .sobre-seccion p { font-size: clamp(0.95rem, 2vw, 1.1rem); line-height: 1.7; opacity: 0.9; }
+
+        .sobre-secciones { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin: 3rem 0; }
+
+        .seccion-elemento { background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03)); border: 1px solid rgba(243, 156, 18, 0.15); border-radius: 15px; padding: 2rem; text-align: center; transition: all 0.4s ease; }
+        .seccion-elemento:hover { background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.06)); border-color: var(--oro); transform: translateY(-10px); box-shadow: 0 15px 40px rgba(243, 156, 18, 0.2); }
+
+        .elemento-icono { font-size: 2.5rem; margin-bottom: 1rem; animation: float 3s ease-in-out infinite; }
+        .elemento-titulo { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--oro); margin-bottom: 1rem; }
+        .seccion-elemento p { font-size: 0.95rem; line-height: 1.6; opacity: 0.9; margin-bottom: 1rem; }
+        .elemento-lema { font-size: 1.1rem; font-weight: 600; color: var(--oro); font-style: italic; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(243, 156, 18, 0.2); }
+
+        .sobre-filosofia { background: linear-gradient(135deg, rgba(139, 69, 19, 0.1), rgba(255, 107, 53, 0.08)); border-color: rgba(255, 107, 53, 0.3); }
+        .filosofia-items { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem; text-align: left; }
+        .filosofia-item { display: flex; gap: 1rem; align-items: flex-start; }
+        .item-mark { font-size: 1.5rem; flex-shrink: 0; margin-top: 0.25rem; }
+        .filosofia-item p { font-size: 1rem; line-height: 1.6; opacity: 0.9; }
+
+        .sobre-cta { background: linear-gradient(135deg, rgba(26, 188, 156, 0.15), rgba(74, 144, 226, 0.1)); border: 2px solid rgba(26, 188, 156, 0.3); border-radius: 20px; padding: 3rem; text-align: center; margin-top: 3rem; }
+        .cta-titulo { font-size: clamp(1.8rem, 4vw, 2.5rem); font-family: 'Playfair Display', serif; color: var(--oro); margin-bottom: 1.5rem; }
+        .sobre-cta p { font-size: clamp(1rem, 2.5vw, 1.2rem); margin-bottom: 2rem; opacity: 0.9; }
+
+        .cta-buttons { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
+        .cta-btn { padding: 1rem 2.5rem; background: linear-gradient(135deg, var(--oro), var(--fuego)); color: #fff; text-decoration: none; border-radius: 50px; font-weight: 600; font-size: 1.1rem; transition: all 0.3s ease; border: none; cursor: pointer; display: inline-block; }
+        .cta-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(243, 156, 18, 0.4); }
+        .cta-whatsapp { background: linear-gradient(135deg, #25D366, #128C7E); }
+        .cta-whatsapp:hover { box-shadow: 0 15px 40px rgba(37, 211, 102, 0.4); }
+
+        /* CONTACTO */
+        .formulario { max-width: 600px; margin: 3rem auto 0; display: flex; flex-direction: column; gap: 1.5rem; }
+        .campo { display: flex; flex-direction: column; gap: 0.5rem; }
+        .campo label { font-weight: 600; color: var(--oro); font-size: 1rem; }
+        .campo input, .campo textarea { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(243, 156, 18, 0.2); border-radius: 10px; padding: 1rem; color: #fff; font-family: 'Montserrat', sans-serif; font-size: 1rem; transition: all 0.3s ease; }
+        .campo input:focus, .campo textarea:focus { outline: none; border-color: var(--oro); background: rgba(255, 255, 255, 0.1); box-shadow: 0 0 20px rgba(243, 156, 18, 0.2); }
+        .btn-enviar { padding: 1.2rem 2.5rem; background: linear-gradient(135deg, var(--oro), var(--fuego)); color: #fff; border: none; border-radius: 50px; font-weight: 600; font-size: 1.1rem; cursor: pointer; transition: all 0.3s ease; }
+        .btn-enviar:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(243, 156, 18, 0.4); }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .umbral { flex-direction: column; }
+            .hero-chakana { width: 150px; height: 150px; left: 50%; transform: translateX(-50%); top: 10%; }
+            .hero-content { margin-left: 0; text-align: center; }
+            .servicios-container { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+            .servicio-circulo { width: 200px; height: 200px; }
+            .circulo-simbolo { font-size: 2.5rem; }
+            .sobre-secciones { grid-template-columns: 1fr; }
+            .filosofia-items { grid-template-columns: 1fr; }
+            .cta-buttons { flex-direction: column; }
+            .cta-btn { width: 100%; }
+        }
+
+        @media (max-width: 480px) {
+            .servicios-container { grid-template-columns: 1fr; }
+            .servicio-circulo { width: 160px; height: 160px; }
+            .circulo-simbolo { font-size: 2rem; }
+            .hero-ctas { flex-direction: column; }
+            .cta-primary, .cta-secondary { width: 100%; justify-content: center; }
+        }
+    </style>
 </head>
 <body>
-    <!-- Splash Screen / Logo Animado -->
+    <!-- SPLASH SCREEN CON LOGO -->
     <div class="splash-screen" id="splashScreen">
         <div class="logo-container">
             <svg class="logo-svg" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
-                <path class="logo-path" d="M150 50 L150 20 M130 70 L170 70 M150 50 L150 250 M130 230 L170 230 M50 150 L20 150 M70 130 L70 170 M50 150 L250 150 M230 130 L230 170" />
-                <circle class="logo-path" cx="150" cy="150" r="120" />
-                <path class="logo-path" d="M100 100 L120 120 M180 100 L200 120 M100 200 L120 180 M180 200 L200 180" />
-                <rect class="logo-path" x="80" y="80" width="15" height="15" />
-                <rect class="logo-path" x="205" y="80" width="15" height="15" />
-                <rect class="logo-path" x="80" y="205" width="15" height="15" />
-                <rect class="logo-path" x="205" y="205" width="15" height="15" />
-                <path class="logo-path" d="M130 130 L170 130 L150 170 L150 170" stroke-width="4" />
+                <path class="logo-path" d="M150 30 L150 270 M30 150 L270 150" stroke-width="3"/>
+                <circle class="logo-path" cx="150" cy="150" r="80" stroke-width="2"/>
+                <path class="logo-path" d="M150 50 L130 70 L170 70 L150 50 Z" stroke-width="2"/>
+                <path class="logo-path" d="M150 250 L130 230 L170 230 L150 250 Z" stroke-width="2"/>
+                <path class="logo-path" d="M50 150 L70 130 L70 170 L50 150 Z" stroke-width="2"/>
+                <path class="logo-path" d="M250 150 L230 130 L230 170 L250 150 Z" stroke-width="2"/>
+                <circle class="logo-path" cx="150" cy="150" r="20" stroke-width="1"/>
+                <circle cx="150" cy="150" r="10" fill="var(--oro)" opacity="0.5"/>
             </svg>
-            <div class="logo-text" data-lang-es="Séptima Pacha " data-lang-en="Seventh Pacha ">Séptima Pacha </div>
+            <div class="logo-text">Séptima Pacha</div>
         </div>
     </div>
 
-    <!-- Idioma toggle -->
-    <div class="language-toggle" id="languageToggle">
-        <span data-lang-es="English" data-lang-en="Español">English</span>
-    </div>
-
-    <!-- Cursor personalizado -->
+    <div class="language-toggle" id="languageToggle">EN</div>
     <div class="custom-cursor"></div>
-    
-    <!-- Botón del Menú -->
-    <button class="menu-boton" id="menuBoton">
-        <span class="menu-icon">☰</span>
-    </button>
+    <button class="menu-boton" id="menuBoton">☰</button>
 
-    <!-- Menú Expandible -->
     <nav class="expandable-menu" id="expandableMenu">
         <button class="menu-close" id="menuCerrar">✕</button>
-        
         <div class="menu-content">
-            <a href="#umbral" class="menu-item" data-scroll=".umbral" 
-                   data-lang-es="Inicio" data-lang-en="Home">Inicio</a>
-            
-            <a href="#fases" class="menu-item" data-scroll=".fases" 
-               data-lang-es="Las 4 Fases" data-lang-en="The 4 Phases">Las 4 Fases</a>
-            
-            <a href="#plantillas-oferta" class="menu-item" data-scroll=".plantillas-oferta" 
-               data-lang-es="Plantillas Web" data-lang-en="Web Templates">Plantillas Web</a>
-            
-            <a href="#proyectos" class="menu-item" data-scroll=".proyectos" 
-               data-lang-es="Proyectos" data-lang-en="Projects">Proyectos</a>
-            
-            <a href="#servicios" class="menu-item" data-scroll=".servicios" 
-               data-lang-es="Servicios" data-lang-en="Services">Servicios</a>
-            
-            <a href="#sobre-septima" class="menu-item" data-scroll=".sobre-septima" 
-               data-lang-es="Sobre Séptima Pacha" data-lang-en="About Séptima Pacha">Sobre Séptima Pacha</a>
-            
-            <a href="#contacto" class="menu-item" data-scroll=".contacto" 
-               data-lang-es="Conexión" data-lang-en="Connection">Conexión</a>
+            <a href="#umbral" class="menu-item">Inicio</a>
+            <a href="#servicios" class="menu-item">Servicios</a>
+            <a href="#sobre-septima" class="menu-item">Sobre Séptima Pacha</a>
+            <a href="#contacto" class="menu-item">Contacto</a>
         </div>
-
         <div class="whatsapp-btn-container">
             <a href="https://wa.me/5493874471122" target="_blank" class="whatsapp-btn">
-                <i class="fab fa-whatsapp"></i>
-                <span data-lang-es="Contáctanos por WhatsApp" data-lang-en="Contact us on WhatsApp">
-                    Contáctanos por WhatsApp
-                </span>
+                <i class="fab fa-whatsapp"></i> WhatsApp
             </a>
         </div>
     </nav>
 
-    <!-- HERO SECTION -->
+    <!-- HERO -->
     <section class="umbral" id="umbral">
-        <!-- SVGs Decorativos Andinos - LADO IZQUIERDO -->
         <svg class="decorative-svg top-left" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-            <path class="svg-path" d="M100,20 L120,80 L180,100 L120,120 L100,180 L80,120 L20,100 L80,80 Z" 
-                  fill="none" stroke="var(--oro)" stroke-width="2" opacity="0.3"/>
-            <circle cx="100" cy="100" r="60" fill="none" stroke="var(--oro)" stroke-width="1" opacity="0.2"/>
+            <path class="svg-path" d="M100,20 L120,80 L180,100 L120,120 L100,180 L80,120 L20,100 L80,80 Z" stroke-width="2"/>
+            <circle class="svg-path" cx="100" cy="100" r="60" stroke-width="1"/>
         </svg>
         
         <svg class="decorative-svg top-left-2" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-            <path class="svg-path" d="M40,40 L160,40 L100,160 Z" 
-                  fill="none" stroke="var(--fuego)" stroke-width="2" opacity="0.3"/>
-            <path d="M70,70 L130,70 L100,130 Z" fill="none" stroke="var(--fuego)" stroke-width="1" opacity="0.2"/>
+            <path class="svg-path" d="M40,40 L160,40 L100,160 Z" stroke-width="2"/>
+            <path class="svg-path" d="M70,70 L130,70 L100,130 Z" stroke-width="1"/>
         </svg>
         
         <svg class="decorative-svg bottom-left" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-            <rect x="50" y="50" width="100" height="100" 
-                  fill="none" stroke="var(--agua)" stroke-width="2" opacity="0.3" transform="rotate(45 100 100)"/>
-            <circle cx="100" cy="100" r="40" fill="none" stroke="var(--agua)" stroke-width="1" opacity="0.2"/>
+            <rect class="svg-path" x="50" y="50" width="100" height="100" stroke-width="2" transform="rotate(45 100 100)"/>
+            <circle class="svg-path" cx="100" cy="100" r="40" stroke-width="1"/>
         </svg>
 
-        <!-- Chakana Central Animada -->
         <div class="hero-chakana">
             <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
                 <line x1="200" y1="50" x2="200" y2="350" stroke="var(--oro)" stroke-width="3" class="chakana-line"/>
                 <line x1="50" y1="200" x2="350" y2="200" stroke="var(--oro)" stroke-width="3" class="chakana-line"/>
-                
-                <path d="M200,120 L220,120 L220,140 L240,140 L240,160 L260,160 M200,120 L180,120 L180,140 L160,140 L160,160 L140,160" 
-                      stroke="var(--oro)" stroke-width="2" fill="none" class="chakana-detail" opacity="0.7"/>
-                <path d="M200,280 L220,280 L220,260 L240,260 L240,240 L260,240 M200,280 L180,280 L180,260 L160,260 L160,240 L140,240" 
-                      stroke="var(--oro)" stroke-width="2" fill="none" class="chakana-detail" opacity="0.7"/>
-                <path d="M120,200 L120,220 L140,220 L140,240 L160,240 L160,260 M120,200 L120,180 L140,180 L140,160 L160,160" 
-                      stroke="var(--oro)" stroke-width="2" fill="none" class="chakana-detail" opacity="0.7"/>
-                <path d="M280,200 L280,220 L260,220 L260,240 L240,240 L240,260 M280,200 L280,180 L260,180 L260,160 L240,160" 
-                      stroke="var(--oro)" stroke-width="2" fill="none" class="chakana-detail" opacity="0.7"/>
-                
                 <circle cx="200" cy="200" r="30" stroke="var(--oro)" stroke-width="3" fill="none" class="chakana-center"/>
-                <circle cx="200" cy="200" r="15" fill="var(--oro)" opacity="0.3" class="chakana-center-fill"/>
-                
-                <rect x="60" y="60" width="20" height="20" fill="var(--tierra)" opacity="0.5" class="chakana-corner"/>
-                <rect x="320" y="60" width="20" height="20" fill="var(--fuego)" opacity="0.5" class="chakana-corner"/>
-                <rect x="60" y="320" width="20" height="20" fill="var(--agua)" opacity="0.5" class="chakana-corner"/>
-                <rect x="320" y="320" width="20" height="20" fill="var(--aire)" opacity="0.5" class="chakana-corner"/>
+                <circle cx="200" cy="200" r="15" fill="var(--oro)" class="chakana-center-fill"/>
+                <rect x="60" y="60" width="20" height="20" fill="var(--tierra)" class="chakana-corner"/>
+                <rect x="320" y="60" width="20" height="20" fill="var(--fuego)" class="chakana-corner"/>
+                <rect x="60" y="320" width="20" height="20" fill="var(--agua)" class="chakana-corner"/>
+                <rect x="320" y="320" width="20" height="20" fill="var(--aire)" class="chakana-corner"/>
             </svg>
         </div>
 
         <div class="hero-content">
-            <h2 class="titulo-principal animate-title" data-lang-es="Séptima Pacha" data-lang-en="Seventh Pacha">
-                Séptima Pacha
-            </h2>
-            
+            <h2 class="titulo-principal">Séptima Pacha</h2>
             <div class="subtitulo-container">
                 <div class="line-decoration left"></div>
-                <h1 class="subtitulo animate-subtitle" 
-                    data-lang-es="Tu Marca con Raíces, Proyectada al Mundo" 
-                    data-lang-en="Your Brand with Roots, Projected to the World">
-                    Tu Marca con Raíces, Proyectada al Mundo
-                </h1>
+                <h1 class="subtitulo">Tu Marca con Raíces</h1>
                 <div class="line-decoration right"></div>
             </div>
-
-            <p class="hero-description animate-description" 
-               data-lang-es="Un espacio donde convergen raíces ancestrales y visión digital. Creamos experiencias que honran el pasado mientras abrazan el futuro." 
-               data-lang-en="A space where ancestral roots and digital vision converge. We create experiences that honor the past while embracing the future.">
-                Un espacio donde convergen raíces ancestrales y visión digital. Creamos experiencias que honran el pasado mientras abrazan el futuro.
-            </p>
-
-            <div class="hero-ctas animate-ctas">
-                <a href="#fases" class="cta-primary">
-                    <span data-lang-es="Explorar Fases" data-lang-en="Explore Phases">Explorar Fases</span>
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                        <path d="M5 10H15M15 10L10 5M15 10L10 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    </svg>
-                </a>
-                <a href="#proyectos" class="cta-secondary">
-                    <span data-lang-es="Ver Proyectos" data-lang-en="View Projects">Ver Proyectos</span>
-                </a>
+            <p class="hero-description">Un espacio donde convergen raíces ancestrales y visión digital. Creamos experiencias que honran el pasado mientras abrazan el futuro.</p>
+            <div class="hero-ctas">
+                <a href="#servicios" class="cta-primary"><span>Explorar</span><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10H15M15 10L10 5M15 10L10 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></a>
+                <a href="#sobre-septima" class="cta-secondary">Información</a>
             </div>
-
             <div class="scroll-indicator">
-                <div class="scroll-mouse">
-                    <div class="scroll-wheel"></div>
-                </div>
-                <span data-lang-es="Descubre más" data-lang-en="Discover more">Descubre más</span>
+                <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
+                <span>Descubre más</span>
             </div>
         </div>
 
-        <!-- Partículas Flotantes -->
         <div class="floating-particles">
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
+            <div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div>
         </div>
     </section>
 
-    <!-- ==========================================
-     SECCIÓN 2: Las 4 Fases del Arte
-     ========================================== -->
-    <section class="fases" id="fases">
-        <h2 class="section-title fade-in" data-lang-es="Las 4 Fases del Arte" data-lang-en="The 4 Phases of Art">Las 4 Fases del Arte</h2>
-        
-        <div class="chakana-grid fade-in">
-            <!-- Implementar fases aquí (del archivo original) -->
-        </div>
-    </section>
-
-    <!-- ==========================================
-     SECCIÓN: Servicios de la Pacha - DISEÑO CIRCULAR
-     ========================================== -->
+    <!-- SERVICIOS -->
     <section class="servicios" id="servicios">
-        <h2 class="section-title fade-in" data-lang-es="Servicios de la Pacha" data-lang-en="Services of the Pacha">Servicios de la Pacha</h2>
-        
-        <div class="servicios-container fade-in">
-            <!-- AGUA - Código y Diseño Web -->
-            <a href="#agua-detail" class="servicio-circulo servicio-agua">
+        <h2 class="section-title">Servicios de la Pacha</h2>
+        <div class="servicios-container">
+            <a href="#agua" class="servicio-circulo servicio-agua">
                 <div class="circulo-interno">
                     <div class="circulo-simbolo">💧</div>
-                    <h3 class="circulo-nombre" data-lang-es="AGUA" data-lang-en="WATER">AGUA</h3>
-                    <p class="circulo-desc" data-lang-es="Código y Diseño Web" data-lang-en="Code & Web Design">Código y Diseño Web</p>
+                    <h3 class="circulo-nombre">AGUA</h3>
+                    <p class="circulo-desc">Código y Diseño</p>
                 </div>
             </a>
-
-            <!-- TIERRA - Galería Pacha -->
-            <a href="#tierra-detail" class="servicio-circulo servicio-tierra">
+            <a href="#tierra" class="servicio-circulo servicio-tierra">
                 <div class="circulo-interno">
                     <div class="circulo-simbolo">🌍</div>
-                    <h3 class="circulo-nombre" data-lang-es="TIERRA" data-lang-en="EARTH">TIERRA</h3>
-                    <p class="circulo-desc" data-lang-es="Galería Pacha" data-lang-en="Pacha Gallery">Galería Pacha</p>
+                    <h3 class="circulo-nombre">TIERRA</h3>
+                    <p class="circulo-desc">Galería Pacha</p>
                 </div>
             </a>
-
-            <!-- FUEGO - Plumafuego -->
-            <a href="#fuego-detail" class="servicio-circulo servicio-fuego">
+            <a href="#fuego" class="servicio-circulo servicio-fuego">
                 <div class="circulo-interno">
                     <div class="circulo-simbolo">🔥</div>
-                    <h3 class="circulo-nombre" data-lang-es="FUEGO" data-lang-en="FIRE">FUEGO</h3>
-                    <p class="circulo-desc" data-lang-es="Plumafuego" data-lang-en="Flamepen">Plumafuego</p>
+                    <h3 class="circulo-nombre">FUEGO</h3>
+                    <p class="circulo-desc">Plumafuego</p>
                 </div>
             </a>
-
-            <!-- AIRE - Wayra Sonora -->
-            <a href="#aire-detail" class="servicio-circulo servicio-aire">
+            <a href="#aire" class="servicio-circulo servicio-aire">
                 <div class="circulo-interno">
                     <div class="circulo-simbolo">💨</div>
-                    <h3 class="circulo-nombre" data-lang-es="AIRE" data-lang-en="AIR">AIRE</h3>
-                    <p class="circulo-desc" data-lang-es="Wayra Sonora" data-lang-en="Sonic Air">Wayra Sonora</p>
+                    <h3 class="circulo-nombre">AIRE</h3>
+                    <p class="circulo-desc">Wayra Sonora</p>
                 </div>
             </a>
         </div>
-
-        <!-- SVGs decorativos para servicios -->
-        <svg class="decorative-svg servicios-top-left" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-            <path class="svg-path" d="M100,20 L120,80 L180,100 L120,120 L100,180 L80,120 L20,100 L80,80 Z" 
-                  fill="none" stroke="var(--oro)" stroke-width="2" opacity="0.15"/>
-            <circle cx="100" cy="100" r="60" fill="none" stroke="var(--oro)" stroke-width="1" opacity="0.1"/>
-        </svg>
-        
-        <svg class="decorative-svg servicios-bottom-right" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-            <path class="svg-path" d="M100,50 L150,100 L100,150 L50,100 Z" 
-                  fill="none" stroke="var(--oro)" stroke-width="2" opacity="0.15"/>
-            <path d="M100,70 L130,100 L100,130 L70,100 Z" 
-                  fill="none" stroke="var(--oro)" stroke-width="1" opacity="0.1"/>
-        </svg>
     </section>
 
-    <!-- ==========================================
-     SECCIÓN: Sobre Séptima Pacha - NUEVA SECCIÓN
-     ========================================== -->
+    <!-- SOBRE -->
     <section class="sobre-septima" id="sobre-septima">
         <div class="sobre-container">
-            <div class="sobre-header fade-in">
-                <h2 class="sobre-titulo" data-lang-es="🌍 ¿Qué es Séptima Pacha?" data-lang-en="🌍 What is Séptima Pacha?">🌍 ¿Qué es Séptima Pacha?</h2>
+            <div class="sobre-header">
+                <h2 class="sobre-titulo">🌍 ¿Qué es Séptima Pacha?</h2>
                 <div class="sobre-intro-text">
-                    <p data-lang-es="Séptima Pacha es un universo digital nacido en el corazón del norte argentino, donde el arte, el sonido y la palabra se encuentran con la tierra, el fuego, el aire y el espíritu." data-lang-en="Séptima Pacha is a digital universe born in the heart of northern Argentina, where art, sound and word meet earth, fire, air and spirit.">Séptima Pacha es un universo digital nacido en el corazón del norte argentino, donde el arte, el sonido y la palabra se encuentran con la tierra, el fuego, el aire y el espíritu.</p>
+                    <p>Un universo digital nacido en el corazón del norte argentino, donde el arte, el sonido y la palabra convergen con los elementos ancestrales.</p>
                 </div>
             </div>
 
-            <!-- Secciones de contenido -->
             <div class="sobre-content">
-                <!-- Creadora -->
-                <div class="sobre-seccion fade-in">
+                <div class="sobre-seccion">
                     <div class="seccion-icono">👩‍🎨</div>
-                    <h3 class="seccion-titulo" data-lang-es="La Creadora" data-lang-en="The Creator">La Creadora</h3>
-                    <p data-lang-es="Fue creada por Natalia Jimena Almagro —artista multidisciplinaria, compositora y desarrolladora— con un sueño claro: conectar a creadores y creadoras del NOA con el mundo, sin perder la esencia, sin caer en lo comercial vacío, sino desde lo auténtico, lo sensible y lo profundamente humano." data-lang-en="Created by Natalia Jimena Almagro — multidisciplinary artist, composer and developer — with a clear dream: to connect creators from the NOA with the world.">Fue creada por Natalia Jimena Almagro —artista multidisciplinaria, compositora y desarrolladora— con un sueño claro: conectar a creadores y creadoras del NOA con el mundo, sin perder la esencia, sin caer en lo comercial vacío, sino desde lo auténtico, lo sensible y lo profundamente humano.</p>
+                    <h3 class="seccion-titulo">La Creadora</h3>
+                    <p>Natalia Jimena Almagro - Artista multidisciplinaria, compositora y desarrolladora. Un sueño: conectar creadores del NOA con el mundo.</p>
                 </div>
 
-                <!-- Qué es -->
-                <div class="sobre-seccion fade-in">
-                    <div class="seccion-icono">🌟</div>
-                    <h3 class="seccion-titulo" data-lang-es="¿Qué es exactamente?" data-lang-en="What exactly is it?">¿Qué es exactamente?</h3>
-                    <p data-lang-es="No es solo una galería, ni solo una biblioteca, ni solo una fonoteca. Es un ecosistema vivo, donde cada sección honra un elemento ancestral… y a quienes lo habitan." data-lang-en="It's not just a gallery, not just a library, not just a phonoteca. It's a living ecosystem.">No es solo una galería, ni solo una biblioteca, ni solo una fonoteca. Es un ecosistema vivo, donde cada sección honra un elemento ancestral… y a quienes lo habitan.</p>
-                </div>
-
-                <!-- Secciones -->
                 <div class="sobre-secciones">
-                    <div class="seccion-elemento fade-in">
+                    <div class="seccion-elemento">
                         <div class="elemento-icono">🌱</div>
-                        <h4 class="elemento-titulo" data-lang-es="Galería Pacha — la tierra" data-lang-en="Pacha Gallery — the earth">Galería Pacha — la tierra</h4>
-                        <p data-lang-es="Espacio dedicado al arte visual: pintura, cerámica, tatuaje, diseño, video y más. Aquí, las obras brotan como semillas de la tierra salteña, sanjuanina, jujeña… con raíz en lo andino, pero mirada contemporánea." data-lang-en="Space dedicated to visual art: painting, ceramics, tattoo, design, video and more.">Espacio dedicado al arte visual: pintura, cerámica, tatuaje, diseño, video y más. Aquí, las obras brotan como semillas de la tierra salteña, sanjuanina, jujeña… con raíz en lo andino, pero mirada contemporánea.</p>
-                        <p class="elemento-lema" data-lang-es="Porque el arte no se vende: se siembra." data-lang-en="Because art is not sold: it is sown.">💚 Porque el arte no se vende: se siembra.</p>
+                        <h4 class="elemento-titulo">Galería Pacha</h4>
+                        <p>Arte visual: pintura, cerámica, tatuaje, diseño, video.</p>
+                        <p class="elemento-lema">💚 El arte no se vende: se siembra.</p>
                     </div>
-
-                    <div class="seccion-elemento fade-in">
+                    <div class="seccion-elemento">
                         <div class="elemento-icono">📜</div>
-                        <h4 class="elemento-titulo" data-lang-es="Plumafuego — el fuego" data-lang-en="Flamepen — the fire">Plumafuego — el fuego</h4>
-                        <p data-lang-es="Tu biblioteca de fuego: textos, poesía, ensayos, manifiestos y relatos que arden con verdad. Un lugar donde las palabras no solo se leen, sino que iluminan, transforman y queman lo viejo." data-lang-en="Your fire library: texts, poetry, essays, manifestos and stories that burn with truth.">Tu biblioteca de fuego: textos, poesía, ensayos, manifiestos y relatos que arden con verdad. Un lugar donde las palabras no solo se leen, sino que iluminan, transforman y queman lo viejo.</p>
-                        <p class="elemento-lema" data-lang-es="Porque escribir es encender." data-lang-en="Because writing is to ignite.">🔥 Porque escribir es encender.</p>
+                        <h4 class="elemento-titulo">Plumafuego</h4>
+                        <p>Textos, poesía, ensayos que arden con verdad.</p>
+                        <p class="elemento-lema">🔥 Escribir es encender.</p>
                     </div>
-
-                    <div class="seccion-elemento fade-in">
+                    <div class="seccion-elemento">
                         <div class="elemento-icono">🎶</div>
-                        <h4 class="elemento-titulo" data-lang-es="Wayra Sonora — el aire" data-lang-en="Wayra Sonora — the air">Wayra Sonora — el aire</h4>
-                        <p data-lang-es="La fonoteca de Séptima Pacha: cantos en quechua, composiciones originales, sonidos del monte, voces que viajan en el viento. Aquí, el aire lleva lo que el corazón no puede callar." data-lang-en="Séptima Pacha's phonoteca: Quechua chants, original compositions, forest sounds, voices that travel on the wind.">La fonoteca de Séptima Pacha: cantos en quechua, composiciones originales, sonidos del monte, voces que viajan en el viento. Aquí, el aire lleva lo que el corazón no puede callar.</p>
-                        <p class="elemento-lema" data-lang-es="Porque el viento también canta." data-lang-en="Because the wind also sings.">💨 Porque el viento también canta.</p>
+                        <h4 class="elemento-titulo">Wayra Sonora</h4>
+                        <p>Cantos, composiciones, sonidos del monte.</p>
+                        <p class="elemento-lema">💨 El viento también canta.</p>
                     </div>
                 </div>
 
-                <!-- Por qué existe -->
-                <div class="sobre-seccion sobre-filosofia fade-in">
-                    <div class="seccion-icono">💫</div>
-                    <h3 class="seccion-titulo" data-lang-es="¿Por qué existe Séptima Pacha?" data-lang-en="Why does Séptima Pacha exist?">¿Por qué existe Séptima Pacha?</h3>
-                    <div class="filosofia-items">
-                        <div class="filosofia-item">
-                            <span class="item-mark">✨</span>
-                            <p data-lang-es="El arte no necesita validación externa para ser valioso." data-lang-en="Art does not need external validation to be valuable.">El arte no necesita validación externa para ser valioso.</p>
-                        </div>
-                        <div class="filosofia-item">
-                            <span class="item-mark">🗣️</span>
-                            <p data-lang-es="Las voces del interior merecen resonar globalmente." data-lang-en="The voices from within deserve to resonate globally.">Las voces del interior merecen resonar globalmente.</p>
-                        </div>
-                        <div class="filosofia-item">
-                            <span class="item-mark">💻</span>
-                            <p data-lang-es="La tecnología puede ser cálida, si la construimos con alma." data-lang-en="Technology can be warm if we build it with soul.">La tecnología puede ser cálida, si la construimos con alma.</p>
-                        </div>
-                        <div class="filosofia-item">
-                            <span class="item-mark">❤️</span>
-                            <p data-lang-es="Ningún creador debe elegir entre pagar las cuentas o honrar su esencia." data-lang-en="No creator should have to choose between paying bills or honoring their essence.">Ningún creador debe elegir entre pagar las cuentas o honrar su esencia.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- CTA final -->
-                <div class="sobre-cta fade-in">
-                    <h3 class="cta-titulo" data-lang-es="💌 ¿Te sentís en casa?" data-lang-en="💌 Do you feel at home?">💌 ¿Te sentís en casa?</h3>
-                    <p data-lang-es="Si tu obra nace de la tierra, si tus palabras arden, si tu voz viaja en el viento… este es tu lugar." data-lang-en="If your work is born from the earth, if your words burn, if your voice travels on the wind… this is your place.">Si tu obra nace de la tierra, si tus palabras arden, si tu voz viaja en el viento… este es tu lugar.</p>
+                <div class="sobre-cta">
+                    <h3 class="cta-titulo">💌 ¿Te sentís en casa?</h3>
+                    <p>Si tu obra nace de la tierra, si tus palabras arden, si tu voz viaja en el viento… este es tu lugar.</p>
                     <div class="cta-buttons">
-                        <a href="#servicios" class="cta-btn" data-lang-es="Explorar" data-lang-en="Explore">Explorar</a>
-                        <a href="https://wa.me/5493874471122" class="cta-btn cta-whatsapp" data-lang-es="Conectar" data-lang-en="Connect">Conectar</a>
+                        <a href="#servicios" class="cta-btn">Explorar</a>
+                        <a href="https://wa.me/5493874471122" class="cta-btn cta-whatsapp">Conectar</a>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- SVGs decorativos -->
-        <svg class="decorative-svg sobre-top-left" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-            <path class="svg-path" d="M100,20 L120,80 L180,100 L120,120 L100,180 L80,120 L20,100 L80,80 Z" 
-                  fill="none" stroke="var(--oro)" stroke-width="2" opacity="0.2"/>
-            <circle cx="100" cy="100" r="60" fill="none" stroke="var(--oro)" stroke-width="1" opacity="0.15"/>
-        </svg>
-        
-        <svg class="decorative-svg sobre-bottom-right" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-            <path class="svg-path" d="M100,50 L150,100 L100,150 L50,100 Z" 
-                  fill="none" stroke="var(--oro)" stroke-width="2" opacity="0.2"/>
-            <path d="M100,70 L130,100 L100,130 L70,100 Z" 
-                  fill="none" stroke="var(--oro)" stroke-width="1" opacity="0.15"/>
-        </svg>
     </section>
 
-    <!-- ==========================================
-     SECCIÓN 7: Contacto
-     ========================================== -->
+    <!-- CONTACTO -->
     <section class="contacto" id="contacto">
-        <h2 class="section-title fade-in" data-lang-es="Conexión" data-lang-en="Connection">Conexión</h2>
-        <form class="formulario fade-in">
+        <h2 class="section-title">Conexión</h2>
+        <form class="formulario">
             <div class="campo">
-                <label for="nombre" data-lang-es="Nombre" data-lang-en="Name">Nombre</label>
+                <label for="nombre">Nombre</label>
                 <input type="text" id="nombre" name="nombre" required>
             </div>
             <div class="campo">
-                <label for="email" data-lang-es="Email" data-lang-en="Email">Email</label>
+                <label for="email">Email</label>
                 <input type="email" id="email" name="email" required>
             </div>
             <div class="campo">
-                <label for="mensaje" data-lang-es="Mensaje" data-lang-en="Message">Mensaje</label>
+                <label for="mensaje">Mensaje</label>
                 <textarea id="mensaje" name="mensaje" rows="5" required></textarea>
             </div>
-            <button type="submit" class="btn-enviar" data-lang-es="Sembrar Mensaje" data-lang-en="Plant Message">Sembrar Mensaje</button>
+            <button type="submit" class="btn-enviar">Sembrar Mensaje</button>
         </form>
-
-        <!-- SVGs decorativos contacto -->
-        <svg class="decorative-svg contacto-bg-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-                <filter id="glowContact">
-                    <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
-                    <feMerge>
-                        <feMergeNode in="coloredBlur"/>
-                        <feMergeNode in="SourceGraphic"/>
-                    </feMerge>
-                </filter>
-            </defs>
-            <path d="M100,50 L150,100 L100,150 L50,100 Z" fill="none" stroke="var(--oro)" stroke-width="1" opacity="0.15" filter="url(#glowContact)"/>
-            <path d="M100,70 L130,100 L100,130 L70,100 Z" fill="none" stroke="var(--oro)" stroke-width="0.5" opacity="0.1"/>
-        </svg>
     </section>
 
-    <script src="carrusel-horizontal.js"></script>
-    <script src="script-nuevo.js"></script>
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        const languageToggle = document.getElementById('languageToggle');
+        const menuBoton = document.getElementById('menuBoton');
+        const menuCerrar = document.getElementById('menuCerrar');
+        const expandableMenu = document.getElementById('expandableMenu');
+        const menuItems = document.querySelectorAll('.menu-item');
+        const splashScreen = document.getElementById('splashScreen');
+        const customCursor = document.querySelector('.custom-cursor');
+
+        // Splash Screen
+        window.addEventListener('load', () => {
+            if (splashScreen) {
+                gsap.to(splashScreen, { opacity: 0, duration: 1, delay: 1.5, ease: 'power2.inOut', onComplete: () => { splashScreen.style.display = 'none'; } });
+            }
+        });
+
+        // Language Toggle
+        languageToggle.addEventListener('click', () => {
+            const text = languageToggle.textContent;
+            languageToggle.textContent = text === 'EN' ? 'ES' : 'EN';
+        });
+
+        // Menu
+        function toggleMenu() {
+            const isOpen = expandableMenu.classList.contains('open');
+            if (isOpen) {
+                expandableMenu.classList.remove('open');
+                gsap.to(expandableMenu, { duration: 0.3, x: 100, opacity: 0, ease: 'back.in' });
+            } else {
+                expandableMenu.classList.add('open');
+                gsap.to(expandableMenu, { duration: 0.3, x: 0, opacity: 1, ease: 'back.out' });
+            }
+        }
+
+        menuBoton.addEventListener('click', toggleMenu);
+        menuCerrar.addEventListener('click', toggleMenu);
+        menuItems.forEach(item => item.addEventListener('click', toggleMenu));
+
+        // Cursor
+        document.addEventListener('mousemove', (e) => {
+            gsap.to(customCursor, { x: e.clientX - 5, y: e.clientY - 5, duration: 0.1, overwrite: 'auto' });
+        });
+        document.addEventListener('mouseenter', () => customCursor.style.display = 'block');
+        document.addEventListener('mouseleave', () => customCursor.style.display = 'none');
+
+        // Hero Animations
+        gsap.fromTo('.titulo-principal', { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: 'power2.out', delay: 0.3 });
+        gsap.fromTo('.subtitulo', { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: 'power2.out', delay: 0.5 });
+        gsap.fromTo('.hero-description', { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: 'power2.out', delay: 0.7 });
+
+        // Servicios
+        const serviciosCirculos = document.querySelectorAll('.servicio-circulo');
+        serviciosCirculos.forEach((circulo) => {
+            circulo.addEventListener('mouseenter', () => {
+                gsap.to(circulo, { duration: 0.4, scale: 1.15, y: -20, ease: 'back.out' });
+                const simbolo = circulo.querySelector('.circulo-simbolo');
+                if (simbolo) gsap.to(simbolo, { duration: 0.4, scale: 1.2, rotation: 360, ease: 'back.out' });
+            });
+            circulo.addEventListener('mouseleave', () => {
+                gsap.to(circulo, { duration: 0.4, scale: 1, y: 0, ease: 'back.out' });
+                const simbolo = circulo.querySelector('.circulo-simbolo');
+                if (simbolo) gsap.to(simbolo, { duration: 0.4, scale: 1, rotation: 0, ease: 'back.out' });
+            });
+        });
+
+        // SVG Animations
+        gsap.utils.toArray('.decorative-svg').forEach((svg, index) => {
+            gsap.to(svg, { duration: 8 + (index * 2), y: -20, rotation: 5, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+        });
+
+       
+    </script>
 </body>
 </html>
