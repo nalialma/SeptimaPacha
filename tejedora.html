@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Mujer que Tejía con Lluvia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital@0;1&family=Bodoni+Moda:ital@0;1&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --gold: #c9a961;
+            --dark: #0f0e0c;
+            --cream: #f5f1e8;
+            --blue: #4a7ba7;
+            --earth: #8b7355;
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            background: #1a1915;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--cream);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 80vh;
+            border: 3px solid var(--gold);
+        }
+
+        .container::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.1), transparent);
+            transform: translateX(-50%);
+        }
+
+        .page {
+            padding: 60px 50px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .page:first-child {
+            border-right: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .page-number {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            color: var(--earth);
+            text-align: center;
+            margin-top: auto;
+            padding-top: 20px;
+            letter-spacing: 1px;
+        }
+
+        .page-content {
+            flex: 1;
+        }
+
+        .page-title {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 32px;
+            color: var(--dark);
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .page-subtitle {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: var(--gold);
+            text-transform: uppercase;
+            margin-bottom: 30px;
+        }
+
+        p {
+            font-size: 17px;
+            line-height: 1.9;
+            color: var(--dark);
+            text-align: justify;
+            margin-bottom: 20px;
+        }
+
+        .dialogue {
+            font-style: italic;
+            color: var(--blue);
+            border-left: 3px dashed var(--blue);
+            padding-left: 20px;
+            margin: 25px 0;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 100;
+        }
+
+        button {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid var(--gold);
+            background: var(--cream);
+            cursor: pointer;
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--dark);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: var(--gold);
+            color: var(--cream);
+            transform: scale(1.1);
+        }
+
+        button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .counter {
+            position: fixed;
+            top: 20px;
+            right: 30px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            letter-spacing: 1px;
+            color: var(--gold);
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            .page:first-child {
+                border-right: none;
+                border-bottom: 1px solid rgba(0,0,0,0.05);
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="counter" id="counter">Página 1-2 de 10</div>
+    
+    <div class="container">
+        <div class="page" id="pageLeft"></div>
+        <div class="page" id="pageRight"></div>
+    </div>
+
+    <div class="controls">
+        <button id="prevBtn">‹</button>
+        <button id="nextBtn">›</button>
+    </div>
+
+    <script>
+        const pages = [
+            {
+                left: `<div class="page-subtitle">Historias del Alma • Volumen I</div>
+                        <div class="page-title">🌙 La Mujer que Tejía con Lluvia</div>
+                        <div class="page-content">
+                            <p>En el corazón de la Quebrada de Humahuaca, donde el viento canta en quechua y las piedras guardan siglos de silencio, vive Mamá Juana. No es su nombre de pila —nadie recuerda cuál era—, pero todos en Tilcara la llaman así desde que el último cura del pueblo dijo, medio en broma, medio en rezo: "Esa mujer no teje lana… teje bendiciones."</p>
+                        </div>
+                        <div class="page-number">página 1</div>`,
+                right: `<div class="page-content">
+                            <p>Juana nació en 1938, en una casa de adobe sin puerta, solo una cortina de cuero de cabra. A los siete años ya hilaba con sus dedos agrietados; a los doce, tejía mantas que los viajeros juraban "calentaban el alma, no solo el cuerpo". Pero su verdadero don no era el telar: era escuchar el cielo.</p>
+                        </div>
+                        <div class="page-number">página 2</div>`
+            },
+            {
+                left: `<div class="page-content">
+                            <p>En el norte, la sequía no es solo falta de agua. Es hambre de esperanza. En 2016, tras tres años sin lluvia, los pozos se secaron, las cabras murieron flacas, y hasta los cactus parecían rendirse. Muchos jóvenes se fueron a Jujuy, a Salta, a Buenos Aires. Pero Juana se quedó.</p>
+                            <p>Cada mañana, tejía una chalina azul —el color de la lluvia que ya no venía— y la colgaba en el algarrobo frente a su casa.</p>
+                        </div>
+                        <div class="page-number">página 3</div>`,
+                right: `<div class="page-content">
+                            <p class="dialogue">—¿Para quién es esa chalina, Mamá Juana? —le preguntaban los pocos niños que quedaban.</p>
+                            <p class="dialogue">—Para la primera gota —respondía ella, sin dejar de hilar.</p>
+                            <p>Nadie entendía. Hasta que, en enero de 2017, llovió. No una llovizna tímida, sino un aguacero que duró tres días y tres noches, como si el cielo se hubiera arrepentido. Los ríos volvieron a cantar. Los pozos se llenaron.</p>
+                        </div>
+                        <div class="page-number">página 4</div>`
+            },
+            {
+                left: `<div class="page-content">
+                            <p>Y en medio del barro, los vecinos vieron algo increíble: docenas de chalinas azules, mojadas y brillantes, ondeando en los árboles de todo el pueblo.</p>
+                            <p>Resulta que, sin que nadie lo supiera, Juana había estado regalando sus tejidos a las familias más golpeadas. "No es magia", dice ella hoy, a sus 86 años, mientras sus manos siguen moviéndose como si acariciaran el viento.</p>
+                        </div>
+                        <div class="page-number">página 5</div>`,
+                right: `<div class="page-content">
+                            <p class="dialogue">"La lluvia siempre escucha… cuando le hablás con las manos quietas y el corazón abierto."</p>
+                            <p>Hoy, su telar está en el Museo Arqueológico de Tilcara. Pero si pasás por su casa al atardecer, verás una chalina azul nueva colgando del algarrobo.</p>
+                            <p>Y si tenés suerte… tal vez la lluvia te alcance antes de irte.</p>
+                        </div>
+                        <div class="page-number">página 6</div>`
+            },
+            {
+                left: `<div class="page-title">📜 Nota al pie</div>
+                        <div class="page-content">
+                            <p>Esta historia se inspira en hechos reales documentados por el Ministerio de Cultura de Jujuy y testimonios recogidos en Tilcara entre 2016 y 2018, durante la severa sequía que afectó al NOA.</p>
+                        </div>
+                        <div class="page-number">página 7</div>`,
+                right: `<div class="page-content">
+                            <p>Mujeres tejedoras como Juana (nombre cambiado por privacidad) jugaron un rol clave en mantener viva la identidad comunitaria, usando el tejido no solo como arte, sino como resistencia espiritual.</p>
+                        </div>
+                        <div class="page-number">página 8</div>`
+            },
+            {
+                left: `<div class="page-title">⚜ Fuentes</div>
+                        <div class="page-content">
+                            <p style="margin-bottom: 15px;">❖ "Tejedoras de la Quebrada", Programa Patrimonio Vivo, Jujuy (2019)</p>
+                            <p style="margin-bottom: 15px;">❖ Entrevistas del Archivo Oral del Museo Arqueológico de Tilcara</p>
+                            <p>❖ Registros del Ministerio de Cultura de Jujuy (2016-2018)</p>
+                        </div>
+                        <div class="page-number">página 9</div>`,
+                right: `<div class="page-content" style="text-align: center; justify-content: center; display: flex; flex-direction: column;">
+                            <p style="font-family: 'Bodoni Moda', serif; font-size: 48px; color: var(--gold); margin: 30px 0;">🌙</p>
+                            <p style="font-family: 'Montserrat', sans-serif; font-size: 13px; letter-spacing: 2px; color: var(--earth); text-transform: uppercase;">Fin del Volumen I</p>
+                            <p style="font-family: 'Crimson Text', serif; font-size: 14px; color: var(--earth); margin-top: 20px; font-style: italic;">Historias del Alma</p>
+                        </div>
+                        <div class="page-number">página 10</div>`
+            }
+        ];
+
+        const pageLeft = document.getElementById('pageLeft');
+        const pageRight = document.getElementById('pageRight');
+        const counter = document.getElementById('counter');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        let current = 0;
+
+        function render() {
+            const page = pages[current];
+            pageLeft.innerHTML = page.left;
+            pageRight.innerHTML = page.right;
+            counter.textContent = `Página ${current * 2 + 1}-${current * 2 + 2} de ${pages.length * 2}`;
+            prevBtn.disabled = current === 0;
+            nextBtn.disabled = current === pages.length - 1;
+        }
+
+        prevBtn.addEventListener('click', () => {
+            if (current > 0) {
+                current--;
+                render();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (current < pages.length - 1) {
+                current++;
+                render();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' && current > 0) { current--; render(); }
+            if (e.key === 'ArrowRight' && current < pages.length - 1) { current++; render(); }
+        });
+
+        render();
+    </script>
+</body>
+</html>
