@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -71,8 +71,17 @@
         .chakana-corner { animation: cornerPulse 1.5s ease-in-out infinite; }
         @keyframes cornerPulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.7; } }
 
-        .hero-content { flex: 1; margin-left: 10%; position: relative; z-index: 10; max-width: 600px; }
-        .titulo-principal { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 8vw, 4rem); color: var(--oro); margin-bottom: 2rem; font-weight: 700; }
+        .hero-content { flex: 1; margin-left: 10%; position: relative; z-index: 10; max-width: 700px; }
+        
+        .titulo-principal { 
+            font-family: 'Playfair Display', serif; 
+            font-size: clamp(4rem, 14vw, 8.5rem); 
+            color: var(--oro); 
+            margin-bottom: 2rem; 
+            font-weight: 700;
+            line-height: 0.85;
+            letter-spacing: -3px;
+        }
 
         .subtitulo-container { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2rem; }
         .line-decoration { flex: 1; height: 2px; background: linear-gradient(90deg, transparent, var(--oro), transparent); }
@@ -297,28 +306,28 @@
     <section class="servicios" id="servicios">
         <h2 class="section-title">Servicios de la Pacha</h2>
         <div class="servicios-container">
-            <a href="#agua-code.html" class="servicio-circulo servicio-agua">
+            <a href="agua-code.html" class="servicio-circulo servicio-agua">
                 <div class="circulo-interno">
                     <div class="circulo-simbolo">💧</div>
                     <h3 class="circulo-nombre">AGUA</h3>
                     <p class="circulo-desc">Código y Diseño</p>
                 </div>
             </a>
-            <a href="#tierra.html" class="servicio-circulo servicio-tierra">
+            <a href="tierra.html" class="servicio-circulo servicio-tierra">
                 <div class="circulo-interno">
                     <div class="circulo-simbolo">🌍</div>
                     <h3 class="circulo-nombre">TIERRA</h3>
                     <p class="circulo-desc">Galería Pacha</p>
                 </div>
             </a>
-            <a href="#fuego.html" class="servicio-circulo servicio-fuego">
+            <a href="fuego.html" class="servicio-circulo servicio-fuego">
                 <div class="circulo-interno">
                     <div class="circulo-simbolo">🔥</div>
                     <h3 class="circulo-nombre">FUEGO</h3>
                     <p class="circulo-desc">Plumafuego</p>
                 </div>
             </a>
-            <a href="#aire.html" class="servicio-circulo servicio-aire">
+            <a href="aire.html" class="servicio-circulo servicio-aire">
                 <div class="circulo-interno">
                     <div class="circulo-simbolo">💨</div>
                     <h3 class="circulo-nombre">AIRE</h3>
@@ -469,9 +478,6 @@
         gsap.utils.toArray('.decorative-svg').forEach((svg, index) => {
             gsap.to(svg, { duration: 8 + (index * 2), y: -20, rotation: 5, repeat: -1, yoyo: true, ease: 'sine.inOut' });
         });
-
-       
     </script>
 </body>
 </html>
-
