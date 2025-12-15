@@ -1519,6 +1519,87 @@
         .modal-close { position: absolute; top: 2rem; right: 2rem; background: none; border: none; font-size: 2.5rem; color: var(--oro); cursor: pointer; transition: all 0.3s ease; z-index: 10; }
         .modal-close:hover { transform: rotate(90deg) scale(1.1); }
 
+        /* SERVICIO MODAL CONTENT */
+        .servicio-modal { 
+            text-align: center; 
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        @keyframes fadeInUp { 
+            from { 
+                opacity: 0; 
+                transform: translateY(20px); 
+            } 
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            } 
+        }
+
+        .servicio-modal h2 { 
+            font-family: 'Playfair Display', serif; 
+            font-size: 2.5rem; 
+            color: var(--oro); 
+            margin-bottom: 1.5rem; 
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .servicio-modal p { 
+            font-size: 1.15rem; 
+            line-height: 1.85; 
+            color: rgba(255, 255, 255, 0.95); 
+            margin-bottom: 3rem;
+            text-align: left;
+            background: rgba(243, 156, 18, 0.05);
+            padding: 2rem;
+            border-radius: 16px;
+            border-left: 4px solid var(--oro);
+        }
+
+        .modal-buttons { 
+            display: flex; 
+            gap: 1.5rem; 
+            justify-content: center; 
+            flex-wrap: wrap;
+        }
+
+        .btn-modal { 
+            padding: 1.2rem 3rem; 
+            border: none; 
+            border-radius: 50px; 
+            font-weight: 700;
+            font-size: 1.1rem; 
+            cursor: pointer; 
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-modal-primary { 
+            background: linear-gradient(135deg, var(--oro), var(--fuego)); 
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(243, 156, 18, 0.3);
+        }
+
+        .btn-modal-primary:hover { 
+            transform: translateY(-3px);
+            box-shadow: 0 20px 50px rgba(243, 156, 18, 0.5);
+            letter-spacing: 0.5px;
+        }
+
+        .btn-modal-secondary { 
+            background: transparent;
+            color: var(--oro);
+            border: 2px solid var(--oro);
+        }
+
+        .btn-modal-secondary:hover { 
+            background: rgba(243, 156, 18, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(243, 156, 18, 0.3);
+        }
+
         .modal-body { 
             font-size: 0.95rem; 
             line-height: 1.6; 
@@ -1759,6 +1840,11 @@
             </div>
         </div>
 
+        <div class="floating-particles">
+            <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+        </div>
+    </section>
+
     <!-- SERVICIOS -->
     <section class="servicios" id="servicios">
         <h2 class="section-title">Servicios de la Pacha</h2>
@@ -1984,6 +2070,52 @@
         serviciosCirculos.forEach(circulo => {
             circulo.style.cursor = 'pointer';
             circulo.addEventListener('click', () => {
+                const servicio = circulo.dataset.servicio;
+                
+                // Información de cada servicio
+                const servicios = {
+                    agua: {
+                        nombre: '💧 AGUA - Código y Diseño',
+                        descripcion: 'Creamos experiencias digitales fluidas y adaptables. Desarrollo web, diseño UX/UI, optimización SEO y soluciones tecnológicas que navegan por el futuro.',
+                        url: 'https://agua.septima-pacha.com',
+                        urlTexto: 'Explorar Agua'
+                    },
+                    tierra: {
+                        nombre: '🌍 TIERRA - Galería Pacha',
+                        descripcion: 'Espacio dedicado al arte visual del NOA. Pintura, cerámica, tatuaje, diseño gráfico y videoarte. Donde el arte brota como semillas de la tierra salteña.',
+                        url: 'https://tierra-viva.septima-pacha.com',
+                        urlTexto: 'Ver Galería'
+                    },
+                    fuego: {
+                        nombre: '🔥 FUEGO - Plumafuego',
+                        descripcion: 'Tu biblioteca de fuego: textos, poesía, manifiestos y relatos que arden con verdad. Palabras que iluminan, transforman y queman lo viejo.',
+                        url: 'https://fuego-letra.septima-pacha.com',
+                        urlTexto: 'Leer Textos'
+                    },
+                    aire: {
+                        nombre: '💨 AIRE - Wayra Sonora',
+                        descripcion: 'La fonoteca de Séptima Pacha: cantos en quechua, composiciones originales, sonidos del monte. Voces que viajan en el viento andino.',
+                        url: 'https://wayra-sonora.septima-pacha.com',
+                        urlTexto: 'Escuchar Música'
+                    }
+                };
+                
+                const info = servicios[servicio];
+                
+                // Llenar el modal con información
+                const modalBody = document.getElementById('modalBody');
+                modalBody.innerHTML = `
+                    <div class="servicio-modal">
+                        <h2>${info.nombre}</h2>
+                        <p>${info.descripcion}</p>
+                        <div class="modal-buttons">
+                            <a href="${info.url}" target="_blank" class="btn-modal btn-modal-primary">${info.urlTexto}</a>
+                            <button class="btn-modal btn-modal-secondary" onclick="document.getElementById('modalOverlay').classList.remove('active'); document.body.style.overflow = 'auto';">Cerrar</button>
+                        </div>
+                    </div>
+                `;
+                
+                // Mostrar el modal
                 modalOverlay.classList.add('active');
                 document.body.style.overflow = 'hidden';
             });
@@ -1991,4 +2123,3 @@
     </script>
 </body>
 </html>
-
