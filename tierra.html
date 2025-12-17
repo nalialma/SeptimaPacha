@@ -552,10 +552,38 @@
             opacity: 0;
             letter-spacing: 0.5px;
             transition: color 0.8s ease;
+            margin-bottom: 3rem;
         }
 
         body.day-mode .hero-subtitle {
             color: #333;
+        }
+
+        .hero-cta-btn {
+            background: linear-gradient(135deg, #FF6B35, #8B4513);
+            color: white;
+            border: none;
+            padding: 1.1rem 2.8rem;
+            border-radius: 35px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            text-decoration: none;
+            display: inline-block;
+            letter-spacing: 0.5px;
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.25);
+            animation: fadeInUp 1s ease-out 5.4s forwards;
+            opacity: 0;
+        }
+
+        body.day-mode .hero-cta-btn {
+            background: linear-gradient(135deg, #FFA500, #FF8C00);
+        }
+
+        .hero-cta-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 45px rgba(255, 107, 53, 0.4);
         }
 
         @keyframes fadeInUp {
@@ -1064,9 +1092,8 @@
                 <p class="hero-subtitle" data-es="Museo Virtual de Arte que celebra la creatividad ancestral y contemporánea del norte argentino" data-en="Virtual Art Museum celebrating ancestral and contemporary creativity from northern Argentina">
                     Museo Virtual de Arte que celebra la creatividad ancestral y contemporánea del norte argentino
                 </p>
+                <a href="museopacha.htm" class="hero-cta-btn" data-es="Visita Galería Interactiva" data-en="Visit Interactive Gallery">Visita Galería Interactiva</a>
             </div>
-            
-      
         </section>
 
         <!-- SECCIONES DE ARTE -->
@@ -1184,7 +1211,7 @@
             } catch (e) {}
         }
 
-        // Datos de artistas con meta description para SEO
+        // Datos de artistas con fotos
         const artistasData = {
             artesanias: [
                 { 
@@ -1192,7 +1219,7 @@
                     desc: 'Cerámica ancestral con diseño contemporáneo', 
                     descEn: 'Ancestral ceramics with contemporary design',
                     seoDesc: 'Artesanías de cerámica única en Salta, Argentina. Diseños ancestrales con técnicas contemporáneas.',
-                    img: 'https://via.placeholder.com/180?text=ALHUA',
+                    img: 'https://images.unsplash.com/photo-1578500494198-246f612d03b3?w=400&h=400&fit=crop',
                     keywords: 'artesanía, cerámica, salta, argentina, arte ancestral'
                 },
                 { 
@@ -1200,7 +1227,7 @@
                     desc: 'Creaciones de barro y tradición', 
                     descEn: 'Clay and tradition creations',
                     seoDesc: 'Artesanías tradicionales de barro trabajadas por artesanos salteños.',
-                    img: 'https://via.placeholder.com/180?text=Artesano',
+                    img: 'https://images.unsplash.com/photo-1578500494198-246f612d03b3?w=400&h=400&fit=crop',
                     keywords: 'artesano, barro, tradición, salta'
                 }
             ],
@@ -1210,7 +1237,7 @@
                     desc: 'Vasijas únicas handmade', 
                     descEn: 'Unique handmade vessels',
                     seoDesc: 'Cerámica artesanal handmade. Vasijas únicas creadas con técnicas ancestrales andinas.',
-                    img: 'https://via.placeholder.com/180?text=ALHUA',
+                    img: 'https://images.unsplash.com/photo-1578500494198-246f612d03b3?w=400&h=400&fit=crop',
                     keywords: 'cerámica, vasijas, handmade, andino, salta'
                 }
             ],
@@ -1220,7 +1247,7 @@
                     desc: 'Retratos con alma y línea', 
                     descEn: 'Portraits with soul and line',
                     seoDesc: 'Dibujos y retratos artísticos que capturan la esencia del arte contemporáneo.',
-                    img: 'https://via.placeholder.com/180?text=Naliart',
+                    img: 'https://images.unsplash.com/photo-1578926078328-123c32e126e2?w=400&h=400&fit=crop',
                     keywords: 'dibujo, arte, retratos, naliart, salta'
                 }
             ],
@@ -1230,7 +1257,7 @@
                     desc: 'Colores del norte argentino', 
                     descEn: 'Colors of northern Argentina',
                     seoDesc: 'Pintura contemporánea inspirada en los colores y paisajes del norte argentino.',
-                    img: 'https://via.placeholder.com/180?text=Pintor',
+                    img: 'https://images.unsplash.com/photo-1561214115-6d2f1b0609fa?w=400&h=400&fit=crop',
                     keywords: 'pintura, arte, norte argentino, salta, colores'
                 }
             ],
@@ -1240,7 +1267,7 @@
                     desc: 'Formas que respiran', 
                     descEn: 'Forms that breathe',
                     seoDesc: 'Esculturas contemporáneas con influencia andina. Arte que respira con la tierra.',
-                    img: 'https://via.placeholder.com/180?text=Escultor',
+                    img: 'https://images.unsplash.com/photo-1577720643272-265f434e64b9?w=400&h=400&fit=crop',
                     keywords: 'escultura, arte, andino, salta, formas'
                 }
             ],
@@ -1250,7 +1277,7 @@
                     desc: 'Marcas profundas en la matriz', 
                     descEn: 'Deep marks on the matrix',
                     seoDesc: 'Grabados artísticos que preservan historias y universos personales del artista.',
-                    img: 'https://via.placeholder.com/180?text=Grabador',
+                    img: 'https://images.unsplash.com/photo-1578500494198-246f612d03b3?w=400&h=400&fit=crop',
                     keywords: 'grabado, arte, matriz, salta, grabador'
                 }
             ],
@@ -1260,7 +1287,7 @@
                     desc: 'Arte y consciencia ambiental', 
                     descEn: 'Art and environmental consciousness',
                     seoDesc: 'Arte sustentable con conciencia ambiental. Nuevas prácticas creativas respetuosas con la tierra.',
-                    img: 'https://via.placeholder.com/180?text=NPS',
+                    img: 'https://images.unsplash.com/photo-1578500494198-246f612d03b3?w=400&h=400&fit=crop',
                     keywords: 'arte sustentable, ambiental, consciente, salta, nps'
                 }
             ]
@@ -1539,7 +1566,3 @@
     </script>
 </body>
 </html>
-
-
-
-
