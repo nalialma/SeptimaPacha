@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tierra Viva - Museo Virtual Nali</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Cormorant+Garamond:wght@300;400;600&family=Bebas+Neue&family=Righteous&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gold: #d4af37;
+            --dark-gold: #8b7355;
+            --cream: #f5e6d3;
+            --dark-bg: #0b1026;
+            --burgundy: #8b3a3a;
+            --terracotta: #c85a3a;
+            --sage: #6b8e6b;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: linear-gradient(135deg, #0b1026 0%, #1a2847 100%);
+            min-height: 100vh;
+            overflow: hidden;
+            color: #dfd89c;
+        }
+
+        .museum-container {
+            width: 100%;
+            height: 100vh;
+            perspective: 1000px;
+            position: relative;
+        }
+
+        /* ==================== ENTRANCE VIEW ==================== */
+        .entrance-view {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: linear-gradient(to bottom, #1a1a2e 0%, #0b1026 50%, #16213e 100%);
+            z-index: 1;
+        }
+
+        .entrance-view::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(139, 115, 85, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .entrance-content {
+            text-align: center;
+            animation: fadeInDown 0.8s ease-out;
+            position: relative;
+            z-index: 2;
+        }
+
+        .entrance-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4em;
+            font-weight: 900;
+            color: var(--gold);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            text-shadow: 
+                0 0 20px rgba(212, 175, 55, 0.5),
+                2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .entrance-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3em;
+            color: var(--dark-gold);
+            margin-bottom: 50px;
+            letter-spacing: 4px;
+            font-weight: 300;
+        }
+
+        .entrance-button {
+            background: linear-gradient(135deg, var(--gold) 0%, #daa520 100%);
+            color: #0b1026;
+            padding: 18px 50px;
+            border-radius: 2px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 20px;
+            border: 3px solid var(--dark-gold);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            box-shadow: 
+                0 10px 30px rgba(212, 175, 55, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .entrance-button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+
+        .entrance-button:hover {
+            background: linear-gradient(135deg, #e8c547 0%, #d4af37 100%);
+            transform: scale(1.08);
+            box-shadow: 
+                0 15px 40px rgba(212, 175, 55, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        }
+
+        /* ==================== MUSEUM INTERIOR ==================== */
+        .museum-interior {
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            background: linear-gradient(to bottom, #1a1a2e 0%, #0b1026 50%, #16213e 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .museum-interior.active {
+            display: flex;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        /* ==================== GALLERY SELECTOR ==================== */
+        .gallery-selector {
+            position: absolute;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 200;
+            display: flex;
+            gap: 15px;
+            background: rgba(11, 16, 38, 0.9);
+            padding: 20px 30px;
+            border-radius: 0;
+            border: 3px solid var(--gold);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
+        }
+
+        .gallery-btn {
+            background: rgba(212, 175, 55, 0.15);
+            color: var(--gold);
+            border: 2px solid var(--dark-gold);
+            padding: 10px 18px;
+            border-radius: 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+
+        .gallery-btn:hover {
+            background: rgba(212, 175, 55, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .gallery-btn.active {
+            background: var(--gold);
+            color: #0b1026;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .gallery-indicator {
+            color: var(--dark-gold);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-family: 'Bebas Neue', sans-serif;
+            border-left: 2px solid var(--dark-gold);
+            padding-left: 15px;
+            margin-left: 10px;
+        }
+
+        .gallery-menu-btn {
+            background: linear-gradient(135deg, rgba(139, 115, 85, 0.3), rgba(212, 175, 55, 0.2));
+            color: var(--gold);
+            border: 2px solid var(--dark-gold);
+            padding: 10px 18px;
+            border-radius: 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: bold;
+            margin-left: auto;
+        }
+
+        .gallery-menu-btn:hover {
+            background: linear-gradient(135deg, rgba(139, 115, 85, 0.5), rgba(212, 175, 55, 0.4));
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        /* ==================== BACK BUTTON ==================== */
+        .back-button {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            z-index: 250;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(139, 115, 85, 0.3));
+            color: var(--gold);
+            border: 2px solid var(--gold);
+            padding: 12px 20px;
+            border-radius: 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: none;
+            font-weight: bold;
+        }
+
+        .back-button.show {
+            display: block;
+        }
+
+        .back-button:hover {
+            background: rgba(212, 175, 55, 0.4);
+            transform: translateX(-5px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        /* ==================== GALLERY PERSPECTIVE ==================== */
+        .gallery-perspective {
+            perspective: 1200px;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            flex: 1;
+        }
+
+        .gallery-wall {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            width: 50%;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-auto-rows: auto;
+            gap: 30px;
+            padding: 140px 35px 60px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            opacity: 0;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .gallery-wall.active {
+            opacity: 1;
+        }
+
+        .gallery-wall::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .gallery-wall::-webkit-scrollbar-track {
+            background: rgba(139, 115, 85, 0.1);
+        }
+
+        .gallery-wall::-webkit-scrollbar-thumb {
+            background: rgba(212, 175, 55, 0.5);
+            border-radius: 4px;
+        }
+
+        .wall-left {
+            left: 0;
+            border-right: 3px dashed var(--dark-gold);
+            transform: perspective(1200px) rotateY(12deg);
+            transform-origin: right center;
+        }
+
+        .wall-right {
+            right: 0;
+            border-left: 3px dashed var(--dark-gold);
+            transform: perspective(1200px) rotateY(-12deg);
+            transform-origin: left center;
+        }
+
+        /* ==================== ART FRAMES ==================== */
+        .art-frame {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, #d4af37, #aa8c35);
+            border: 12px solid var(--dark-gold);
+            overflow: hidden;
+            box-shadow: 
+                0 10px 25px rgba(0, 0, 0, 0.7),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+            position: relative;
+            animation: frameSlideIn 0.6s ease-out backwards;
+        }
+
+        .art-frame:hover {
+            transform: scale(1.1) translateY(-12px) rotate(1deg);
+            box-shadow: 
+                0 20px 40px rgba(212, 175, 55, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .art-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .art-frame:hover img {
+            transform: scale(1.08);
+        }
+
+        .art-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent);
+            color: var(--gold);
+            padding: 20px 10px 12px;
+            font-size: 12px;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-weight: bold;
+        }
+
+        .art-frame:hover .art-label {
+            opacity: 1;
+        }
+
+        /* ==================== THEME STYLES ==================== */
+        /* VICTORIAN THEME (Default) */
+        .museum-interior.theme-victorian {
+            background: linear-gradient(135deg, #1a1520 0%, #0b1026 50%, #1a1a3a 100%);
+        }
+
+        /* CERAMIC THEME - VINTAGE */
+        .museum-interior.theme-ceramic {
+            background: linear-gradient(to bottom, 
+                #d4a574 0%, 
+                #c89968 25%, 
+                #b8885c 50%, 
+                #a87850 75%, 
+                #986844 100%);
+        }
+
+        .gallery-wall.ceramic-wall {
+            background: linear-gradient(to bottom, 
+                rgba(212, 165, 116, 0.3), 
+                rgba(200, 153, 104, 0.2));
+        }
+
+        .wall-left.ceramic-wall {
+            border-right: 3px solid rgba(139, 90, 43, 0.6);
+            background: linear-gradient(to right, 
+                rgba(139, 90, 43, 0.4), 
+                transparent);
+        }
+
+        .wall-right.ceramic-wall {
+            border-left: 3px solid rgba(139, 90, 43, 0.6);
+            background: linear-gradient(to left, 
+                rgba(139, 90, 43, 0.4), 
+                transparent);
+        }
+
+        /* TATTOO THEME */
+        .museum-interior.theme-tattoo {
+            background: linear-gradient(to bottom,
+                #1a1a1a 0%,
+                #2d2d2d 25%,
+                #1a1a1a 50%,
+                #0d0d0d 75%,
+                #000000 100%);
+        }
+
+        .gallery-wall.tattoo-wall {
+            background: linear-gradient(to bottom,
+                rgba(255, 69, 0, 0.05),
+                rgba(255, 20, 147, 0.05));
+        }
+
+        .wall-left.tattoo-wall {
+            border-right: 3px dashed rgba(255, 69, 0, 0.6);
+            background: linear-gradient(to right,
+                rgba(51, 51, 51, 0.8),
+                transparent);
+        }
+
+        .wall-right.tattoo-wall {
+            border-left: 3px dashed rgba(255, 69, 0, 0.6);
+            background: linear-gradient(to left,
+                rgba(51, 51, 51, 0.8),
+                transparent);
+        }
+
+        .art-frame.tattoo-frame {
+            border-color: #ff4500;
+            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+            box-shadow:
+                0 0 20px rgba(255, 69, 0, 0.4),
+                0 10px 25px rgba(0, 0, 0, 0.8),
+                inset 0 1px 0 rgba(255, 100, 0, 0.2);
+        }
+
+        .art-frame.tattoo-frame:hover {
+            box-shadow:
+                0 0 30px rgba(255, 69, 0, 0.8),
+                0 20px 40px rgba(255, 69, 0, 0.3),
+                inset 0 1px 0 rgba(255, 100, 0, 0.3);
+            border-color: #ff6347;
+        }
+
+        /* NALIA ART THEME - POP ART */
+        .museum-interior.theme-nalia {
+            background: linear-gradient(135deg, #ff1493 0%, #ff69b4 20%, #ffb6c1 40%, #0a0e27 60%, #1a1a2e 80%, #0b1026 100%);
+            animation: popArtGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes popArtGlow {
+            0%, 100% {
+                filter: brightness(1);
+            }
+            50% {
+                filter: brightness(1.1) saturate(1.2);
+            }
+        }
+
+        .gallery-wall.nalia-wall {
+            background: linear-gradient(to bottom,
+                rgba(255, 20, 147, 0.15),
+                rgba(0, 255, 255, 0.1),
+                rgba(255, 215, 0, 0.1));
+        }
+
+        .wall-left.nalia-wall {
+            border-right: 3px solid rgba(255, 20, 147, 0.8);
+            background: linear-gradient(to right,
+                rgba(255, 20, 147, 0.2),
+                transparent);
+        }
+
+        .wall-right.nalia-wall {
+            border-left: 3px solid rgba(0, 255, 255, 0.8);
+            background: linear-gradient(to left,
+                rgba(0, 255, 255, 0.2),
+                transparent);
+        }
+
+        .art-frame.nalia-frame {
+            border-color: #ff1493;
+            background: linear-gradient(135deg, #ff1493, #ff69b4);
+            box-shadow:
+                0 0 30px rgba(255, 20, 147, 0.6),
+                0 10px 25px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 0, 0.2);
+        }
+
+        .art-frame.nalia-frame:hover {
+            box-shadow:
+                0 0 50px rgba(255, 20, 147, 1),
+                0 0 30px rgba(0, 255, 255, 0.8),
+                0 20px 40px rgba(255, 20, 147, 0.5),
+                inset 0 1px 0 rgba(255, 255, 0, 0.3);
+            border-color: #00ffff;
+            animation: naliaBounce 0.6s ease;
+        }
+
+        @keyframes naliaBounce {
+            0%, 100% { transform: scale(1.1) rotate(0deg); }
+            25% { transform: scale(1.12) rotate(2deg); }
+            75% { transform: scale(1.12) rotate(-2deg); }
+        }
+
+        /* DIGITAL ART THEME */
+        .museum-interior.theme-digital {
+            background: linear-gradient(135deg, 
+                #0a0e27 0%, 
+                #1a1a3e 25%, 
+                #2d1b4e 50%, 
+                #1a1a2e 75%, 
+                #0b1026 100%);
+            animation: digitalPulse 4s ease-in-out infinite;
+        }
+
+        @keyframes digitalPulse {
+            0%, 100% {
+                filter: hue-rotate(0deg);
+            }
+            50% {
+                filter: hue-rotate(15deg);
+            }
+        }
+
+        .gallery-wall.digital-wall {
+            background: linear-gradient(to bottom,
+                rgba(138, 43, 226, 0.1),
+                rgba(0, 255, 255, 0.1),
+                rgba(138, 43, 226, 0.1));
+        }
+
+        .wall-left.digital-wall {
+            border-right: 3px solid rgba(138, 43, 226, 0.7);
+            background: linear-gradient(to right,
+                rgba(138, 43, 226, 0.2),
+                transparent);
+        }
+
+        .wall-right.digital-wall {
+            border-left: 3px solid rgba(0, 255, 255, 0.7);
+            background: linear-gradient(to left,
+                rgba(0, 255, 255, 0.2),
+                transparent);
+        }
+
+        .art-frame.digital-frame {
+            border-color: #00ffff;
+            background: linear-gradient(135deg, #2d1b4e, #1a0033);
+            box-shadow:
+                0 0 20px rgba(0, 255, 255, 0.5),
+                0 0 40px rgba(138, 43, 226, 0.3),
+                0 10px 25px rgba(0, 0, 0, 0.8),
+                inset 0 1px 0 rgba(0, 255, 255, 0.2);
+        }
+
+        .art-frame.digital-frame:hover {
+            box-shadow:
+                0 0 30px rgba(0, 255, 255, 0.9),
+                0 0 60px rgba(138, 43, 226, 0.6),
+                0 20px 40px rgba(0, 255, 255, 0.4),
+                inset 0 1px 0 rgba(0, 255, 255, 0.3);
+            border-color: #00ff88;
+        }
+
+        /* ==================== SVG DECORATIONS ==================== */
+        .svg-decoration {
+            position: absolute;
+            opacity: 0.3;
+            pointer-events: none;
+            color: var(--gold);
+            transition: color 0.5s ease;
+        }
+
+        .corner-ornament {
+            width: 120px;
+            height: 120px;
+        }
+
+        .corner-ornament-tl {
+            top: 20px;
+            left: 20px;
+        }
+
+        .corner-ornament-tr {
+            top: 20px;
+            right: 20px;
+            transform: scaleX(-1);
+        }
+
+        .corner-ornament-bl {
+            bottom: 20px;
+            left: 20px;
+            transform: scaleY(-1);
+        }
+
+        .corner-ornament-br {
+            bottom: 20px;
+            right: 20px;
+            transform: scale(-1);
+        }
+
+        /* SVG Animations */
+        .svg-animation {
+            z-index: 50;
+            opacity: 0.6;
+            color: var(--gold);
+            transition: all 0.5s ease;
+        }
+
+        .museum-interior.theme-ceramic .svg-animation {
+            color: #8b5a2b;
+        }
+
+        .museum-interior.theme-ceramic .svg-decoration {
+            color: #8b5a2b;
+            opacity: 0.5;
+        }
+
+        .museum-interior.theme-tattoo .svg-animation {
+            color: #ff4500;
+        }
+
+        .museum-interior.theme-tattoo .svg-decoration {
+            color: #ff4500;
+            opacity: 0.4;
+        }
+
+        .museum-interior.theme-nalia .svg-animation {
+            color: #ff1493;
+            filter: drop-shadow(0 0 10px rgba(255, 20, 147, 0.6));
+        }
+
+        .museum-interior.theme-nalia .svg-decoration {
+            color: #ff1493;
+            opacity: 0.7;
+            filter: drop-shadow(0 0 5px rgba(255, 20, 147, 0.4));
+        }
+
+        .museum-interior.theme-digital .svg-animation {
+            color: #00ffff;
+            filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.5));
+        }
+
+        .museum-interior.theme-digital .svg-decoration {
+            color: #00ffff;
+            opacity: 0.6;
+            filter: drop-shadow(0 0 5px rgba(0, 255, 255, 0.3));
+        }
+
+        /* ==================== ARTIST MENU MODAL ==================== */
+        .artist-menu-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(8px);
+        }
+
+        .artist-menu-modal.active {
+            display: flex;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .artist-menu-content {
+            position: relative;
+            max-width: 900px;
+            max-height: 90vh;
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.95), rgba(11, 16, 38, 0.95));
+            border: 3px solid var(--gold);
+            padding: 50px;
+            border-radius: 0;
+            overflow-y: auto;
+            animation: zoomIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 
+                0 0 50px rgba(212, 175, 55, 0.3),
+                inset 0 0 50px rgba(212, 175, 55, 0.05);
+        }
+
+        .menu-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3em;
+            color: var(--gold);
+            text-align: center;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .menu-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1em;
+            color: var(--dark-gold);
+            text-align: center;
+            margin-bottom: 40px;
+            letter-spacing: 2px;
+        }
+
+        .artists-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .artist-card {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(139, 115, 85, 0.1));
+            border: 2px solid var(--gold);
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+            border-radius: 0;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .artist-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .artist-card:hover::before {
+            left: 100%;
+        }
+
+        .artist-card:hover {
+            transform: translateY(-15px) scale(1.05);
+            border-color: #f0e68c;
+            box-shadow: 
+                0 15px 40px rgba(212, 175, 55, 0.3),
+                0 0 20px rgba(212, 175, 55, 0.2);
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(139, 115, 85, 0.2));
+        }
+
+        .artist-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+            display: block;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .artist-card:hover .artist-icon {
+            animation: bounce 1s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .artist-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4em;
+            color: var(--gold);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .artist-card p {
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--dark-gold);
+            font-size: 0.95em;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        .artist-count {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.2);
+            color: var(--gold);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-family: 'Bebas Neue', sans-serif;
+            border: 1px solid var(--gold);
+        }
+
+        /* ==================== MODAL ==================== */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(8px);
+        }
+
+        .modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            animation: zoomIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .modal-content img {
+            max-width: 100%;
+            max-height: 85vh;
+            border: 15px solid var(--gold);
+            box-shadow: 0 0 50px rgba(212, 175, 55, 0.5);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            color: var(--gold);
+            font-size: 40px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .modal-close:hover {
+            transform: scale(1.2) rotate(90deg);
+            color: #fff;
+        }
+
+        /* ==================== ANIMATIONS ==================== */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.85);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes frameSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 768px) {
+            .entrance-title {
+                font-size: 2.5em;
+                letter-spacing: 4px;
+            }
+
+            .gallery-wall {
+                grid-template-columns: 1fr;
+                padding: 120px 15px 50px;
+                gap: 20px;
+            }
+
+            .gallery-selector {
+                flex-wrap: wrap;
+                justify-content: center;
+                width: 90%;
+                gap: 10px;
+            }
+
+            .back-button {
+                top: auto;
+                bottom: 20px;
+                left: 20px;
+            }
+
+            .svg-decoration {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="museum-container">
+        <!-- ENTRADA -->
+        <div class="entrance-view" id="entranceView">
+            <div class="entrance-content">
+                <div class="entrance-title">Tierra Viva</div>
+                <div class="entrance-subtitle">Galería Virtual de Nali</div>
+                <button class="entrance-button" onclick="enterMuseum()">✨ Entrar al Museo ✨</button>
+            </div>
+        </div>
+
+        <!-- INTERIOR DEL MUSEO -->
+        <div class="museum-interior theme-victorian" id="museumInterior">
+            <button class="back-button" id="backBtn" onclick="goBack()">← Atrás</button>
+
+            <div class="gallery-selector" id="gallerySelector">
+                <button class="gallery-btn active" data-gallery="ceramica" onclick="switchGallery('ceramica', event)">Alhua Cerámica</button>
+                <button class="gallery-btn" data-gallery="tattoo" onclick="switchGallery('tattoo', event)">Tattoo Design</button>
+                <button class="gallery-btn" data-gallery="nalia" onclick="switchGallery('nalia', event)">Nalia Art</button>
+                <button class="gallery-btn" data-gallery="digital" onclick="switchGallery('digital', event)">Arte Digital</button>
+                <button class="gallery-menu-btn" onclick="openArtistMenu()">🎨 Galeria Pacha</button>
+            </div>
+
+            <!-- DECORACIONES SVG VICTORIANAS -->
+            <svg class="svg-decoration corner-ornament corner-ornament-tl" id="svg-tl" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <g stroke="currentColor" stroke-width="1.5" fill="none">
+                    <path d="M 10 10 L 50 50 L 10 90" opacity="0.6"/>
+                    <circle cx="30" cy="30" r="8" opacity="0.4"/>
+                    <circle cx="30" cy="70" r="8" opacity="0.4"/>
+                    <path d="M 60 20 Q 80 40 60 80" opacity="0.5"/>
+                </g>
+            </svg>
+
+            <svg class="svg-decoration corner-ornament corner-ornament-tr" id="svg-tr" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <g stroke="currentColor" stroke-width="1.5" fill="none">
+                    <path d="M 10 10 L 50 50 L 10 90" opacity="0.6"/>
+                    <circle cx="30" cy="30" r="8" opacity="0.4"/>
+                    <circle cx="30" cy="70" r="8" opacity="0.4"/>
+                    <path d="M 60 20 Q 80 40 60 80" opacity="0.5"/>
+                </g>
+            </svg>
+
+            <svg class="svg-decoration corner-ornament corner-ornament-bl" id="svg-bl" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <g stroke="currentColor" stroke-width="1.5" fill="none">
+                    <path d="M 10 10 L 50 50 L 10 90" opacity="0.6"/>
+                    <circle cx="30" cy="30" r="8" opacity="0.4"/>
+                    <circle cx="30" cy="70" r="8" opacity="0.4"/>
+                    <path d="M 60 20 Q 80 40 60 80" opacity="0.5"/>
+                </g>
+            </svg>
+
+            <svg class="svg-decoration corner-ornament corner-ornament-br" id="svg-br" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <g stroke="currentColor" stroke-width="1.5" fill="none">
+                    <path d="M 10 10 L 50 50 L 10 90" opacity="0.6"/>
+                    <circle cx="30" cy="30" r="8" opacity="0.4"/>
+                    <circle cx="30" cy="70" r="8" opacity="0.4"/>
+                    <path d="M 60 20 Q 80 40 60 80" opacity="0.5"/>
+                </g>
+            </svg>
+
+            <!-- SVG ANIMADO - CERÁMICA -->
+            <svg class="svg-animation ceramic-svg" id="ceramic-animation" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="position: absolute; bottom: 60px; left: 5%; width: 150px; height: 150px;">
+                <defs>
+                    <style>
+                        @keyframes ceramicSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+                        @keyframes ceramicFloat { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
+                    </style>
+                </defs>
+                <g transform-origin="100 100" style="animation: ceramicSpin 8s linear infinite; transform-origin: 100px 100px;">
+                    <circle cx="100" cy="100" r="60" fill="none" stroke="currentColor" stroke-width="2" opacity="0.4"/>
+                    <circle cx="100" cy="50" r="15" fill="currentColor" opacity="0.6"/>
+                    <circle cx="150" cy="100" r="12" fill="currentColor" opacity="0.5"/>
+                    <circle cx="100" cy="150" r="14" fill="currentColor" opacity="0.5"/>
+                    <circle cx="50" cy="100" r="13" fill="currentColor" opacity="0.6"/>
+                </g>
+            </svg>
+
+            <!-- SVG ANIMADO - TATUAJE -->
+            <svg class="svg-animation tattoo-svg" id="tattoo-animation" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="position: absolute; bottom: 60px; right: 5%; width: 150px; height: 150px; display: none;">
+                <defs>
+                    <style>
+                        @keyframes tattooFlash { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.8; } }
+                    </style>
+                </defs>
+                <g style="animation: tattooFlash 2s ease-in-out infinite;">
+                    <path d="M 100 40 L 130 80 L 100 120 L 70 80 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+                    <circle cx="100" cy="80" r="8" fill="currentColor" opacity="0.7"/>
+                    <path d="M 60 140 Q 100 160 140 140" fill="none" stroke="currentColor" stroke-width="2" opacity="0.6"/>
+                    <line x1="50" y1="50" x2="150" y2="150" stroke="currentColor" stroke-width="1" opacity="0.4"/>
+                    <line x1="150" y1="50" x2="50" y2="150" stroke="currentColor" stroke-width="1" opacity="0.4"/>
+                </g>
+            </svg>
+
+            <!-- SVG ANIMADO - POP ART -->
+            <svg class="svg-animation nalia-svg" id="nalia-animation" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="position: absolute; bottom: 60px; left: 5%; width: 150px; height: 150px; display: none;">
+                <defs>
+                    <style>
+                        @keyframes popart-pulse { 0%, 100% { r: 20px; opacity: 0.4; } 50% { r: 40px; opacity: 0.1; } }
+                        @keyframes popart-bounce { 0%, 100% { transform: translateY(0px); } 25% { transform: translateY(-15px); } }
+                    </style>
+                </defs>
+                <g>
+                    <circle cx="100" cy="100" r="20" fill="none" stroke="currentColor" stroke-width="3" style="animation: popart-pulse 2s ease-out infinite; transform-origin: 100px 100px;"/>
+                    <circle cx="100" cy="100" r="20" fill="none" stroke="currentColor" stroke-width="3" style="animation: popart-pulse 2s ease-out 0.4s infinite; transform-origin: 100px 100px;" opacity="0.6"/>
+                    <polygon points="100,50 130,80 100,110 70,80" fill="currentColor" opacity="0.7" style="animation: popart-bounce 1.5s ease-in-out infinite;"/>
+                    <text x="100" y="160" text-anchor="middle" font-size="24" font-weight="bold" fill="currentColor" opacity="0.6">✨</text>
+                </g>
+            </svg>
+
+            <!-- SVG ANIMADO - DIGITAL -->
+            <svg class="svg-animation digital-svg" id="digital-animation" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="position: absolute; bottom: 60px; right: 5%; width: 150px; height: 150px; display: none;">
+                <defs>
+                    <style>
+                        @keyframes digitalGlow { 0%, 100% { stroke-opacity: 0.3; } 50% { stroke-opacity: 1; } }
+                        @keyframes digitalScan { 0% { y: 30; } 100% { y: 150; } }
+                    </style>
+                </defs>
+                <g>
+                    <rect x="40" y="40" width="120" height="120" fill="none" stroke="currentColor" stroke-width="2" style="animation: digitalGlow 2s ease-in-out infinite;"/>
+                    <line x1="50" y1="80" x2="150" y2="80" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+                    <line x1="50" y1="120" x2="150" y2="120" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+                    <circle cx="100" cy="100" r="30" fill="none" stroke="currentColor" stroke-width="2" style="animation: digitalGlow 1.5s ease-in-out infinite 0.3s;"/>
+                    <path d="M 60 60 L 140 140 M 140 60 L 60 140" stroke="currentColor" stroke-width="1" opacity="0.4"/>
+                </g>
+            </svg>
+
+            <div class="gallery-perspective">
+                <!-- CERÁMICA -->
+                <div class="gallery-wall wall-left active ceramic-wall" id="gallery-ceramica" data-gallery="ceramica">
+                    <div class="art-frame" onclick="openModal(this.querySelector('img').src)">
+                        <img src="https://i.pinimg.com/736x/de/c9/55/dec95579bba28914a0b2f5776b180df8.jpg" alt="Cerámica 1">
+                        <div class="art-label">Alhua 01</div>
+                    </div>
+                    <div class="art-frame" onclick="openModal(this.querySelector('img').src)">
+                        <img src="https://i.pinimg.com/736x/d0/28/30/d02830989cc5293ab60227a1baab8c8c.jpg" alt="Cerámica 2">
+                        <div class="art-label">Alhua 02</div>
+                    </div>
+                    <div class="art-frame" onclick="openModal(this.querySelector('img').src)">
+                        <img src="https://i.pinimg.com/736x/82/d4/17/82d417f70fdee714a6def77ba0003c23.jpg" alt="Cerámica 3">
+                        <div class="art-label">Alhua 03</div>
+                    </div>
+                    <div class="art-frame" onclick="openModal(this.querySelector('img').src)">
+                        <img src="https://i.pinimg.com/736x/49/c1/b1/49c1b15ad80c5fc29d963071b99b863c.jpg" alt="Cerámica 4">
+                        <div class="art-label">Alhua 04</div>
+                    </div>
+                    <div class="art-frame" onclick="openModal(this.querySelector('img').src)">
+                        <img src="https://i.pinimg.com/736x/48/0c/f5/480cf55a2618038aee58822c1476fd8a.jpg" alt="Cerámica 5">
+                        <div class="art-label">Alhua 05</div>
+                    </div>
+                </div>
+
+                <!-- TATTOO -->
+                <div class="gallery-wall wall-right tattoo-wall" id="gallery-tattoo" data-gallery="tattoo" style="display: none;">
+                    <div class="art-frame tattoo-frame" onclick="openModal(this.querySelector('img').src)">
+                        <img src="https://i.pinimg.com/736x/2b/94/20/2b9420d196b00c88f23a745d00293341.jpg" alt="Tattoo 1">
+                        <div class="art-label">Tattoo 01</div>
+                    </div>
+                    <div class="art-frame tattoo-frame" onclick="openModal(this.querySelector('img').src)">
+                        <img src="https://i.pinimg.com/736x/07/d6/0e/07d60e7a45917f79623c0826d441d757.jpg" alt="Tattoo 2">
+                        <div class="art-label">Tattoo 02</div>
+                    </div>
+                    <div class="art-frame tattoo-frame" onclick="openModal(this.querySelector('img').src)">
+                        <img src="https://i.pinimg.com/736x/15/37/d4/1537d485e56376a1c5fc342acc8d8026.jpg" alt="Tattoo 3">
+                        <div class="art-label">Tattoo 03</div>
+                    </div>
+                    <div class="art-frame tattoo-frame" onclick="openModal(this.querySelector('img').src)">
+                        <img src="https://i.pinimg.com/736x/40/6d/8d/406d8d97e6493c6c403e03908c7d0961.jpg" alt="Tattoo 4">
+                        <div class="art-label">Tattoo 04</div>
+                    </div>
+                    <div class="art-frame tattoo-frame" onclick="openModal(this.querySelector('img').src)">
+                        <img src="https://i.pinimg.com/736x/44/0d/63/440d6349847962c13dd3cb61794b45f9.jpg" alt="Tattoo 5">
+                        <div class="art-label">Tattoo 05</div>
+                    </div>
+                    <div class="art-frame tattoo-frame" onclick="openModal(this.querySelector('img').src)">
+                        <img src="https://i.pinimg.com/736x/45/8b/30/458b305c694393c734636890f4c67c79.jpg" alt="Tattoo 6">
+                        <div class="art-label">Tattoo 06</div>
+                    </div>
+                    <div class="art-frame tattoo-frame" onclick="openModal(this.querySelector('img').src)">
+                        <img src="https://i.pinimg.com/736x/d7/d5/63/d7d5633b3c9b910d235a053c15ebd2c8.jpg" alt="Tattoo 7">
+                        <div class="art-label">Tattoo 07</div>
+                    </div>
+                    <div class="art-frame tattoo-frame" onclick="openModal(this.querySelector('img').src)">
+                        <img src="https://i.pinimg.com/736x/77/39/63/773963a0b5a7ce1e6953f0d77a4f6830.jpg" alt="Tattoo 8">
+                        <div class="art-label">Tattoo 08</div>
+                    </div>
+                </div>
+
+                <!-- NALIA ART -->
+                <div class="gallery-wall wall-left nalia-wall" id="gallery-nalia" data-gallery="nalia" style="display: none;">
+                    <div class="art-frame nalia-frame" onclick="openModal(this.querySelector('img').src)">
+                        <img src="https://i.pinimg.com/736x/21/bd/24/21bd2402217441d33fa72e3ea44acc6b.jpg" alt="Nalia 1">
+                        <div class="art-label">Nalia 01</div>
+                    </div>
+                    <div class="art-frame nalia-frame" onclick="openModal(this.querySelector('img').src)">
+                        <img src="https://i.pinimg.com/736x/50/f4/fd/50f4fd15c41c698cf337449a04a98db8.jpg" alt="Nalia 2">
+                        <div class="art-label">Nalia 02</div>
+                    </div>
+                    <div class="art-frame nalia-frame" onclick="openModal(this.querySelector('img').src)">
+                        <img src="https://i.pinimg.com/736x/bf/42/a3/bf42a3ebb0fe45d99ff21a2f8693025d.jpg" alt="Nalia 3">
+                        <div class="art-label">Nalia 03</div>
+                    </div>
+                    <div class="art-frame nalia-frame" onclick="openModal(this.querySelector('img').src)">
+                        <img src="https://i.pinimg.com/736x/ae/be/d9/aebed92462028324a8f347200ddd4795.jpg" alt="Nalia 4">
+                        <div class="art-label">Nalia 04</div>
+                    </div>
+                    <div class="art-frame nalia-frame" onclick="openModal(this.querySelector('img').src)">
+                        <img src="https://i.pinimg.com/736x/ce/63/38/ce63383bcaadc7ca876f20817a5ab3e9.jpg" alt="Nalia 5">
+                        <div class="art-label">Nalia 05</div>
+                    </div>
+                    <div class="art-frame nalia-frame" onclick="openModal(this.querySelector('img').src)">
+                        <img src="https://i.pinimg.com/736x/23/a5/59/23a5599a304566cf953afa3cb19acd19.jpg" alt="Nalia 6">
+                        <div class="art-label">Nalia 06</div>
+                    </div>
+                    <div class="art-frame nalia-frame" onclick="openModal(this.querySelector('img').src)">
+                        <img src="https://i.pinimg.com/736x/bf/05/13/bf0513c65e4fbbfaafcad89ddf774ff6.jpg" alt="Nalia 7">
+                        <div class="art-label">Nalia 07</div>
+                    </div>
+                </div>
+
+                <!-- ARTE DIGITAL -->
+                <div class="gallery-wall wall-right digital-wall" id="gallery-digital" data-gallery="digital" style="display: none;">
+                    <div class="art-frame digital-frame" onclick="openModal(this.querySelector('img').src)">
+                        <img src="https://i.pinimg.com/736x/78/a8/0d/78a80dc393b779f3bdf52d2669bfb1e9.jpg" alt="Digital 1">
+                        <div class="art-label">Tarot 01</div>
+                    </div>
+                    <div class="art-frame digital-frame" onclick="openModal(this.querySelector('img').src)">
+                        <img src="https://i.pinimg.com/736x/91/dd/d9/91ddd9ccfe2420cdd9b467e7872161d7.jpg" alt="Digital 2">
+                        <div class="art-label">Tarot 02</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ARTIST MENU MODAL -->
+    <div class="modal artist-menu-modal" id="artistMenu" onclick="closeArtistMenu(event)">
+        <div class="artist-menu-content" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeArtistMenu()">&times;</span>
+            <h1 class="menu-title">🎨 Galería Pacha</h1>
+            <p class="menu-subtitle">Elige un artista para explorar su obra</p>
+            
+            <div class="artists-grid">
+                <div class="artist-card" onclick="selectArtist('ceramica')">
+                    <div class="artist-icon">🏺</div>
+                    <h3>Alhua Cerámica</h3>
+                    <p>Creativa</p>
+                    <span class="artist-count">5 obras</span>
+                </div>
+
+                <div class="artist-card" onclick="selectArtist('tattoo')">
+                    <div class="artist-icon">🎯</div>
+                    <h3>Diseño Tattoo</h3>
+                    <p>Tinta & Arte</p>
+                    <span class="artist-count">8 obras</span>
+                </div>
+
+                <div class="artist-card" onclick="selectArtist('nalia')">
+                    <div class="artist-icon">🌈</div>
+                    <h3>Nalia Art</h3>
+                    <p>Pop Art Fusion</p>
+                    <span class="artist-count">7 obras</span>
+                </div>
+
+                <div class="artist-card" onclick="selectArtist('digital')">
+                    <div class="artist-icon">💫</div>
+                    <h3>Arte Digital</h3>
+                    <p>Ciberpunk</p>
+                    <span class="artist-count">2 obras</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL PARA AMPLIACIÓN DE IMÁGENES -->
+    <div class="modal" id="imageModal" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <img id="modalImage" src="" alt="Ampliado">
+        </div>
+    </div>
+
+    <script>
+        const galleries = {
+            ceramica: { number: '01', theme: 'victorian', svg: 'ceramic-animation' },
+            tattoo: { number: '02', theme: 'tattoo', svg: 'tattoo-animation' },
+            nalia: { number: '03', theme: 'nalia', svg: 'nalia-animation' },
+            digital: { number: '04', theme: 'digital', svg: 'digital-animation' }
+        };
+
+        let currentGallery = 'ceramica';
+
+        function enterMuseum() {
+            document.getElementById('entranceView').style.display = 'none';
+            document.getElementById('museumInterior').classList.add('active');
+            document.getElementById('backBtn').classList.add('show');
+            
+            // Asegurarse de que la primera galería está activa
+            setTimeout(() => {
+                const firstBtn = document.querySelector('[data-gallery="ceramica"]');
+                if (firstBtn) {
+                    switchGallery('ceramica', { target: firstBtn });
+                }
+            }, 100);
+        }
+
+        function openArtistMenu() {
+            document.getElementById('artistMenu').classList.add('active');
+        }
+
+        function closeArtistMenu(event) {
+            if (event && event.target !== document.getElementById('artistMenu')) {
+                return;
+            }
+            document.getElementById('artistMenu').classList.remove('active');
+        }
+
+        function selectArtist(galleryName) {
+            closeArtistMenu();
+            switchGallery(galleryName, { target: document.querySelector(`[data-gallery="${galleryName}"]`) });
+        }
+
+        function switchGallery(galleryName, event) {
+            if (event && event.preventDefault) event.preventDefault();
+
+            // Ocultar todas las galerías
+            document.querySelectorAll('[data-gallery]').forEach(gallery => {
+                gallery.style.opacity = '0';
+                gallery.style.display = 'none';
+                gallery.classList.remove('active');
+            });
+
+            // Mostrar la galería seleccionada
+            const selectedGallery = document.getElementById(`gallery-${galleryName}`);
+            selectedGallery.style.display = 'grid';
+            
+            // Forzar reflow para que la animación funcione
+            selectedGallery.offsetHeight;
+            
+            selectedGallery.style.opacity = '1';
+            selectedGallery.classList.add('active');
+
+            // Actualizar botones activos
+            document.querySelectorAll('.gallery-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Marcar el botón actual como activo
+            document.querySelector(`[data-gallery="${galleryName}"]`).classList.add('active');
+
+            // Cambiar tema del museo
+            const museum = document.getElementById('museumInterior');
+            Object.keys(galleries).forEach(key => {
+                museum.classList.remove(`theme-${galleries[key].theme}`);
+            });
+
+            const theme = galleries[galleryName].theme;
+            museum.classList.add(`theme-${theme}`);
+
+            // Aplicar clases temáticas a paredes y marcos
+            applyThemeClasses(galleryName, theme);
+
+            // Cambiar SVG animado
+            switchSVGAnimation(galleryName);
+
+            // Scroll al inicio
+            const wall = document.getElementById(`gallery-${galleryName}`);
+            if (wall) {
+                wall.scrollTop = 0;
+            }
+
+            currentGallery = galleryName;
+        }
+
+        function switchSVGAnimation(galleryName) {
+            // Ocultar todos los SVGs animados
+            document.querySelectorAll('.svg-animation').forEach(svg => {
+                svg.style.display = 'none';
+            });
+
+            // Mostrar el SVG de la galería actual
+            const svgId = galleries[galleryName].svg;
+            const svgElement = document.getElementById(svgId);
+            if (svgElement) {
+                svgElement.style.display = 'block';
+            }
+        }
+
+        function applyThemeClasses(galleryName, theme) {
+            // Remover clases temáticas previas de todas las paredes
+            document.querySelectorAll('.gallery-wall').forEach(wall => {
+                wall.classList.remove('ceramic-wall', 'tattoo-wall', 'nalia-wall', 'digital-wall');
+            });
+
+            // Remover clases de frames
+            document.querySelectorAll('.art-frame').forEach(frame => {
+                frame.classList.remove('tattoo-frame', 'nalia-frame', 'digital-frame');
+            });
+
+            // Aplicar nuevas clases a la pared seleccionada
+            const wall = document.getElementById(`gallery-${galleryName}`);
+            if (wall) {
+                wall.classList.add(`${theme}-wall`);
+
+                // Aplicar clase a frames si no es tema victoriano
+                if (theme !== 'victorian') {
+                    const frames = wall.querySelectorAll('.art-frame');
+                    frames.forEach(frame => {
+                        frame.classList.add(`${theme}-frame`);
+                    });
+                }
+            }
+        }
+
+        function goBack() {
+            document.getElementById('entranceView').style.display = 'flex';
+            document.getElementById('museumInterior').classList.remove('active');
+            document.getElementById('backBtn').classList.remove('show');
+        }
+
+        function openModal(src) {
+            document.getElementById('modalImage').src = src;
+            document.getElementById('imageModal').classList.add('active');
+        }
+
+        function closeModal(event) {
+            if (event && event.target !== document.getElementById('imageModal')) {
+                return;
+            }
+            document.getElementById('imageModal').classList.remove('active');
+        }
+
+        // Cerrar modales con tecla ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+                closeArtistMenu();
+            }
+        });
+
+        // Inicializar cuando carga la página
+        window.addEventListener('load', () => {
+            applyThemeClasses('ceramica', 'victorian');
+            switchSVGAnimation('ceramica');
+        });
+    </script>
+</body>
+</html>
