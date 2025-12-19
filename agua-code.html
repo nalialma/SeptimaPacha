@@ -36,7 +36,7 @@
             padding: 0;
         }
 
-        /* SPLASH SCREEN */
+        /* ===== SPLASH SCREEN CON BURBUJAS ===== */
         .splash-screen {
             position: fixed;
             top: 0;
@@ -46,181 +46,343 @@
             background: linear-gradient(135deg, #0a1a2a 0%, #1a2a3a 50%, #0a2a1a 100%);
             z-index: 11000;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            animation: fadeOutSplash 0.8s ease-out 2.5s forwards;
         }
 
-        @keyframes fadeOutSplash {
-            0% { opacity: 1; }
-            100% { opacity: 0; visibility: hidden; }
+        .splash-screen.out {
+            animation: fadeOut 0.8s ease-out forwards;
         }
 
-        .splash-code {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(3rem, 12vw, 8rem);
-            font-weight: 700;
-            background: linear-gradient(45deg, var(--agua-primary), var(--agua-secondary), var(--agua-accent));
-            background-size: 300% 300%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: waterGradientSplash 3s ease-in-out infinite, codeFall 2.2s ease-out forwards;
-            margin-bottom: 2rem;
-            letter-spacing: 8px;
+        @keyframes fadeOut {
+            to { 
+                opacity: 0; 
+                visibility: hidden; 
+            }
         }
 
-        @keyframes codeFall {
-            0% { transform: translateY(-100px) scale(0.5); opacity: 0; }
-            30% { opacity: 1; }
-            70% { opacity: 1; }
-            100% { transform: translateY(0) scale(1); opacity: 1; }
-        }
-
-        @keyframes waterGradientSplash {
-            0%, 100% { background-position: 0% 50%; }
-            33% { background-position: 100% 50%; }
-            66% { background-position: 50% 100%; }
-        }
-
-        .splash-water-drops {
-            position: relative;
-            width: 200px;
-            height: 200px;
-            animation: splashPulse 2s ease-in-out infinite;
-        }
-
-        @keyframes splashPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        .water-drop {
+        /* Burbujas del splash */
+        .splash-bubble {
             position: absolute;
-            width: 15px;
-            height: 20px;
-            background: var(--agua-primary);
-            border-radius: 50% 50% 50% 0;
-            transform: rotate(-45deg);
-            opacity: 0.8;
-            animation: dropFall 1.5s ease-in forwards;
-        }
-
-        @keyframes dropFall {
-            0% { transform: translateY(-150px) rotate(-45deg) scale(0); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(150px) rotate(-45deg) scale(0); opacity: 0; }
-        }
-
-        .drop1 { left: 20px; animation-delay: 0s; }
-        .drop2 { left: 60px; animation-delay: 0.3s; }
-        .drop3 { left: 100px; animation-delay: 0.6s; }
-        .drop4 { left: 140px; animation-delay: 0.9s; }
-
-        .splash-ripple {
-            position: absolute;
-            width: 80px;
-            height: 80px;
-            border: 3px solid var(--agua-primary);
             border-radius: 50%;
-            bottom: 50%;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: rippleEffect 1.5s ease-out infinite;
-            opacity: 0;
+            box-shadow: inset 0 0 50px rgba(255, 255, 255, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(46, 204, 113, 0.8);
         }
 
-        @keyframes rippleEffect {
-            0% { width: 80px; height: 80px; opacity: 0.8; }
-            100% { width: 200px; height: 200px; opacity: 0; }
+        .splash-bubble.code {
+            width: 300px;
+            height: 300px;
+            font-size: 3rem;
+            left: 20%;
+            animation: bubbleIn 3s ease-out, bubbleExplode 0.6s ease-out 4s forwards;
         }
 
-        .splash-ripple1 { animation-delay: 0s; }
-        .splash-ripple2 { animation-delay: 0.5s; }
-        .splash-ripple3 { animation-delay: 1s; }
+        .splash-bubble.agua {
+            width: 300px;
+            height: 300px;
+            font-size: 3rem;
+            right: 20%;
+            animation: bubbleIn 3s ease-out 0.5s, bubbleExplode 0.6s ease-out 4.3s forwards;
+        }
 
+        .splash-bubble.small {
+            width: 100px;
+            height: 100px;
+            font-size: 0;
+        }
+
+        .small1 {
+            top: 15%;
+            left: 10%;
+            animation: bubbleIn 2s ease-out, bubbleExplode 0.4s ease-out 3.8s forwards;
+        }
+
+        .small2 {
+            top: 70%;
+            right: 15%;
+            animation: bubbleIn 2.5s ease-out 0.3s, bubbleExplode 0.4s ease-out 4.1s forwards;
+        }
+
+        .small3 {
+            bottom: 20%;
+            left: 15%;
+            animation: bubbleIn 2.2s ease-out 0.6s, bubbleExplode 0.4s ease-out 3.9s forwards;
+        }
+
+        .small4 {
+            top: 25%;
+            right: 8%;
+            animation: bubbleIn 2.8s ease-out 0.9s, bubbleExplode 0.4s ease-out 4.2s forwards;
+        }
+
+        @keyframes bubbleIn {
+            0%, 100% { 
+                transform: scale(0); 
+                opacity: 0; 
+            }
+            20%, 80% { 
+                transform: scale(1); 
+                opacity: 1; 
+            }
+        }
+
+        @keyframes bubbleExplode {
+            0% { 
+                transform: scale(1); 
+                opacity: 1; 
+            }
+            50% { 
+                transform: scale(1.2); 
+                opacity: 0.8; 
+            }
+            100% { 
+                transform: scale(2.5); 
+                opacity: 0; 
+            }
+        }
+
+        .splash-bubble::before {
+            content: '';
+            position: absolute;
+            top: 50px;
+            left: 80px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #fff;
+            filter: blur(4px);
+            opacity: 0.6;
+        }
+
+        .splash-bubble span {
+            position: absolute;
+            inset: 20px;
+            border-radius: 50%;
+        }
+
+        .splash-bubble span:nth-child(1) {
+            border-left: 25px solid #2ECC71;
+            filter: blur(12px);
+            animation: rotate360 4s linear infinite;
+        }
+
+        .splash-bubble span:nth-child(2) {
+            border-right: 25px solid #3498DB;
+            filter: blur(12px);
+            animation: rotate360 4s linear infinite reverse;
+        }
+
+        @keyframes rotate360 {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ===== BURBUJAS FLOTANTES EN LA PÁGINA ===== */
+        .floating-bubble {
+            position: fixed;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            box-shadow: inset 0 0 25px rgba(255, 255, 255, 0.25);
+            animation: float 15s ease-in-out infinite;
+            z-index: 5;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #fff;
+            text-align: center;
+            padding: 1rem;
+            line-height: 1.2;
+        }
+
+        .floating-bubble.exploded {
+            animation: bubblePageExplode 0.6s ease-out forwards;
+        }
+
+        @keyframes bubblePageExplode {
+            0% { 
+                transform: scale(1); 
+                opacity: 1; 
+            }
+            50% { 
+                transform: scale(1.3); 
+                opacity: 0.7; 
+            }
+            100% { 
+                transform: scale(2.8); 
+                opacity: 0; 
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            25% { transform: translateY(-30px) translateX(15px); }
+            50% { transform: translateY(-15px) translateX(-10px); }
+            75% { transform: translateY(-35px) translateX(20px); }
+        }
+
+        .floating-bubble::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 25px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #fff;
+            filter: blur(2px);
+            opacity: 0.5;
+        }
+
+        .floating-bubble span {
+            position: absolute;
+            inset: 10px;
+            border-radius: 50%;
+        }
+
+        .floating-bubble span:nth-child(1) {
+            border-left: 10px solid #2ECC71;
+            filter: blur(6px);
+            animation: rotate360 6s linear infinite;
+        }
+
+        .floating-bubble span:nth-child(2) {
+            border-right: 10px solid #3498DB;
+            filter: blur(6px);
+            animation: rotate360 6s linear infinite reverse;
+        }
+
+        /* ===== CURSOR PERSONALIZADO ===== */
         .custom-cursor {
             position: fixed;
             width: 24px;
             height: 24px;
-            background: radial-gradient(circle, var(--agua-accent) 0%, var(--agua-primary) 70%, transparent 100%);
+            background: radial-gradient(circle, #1ABC9C 0%, #2ECC71 70%, transparent 100%);
             border-radius: 50%;
             pointer-events: none;
             z-index: 9999;
-            box-shadow: 0 0 20px var(--agua-primary);
+            box-shadow: 0 0 20px #2ECC71;
         }
 
-        .water-particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        .particle {
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            background: var(--agua-primary);
-            border-radius: 50%;
-            animation: float-water 6s linear infinite;
-            opacity: 0;
-        }
-
-        @keyframes float-water {
-            0% { opacity: 0; transform: translateY(100vh) translateX(0) scale(0); }
-            10% { opacity: 1; transform: translateY(90vh) translateX(10px) scale(1); }
-            50% { opacity: 0.8; transform: translateY(50vh) translateX(-10px) scale(0.8); }
-            90% { opacity: 0.3; transform: translateY(10vh) translateX(15px) scale(0.5); }
-            100% { opacity: 0; transform: translateY(-10vh) translateX(0) scale(0); }
-        }
-
-        .language-toggle {
-            position: fixed;
-            top: 2rem;
-            right: 2rem;
-            z-index: 9999;
-            background: rgba(46, 204, 113, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(46, 204, 113, 0.3);
-            border-radius: 50px;
-            padding: 0.6rem 1.2rem;
-            color: var(--agua-primary);
+        /* ===== BOTÓN ANIMADO ===== */
+        .animated-button {
+            --radius: 18px;
+            border-radius: var(--radius);
             cursor: pointer;
-            transition: all 0.3s ease;
+            font-size: 1rem;
+            background: transparent;
+            border: 0;
+            position: relative;
+            min-width: 180px;
+            height: 60px;
+            font-family: 'Montserrat', sans-serif;
             font-weight: 600;
-            font-size: 0.85rem;
+        }
+
+        .animated-button .bg {
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+        }
+
+        .animated-button .bg::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: calc(var(--radius) * 1.1);
+            background: #1F9D55;
+            filter: blur(5px);
+            box-shadow: -5px 4px 0 0 rgba(46, 204, 113, 0.4),
+                        -10px 8px 0 0 rgba(46, 204, 113, 0.3);
+        }
+
+        .animated-button .wrap {
+            border-radius: inherit;
+            height: 100%;
+            transform: translate(4px, -4px);
+            padding: 2px;
+            background: linear-gradient(to bottom, #52D87E 0%, #2ECC71 100%);
+            transition: all 0.3s ease;
+        }
+
+        .animated-button .content {
             display: flex;
             align-items: center;
-            gap: 0.4rem;
-            white-space: nowrap;
+            justify-content: center;
+            height: 100%;
+            border-radius: calc(var(--radius) * 0.85);
+            background: linear-gradient(to bottom, #2ECC71 0%, #3498DB 100%);
+            color: #fff;
         }
 
-        .language-toggle:hover {
-            background: rgba(46, 204, 113, 0.2);
-            box-shadow: 0 0 15px rgba(46, 204, 113, 0.2);
-            transform: scale(1.05);
+        .animated-button:hover .wrap {
+            transform: translate(6px, -6px);
         }
 
+        /* ===== CONTENEDOR MEJORADO CON BORDES ANIMADOS ===== */
+        .enhanced-container {
+            position: relative;
+            background: rgba(10, 26, 42, 0.6);
+            border-radius: 20px;
+            padding: 2rem;
+            isolation: isolate;
+            overflow: hidden;
+        }
+
+        .enhanced-container::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 2px;
+            background: linear-gradient(135deg, #2ECC71, #3498DB, #1ABC9C);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .enhanced-container .glow-effect {
+            position: absolute;
+            inset: -2px;
+            border-radius: inherit;
+            background: conic-gradient(from 0deg, transparent 0%, #2ECC71 10%, transparent 20%, transparent 50%, #1ABC9C 60%, transparent 70%);
+            filter: blur(20px);
+            opacity: 0.3;
+            z-index: -1;
+            animation: rotateGlow 6s linear infinite;
+        }
+
+        @keyframes rotateGlow {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ===== NAVEGACIÓN ===== */
         .menu-btn {
             position: fixed;
             top: 2rem;
             left: 2rem;
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             background: rgba(46, 204, 113, 0.1);
-            border: 1px solid var(--agua-primary);
+            border: 1px solid #2ECC71;
             border-radius: 50%;
+            cursor: pointer;
+            z-index: 9998;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            z-index: 9998;
+            box-shadow: 0 0 25px rgba(46, 204, 113, 0.3);
             transition: all 0.3s ease;
         }
 
@@ -229,15 +391,37 @@
             transform: scale(1.05);
         }
 
-        .menu-btn svg {
-            width: 28px;
-            height: 28px;
-            transition: transform 0.3s ease;
-            filter: drop-shadow(0 0 2px var(--agua-primary));
+        .menu-btn .loader-inner {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            animation: colorize 6s ease-in-out infinite;
         }
 
-        .menu-btn.active svg {
-            transform: rotate(90deg);
+        @keyframes colorize {
+            0%, 100% { filter: hue-rotate(0deg); }
+            50% { filter: hue-rotate(30deg); }
+        }
+
+        .language-toggle {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            z-index: 9999;
+            background: rgba(46, 204, 113, 0.1);
+            border: 1px solid rgba(46, 204, 113, 0.3);
+            border-radius: 50px;
+            padding: 0.6rem 1.2rem;
+            color: #2ECC71;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .language-toggle:hover {
+            background: rgba(46, 204, 113, 0.2);
+            transform: scale(1.05);
         }
 
         .nav-menu {
@@ -246,40 +430,21 @@
             top: 0;
             width: 350px;
             height: 100vh;
-            background: radial-gradient(ellipse at center, rgba(10, 26, 42, 0.95) 0%, rgba(26, 42, 58, 0.98) 100%);
+            background: rgba(10, 26, 42, 0.95);
             backdrop-filter: blur(20px);
             border-right: 1px solid rgba(46, 204, 113, 0.3);
             z-index: 9997;
             padding-top: 6rem;
             overflow-y: auto;
-            transition: left 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: left 0.4s ease;
         }
 
         .nav-menu.active {
             left: 0;
         }
 
-        .nav-menu::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="30" r="3" fill="rgba(46,204,113,0.1)"/><circle cx="80" cy="50" r="2.5" fill="rgba(46,204,113,0.08)"/></svg>');
-            pointer-events: none;
-            animation: rainfallMenu 8s linear infinite;
-        }
-
-        @keyframes rainfallMenu {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(100%); }
-        }
-
         .nav-menu ul {
             list-style: none;
-            position: relative;
-            z-index: 2;
         }
 
         .nav-menu a {
@@ -288,15 +453,14 @@
             color: rgba(255, 255, 255, 0.85);
             text-decoration: none;
             font-weight: 500;
-            font-size: 1.1rem;
             transition: all 0.3s ease;
             border-left: 3px solid transparent;
         }
 
         .nav-menu a:hover {
             background: rgba(46, 204, 113, 0.15);
-            border-left-color: var(--agua-primary);
-            color: var(--agua-primary);
+            border-left-color: #2ECC71;
+            color: #2ECC71;
             padding-left: 3rem;
         }
 
@@ -306,21 +470,14 @@
             right: 7.5rem;
             z-index: 9999;
             background: rgba(46, 204, 113, 0.1);
-            backdrop-filter: blur(10px);
             border: 1px solid rgba(46, 204, 113, 0.3);
             border-radius: 50px;
             padding: 0.6rem 1.2rem;
-            color: var(--agua-primary);
+            color: #2ECC71;
             text-decoration: none;
             transition: all 0.3s ease;
             font-weight: 600;
             font-size: 0.85rem;
-            white-space: nowrap;
-        }
-
-        .nav-back:hover {
-            background: rgba(46, 204, 113, 0.2);
-            box-shadow: 0 0 15px rgba(46, 204, 113, 0.2);
         }
 
         .whatsapp-float {
@@ -334,13 +491,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
             color: #fff;
             text-decoration: none;
-            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
             z-index: 8000;
             transition: all 0.3s ease;
             animation: whatsappPulse 2s ease-in-out infinite;
+            font-size: 1.5rem;
         }
 
         @keyframes whatsappPulse {
@@ -353,7 +509,7 @@
             background: #128C7E;
         }
 
-        /* HERO SECTION */
+        /* ===== HERO SECTION ===== */
         .hero-codigo {
             min-height: 100vh;
             display: flex;
@@ -361,9 +517,7 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            position: relative;
-            background: radial-gradient(ellipse at center, rgba(46, 204, 113, 0.2) 0%, transparent 70%);
-            padding: 2rem;
+            padding: 2rem 2rem 2rem;
             padding-top: 6rem;
         }
 
@@ -375,9 +529,18 @@
         }
 
         @keyframes flow {
-            0% { text-shadow: 0 0 20px var(--agua-primary), 0 0 40px var(--agua-primary); transform: scale(1) rotate(-1deg); }
-            50% { text-shadow: 0 0 30px var(--agua-secondary), 0 0 60px var(--agua-secondary); transform: scale(1.05) rotate(1deg); }
-            100% { text-shadow: 0 0 25px var(--agua-accent), 0 0 50px var(--agua-accent); transform: scale(1.02) rotate(-0.5deg); }
+            0% { 
+                text-shadow: 0 0 20px var(--agua-primary), 0 0 40px var(--agua-primary); 
+                transform: scale(1) rotate(-1deg); 
+            }
+            50% { 
+                text-shadow: 0 0 30px var(--agua-secondary), 0 0 60px var(--agua-secondary); 
+                transform: scale(1.05) rotate(1deg); 
+            }
+            100% { 
+                text-shadow: 0 0 25px var(--agua-accent), 0 0 50px var(--agua-accent); 
+                transform: scale(1.02) rotate(-0.5deg); 
+            }
         }
 
         .hero-title {
@@ -399,27 +562,14 @@
         }
 
         .hero-subtitle {
-            font-size: clamp(1rem, 3vw, 1.8rem);
+            font-size: clamp(1rem, 3vw, 1.5rem);
             font-weight: 300;
             opacity: 0.9;
             max-width: 800px;
             margin-bottom: 3rem;
-            text-shadow: 0 0 10px rgba(46, 204, 113, 0.3);
         }
 
-        .water-quote {
-            background: rgba(46, 204, 113, 0.1);
-            border-left: 3px solid var(--agua-primary);
-            border-radius: 0 15px 15px 0;
-            padding: 2rem;
-            font-family: 'Playfair Display', serif;
-            font-size: 1.3rem;
-            font-style: italic;
-            color: var(--agua-accent);
-            max-width: 600px;
-            margin: 2rem 0;
-        }
-
+        /* ===== SECCIONES ===== */
         .section {
             min-height: 80vh;
             padding: 5rem 2rem;
@@ -430,24 +580,6 @@
             position: relative;
         }
 
-        .section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="30" r="2" fill="rgba(46,204,113,0.1)"/><circle cx="80" cy="50" r="1.5" fill="rgba(46,204,113,0.08)"/></svg>');
-            pointer-events: none;
-            animation: floatBg 20s ease-in-out infinite;
-            z-index: 0;
-        }
-
-        @keyframes floatBg {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
         .section-title {
             font-family: 'Playfair Display', serif;
             font-size: clamp(2.5rem, 6vw, 4rem);
@@ -455,8 +587,6 @@
             margin-bottom: 3rem;
             color: var(--agua-primary);
             text-shadow: 0 0 20px rgba(46, 204, 113, 0.5);
-            position: relative;
-            z-index: 1;
         }
 
         .services-grid {
@@ -465,39 +595,22 @@
             gap: 2rem;
             max-width: 1200px;
             width: 100%;
-            position: relative;
-            z-index: 1;
         }
 
         .service-card {
-            background: rgba(46, 204, 113, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid transparent;
-            border-radius: 20px;
-            padding: 2rem;
             text-align: center;
             transition: all 0.4s ease;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
         }
 
         .service-card:hover {
             transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(46, 204, 113, 0.4);
-            border-color: var(--agua-accent);
         }
 
         .service-icon {
             font-size: 4rem;
             margin-bottom: 1rem;
             display: block;
-            animation: iconFlow 3s ease-in-out infinite;
-        }
-
-        @keyframes iconFlow {
-            0% { filter: drop-shadow(0 0 10px var(--agua-primary)); }
-            100% { filter: drop-shadow(0 0 20px var(--agua-accent)); }
         }
 
         .service-title {
@@ -507,87 +620,32 @@
             color: var(--agua-accent);
         }
 
-        .service-description {
-            font-size: 0.95rem;
-            margin-bottom: 1rem;
-            line-height: 1.5;
-        }
-
         .service-price {
             font-size: 1.3rem;
             font-weight: 700;
             color: #F39C12;
-            margin-bottom: 1rem;
+            margin: 1rem 0;
         }
 
-        .service-button {
-            background: linear-gradient(45deg, var(--agua-primary), var(--agua-secondary));
-            border: none;
-            color: white;
-            padding: 0.8rem 2rem;
-            border-radius: 25px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 0.9rem;
-        }
-
-        .service-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(46, 204, 113, 0.4);
-        }
-
-        .clientes {
-            background: linear-gradient(180deg, rgba(26, 188, 156, 0.08) 0%, #1a1a1a 50%, rgba(26, 188, 156, 0.05) 100%);
-        }
-
+        /* ===== CLIENTES ===== */
         .clientes-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
             max-width: 1200px;
-            position: relative;
-            z-index: 1;
+            width: 100%;
         }
 
         .cliente-card {
-            position: relative;
-            padding: 2rem;
+            display: block;
             text-align: center;
+            text-decoration: none;
+            color: inherit;
             transition: all 0.4s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 220px;
-            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
-        }
-
-        .cliente-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at 30% 30%, rgba(46, 204, 113, 0.2), rgba(26, 188, 156, 0.1));
-            clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 50% 95%, 18% 100%, 0% 38%);
-            z-index: -1;
-            border: 1px solid var(--agua-accent);
-            transition: all 0.4s ease;
-        }
-
-        .cliente-card:hover::before {
-            background: radial-gradient(circle at 30% 30%, rgba(46, 204, 113, 0.4), rgba(26, 188, 156, 0.2));
-            box-shadow: 0 0 30px rgba(46, 204, 113, 0.5);
         }
 
         .cliente-card:hover {
             transform: translateY(-15px) scale(1.05);
-        }
-
-        .cliente-content {
-            position: relative;
-            z-index: 1;
         }
 
         .cliente-icono {
@@ -600,167 +658,31 @@
             font-size: 1.2rem;
             font-weight: 600;
             color: var(--agua-accent);
-            margin-bottom: 0.5rem;
         }
 
-        .cliente-link {
-            color: var(--agua-accent);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .cliente-link:hover {
-            color: #F39C12;
-        }
-
-        .tu-web {
-            background: linear-gradient(135deg, rgba(74, 144, 226, 0.1) 0%, rgba(46, 204, 113, 0.05) 100%);
-        }
-
-        .tu-web-content {
-            max-width: 900px;
-            margin: 0 auto;
-            text-align: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .tu-web-benefits {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin: 3rem 0;
-        }
-
-        .benefit {
-            padding: 1.5rem;
-            background: rgba(46, 204, 113, 0.1);
-            border-radius: 15px;
-            border-left: 3px solid var(--agua-primary);
-        }
-
-        .benefit-icon {
-            font-size: 2.5rem;
-            margin-bottom: 0.8rem;
-        }
-
-        .benefit-title {
-            font-weight: 600;
-            color: var(--agua-accent);
-        }
-
-        .cta-btn {
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 1rem;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.8rem;
-            transition: all 0.3s ease;
-            background: linear-gradient(135deg, var(--agua-primary), var(--agua-secondary));
-            color: #fff;
-            box-shadow: 0 10px 30px rgba(46, 204, 113, 0.3);
-            border: none;
-            cursor: pointer;
-        }
-
-        .cta-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(46, 204, 113, 0.5);
-        }
-
-        /* PLANTILLAS NAVIDEÑAS */
+        /* ===== PLANTILLAS ===== */
         .plantillas {
             background: linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .christmas-garland {
-            position: absolute;
-            width: 100%;
-            height: auto;
-            opacity: 0.8;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        .christmas-garland-top {
-            top: 5%;
-            animation: sway 4s ease-in-out infinite;
-        }
-
-        .christmas-garland-bottom {
-            bottom: 5%;
-            animation: sway 4s ease-in-out infinite reverse;
-        }
-
-        @keyframes sway {
-            0%, 100% { transform: translateX(0); }
-            50% { transform: translateX(8px); }
-        }
-
-        .festive-message {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            margin-bottom: 3rem;
-            padding: 2rem;
-            background: rgba(220, 20, 60, 0.12);
-            border: 1px solid rgba(220, 20, 60, 0.3);
-            border-radius: 15px;
-            max-width: 700px;
-        }
-
-        .festive-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.6rem;
-            color: #DC143C;
-            margin-bottom: 1rem;
-            font-weight: 700;
-        }
-
-        .festive-subtitle {
-            font-size: 1.05rem;
-            color: rgba(255, 255, 255, 0.9);
-            line-height: 1.7;
-        }
-
-        .plantillas-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
         }
 
         .plantillas-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 1.5rem;
+            max-width: 1400px;
             width: 100%;
         }
 
         .plantilla-card {
-            background: rgba(46, 204, 113, 0.08);
-            border: 1px solid rgba(46, 204, 113, 0.3);
-            border-radius: 15px;
             overflow: hidden;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
             display: flex;
             flex-direction: column;
-            height: 100%;
-            position: relative;
         }
 
         .plantilla-card:hover {
             transform: translateY(-15px) scale(1.02);
-            border-color: var(--agua-accent);
-            box-shadow: 0 25px 50px rgba(46, 204, 113, 0.4);
         }
 
         .plantilla-preview {
@@ -772,7 +694,6 @@
             align-items: center;
             justify-content: center;
             font-size: 2.5rem;
-            overflow: hidden;
         }
 
         .plantilla-oferta {
@@ -796,9 +717,6 @@
 
         .plantilla-info {
             padding: 1rem;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
         }
 
         .plantilla-nombre {
@@ -809,187 +727,14 @@
             color: var(--agua-accent);
         }
 
-        .plantilla-categoria {
-            font-size: 0.75rem;
-            color: #F39C12;
-            margin-bottom: 0.8rem;
-        }
-
         .plantilla-precio {
             font-size: 1.2rem;
             font-weight: 700;
             color: #F39C12;
-            margin-bottom: 0.8rem;
+            margin: 0.8rem 0;
         }
 
-        .plantilla-btn {
-            background: linear-gradient(135deg, var(--agua-accent), var(--agua-primary));
-            color: #fff;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.8rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            align-self: flex-start;
-            border: none;
-            cursor: pointer;
-        }
-
-        .plantilla-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(46, 204, 113, 0.4);
-        }
-
-        /* COPOS DE NIEVE SOLO EN PLANTILLAS */
-        .snowflake {
-            position: absolute;
-            top: -10px;
-            width: 10px;
-            height: 10px;
-            background: white;
-            pointer-events: none;
-            opacity: 0.7;
-            border-radius: 50%;
-            animation: snowfall 10s linear forwards;
-            z-index: 1;
-        }
-
-        @keyframes snowfall {
-            0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0.7; }
-            50% { opacity: 0.8; }
-            100% { transform: translateY(100vh) translateX(100px) rotate(360deg); opacity: 0; }
-        }
-
-        /* GORRO NAVIDEÑO */
-        .santa-hat {
-            display: inline-block;
-            width: 60px;
-            height: 50px;
-            margin-left: 10px;
-            animation: hatBounce 0.6s ease-in-out infinite;
-        }
-
-        @keyframes hatBounce {
-            0%, 100% { transform: translateY(0) rotate(-5deg); }
-            50% { transform: translateY(-10px) rotate(5deg); }
-        }
-
-        /* TÍTULO NAVIDEÑO */
-        .christmas-title {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .christmas-word {
-            color: var(--navidad-blanco);
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-
-        .christmas-word.red {
-            color: var(--navidad-rojo);
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 10000;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-            overflow-y: auto;
-            box-sizing: border-box;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: rgba(26, 26, 26, 0.9);
-            border: 1px solid rgba(46, 204, 113, 0.3);
-            border-radius: 20px;
-            max-width: 900px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-            width: 40px;
-            height: 40px;
-            background: rgba(46, 204, 113, 0.2);
-            border: none;
-            border-radius: 50%;
-            color: var(--agua-primary);
-            font-size: 1.5rem;
-            cursor: pointer;
-            z-index: 10001;
-            transition: all 0.3s ease;
-        }
-
-        .modal-close:hover {
-            background: rgba(46, 204, 113, 0.4);
-            transform: scale(1.1);
-        }
-
-        .modal-info {
-            padding: 2rem;
-        }
-
-        .modal-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: var(--agua-accent);
-        }
-
-        .modal-buttons {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin-top: 2rem;
-        }
-
-        .modal-btn {
-            flex: 1;
-            min-width: 150px;
-            padding: 1rem;
-            border-radius: 10px;
-            font-weight: 600;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-        }
-
-        .modal-btn-primary {
-            background: linear-gradient(135deg, var(--agua-primary), var(--agua-secondary));
-            color: white;
-        }
-
-        .modal-btn-secondary {
-            background: rgba(46, 204, 113, 0.2);
-            color: var(--agua-accent);
-            border: 1px solid var(--agua-accent);
-        }
-
+        /* ===== PROCESO / FLUJO DE CREACIÓN ===== */
         .process-timeline {
             max-width: 800px;
             width: 100%;
@@ -1007,16 +752,17 @@
             position: absolute;
             left: 0;
             top: 0;
-            width: 40px;
-            height: 40px;
-            background: var(--agua-primary);
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--agua-primary), var(--agua-secondary));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
             color: #fff;
-            box-shadow: 0 0 15px rgba(46, 204, 113, 0.5);
+            box-shadow: 0 0 25px rgba(46, 204, 113, 0.5);
+            font-size: 1.3rem;
         }
 
         .process-title {
@@ -1026,31 +772,13 @@
             color: var(--agua-accent);
         }
 
-        .tech-stack {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.8rem;
-            margin-top: 1.2rem;
-            justify-content: center;
+        .process-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.85);
         }
 
-        .tech-badge {
-            background: rgba(46, 204, 113, 0.15);
-            border: 1px solid rgba(46, 204, 113, 0.4);
-            border-radius: 25px;
-            padding: 0.5rem 1.2rem;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--agua-primary);
-            transition: all 0.3s ease;
-        }
-
-        .tech-badge:hover {
-            background: rgba(46, 204, 113, 0.25);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
-        }
-
+        /* ===== HERRAMIENTAS Y TECNOLOGÍAS ===== */
         .tools-section {
             margin-top: 3rem;
             padding: 2rem;
@@ -1063,11 +791,12 @@
         }
 
         .tools-title {
-            font-size: 1.4rem;
+            font-size: 1.8rem;
             font-weight: 600;
             color: var(--agua-primary);
             margin-bottom: 1.5rem;
             text-align: center;
+            font-family: 'Playfair Display', serif;
         }
 
         .tools-grid {
@@ -1109,6 +838,7 @@
             line-height: 1.5;
         }
 
+        /* ===== FILOSOFÍA FINAL ===== */
         .philosophy-section {
             background: rgba(46, 204, 113, 0.05);
             border-radius: 20px;
@@ -1118,6 +848,7 @@
             text-align: center;
             position: relative;
             z-index: 1;
+            border: 1px solid rgba(46, 204, 113, 0.2);
         }
 
         .philosophy-text {
@@ -1128,57 +859,47 @@
             font-style: italic;
         }
 
+        /* ===== ANIMACIONES ===== */
         .fade-in {
             opacity: 0;
             transform: translateY(30px);
         }
 
-        .animated-title {
-            display: inline-block;
-        }
-
-        .animated-title .char {
-            display: inline-block;
-            animation: charReveal 0.6s ease-out forwards;
-            opacity: 0;
-        }
-
-        @keyframes charReveal {
-            0% { opacity: 0; transform: translateY(30px) rotateX(-90deg); }
-            100% { opacity: 1; transform: translateY(0) rotateX(0deg); }
-        }
-
-        audio {
-            display: none;
-        }
-
-        /* RESPONSIVE - TABLET Y MOBILE */
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
-            .nav-menu { 
+            .nav-menu {
                 width: 80vw;
                 left: -80vw;
                 max-width: 300px;
             }
-            
-            .nav-back {
-                right: 5.5rem;
-                font-size: 0.75rem;
-                padding: 0.5rem 0.8rem;
-            }
-            
-            .language-toggle {
-                font-size: 0.7rem;
-                padding: 0.5rem 0.8rem;
-            }
 
-            .plantillas-grid { 
+            .plantillas-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 1.2rem;
             }
-            
-            .tu-web-benefits { 
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1rem;
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 3rem 1.5rem;
+                min-height: auto;
+            }
+
+            .hero-codigo {
+                padding: 3rem 1.5rem;
+                min-height: 80vh;
+            }
+
+            .process-step {
+                padding-left: 3rem;
+            }
+
+            .process-number {
+                width: 40px;
+                height: 40px;
+                font-size: 1.1rem;
             }
 
             .tools-grid {
@@ -1191,48 +912,21 @@
                 margin-top: 2rem;
             }
 
-            .tools-title {
+            .philosophy-section {
+                padding: 2rem;
+            }
+
+            .philosophy-text {
                 font-size: 1.2rem;
-                margin-bottom: 1.2rem;
-            }
-
-            .tool-item {
-                padding: 1rem;
-            }
-
-            .tool-icon {
-                font-size: 2rem;
-            }
-
-            .tool-name {
-                font-size: 0.95rem;
-            }
-
-            .tool-desc {
-                font-size: 0.8rem;
-            }
-            
-            .services-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .section {
-                padding: 3rem 1.5rem;
-                min-height: auto;
-            }
-            
-            .hero-codigo {
-                padding: 3rem 1.5rem;
-                min-height: 80vh;
             }
         }
-        
+
         @media (max-width: 480px) {
-            .nav-menu { 
+            .nav-menu {
                 width: 85vw;
                 left: -85vw;
             }
-            
+
             .menu-btn {
                 width: 45px;
                 height: 45px;
@@ -1240,25 +934,20 @@
                 left: 1.5rem;
             }
 
-            .menu-btn svg {
-                width: 24px;
-                height: 24px;
-            }
-            
             .nav-back {
                 top: 1.5rem;
                 right: 4.5rem;
                 font-size: 0.7rem;
                 padding: 0.4rem 0.7rem;
             }
-            
+
             .language-toggle {
                 top: 1.5rem;
                 right: 1.5rem;
                 padding: 0.4rem 0.8rem;
                 font-size: 0.65rem;
             }
-            
+
             .whatsapp-float {
                 width: 45px;
                 height: 45px;
@@ -1266,56 +955,43 @@
                 bottom: 1.5rem;
                 right: 1.5rem;
             }
-            
-            .plantillas-grid { 
+
+            .plantillas-grid {
                 grid-template-columns: 1fr;
                 gap: 1rem;
             }
-            
-            .tu-web-benefits { 
-                grid-template-columns: 1fr;
-                gap: 0.8rem;
-            }
-            
+
             .services-grid {
                 grid-template-columns: 1fr;
                 gap: 1.5rem;
             }
-            
+
             .clientes-grid {
                 grid-template-columns: 1fr;
             }
-            
+
             .section {
                 padding: 2rem 1rem;
             }
-            
+
             .hero-codigo {
                 padding: 2rem 1rem;
                 min-height: 70vh;
             }
 
-            .festive-message {
-                padding: 1.2rem;
-                margin-bottom: 1.5rem;
+            .process-step {
+                padding-left: 2.5rem;
+                margin-bottom: 2rem;
             }
 
-            .festive-title {
-                font-size: 1.1rem;
-                margin-bottom: 0.6rem;
+            .process-number {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
             }
 
-            .festive-subtitle {
-                font-size: 0.9rem;
-            }
-
-            .christmas-garland {
-                display: none;
-            }
-
-            .plantilla-preview {
-                aspect-ratio: 16 / 8;
-                font-size: 2rem;
+            .process-title {
+                font-size: 1.2rem;
             }
 
             .tools-grid {
@@ -1329,50 +1005,82 @@
             }
 
             .tools-title {
+                font-size: 1.4rem;
+            }
+
+            .philosophy-section {
+                padding: 1.5rem;
+            }
+
+            .philosophy-text {
                 font-size: 1.1rem;
-                margin-bottom: 1rem;
-            }
-
-            .tool-item {
-                padding: 0.8rem;
-            }
-
-            .tool-icon {
-                font-size: 1.8rem;
-                margin-bottom: 0.5rem;
-            }
-
-            .tool-name {
-                font-size: 0.9rem;
-                margin-bottom: 0.4rem;
-            }
-
-            .tool-desc {
-                font-size: 0.75rem;
             }
         }
     </style>
 </head>
 <body>
     <!-- SPLASH SCREEN -->
-    <div class="splash-screen">
-        <h1 class="splash-code">CODE</h1>
-        <div class="splash-water-drops">
-            <div class="water-drop drop1"></div>
-            <div class="water-drop drop2"></div>
-            <div class="water-drop drop3"></div>
-            <div class="water-drop drop4"></div>
-            <div class="splash-ripple splash-ripple1"></div>
-            <div class="splash-ripple splash-ripple2"></div>
-            <div class="splash-ripple splash-ripple3"></div>
+    <div class="splash-screen" id="splash">
+        <div class="splash-bubble code">
+            CODE
+            <span></span>
+            <span></span>
+        </div>
+        <div class="splash-bubble agua">
+            AGUA
+            <span></span>
+            <span></span>
+        </div>
+        <div class="splash-bubble small small1">
+            <span></span>
+            <span></span>
+        </div>
+        <div class="splash-bubble small small2">
+            <span></span>
+            <span></span>
+        </div>
+        <div class="splash-bubble small small3">
+            <span></span>
+            <span></span>
+        </div>
+        <div class="splash-bubble small small4">
+            <span></span>
+            <span></span>
         </div>
     </div>
 
+    <!-- BURBUJAS FLOTANTES -->
+    <div class="floating-bubble" id="b1" style="top: 10%; left: 5%;">
+        HTML5
+        <span></span>
+        <span></span>
+    </div>
+    <div class="floating-bubble" id="b2" style="top: 60%; left: 10%;">
+        CSS3
+        <span></span>
+        <span></span>
+    </div>
+    <div class="floating-bubble" id="b3" style="top: 30%; right: 8%;">
+        JavaScript
+        <span></span>
+        <span></span>
+    </div>
+    <div class="floating-bubble" id="b4" style="bottom: 15%; right: 12%;">
+        Responsive
+        <span></span>
+        <span></span>
+    </div>
+    <div class="floating-bubble" id="b5" style="top: 75%; right: 20%;">
+        GSAP
+        <span></span>
+        <span></span>
+    </div>
+
     <div class="custom-cursor"></div>
-    <div class="water-particles" id="waterParticles"></div>
-    
-    <button class="menu-btn" id="menuBtn" onclick="toggleMenu()">
-        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+
+    <!-- MENÚ HAMBURGUESA -->
+    <button class="menu-btn" onclick="toggleMenu()">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="loader-inner">
             <ellipse cx="35" cy="25" rx="10" ry="12" fill="currentColor"/>
             <path d="M 35 37 Q 30 42 35 50 Q 40 42 35 37" fill="currentColor"/>
             <ellipse cx="65" cy="35" rx="8" ry="10" fill="currentColor" opacity="0.8"/>
@@ -1383,665 +1091,410 @@
         </svg>
     </button>
 
-    <button class="language-toggle" id="languageToggle" onclick="toggleLanguage()">
-        <span id="langText">🌍 EN</span>
+    <button class="language-toggle" onclick="toggleLang()">
+        <span id="lang">EN</span>
     </button>
 
     <nav class="nav-menu" id="navMenu">
         <ul>
-            <li><a href="#inicio" onclick="toggleMenu()">🏠 <span data-key="nav_inicio">Inicio</span></a></li>
-            <li><a href="#clientes" onclick="toggleMenu()">🌊 <span data-key="nav_clientes">Clientes</span></a></li>
-            <li><a href="#tu-web" onclick="toggleMenu()">💧 <span data-key="nav_web">Tu Web</span></a></li>
-            <li><a href="#plantillas" onclick="toggleMenu()">🎨 <span data-key="nav_plantillas">Plantillas</span></a></li>
-            <li><a href="#proceso" onclick="toggleMenu()">⚙️ <span data-key="nav_proceso">Proceso</span></a></li>
+            <li><a href="#inicio" onclick="toggleMenu()">🏠 Inicio</a></li>
+            <li><a href="#clientes" onclick="toggleMenu()">🌊 Clientes</a></li>
+            <li><a href="#plantillas" onclick="toggleMenu()">🎨 Plantillas</a></li>
+            <li><a href="#proceso" onclick="toggleMenu()">⚙️ Proceso</a></li>
         </ul>
     </nav>
-    
-    <a href="index.html" class="nav-back" data-key="nav_volver">← Volver</a>
-    <a href="https://wa.me/543872271144?text=Hola%20Séptima%20Pacha,%20me%20interesa%20crear%20mi%20sitio%20web" class="whatsapp-float" target="_blank">💬</a>
 
-    <audio id="waterSound" preload="auto">
-        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAAB9AAACABAAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBg==" type="audio/wav">
-    </audio>
+    <a href="index.html" class="nav-back">← Volver</a>
+    <a href="https://wa.me/543872271144?text=Hola%20Séptima%20Pacha" class="whatsapp-float" target="_blank">💬</a>
 
     <!-- HERO SECTION -->
     <section class="hero-codigo" id="inicio">
         <div class="codigo-icon">💧</div>
         <h1 class="hero-title">Código</h1>
-        <p class="hero-subtitle" data-key="hero_subtitle"></p>
-        <div class="water-quote" data-key="water_quote"></div>
+        <p class="hero-subtitle">Elemento que fluye y transforma ideas en experiencias digitales</p>
     </section>
 
+    <!-- SERVICIOS -->
     <section class="section">
-        <h2 class="section-title fade-in">
-            <span class="animated-title" data-key="servicios_titulo">Servicios del Agua Digital</span>
-        </h2>
+        <h2 class="section-title fade-in">Servicios del Agua Digital</h2>
         <div class="services-grid">
-            <div class="service-card fade-in">
+            <div class="service-card enhanced-container fade-in">
+                <div class="glow-effect"></div>
                 <span class="service-icon">🌐</span>
-                <h3 class="service-title" data-key="paginas_web">Páginas Web Responsivas</h3>
-                <p class="service-description" data-key="paginas_desc">Sitios web adaptativos que fluyen perfectamente en cualquier dispositivo.</p>
-                <div class="service-price"><span data-key="precio_desde">Desde $</span>200.000 ARS</div>
-                <a href="https://wa.me/543872271144" class="service-button" data-key="contratar">Contratar</a>
+                <h3 class="service-title">Páginas Web Responsivas</h3>
+                <p>Sitios web adaptativos que fluyen perfectamente en cualquier dispositivo</p>
+                <div class="service-price">Desde $200.000</div>
+                <button class="animated-button" onclick="window.open('https://wa.me/543872271144','_blank')">
+                    <div class="bg"></div>
+                    <div class="wrap">
+                        <div class="content">Contratar</div>
+                    </div>
+                </button>
             </div>
-            
-            <div class="service-card fade-in">
+
+            <div class="service-card enhanced-container fade-in">
+                <div class="glow-effect"></div>
                 <span class="service-icon">🎨</span>
-                <h3 class="service-title" data-key="identidad">Identidad Visual Digital</h3>
-                <p class="service-description" data-key="identidad_desc">Logos, paletas de colores y sistemas de diseño coherentes para tu marca.</p>
-                <div class="service-price"><span data-key="precio_desde">Desde $</span>100.000 ARS</div>
-                <a href="https://wa.me/543872271144" class="service-button" data-key="contratar">Contratar</a>
+                <h3 class="service-title">Identidad Visual Digital</h3>
+                <p>Logos, paletas de colores y sistemas de diseño coherentes</p>
+                <div class="service-price">Desde $100.000</div>
+                <button class="animated-button" onclick="window.open('https://wa.me/543872271144','_blank')">
+                    <div class="bg"></div>
+                    <div class="wrap">
+                        <div class="content">Contratar</div>
+                    </div>
+                </button>
             </div>
-            
-            <div class="service-card fade-in">
+
+            <div class="service-card enhanced-container fade-in">
+                <div class="glow-effect"></div>
                 <span class="service-icon">🚀</span>
-                <h3 class="service-title" data-key="seo">Optimización & SEO</h3>
-                <p class="service-description" data-key="seo_desc">Mejora el rendimiento de tu sitio web y aumenta su visibilidad en buscadores.</p>
-                <div class="service-price"><span data-key="precio_desde">Desde $</span>280.000 ARS</div>
-                <a href="https://wa.me/543872271144" class="service-button" data-key="contratar">Contratar</a>
+                <h3 class="service-title">Optimización & SEO</h3>
+                <p>Mejora el rendimiento y aumenta la visibilidad en buscadores</p>
+                <div class="service-price">Desde $280.000</div>
+                <button class="animated-button" onclick="window.open('https://wa.me/543872271144','_blank')">
+                    <div class="bg"></div>
+                    <div class="wrap">
+                        <div class="content">Contratar</div>
+                    </div>
+                </button>
             </div>
         </div>
     </section>
 
-    <section id="clientes" class="section clientes">
-        <h2 class="section-title fade-in">
-            <span class="animated-title" data-key="clientes_activos">Nuestros Clientes Activos</span>
-        </h2>
+    <!-- CLIENTES -->
+    <section class="section" id="clientes">
+        <h2 class="section-title fade-in">Nuestros Clientes</h2>
         <div class="clientes-grid">
-            <div class="cliente-card fade-in">
-                <div class="cliente-content">
-                    <div class="cliente-icono">🏗️</div>
-                    <div class="cliente-nombre">Sinergia Desarrolladora</div>
-                    <a href="https://sinergiadesarrolladora.com/" class="cliente-link" target="_blank">Ver sitio →</a>
+            <a href="https://sinergiadesarrolladora.com/" class="cliente-card enhanced-container fade-in" target="_blank">
+                <div class="glow-effect"></div>
+                <div class="cliente-icono">🏗️</div>
+                <div class="cliente-nombre">Sinergia Desarrolladora</div>
+            </a>
+
+            <a href="https://septimapacha.com/" class="cliente-card enhanced-container fade-in" target="_blank">
+                <div class="glow-effect"></div>
+                <div class="cliente-icono">✨</div>
+                <div class="cliente-nombre">Séptima Pacha Co.</div>
+            </a>
+
+            <a href="https://allpayflora.org/" class="cliente-card enhanced-container fade-in" target="_blank">
+                <div class="glow-effect"></div>
+                <div class="cliente-icono">🌿</div>
+                <div class="cliente-nombre">Allpa y Flora</div>
+            </a>
+        </div>
+    </section>
+
+    <!-- PLANTILLAS BLACK FRIDAY -->
+    <section class="section plantillas" id="plantillas">
+        <h2 class="section-title fade-in">🎄 Black Friday 2024 🎉</h2>
+        <div class="plantillas-grid">
+            <div class="plantilla-card enhanced-container fade-in">
+                <div class="glow-effect"></div>
+                <div class="plantilla-preview">
+                    <div class="plantilla-oferta">OFERTA</div>
+                    📩
+                </div>
+                <div class="plantilla-info">
+                    <div class="plantilla-nombre">Squeeze Page</div>
+                    <div class="plantilla-precio">$202.000</div>
+                    <button class="animated-button" onclick="window.open('https://nalialma.github.io/Squeeze-page-A/','_blank')" style="width: 100%">
+                        <div class="bg"></div>
+                        <div class="wrap">
+                            <div class="content">Demo</div>
+                        </div>
+                    </button>
                 </div>
             </div>
-            <div class="cliente-card fade-in">
-                <div class="cliente-content">
-                    <div class="cliente-icono">✨</div>
-                    <div class="cliente-nombre">Séptima Pacha Co.</div>
-                    <a href="https://septimapacha.com/" class="cliente-link" target="_blank">Ver sitio →</a>
+
+            <div class="plantilla-card enhanced-container fade-in">
+                <div class="glow-effect"></div>
+                <div class="plantilla-preview">
+                    <div class="plantilla-oferta">OFERTA</div>
+                    ✈️
+                </div>
+                <div class="plantilla-info">
+                    <div class="plantilla-nombre">Travel Experience</div>
+                    <div class="plantilla-precio">$315.000</div>
+                    <button class="animated-button" onclick="window.open('https://nalialma.github.io/Nali.Travel/','_blank')" style="width: 100%">
+                        <div class="bg"></div>
+                        <div class="wrap">
+                            <div class="content">Demo</div>
+                        </div>
+                    </button>
                 </div>
             </div>
-            <div class="cliente-card fade-in">
-                <div class="cliente-content">
-                    <div class="cliente-icono">🌿</div>
-                    <div class="cliente-nombre">Allpa y Flora</div>
-                    <a href="https://allpayflora.org/" class="cliente-link" target="_blank">Ver sitio →</a>
+
+            <div class="plantilla-card enhanced-container fade-in">
+                <div class="glow-effect"></div>
+                <div class="plantilla-preview">
+                    <div class="plantilla-oferta">OFERTA</div>
+                    🔮
+                </div>
+                <div class="plantilla-info">
+                    <div class="plantilla-nombre">Tarot en Luz</div>
+                    <div class="plantilla-precio">$315.000</div>
+                    <button class="animated-button" onclick="window.open('https://nalialma.github.io/Tarot-en-Luz/','_blank')" style="width: 100%">
+                        <div class="bg"></div>
+                        <div class="wrap">
+                            <div class="content">Demo</div>
+                        </div>
+                    </button>
                 </div>
             </div>
-            <div class="cliente-card fade-in">
-                <div class="cliente-content">
-                    <div class="cliente-icono">🎨</div>
-                    <div class="cliente-nombre">Nali - Artista</div>
-                    <a href="https://nalialma.github.io/Nali/" class="cliente-link" target="_blank">Ver sitio →</a>
+
+            <div class="plantilla-card enhanced-container fade-in">
+                <div class="glow-effect"></div>
+                <div class="plantilla-preview">
+                    <div class="plantilla-oferta">OFERTA</div>
+                    🎯
+                </div>
+                <div class="plantilla-info">
+                    <div class="plantilla-nombre">Landing Premium</div>
+                    <div class="plantilla-precio">$315.000</div>
+                    <button class="animated-button" onclick="window.open('https://nalialma.github.io/Landing-Page-A1/','_blank')" style="width: 100%">
+                        <div class="bg"></div>
+                        <div class="wrap">
+                            <div class="content">Demo</div>
+                        </div>
+                    </button>
                 </div>
             </div>
-            <div class="cliente-card fade-in">
-                <div class="cliente-content">
-                    <div class="cliente-icono">📹</div>
-                    <div class="cliente-nombre">Agencia Aster</div>
-                    <a href="https://nalialma.github.io/ASTER/" class="cliente-link" target="_blank">Ver sitio →</a>
+
+            <div class="plantilla-card enhanced-container fade-in">
+                <div class="glow-effect"></div>
+                <div class="plantilla-preview">
+                    <div class="plantilla-oferta">OFERTA</div>
+                    💼
+                </div>
+                <div class="plantilla-info">
+                    <div class="plantilla-nombre">Catálogo Servicios</div>
+                    <div class="plantilla-precio">$315.000</div>
+                    <button class="animated-button" onclick="window.open('https://nalialma.github.io/servicios-plantilla/','_blank')" style="width: 100%">
+                        <div class="bg"></div>
+                        <div class="wrap">
+                            <div class="content">Demo</div>
+                        </div>
+                    </button>
                 </div>
             </div>
-            <div class="cliente-card fade-in">
-                <div class="cliente-content">
-                    <div class="cliente-icono">🐾</div>
-                    <div class="cliente-nombre">Tribu Rescate</div>
-                    <a href="https://nalialma.github.io/Tribu-Rescate-/" class="cliente-link" target="_blank">Ver sitio →</a>
+
+            <div class="plantilla-card enhanced-container fade-in">
+                <div class="glow-effect"></div>
+                <div class="plantilla-preview">
+                    <div class="plantilla-oferta">OFERTA</div>
+                    🎨
+                </div>
+                <div class="plantilla-info">
+                    <div class="plantilla-nombre">ArtePluma</div>
+                    <div class="plantilla-precio">$315.000</div>
+                    <button class="animated-button" onclick="window.open('https://nalialma.github.io/ArtePluma/','_blank')" style="width: 100%">
+                        <div class="bg"></div>
+                        <div class="wrap">
+                            <div class="content">Demo</div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <div class="plantilla-card enhanced-container fade-in">
+                <div class="glow-effect"></div>
+                <div class="plantilla-preview">
+                    <div class="plantilla-oferta">OFERTA</div>
+                    ⚖️
+                </div>
+                <div class="plantilla-info">
+                    <div class="plantilla-nombre">Despacho Legal</div>
+                    <div class="plantilla-precio">$315.000</div>
+                    <button class="animated-button" onclick="window.open('https://nalialma.github.io/plantilla-abogado/','_blank')" style="width: 100%">
+                        <div class="bg"></div>
+                        <div class="wrap">
+                            <div class="content">Demo</div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <div class="plantilla-card enhanced-container fade-in">
+                <div class="glow-effect"></div>
+                <div class="plantilla-preview">
+                    <div class="plantilla-oferta">OFERTA</div>
+                    🖼️
+                </div>
+                <div class="plantilla-info">
+                    <div class="plantilla-nombre">Arte Minimalista</div>
+                    <div class="plantilla-precio">$202.000</div>
+                    <button class="animated-button" onclick="window.open('https://nalialma.github.io/arte-basic/','_blank')" style="width: 100%">
+                        <div class="bg"></div>
+                        <div class="wrap">
+                            <div class="content">Demo</div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <div class="plantilla-card enhanced-container fade-in">
+                <div class="glow-effect"></div>
+                <div class="plantilla-preview">
+                    <div class="plantilla-oferta">OFERTA</div>
+                    🛍️
+                </div>
+                <div class="plantilla-info">
+                    <div class="plantilla-nombre">Tienda Online</div>
+                    <div class="plantilla-precio">$450.000</div>
+                    <button class="animated-button" onclick="window.open('https://nalialma.github.io/Plantilla-Tienda/','_blank')" style="width: 100%">
+                        <div class="bg"></div>
+                        <div class="wrap">
+                            <div class="content">Demo</div>
+                        </div>
+                    </button>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="tu-web" class="section tu-web">
-        <h2 class="section-title fade-in">
-            <span class="animated-title" data-key="tu_web_titulo">¿Necesitas Tu Propia Web?</span>
-        </h2>
-        <div class="tu-web-content">
-            <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9;" data-key="tu_web_subtitulo">Es hora de que tu marca brille en el mundo digital</p>
-
-            <div class="tu-web-benefits">
-                <div class="benefit">
-                    <div class="benefit-icon">💡</div>
-                    <div class="benefit-title" data-key="diseño_unico">Diseño Único</div>
-                </div>
-                <div class="benefit">
-                    <div class="benefit-icon">📈</div>
-                    <div class="benefit-title" data-key="mas_clientes">Más Clientes</div>
-                </div>
-                <div class="benefit">
-                    <div class="benefit-icon">⚡</div>
-                    <div class="benefit-title" data-key="super_rapida">Super Rápida</div>
-                </div>
-                <div class="benefit">
-                    <div class="benefit-icon">🔒</div>
-                    <div class="benefit-title" data-key="segura">Segura</div>
-                </div>
-            </div>
-
-            <a href="https://wa.me/543872271144" class="cta-btn" target="_blank" data-key="contactate">Contactate Con Nosotros 🚀</a>
-        </div>
-    </section>
-
-    <!-- PLANTILLAS NAVIDEÑAS -->
-    <section id="plantillas" class="section plantillas">
-        <svg class="christmas-garland christmas-garland-top" viewBox="0 0 1200 60" preserveAspectRatio="xMidYMid slice">
-            <defs>
-                <linearGradient id="garlandGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" style="stop-color:#DC143C;stop-opacity:0.7" />
-                    <stop offset="50%" style="stop-color:#1ABC9C;stop-opacity:0.9" />
-                    <stop offset="100%" style="stop-color:#FFD700;stop-opacity:0.7" />
-                </linearGradient>
-            </defs>
-            <path d="M0,40 Q30,20 60,40 T120,40 T180,40 T240,40 T300,40 T360,40 T420,40 T480,40 T540,40 T600,40 T660,40 T720,40 T780,40 T840,40 T900,40 T960,40 T1020,40 T1080,40 T1140,40 T1200,40" 
-                  stroke="url(#garlandGradient)" stroke-width="3" fill="none"/>
-            <circle cx="30" cy="40" r="6" fill="#DC143C" opacity="0.9"/>
-            <circle cx="90" cy="40" r="6" fill="#FFD700" opacity="0.9"/>
-            <circle cx="150" cy="40" r="6" fill="#DC143C" opacity="0.9"/>
-            <circle cx="210" cy="40" r="6" fill="#1ABC9C" opacity="0.9"/>
-            <circle cx="270" cy="40" r="6" fill="#FFD700" opacity="0.9"/>
-            <circle cx="330" cy="40" r="6" fill="#DC143C" opacity="0.9"/>
-            <circle cx="390" cy="40" r="6" fill="#1ABC9C" opacity="0.9"/>
-            <circle cx="450" cy="40" r="6" fill="#FFD700" opacity="0.9"/>
-            <circle cx="510" cy="40" r="6" fill="#DC143C" opacity="0.9"/>
-            <circle cx="570" cy="40" r="6" fill="#1ABC9C" opacity="0.9"/>
-            <circle cx="630" cy="40" r="6" fill="#FFD700" opacity="0.9"/>
-            <circle cx="690" cy="40" r="6" fill="#DC143C" opacity="0.9"/>
-            <circle cx="750" cy="40" r="6" fill="#1ABC9C" opacity="0.9"/>
-            <circle cx="810" cy="40" r="6" fill="#FFD700" opacity="0.9"/>
-            <circle cx="870" cy="40" r="6" fill="#DC143C" opacity="0.9"/>
-            <circle cx="930" cy="40" r="6" fill="#1ABC9C" opacity="0.9"/>
-            <circle cx="990" cy="40" r="6" fill="#FFD700" opacity="0.9"/>
-            <circle cx="1050" cy="40" r="6" fill="#DC143C" opacity="0.9"/>
-            <circle cx="1110" cy="40" r="6" fill="#1ABC9C" opacity="0.9"/>
-            <circle cx="1170" cy="40" r="6" fill="#FFD700" opacity="0.9"/>
-        </svg>
-
-        <h2 class="section-title fade-in christmas-title">
-            <span class="christmas-word">🎄</span>
-            <span class="christmas-word red">Black</span>
-            <span class="christmas-word">Friday</span>
-            <svg class="santa-hat" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10 50 L50 20 L90 50 L85 50 L50 30 L15 50 Z" fill="#DC143C"/>
-                <circle cx="50" cy="18" r="8" fill="#FFFFFF"/>
-                <rect x="0" y="50" width="100" height="20" fill="#FFFFFF" rx="5"/>
-                <circle cx="5" cy="60" r="4" fill="#FFD700"/>
-                <circle cx="95" cy="60" r="4" fill="#FFD700"/>
-            </svg>
-            <span class="christmas-word red">2024</span>
-            <span class="christmas-word">🎉</span>
-        </h2>
-
-        <div class="plantillas-container">
-            <div class="festive-message fade-in">
-                <div class="festive-title" data-key="festive_title">🎁 Aprovecha el Black Friday</div>
-                <div class="festive-subtitle" data-key="festive_subtitle">Todo el mes de descuentos. Comenzá el 2025 con tu emprendimiento en la web. No esperes más, es el momento de brillar en internet.</div>
-            </div>
-
-            <div class="plantillas-grid">
-                <div class="plantilla-card fade-in" onclick="openModal('squeeze')">
-                    <div class="plantilla-preview">📩</div>
-                    <div class="plantilla-info">
-                        <div class="plantilla-oferta">OFERTA</div>
-                        <div class="plantilla-nombre">Squeeze Page</div>
-                        <div class="plantilla-categoria">Landing Page</div>
-                        <div class="plantilla-precio">$202.000</div>
-                        <a href="https://nalialma.github.io/Squeeze-page-A/" class="plantilla-btn" target="_blank">Demo</a>
-                    </div>
-                </div>
-
-                <div class="plantilla-card fade-in" onclick="openModal('travel')">
-                    <div class="plantilla-preview">✈️</div>
-                    <div class="plantilla-info">
-                        <div class="plantilla-oferta">OFERTA</div>
-                        <div class="plantilla-nombre">Travel Experience</div>
-                        <div class="plantilla-categoria">Viajes</div>
-                        <div class="plantilla-precio">$315.000</div>
-                        <a href="https://nalialma.github.io/Nali.Travel/" class="plantilla-btn" target="_blank">Demo</a>
-                    </div>
-                </div>
-
-                <div class="plantilla-card fade-in" onclick="openModal('tarot')">
-                    <div class="plantilla-preview">🔮</div>
-                    <div class="plantilla-info">
-                        <div class="plantilla-oferta">OFERTA</div>
-                        <div class="plantilla-nombre">Tarot en Luz</div>
-                        <div class="plantilla-categoria">Servicios Espirituales</div>
-                        <div class="plantilla-precio">$315.000</div>
-                        <a href="https://nalialma.github.io/Tarot-en-Luz/" class="plantilla-btn" target="_blank">Demo</a>
-                    </div>
-                </div>
-
-                <div class="plantilla-card fade-in" onclick="openModal('landing')">
-                    <div class="plantilla-preview">🎯</div>
-                    <div class="plantilla-info">
-                        <div class="plantilla-oferta">OFERTA</div>
-                        <div class="plantilla-nombre">Landing Premium</div>
-                        <div class="plantilla-categoria">Conversión</div>
-                        <div class="plantilla-precio">$315.000</div>
-                        <a href="https://nalialma.github.io/Landing-Page-A1/" class="plantilla-btn" target="_blank">Demo</a>
-                    </div>
-                </div>
-
-                <div class="plantilla-card fade-in" onclick="openModal('servicios')">
-                    <div class="plantilla-preview">💼</div>
-                    <div class="plantilla-info">
-                        <div class="plantilla-oferta">OFERTA</div>
-                        <div class="plantilla-nombre">Catálogo Servicios</div>
-                        <div class="plantilla-categoria">Profesionales</div>
-                        <div class="plantilla-precio">$315.000</div>
-                        <a href="https://nalialma.github.io/servicios-plantilla/" class="plantilla-btn" target="_blank">Demo</a>
-                    </div>
-                </div>
-
-                <div class="plantilla-card fade-in" onclick="openModal('artepluma')">
-                    <div class="plantilla-preview">🎨</div>
-                    <div class="plantilla-info">
-                        <div class="plantilla-oferta">OFERTA</div>
-                        <div class="plantilla-nombre">ArtePluma</div>
-                        <div class="plantilla-categoria">Portfolio Artístico</div>
-                        <div class="plantilla-precio">$315.000</div>
-                        <a href="https://nalialma.github.io/ArtePluma/" class="plantilla-btn" target="_blank">Demo</a>
-                    </div>
-                </div>
-
-                <div class="plantilla-card fade-in" onclick="openModal('abogado')">
-                    <div class="plantilla-preview">⚖️</div>
-                    <div class="plantilla-info">
-                        <div class="plantilla-oferta">OFERTA</div>
-                        <div class="plantilla-nombre">Despacho Legal</div>
-                        <div class="plantilla-categoria">Servicios Legales</div>
-                        <div class="plantilla-precio">$315.000</div>
-                        <a href="https://nalialma.github.io/plantilla-abogado/" class="plantilla-btn" target="_blank">Demo</a>
-                    </div>
-                </div>
-
-                <div class="plantilla-card fade-in" onclick="openModal('artebasic')">
-                    <div class="plantilla-preview">🖼️</div>
-                    <div class="plantilla-info">
-                        <div class="plantilla-oferta">OFERTA</div>
-                        <div class="plantilla-nombre">Arte Minimalista</div>
-                        <div class="plantilla-categoria">Diseño Simple</div>
-                        <div class="plantilla-precio">$202.000</div>
-                        <a href="https://nalialma.github.io/arte-basic/" class="plantilla-btn" target="_blank">Demo</a>
-                    </div>
-                </div>
-
-                <div class="plantilla-card fade-in" onclick="openModal('tienda')">
-                    <div class="plantilla-preview">🛍️</div>
-                    <div class="plantilla-info">
-                        <div class="plantilla-oferta">OFERTA</div>
-                        <div class="plantilla-nombre">Tienda Online</div>
-                        <div class="plantilla-categoria">E-commerce</div>
-                        <div class="plantilla-precio">$450.000</div>
-                        <a href="https://nalialma.github.io/Plantilla-Tienda/" class="plantilla-btn" target="_blank">Demo</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <svg class="christmas-garland christmas-garland-bottom" viewBox="0 0 1200 60" preserveAspectRatio="xMidYMid slice">
-            <defs>
-                <linearGradient id="garlandGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" style="stop-color:#FFD700;stop-opacity:0.7" />
-                    <stop offset="50%" style="stop-color:#DC143C;stop-opacity:0.9" />
-                    <stop offset="100%" style="stop-color:#1ABC9C;stop-opacity:0.7" />
-                </linearGradient>
-            </defs>
-            <path d="M0,20 Q30,40 60,20 T120,20 T180,20 T240,20 T300,20 T360,20 T420,20 T480,20 T540,20 T600,20 T660,20 T720,20 T780,20 T840,20 T900,20 T960,20 T1020,20 T1080,20 T1140,20 T1200,20" 
-                  stroke="url(#garlandGradient2)" stroke-width="3" fill="none"/>
-            <circle cx="30" cy="20" r="6" fill="#1ABC9C" opacity="0.9"/>
-            <circle cx="90" cy="20" r="6" fill="#DC143C" opacity="0.9"/>
-            <circle cx="150" cy="20" r="6" fill="#FFD700" opacity="0.9"/>
-            <circle cx="210" cy="20" r="6" fill="#1ABC9C" opacity="0.9"/>
-            <circle cx="270" cy="20" r="6" fill="#DC143C" opacity="0.9"/>
-            <circle cx="330" cy="20" r="6" fill="#FFD700" opacity="0.9"/>
-            <circle cx="390" cy="20" r="6" fill="#1ABC9C" opacity="0.9"/>
-            <circle cx="450" cy="20" r="6" fill="#DC143C" opacity="0.9"/>
-            <circle cx="510" cy="20" r="6" fill="#FFD700" opacity="0.9"/>
-            <circle cx="570" cy="20" r="6" fill="#1ABC9C" opacity="0.9"/>
-            <circle cx="630" cy="20" r="6" fill="#DC143C" opacity="0.9"/>
-            <circle cx="690" cy="20" r="6" fill="#FFD700" opacity="0.9"/>
-            <circle cx="750" cy="20" r="6" fill="#1ABC9C" opacity="0.9"/>
-            <circle cx="810" cy="20" r="6" fill="#DC143C" opacity="0.9"/>
-            <circle cx="870" cy="20" r="6" fill="#FFD700" opacity="0.9"/>
-            <circle cx="930" cy="20" r="6" fill="#1ABC9C" opacity="0.9"/>
-            <circle cx="990" cy="20" r="6" fill="#DC143C" opacity="0.9"/>
-            <circle cx="1050" cy="20" r="6" fill="#FFD700" opacity="0.9"/>
-            <circle cx="1110" cy="20" r="6" fill="#1ABC9C" opacity="0.9"/>
-            <circle cx="1170" cy="20" r="6" fill="#DC143C" opacity="0.9"/>
-        </svg>
-    </section>
-
+    <!-- PROCESO / FLUJO DE CREACIÓN -->
     <section id="proceso" class="section">
-        <h2 class="section-title fade-in">
-            <span class="animated-title" data-key="flujo_creacion">El Flujo de Creación</span>
-        </h2>
+        <h2 class="section-title fade-in">El Flujo de Creación</h2>
+        
         <div class="process-timeline">
-            <div class="process-step fade-in">
+            <div class="process-step enhanced-container fade-in">
+                <div class="glow-effect"></div>
                 <div class="process-number">1</div>
-                <h3 class="process-title" data-key="inversion_titulo">Inmersión en tu Visión</h3>
-                <p data-key="inversion_desc">Entendemos tus objetivos, audiencia y necesidades específicas.</p>
+                <h3 class="process-title">Inmersión en tu Visión</h3>
+                <p class="process-description">Entendemos tus objetivos, audiencia y necesidades específicas para crear una solución a medida.</p>
             </div>
             
-            <div class="process-step fade-in">
+            <div class="process-step enhanced-container fade-in">
+                <div class="glow-effect"></div>
                 <div class="process-number">2</div>
-                <h3 class="process-title" data-key="diseño_fluido_titulo">Diseño Fluido</h3>
-                <p data-key="diseño_fluido_desc">Creamos diseños que fluyen naturalmente, priorizando la experiencia del usuario.</p>
+                <h3 class="process-title">Diseño Fluido</h3>
+                <p class="process-description">Creamos diseños que fluyen naturalmente, priorizando la experiencia del usuario y la identidad de tu marca.</p>
             </div>
             
-            <div class="process-step fade-in">
+            <div class="process-step enhanced-container fade-in">
+                <div class="glow-effect"></div>
                 <div class="process-number">3</div>
-                <h3 class="process-title" data-key="desarrollo_titulo">Desarrollo Adaptativo</h3>
-                <p data-key="desarrollo_desc">Programamos con código limpio para que tu sitio se adapte perfectamente.</p>
+                <h3 class="process-title">Desarrollo Adaptativo</h3>
+                <p class="process-description">Programamos con código limpio y eficiente para que tu sitio se adapte perfectamente a cualquier dispositivo.</p>
             </div>
             
-            <div class="process-step fade-in">
+            <div class="process-step enhanced-container fade-in">
+                <div class="glow-effect"></div>
                 <div class="process-number">4</div>
-                <h3 class="process-title" data-key="optimizacion_titulo">Optimización y Pulido</h3>
-                <p data-key="optimizacion_desc">Refinamos cada detalle y optimizamos el rendimiento.</p>
+                <h3 class="process-title">Optimización y Pulido</h3>
+                <p class="process-description">Refinamos cada detalle y optimizamos el rendimiento para garantizar una experiencia excepcional.</p>
             </div>
             
-            <div class="process-step fade-in">
+            <div class="process-step enhanced-container fade-in">
+                <div class="glow-effect"></div>
                 <div class="process-number">5</div>
-                <h3 class="process-title" data-key="lanzamiento_titulo">Lanzamiento y Soporte</h3>
-                <p data-key="lanzamiento_desc">Publicamos tu proyecto y proporcionamos soporte continuo.</p>
+                <h3 class="process-title">Lanzamiento y Soporte</h3>
+                <p class="process-description">Publicamos tu proyecto y proporcionamos soporte continuo para asegurar su éxito a largo plazo.</p>
             </div>
         </div>
 
-        <div class="tools-section fade-in">
-            <h3 class="tools-title" data-key="tools_title">Tecnologías y Herramientas</h3>
+        <!-- HERRAMIENTAS Y TECNOLOGÍAS -->
+        <div class="tools-section enhanced-container fade-in">
+            <div class="glow-effect"></div>
+            <h3 class="tools-title">Tecnologías y Herramientas</h3>
             <div class="tools-grid">
                 <div class="tool-item">
                     <div class="tool-icon">🎨</div>
                     <div class="tool-name">HTML5</div>
-                    <div class="tool-desc" data-key="html_desc">Estructura semántica y accesible para tus proyectos web.</div>
+                    <div class="tool-desc">Estructura semántica y accesible para tus proyectos web.</div>
                 </div>
+                
                 <div class="tool-item">
                     <div class="tool-icon">✨</div>
                     <div class="tool-name">CSS3</div>
-                    <div class="tool-desc" data-key="css_desc">Diseños responsivos y animaciones fluidas que cautivan.</div>
+                    <div class="tool-desc">Diseños responsivos y animaciones fluidas que cautivan.</div>
                 </div>
+                
                 <div class="tool-item">
                     <div class="tool-icon">⚡</div>
                     <div class="tool-name">JavaScript</div>
-                    <div class="tool-desc" data-key="js_desc">Interactividad dinámica y funcionalidades avanzadas.</div>
+                    <div class="tool-desc">Interactividad dinámica y funcionalidades avanzadas.</div>
                 </div>
+                
                 <div class="tool-item">
                     <div class="tool-icon">🤖</div>
                     <div class="tool-name">Inteligencia Artificial</div>
-                    <div class="tool-desc" data-key="ai_desc">Optimización de UX/UI y análisis de datos inteligente.</div>
+                    <div class="tool-desc">Optimización de UX/UI y análisis de datos inteligente.</div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- FILOSOFÍA FINAL -->
     <section class="section">
-        <div class="philosophy-section fade-in">
-            <p class="philosophy-text" data-key="filosofia">"El código es agua digital que fluye entre servidores y pantallas, adaptándose a cada necesidad, tomando la forma de cada sueño."</p>
+        <div class="philosophy-section enhanced-container fade-in">
+            <div class="glow-effect"></div>
+            <p class="philosophy-text">
+                "El código es agua digital que fluye entre servidores y pantallas, adaptándose a cada necesidad, tomando la forma de cada sueño."
+            </p>
         </div>
     </section>
-
-    <div id="modal" class="modal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal()">✕</button>
-            <div class="modal-info">
-                <h2 class="modal-title" id="modalTitle"></h2>
-                <p id="modalDescription"></p>
-                <div class="modal-buttons">
-                    <a id="modalDemoBtn" class="modal-btn modal-btn-primary" target="_blank" data-key="ver_demo">Ver Demo en Vivo</a>
-                    <a href="https://wa.me/543872271144" class="modal-btn modal-btn-secondary" target="_blank" data-key="consultar_precio">Consultar Precio</a>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        // TRADUCCIONES COMPLETAS
-        const translations = {
-            es: {
-                servicios_titulo: 'Servicios del Agua Digital',
-                paginas_web: 'Páginas Web Responsivas',
-                paginas_desc: 'Sitios web adaptativos que fluyen perfectamente en cualquier dispositivo.',
-                identidad: 'Identidad Visual Digital',
-                identidad_desc: 'Logos, paletas de colores y sistemas de diseño coherentes para tu marca.',
-                seo: 'Optimización & SEO',
-                seo_desc: 'Mejora el rendimiento de tu sitio web y aumenta su visibilidad en buscadores.',
-                precio_desde: 'Desde $',
-                contratar: 'Contratar',
-                clientes_activos: 'Nuestros Clientes Activos',
-                tu_web_titulo: '¿Necesitas Tu Propia Web?',
-                tu_web_subtitulo: 'Es hora de que tu marca brille en el mundo digital',
-                diseño_unico: 'Diseño Único',
-                mas_clientes: 'Más Clientes',
-                super_rapida: 'Super Rápida',
-                segura: 'Segura',
-                contactate: 'Contactate Con Nosotros 🚀',
-                flujo_creacion: 'El Flujo de Creación',
-                inversion_titulo: 'Inmersión en tu Visión',
-                inversion_desc: 'Entendemos tus objetivos, audiencia y necesidades específicas.',
-                diseño_fluido_titulo: 'Diseño Fluido',
-                diseño_fluido_desc: 'Creamos diseños que fluyen naturalmente, priorizando la experiencia del usuario.',
-                desarrollo_titulo: 'Desarrollo Adaptativo',
-                desarrollo_desc: 'Programamos con código limpio para que tu sitio se adapte perfectamente.',
-                optimizacion_titulo: 'Optimización y Pulido',
-                optimizacion_desc: 'Refinamos cada detalle y optimizamos el rendimiento.',
-                lanzamiento_titulo: 'Lanzamiento y Soporte',
-                lanzamiento_desc: 'Publicamos tu proyecto y proporcionamos soporte continuo.',
-                filosofia: '"El código es agua digital que fluye entre servidores y pantallas, adaptándose a cada necesidad, tomando la forma de cada sueño."',
-                hero_subtitle: 'Elemento que fluye y transforma ideas en experiencias digitales. Donde el diseño cobra vida a través de la programación.',
-                water_quote: '"Como el agua que toma la forma del recipiente, el código se adapta a cada visión para crear mundos digitales únicos"',
-                nav_inicio: 'Inicio',
-                nav_clientes: 'Clientes',
-                nav_web: 'Tu Web',
-                nav_plantillas: 'Plantillas',
-                nav_proceso: 'Proceso',
-                nav_volver: '← Volver',
-                festive_title: '🎁 Aprovecha el Black Friday',
-                festive_subtitle: 'Todo el mes de descuentos. Comenzá el 2025 con tu emprendimiento en la web. No esperes más, es el momento de brillar en internet.',
-                ver_demo: 'Ver Demo en Vivo',
-                consultar_precio: 'Consultar Precio',
-                tools_title: 'Tecnologías y Herramientas',
-                html_desc: 'Estructura semántica y accesible para tus proyectos web.',
-                css_desc: 'Diseños responsivos y animaciones fluidas que cautivan.',
-                js_desc: 'Interactividad dinámica y funcionalidades avanzadas.',
-                ai_desc: 'Optimización inteligente de UX/UI y análisis de datos.',
-                langBtn: 'ES'
-            },
-            en: {
-                servicios_titulo: 'Digital Water Services',
-                paginas_web: 'Responsive Web Pages',
-                paginas_desc: 'Adaptive websites that flow perfectly on any device.',
-                identidad: 'Digital Visual Identity',
-                identidad_desc: 'Logos, color palettes and coherent design systems for your brand.',
-                seo: 'Optimization & SEO',
-                seo_desc: 'Improve your website performance and increase search visibility.',
-                precio_desde: 'From $',
-                contratar: 'Hire',
-                clientes_activos: 'Our Active Clients',
-                tu_web_titulo: 'Do You Need Your Own Website?',
-                tu_web_subtitulo: 'It\'s time for your brand to shine in the digital world',
-                diseño_unico: 'Unique Design',
-                mas_clientes: 'More Clients',
-                super_rapida: 'Super Fast',
-                segura: 'Secure',
-                contactate: 'Contact Us 🚀',
-                flujo_creacion: 'The Creation Flow',
-                inversion_titulo: 'Immersion in Your Vision',
-                inversion_desc: 'We understand your goals, audience and specific needs.',
-                diseño_fluido_titulo: 'Fluid Design',
-                diseño_fluido_desc: 'We create designs that flow naturally, prioritizing user experience.',
-                desarrollo_titulo: 'Adaptive Development',
-                desarrollo_desc: 'We code with clean code so your site adapts perfectly.',
-                optimizacion_titulo: 'Optimization and Polish',
-                optimizacion_desc: 'We refine every detail and optimize performance.',
-                lanzamiento_titulo: 'Launch and Support',
-                lanzamiento_desc: 'We publish your project and provide ongoing support.',
-                filosofia: '"Code is digital water that flows between servers and screens, adapting to every need, taking the shape of every dream."',
-                hero_subtitle: 'An element that flows and transforms ideas into digital experiences. Where design comes to life through programming.',
-                water_quote: '"Like water that takes the shape of its container, code adapts to every vision to create unique digital worlds"',
-                nav_inicio: 'Home',
-                nav_clientes: 'Clients',
-                nav_web: 'Your Web',
-                nav_plantillas: 'Templates',
-                nav_proceso: 'Process',
-                nav_volver: '← Back',
-                festive_title: '🎁 Take Advantage of Black Friday',
-                festive_subtitle: 'All month discounts. Start 2025 with your business on the web. Don\'t wait, it\'s time to shine online.',
-                ver_demo: 'View Live Demo',
-                consultar_precio: 'Ask for Price',
-                tools_title: 'Technologies & Tools',
-                html_desc: 'Semantic and accessible structure for your web projects.',
-                css_desc: 'Responsive design and fluid animations that captivate.',
-                js_desc: 'Dynamic interactivity and advanced functionality.',
-                ai_desc: 'Intelligent UX/UI optimization and smart data analytics.',
-                langBtn: 'EN'
-            }
-        };
+        // SPLASH SCREEN
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('splash').classList.add('out');
+            }, 5000);
 
-        let currentLang = localStorage.getItem('language') || 'es';
-
-        function toggleLanguage() {
-            currentLang = currentLang === 'es' ? 'en' : 'es';
-            updateLanguage();
-            localStorage.setItem('language', currentLang);
-        }
-
-        function updateLanguage() {
-            const t = translations[currentLang];
-            document.getElementById('langText').textContent = '🌍 ' + t.langBtn;
-            
-            document.querySelectorAll('[data-key]').forEach(el => {
-                const key = el.getAttribute('data-key');
-                if (t[key]) {
-                    el.textContent = t[key];
+            // EXPLOTAR BURBUJAS FLOTANTES
+            setTimeout(() => {
+                for (let i = 1; i <= 5; i++) {
+                    const bubble = document.getElementById('b' + i);
+                    if (bubble) {
+                        bubble.classList.add('exploded');
+                        setTimeout(() => bubble.remove(), 600);
+                    }
                 }
-            });
-        }
+            }, 5000);
+        });
 
-        function animateLetters() {
-            document.querySelectorAll('.animated-title').forEach(title => {
-                const text = title.textContent;
-                title.innerHTML = '';
-                let delay = 0;
-                text.split('').forEach(char => {
-                    const span = document.createElement('span');
-                    span.className = 'char';
-                    span.textContent = char;
-                    span.style.animationDelay = delay + 'ms';
-                    title.appendChild(span);
-                    delay += 30;
-                });
-            });
-        }
-
+        // CURSOR PERSONALIZADO
         const cursor = document.querySelector('.custom-cursor');
         document.addEventListener('mousemove', (e) => {
-            gsap.to(cursor, {x: e.clientX - 12, y: e.clientY - 12, duration: 0.1});
+            gsap.to(cursor, {
+                x: e.clientX - 12,
+                y: e.clientY - 12,
+                duration: 0.1
+            });
         });
 
+        // ANIMACIONES DE SCROLL
+        gsap.utils.toArray('.fade-in').forEach(el => {
+            gsap.fromTo(el, 
+                { y: 50, opacity: 0 },
+                { 
+                    y: 0, 
+                    opacity: 1, 
+                    duration: 0.8,
+                    scrollTrigger: {
+                        trigger: el,
+                        start: "top 80%"
+                    }
+                }
+            );
+        });
+
+        // TOGGLE MENU
         function toggleMenu() {
-            const menu = document.getElementById('navMenu');
-            const btn = document.getElementById('menuBtn');
-            menu.classList.toggle('active');
-            btn.classList.toggle('active');
-            playSound('waterSound');
+            document.getElementById('navMenu').classList.toggle('active');
         }
 
-        function createWaterParticles() {
-            const container = document.getElementById('waterParticles');
-            function createParticle() {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 6 + 's';
-                particle.style.animationDuration = (4 + Math.random() * 3) + 's';
-                const colors = ['#2ECC71', '#3498DB', '#1ABC9C', '#85C1E9'];
-                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-                container.appendChild(particle);
-                setTimeout(() => particle.remove(), 8000);
-            }
-            setInterval(createParticle, 400);
+        // TOGGLE IDIOMA
+        let lang = 'es';
+        function toggleLang() {
+            lang = lang === 'es' ? 'en' : 'es';
+            document.getElementById('lang').textContent = lang === 'es' ? 'EN' : 'ES';
         }
-        createWaterParticles();
-
-        // COPOS DE NIEVE SOLO EN PLANTILLAS
-        function createSnowflakes() {
-            const plantillasSection = document.getElementById('plantillas');
-            if (!plantillasSection) return;
-            
-            function createSnowflake() {
-                const snowflake = document.createElement('div');
-                snowflake.className = 'snowflake';
-                snowflake.textContent = '❄️';
-                snowflake.style.left = Math.random() * 100 + '%';
-                snowflake.style.fontSize = (Math.random() * 20 + 10) + 'px';
-                snowflake.style.animationDuration = (Math.random() * 5 + 10) + 's';
-                plantillasSection.appendChild(snowflake);
-                
-                setTimeout(() => snowflake.remove(), 15000);
-            }
-            
-            setInterval(createSnowflake, 300);
-        }
-        createSnowflakes();
-
-        gsap.utils.toArray('.fade-in').forEach((element, index) => {
-            const scrollTrigger = {trigger: element, start: "top 80%", toggleActions: "play none none none"};
-            const isInViewport = element.getBoundingClientRect().top < window.innerHeight;
-            
-            if (isInViewport) {
-                gsap.fromTo(element, {y: 50, opacity: 0}, {y: 0, opacity: 1, duration: 0.8, ease: "power2.out", delay: index * 0.05});
-            } else {
-                gsap.fromTo(element, {y: 50, opacity: 0}, {y: 0, opacity: 1, duration: 0.8, ease: "power2.out", delay: index * 0.05, scrollTrigger});
-            }
-        });
-
-        const modals = {
-            squeeze: {title: 'Squeeze Page', description: 'Página de captura de leads optimizada.', demo: 'https://nalialma.github.io/Squeeze-page-A/'},
-            travel: {title: 'Travel Experience', description: 'Diseño para agencias de viajes.', demo: 'https://nalialma.github.io/Nali.Travel/'},
-            tarot: {title: 'Tarot en Luz', description: 'Atmósfera mística para consultores.', demo: 'https://nalialma.github.io/Tarot-en-Luz/'},
-            landing: {title: 'Landing Premium', description: 'Plantilla de alto impacto.', demo: 'https://nalialma.github.io/Landing-Page-A1/'},
-            servicios: {title: 'Catálogo Servicios', description: 'Muestra tus servicios con elegancia.', demo: 'https://nalialma.github.io/servicios-plantilla/'},
-            artepluma: {title: 'ArtePluma', description: 'Galería elegante para artistas.', demo: 'https://nalialma.github.io/ArtePluma/'},
-            abogado: {title: 'Despacho Legal', description: 'Solución para despachos.', demo: 'https://nalialma.github.io/plantilla-abogado/'},
-            artebasic: {title: 'Arte Minimalista', description: 'Diseño minimalista limpio.', demo: 'https://nalialma.github.io/arte-basic/'},
-            tienda: {title: 'Tienda Online', description: 'Solución e-commerce completa.', demo: 'https://nalialma.github.io/Plantilla-Tienda/'}
-        };
-
-        function openModal(type) {
-            const data = modals[type];
-            document.getElementById('modalTitle').textContent = data.title;
-            document.getElementById('modalDescription').textContent = data.description;
-            document.getElementById('modalDemoBtn').href = data.demo;
-            document.getElementById('modal').classList.add('active');
-            playSound('waterSound');
-        }
-
-        function closeModal() {
-            document.getElementById('modal').classList.remove('active');
-        }
-
-        document.getElementById('modal').addEventListener('click', (e) => {
-            if (e.target.id === 'modal') closeModal();
-        });
-
-        function playSound(soundId) {
-            const sound = document.getElementById(soundId);
-            sound.currentTime = 0;
-            sound.play().catch(() => {});
-        }
-
-        document.addEventListener('click', (e) => {
-            if (e.target.closest('.service-card') || e.target.closest('.plantilla-card')) playSound('waterSound');
-        });
-
-        window.addEventListener('load', () => {
-            animateLetters();
-            updateLanguage();
-        });
     </script>
 </body>
 </html>
