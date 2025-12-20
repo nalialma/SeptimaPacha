@@ -6,6 +6,7 @@
     <title>Agua | Séptima Pacha Co.</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
@@ -644,38 +645,47 @@
             background: #128C7E;
         }
 
-        /* ===== HERO SECTION ===== */
+        /* ===== HERO SECTION MODIFICADO ===== */
         .hero-codigo {
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
             align-items: center;
-            text-align: center;
-            padding: 2rem 2rem 2rem;
+            padding: 2rem;
             padding-top: 6rem;
         }
 
-        .codigo-icon {
-            font-size: 8rem;
-            margin-bottom: 2rem;
-            animation: flow 3s ease-in-out infinite alternate;
-            filter: drop-shadow(0 0 30px var(--agua-primary));
+        .hero-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            text-align: left;
+            padding: 2rem;
         }
 
-        @keyframes flow {
-            0% { 
-                text-shadow: 0 0 20px var(--agua-primary), 0 0 40px var(--agua-primary); 
-                transform: scale(1) rotate(-1deg); 
-            }
-            50% { 
-                text-shadow: 0 0 30px var(--agua-secondary), 0 0 60px var(--agua-secondary); 
-                transform: scale(1.05) rotate(1deg); 
-            }
-            100% { 
-                text-shadow: 0 0 25px var(--agua-accent), 0 0 50px var(--agua-accent); 
-                transform: scale(1.02) rotate(-0.5deg); 
-            }
+        .hero-right {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            min-height: 600px;
+        }
+
+        .model-container {
+            width: 100%;
+            height: 100%;
+            min-height: 600px;
+            position: relative;
+        }
+
+        model-viewer {
+            width: 100%;
+            height: 100%;
+            min-height: 600px;
+            border-radius: 20px;
+            background: transparent;
         }
 
         .hero-title {
@@ -700,8 +710,9 @@
             font-size: clamp(1rem, 3vw, 1.5rem);
             font-weight: 300;
             opacity: 0.9;
-            max-width: 800px;
-            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-bottom: 2rem;
+            line-height: 1.6;
         }
 
         /* ===== SECCIONES ===== */
@@ -1001,6 +1012,22 @@
         }
 
         /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .hero-codigo {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .hero-left {
+                text-align: center;
+                align-items: center;
+            }
+
+            .hero-subtitle {
+                max-width: 100%;
+            }
+        }
+
         @media (max-width: 768px) {
             .nav-menu {
                 width: 80vw;
@@ -1062,6 +1089,14 @@
 
             .loader {
                 --size: 0.6;
+            }
+
+            .model-container {
+                min-height: 450px;
+            }
+
+            model-viewer {
+                min-height: 450px;
             }
         }
 
@@ -1127,6 +1162,10 @@
                 min-height: 70vh;
             }
 
+            .hero-left {
+                padding: 1rem;
+            }
+
             .process-step {
                 padding-left: 2.5rem;
                 margin-bottom: 2rem;
@@ -1162,6 +1201,14 @@
 
             .philosophy-text {
                 font-size: 1.1rem;
+            }
+
+            .model-container {
+                min-height: 350px;
+            }
+
+            model-viewer {
+                min-height: 350px;
             }
         }
     </style>
@@ -1267,11 +1314,28 @@
     <a href="index.html" class="nav-back">← Volver</a>
     <a href="https://wa.me/543872271144?text=Hola%20Séptima%20Pacha" class="whatsapp-float" target="_blank">💬</a>
 
-    <!-- HERO SECTION -->
+    <!-- HERO SECTION MODIFICADO CON ASTRONAUTA -->
     <section class="hero-codigo" id="inicio">
-        <div class="codigo-icon">💧</div>
-        <h1 class="hero-title">Código</h1>
-        <p class="hero-subtitle">Elemento que fluye y transforma ideas en experiencias digitales</p>
+        <div class="hero-left">
+            <h1 class="hero-title">Código Agua</h1>
+            <p class="hero-subtitle">Fluye como el agua, se adapta como el código. Transformamos tus ideas en experiencias digitales que navegan en el océano infinito de la web.</p>
+        </div>
+        <div class="hero-right">
+            <div class="model-container">
+                <model-viewer 
+                    alt="Neil Armstrong's Spacesuit from the Smithsonian Digitization Programs Office and National Air and Space Museum" 
+                    src="https://modelviewer.dev/shared-assets/models/NeilArmstrong.glb" 
+                    ar 
+                    environment-image="https://modelviewer.dev/shared-assets/environments/moon_1k.hdr" 
+                    poster="https://modelviewer.dev/shared-assets/models/NeilArmstrong.webp" 
+                    shadow-intensity="1" 
+                    camera-controls 
+                    touch-action="pan-y"
+                    auto-rotate
+                    rotation-per-second="30deg">
+                </model-viewer>
+            </div>
+        </div>
     </section>
 
     <!-- SERVICIOS -->
@@ -1331,8 +1395,7 @@
                 <div class="cliente-icono">🏗️</div>
                 <div class="cliente-nombre">Sinergia Desarrolladora</div>
             </a>
-
-           
+        </div>
     </section>
 
     <!-- PLANTILLAS BLACK FRIDAY -->
