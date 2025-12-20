@@ -1,0 +1,38 @@
+# robots.txt para Séptima Pacha Co.
+# Optimizado para SEO - Desarrollo Web Salta
+
+User-agent: *
+Allow: /
+
+# Sitemap principal
+Sitemap: https://septimapacha.com/sitemap.xml
+
+# Permitir rastreo de recursos importantes
+Allow: /assets/css/
+Allow: /assets/js/
+Allow: /assets/images/
+
+# Bloquear archivos y directorios innecesarios
+Disallow: /temp/
+Disallow: /cache/
+Disallow: /admin/
+Disallow: /private/
+Disallow: /*.pdf$
+
+# Optimización para crawlers específicos
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Rastreo frecuente para contenido actualizado
+Crawl-delay: 0
+
+# Información adicional
+# Sitio: https://septimapacha.com
+# Email: contacto@septimapacha.com
+# Especialidad: Desarrollo Web en Salta, Argentina
