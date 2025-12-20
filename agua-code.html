@@ -785,9 +785,12 @@
         }
 
         .service-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            display: block;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .service-title {
@@ -802,6 +805,487 @@
             font-weight: 700;
             color: #F39C12;
             margin: 1rem 0;
+        }
+
+        /* ANIMACIONES DE SERVICIOS */
+        /* Círculo Spinner (circulo--e.txt) */
+        .spinner-container {
+            width: 150px;
+            height: 150px;
+            position: relative;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .spinner {
+            position: absolute;
+            width: calc(100% - 9.9px);
+            height: calc(100% - 9.9px);
+            border: 5px solid transparent;
+            border-radius: 50%;
+            border-top-color: var(--agua-primary);
+            animation: spin 5s cubic-bezier(0.17, 0.49, 0.96, 0.79) infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Mona Lisa Loader - Completo */
+        .monalisa-loader {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
+        }
+
+        .monalisa-loader path {
+            stroke: var(--agua-accent);
+            stroke-width: 0.8px;
+            fill: none;
+            animation: dashArray 4s ease-in-out infinite,
+                      dashOffset 4s linear infinite;
+        }
+
+        @keyframes dashArray {
+            0% { stroke-dasharray: 0 1 359 0; }
+            50% { stroke-dasharray: 0 359 1 0; }
+            100% { stroke-dasharray: 359 1 0 0; }
+        }
+
+        @keyframes dashOffset {
+            0% { stroke-dashoffset: 365; }
+            100% { stroke-dashoffset: 5; }
+        }
+
+        /* Planeta Loader */
+        .planeta-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
+            perspective: 800px;
+            transform-style: preserve-3d;
+        }
+
+        .sphere-core {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle at 40% 40%, var(--agua-accent), var(--agua-secondary));
+            border-radius: 50%;
+            box-shadow: 0 0 25px rgba(46, 204, 113, 0.5);
+            animation: pulse-planeta 2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        }
+
+        .ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid rgba(46, 204, 113, 0.7);
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(46, 204, 113, 0.3);
+            transform-style: preserve-3d;
+        }
+
+        .ring-1 {
+            animation: rotateX 2.5s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+        }
+
+        .ring-2 {
+            animation: rotateY 2s cubic-bezier(0.55, 0, 0.45, 1) infinite;
+            width: 120px;
+            height: 120px;
+            top: 15px;
+            left: 15px;
+            border-color: rgba(52, 152, 219, 0.5);
+        }
+
+        .ring-3 {
+            animation: rotateXY 3s cubic-bezier(0.7, 0, 0.3, 1) infinite;
+            width: 90px;
+            height: 90px;
+            top: 30px;
+            left: 30px;
+            border-color: rgba(26, 188, 156, 0.3);
+        }
+
+        @keyframes rotateX {
+            0% { transform: rotateX(0deg); }
+            50% { transform: rotateX(180deg); }
+            100% { transform: rotateX(360deg); }
+        }
+
+        @keyframes rotateY {
+            0% { transform: rotateY(0deg); }
+            50% { transform: rotateY(180deg); }
+            100% { transform: rotateY(360deg); }
+        }
+
+        @keyframes rotateXY {
+            0% { transform: rotateX(0deg) rotateY(0deg); }
+            50% { transform: rotateX(90deg) rotateY(180deg); }
+            100% { transform: rotateX(360deg) rotateY(360deg); }
+        }
+
+        @keyframes pulse-planeta {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                box-shadow: 0 0 25px rgba(46, 204, 113, 0.5);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.1);
+                box-shadow: 0 0 35px rgba(46, 204, 113, 0.7);
+            }
+        }
+
+        /* ANIMACIONES DE HERRAMIENTAS */
+        /* Spinning Numbers - Corregido y centrado */
+        .spinning-number {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto;
+            font-size: 0.5em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .spinning-number .wheel {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            animation: spinning-number-spin var(--t) linear infinite var(--r1);
+        }
+
+        @keyframes spinning-number-spin {
+            0% { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .spinning-number .number {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(var(--a)) translateY(calc(var(--l) * -1)) rotate(calc(var(--a) * -1)) scale(var(--s));
+            font-weight: bold;
+            font-size: 2.5em;
+            color: inherit;
+        }
+
+        .spinning-number .number::before {
+            content: "1";
+            --z: 1.9;
+            --r: normal;
+            display: block;
+            animation: spinning-number-changing calc(var(--t) * var(--z)) calc(-1 * var(--z) * var(--t) * var(--i) / var(--m) - 60s) linear infinite var(--r);
+        }
+
+        @keyframes spinning-number-changing {
+            0% { content: "1"; }
+            10% { content: "2"; }
+            20% { content: "3"; }
+            30% { content: "4"; }
+            40% { content: "5"; }
+            50% { content: "6"; }
+            60% { content: "7"; }
+            70% { content: "8"; }
+            80% { content: "9"; }
+            90% { content: "0"; }
+            100% { content: "1"; }
+        }
+
+        /* Dino Loader - Mejorado y visible */
+        .dino-loader {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dino-loader .pixel {
+            width: 4px;
+            height: 4px;
+            background: transparent;
+            box-shadow: 
+                /* Cabeza */
+                20px 0px var(--agua-primary), 24px 0px var(--agua-primary),
+                28px 0px var(--agua-primary), 32px 0px var(--agua-primary),
+                16px 4px var(--agua-primary), 20px 4px var(--agua-primary),
+                24px 4px var(--agua-primary), 28px 4px var(--agua-primary),
+                32px 4px var(--agua-primary), 36px 4px var(--agua-primary),
+                /* Ojos */
+                16px 8px var(--agua-primary), 20px 8px var(--agua-primary),
+                32px 8px var(--agua-primary), 36px 8px var(--agua-primary),
+                40px 8px var(--agua-primary), 44px 8px var(--agua-primary),
+                /* Cuerpo superior */
+                16px 12px var(--agua-primary), 20px 12px var(--agua-primary),
+                32px 12px var(--agua-primary), 36px 12px var(--agua-primary),
+                40px 12px var(--agua-primary), 44px 12px var(--agua-primary),
+                /* Cuerpo medio */
+                16px 16px var(--agua-primary), 20px 16px var(--agua-primary),
+                24px 16px var(--agua-primary), 28px 16px var(--agua-primary),
+                32px 16px var(--agua-primary), 36px 16px var(--agua-primary),
+                40px 16px var(--agua-primary), 44px 16px var(--agua-primary),
+                /* Cola */
+                16px 20px var(--agua-primary), 20px 20px var(--agua-primary),
+                24px 20px var(--agua-primary), 28px 20px var(--agua-primary),
+                32px 20px var(--agua-primary), 36px 20px var(--agua-primary),
+                40px 20px var(--agua-primary), 44px 20px var(--agua-primary),
+                /* Más cola */
+                16px 24px var(--agua-primary), 20px 24px var(--agua-primary),
+                24px 24px var(--agua-primary), 28px 24px var(--agua-primary),
+                32px 24px var(--agua-primary), 36px 24px var(--agua-primary),
+                /* Patas frame 1 */
+                16px 28px var(--agua-primary), 20px 28px var(--agua-primary),
+                24px 28px var(--agua-primary), 28px 28px var(--agua-primary),
+                32px 28px var(--agua-primary), 36px 28px var(--agua-primary),
+                /* Pies */
+                16px 32px var(--agua-primary), 20px 32px var(--agua-primary),
+                24px 32px var(--agua-primary), 28px 32px var(--agua-primary),
+                32px 32px var(--agua-primary), 36px 32px var(--agua-primary);
+            animation: dino-walk 0.4s steps(2) infinite;
+        }
+
+        @keyframes dino-walk {
+            0% {
+                box-shadow: 
+                    /* Cabeza */
+                    20px 0px var(--agua-primary), 24px 0px var(--agua-primary),
+                    28px 0px var(--agua-primary), 32px 0px var(--agua-primary),
+                    16px 4px var(--agua-primary), 20px 4px var(--agua-primary),
+                    24px 4px var(--agua-primary), 28px 4px var(--agua-primary),
+                    32px 4px var(--agua-primary), 36px 4px var(--agua-primary),
+                    16px 8px var(--agua-primary), 20px 8px var(--agua-primary),
+                    32px 8px var(--agua-primary), 36px 8px var(--agua-primary),
+                    40px 8px var(--agua-primary), 44px 8px var(--agua-primary),
+                    16px 12px var(--agua-primary), 20px 12px var(--agua-primary),
+                    32px 12px var(--agua-primary), 36px 12px var(--agua-primary),
+                    40px 12px var(--agua-primary), 44px 12px var(--agua-primary),
+                    16px 16px var(--agua-primary), 20px 16px var(--agua-primary),
+                    24px 16px var(--agua-primary), 28px 16px var(--agua-primary),
+                    32px 16px var(--agua-primary), 36px 16px var(--agua-primary),
+                    40px 16px var(--agua-primary), 44px 16px var(--agua-primary),
+                    16px 20px var(--agua-primary), 20px 20px var(--agua-primary),
+                    24px 20px var(--agua-primary), 28px 20px var(--agua-primary),
+                    32px 20px var(--agua-primary), 36px 20px var(--agua-primary),
+                    40px 20px var(--agua-primary), 44px 20px var(--agua-primary),
+                    16px 24px var(--agua-primary), 20px 24px var(--agua-primary),
+                    24px 24px var(--agua-primary), 28px 24px var(--agua-primary),
+                    32px 24px var(--agua-primary), 36px 24px var(--agua-primary),
+                    /* Patas izquierda */
+                    16px 28px var(--agua-primary), 20px 28px var(--agua-primary),
+                    24px 28px var(--agua-primary),
+                    16px 32px var(--agua-primary), 20px 32px var(--agua-primary),
+                    24px 32px var(--agua-primary);
+            }
+            50% {
+                box-shadow: 
+                    /* Cabeza igual */
+                    20px 0px var(--agua-primary), 24px 0px var(--agua-primary),
+                    28px 0px var(--agua-primary), 32px 0px var(--agua-primary),
+                    16px 4px var(--agua-primary), 20px 4px var(--agua-primary),
+                    24px 4px var(--agua-primary), 28px 4px var(--agua-primary),
+                    32px 4px var(--agua-primary), 36px 4px var(--agua-primary),
+                    16px 8px var(--agua-primary), 20px 8px var(--agua-primary),
+                    32px 8px var(--agua-primary), 36px 8px var(--agua-primary),
+                    40px 8px var(--agua-primary), 44px 8px var(--agua-primary),
+                    16px 12px var(--agua-primary), 20px 12px var(--agua-primary),
+                    32px 12px var(--agua-primary), 36px 12px var(--agua-primary),
+                    40px 12px var(--agua-primary), 44px 12px var(--agua-primary),
+                    16px 16px var(--agua-primary), 20px 16px var(--agua-primary),
+                    24px 16px var(--agua-primary), 28px 16px var(--agua-primary),
+                    32px 16px var(--agua-primary), 36px 16px var(--agua-primary),
+                    40px 16px var(--agua-primary), 44px 16px var(--agua-primary),
+                    16px 20px var(--agua-primary), 20px 20px var(--agua-primary),
+                    24px 20px var(--agua-primary), 28px 20px var(--agua-primary),
+                    32px 20px var(--agua-primary), 36px 20px var(--agua-primary),
+                    40px 20px var(--agua-primary), 44px 20px var(--agua-primary),
+                    16px 24px var(--agua-primary), 20px 24px var(--agua-primary),
+                    24px 24px var(--agua-primary), 28px 24px var(--agua-primary),
+                    32px 24px var(--agua-primary), 36px 24px var(--agua-primary),
+                    /* Patas derecha */
+                    28px 28px var(--agua-primary), 32px 28px var(--agua-primary),
+                    36px 28px var(--agua-primary),
+                    28px 32px var(--agua-primary), 32px 32px var(--agua-primary),
+                    36px 32px var(--agua-primary);
+            }
+        }
+
+        /* Animación Container */
+        .animation-container {
+            width: 100px;
+            height: 100px;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .animation-square {
+            width: 8px;
+            height: 30px;
+            background: var(--agua-primary);
+            border-radius: 10px;
+            display: block;
+            animation: turn 2.5s ease infinite;
+            box-shadow: var(--agua-primary) 0px 1px 15px 0px;
+        }
+
+        .animation-top {
+            position: absolute;
+            left: 40%;
+            top: 50%;
+            transform: rotate(90deg);
+        }
+
+        .animation-bottom {
+            position: absolute;
+            left: 40%;
+            top: 50%;
+            transform: rotate(-90deg);
+        }
+
+        .animation-left {
+            position: absolute;
+            left: 40%;
+            top: 50%;
+        }
+
+        .animation-right {
+            position: absolute;
+            left: 40%;
+            top: 50%;
+            transform: rotate(-180deg);
+        }
+
+        @keyframes turn {
+            0% { transform: translateX(0) translateY(0) rotate(0); }
+            70% { transform: translateX(400%) translateY(100%) rotate(90deg); }
+            100% { transform: translateX(0) translateY(0) rotate(0); }
+        }
+
+        /* Eva Loader - Optimizado */
+        .eva-modelViewPort {
+            perspective: 1000px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #000;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        .eva {
+            --EVA-ROTATION-DURATION: 4s;
+            transform-style: preserve-3d;
+            animation: rotateRight var(--EVA-ROTATION-DURATION) linear infinite alternate;
+            transform: scale(0.25);
+        }
+
+        .head {
+            position: relative;
+            width: 6rem;
+            height: 4rem;
+            border-radius: 48% 53% 45% 55% / 79% 79% 20% 22%;
+            background: linear-gradient(to right, white 45%, #ccc);
+        }
+
+        .eyeChamber {
+            width: 4.5rem;
+            height: 2.75rem;
+            position: relative;
+            left: 50%;
+            top: 55%;
+            border-radius: 45% 53% 45% 48% / 62% 59% 35% 34%;
+            background-color: #0c203c;
+            box-shadow: 0px 0px 2px 2px white, inset 0px 0px 0px 2px black;
+            transform: translate(-50%, -50%);
+            animation: moveRight var(--EVA-ROTATION-DURATION) linear infinite alternate;
+        }
+
+        .eye {
+            width: 1.2rem;
+            height: 1.5rem;
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .eye:first-child {
+            left: 12px;
+            top: 50%;
+            background: repeating-linear-gradient(65deg, #9bdaeb 0px, #9bdaeb 1px, white 2px);
+            box-shadow: inset 0px 0px 5px #04b8d5, 0px 0px 15px 1px #0bdaeb;
+            transform: translate(0, -50%) rotate(-65deg);
+        }
+
+        .eye:nth-child(2) {
+            right: 12px;
+            top: 50%;
+            background: repeating-linear-gradient(-65deg, #9bdaeb 0px, #9bdaeb 1px, white 2px);
+            box-shadow: inset 0px 0px 5px #04b8d5, 0px 0px 15px 1px #0bdaeb;
+            transform: translate(0, -50%) rotate(65deg);
+        }
+
+        .eva-body {
+            width: 6rem;
+            height: 8rem;
+            position: relative;
+            margin-top: 0.25rem;
+            border-radius: 47% 53% 45% 55% / 12% 9% 90% 88%;
+            background: linear-gradient(to right, white 35%, #ccc);
+        }
+
+        .eva-hand {
+            position: absolute;
+            width: 2rem;
+            height: 5.5rem;
+            border-radius: 40%;
+            background: linear-gradient(to left, white 15%, #aaa);
+            box-shadow: 5px 0px 5px rgba(0, 0, 0, 0.25);
+        }
+
+        .eva-hand:first-child {
+            left: -1.5rem;
+            top: 0.75rem;
+            transform: rotateY(55deg) rotateZ(10deg);
+            animation: compensateRotation var(--EVA-ROTATION-DURATION) linear infinite alternate;
+        }
+
+        .eva-hand:nth-child(2) {
+            left: calc(100% - 0.5rem);
+            top: 0.75rem;
+            background: linear-gradient(to right, white 15%, #aaa);
+            transform: rotateY(55deg) rotateZ(-10deg);
+            animation: compensateRotationRight var(--EVA-ROTATION-DURATION) linear infinite alternate;
+        }
+
+        @keyframes rotateRight {
+            from { transform: rotateY(0deg) scale(0.25); }
+            to { transform: rotateY(25deg) scale(0.25); }
+        }
+
+        @keyframes moveRight {
+            from { transform: translate(-50%, -50%); }
+            to { transform: translate(-40%, -50%); }
+        }
+
+        @keyframes compensateRotation {
+            from { transform: rotateY(55deg) rotateZ(10deg); }
+            to { transform: rotateY(30deg) rotateZ(10deg); }
+        }
+
+        @keyframes compensateRotationRight {
+            from { transform: rotateY(55deg) rotateZ(-10deg); }
+            to { transform: rotateY(70deg) rotateZ(-10deg); }
         }
 
         /* CLIENTES */
@@ -1009,8 +1493,12 @@
         }
 
         .tool-icon {
-            font-size: 2.5rem;
-            margin-bottom: 0.8rem;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .tool-name {
@@ -1055,7 +1543,7 @@
             margin: 0 auto;
         }
 
-        .superman-loader .loader {
+        .superman-loader .loader-superman {
             position: absolute;
             top: 50%;
             margin-left: -50px;
@@ -1063,7 +1551,7 @@
             animation: speeder 0.4s linear infinite;
         }
 
-        .superman-loader .loader > span {
+        .superman-loader .loader-superman > span {
             height: 5px;
             width: 35px;
             background: var(--agua-primary);
@@ -1129,10 +1617,10 @@
             border-radius: 0 0 0 2px;
         }
 
-        .superman-loader .loader > span > span:nth-child(1),
-        .superman-loader .loader > span > span:nth-child(2),
-        .superman-loader .loader > span > span:nth-child(3),
-        .superman-loader .loader > span > span:nth-child(4) {
+        .superman-loader .loader-superman > span > span:nth-child(1),
+        .superman-loader .loader-superman > span > span:nth-child(2),
+        .superman-loader .loader-superman > span > span:nth-child(3),
+        .superman-loader .loader-superman > span > span:nth-child(4) {
             width: 30px;
             height: 1px;
             background: var(--agua-primary);
@@ -1140,18 +1628,18 @@
             animation: fazer1 0.2s linear infinite;
         }
 
-        .superman-loader .loader > span > span:nth-child(2) {
+        .superman-loader .loader-superman > span > span:nth-child(2) {
             top: 3px;
             animation: fazer2 0.4s linear infinite;
         }
 
-        .superman-loader .loader > span > span:nth-child(3) {
+        .superman-loader .loader-superman > span > span:nth-child(3) {
             top: 1px;
             animation: fazer3 0.4s linear infinite;
             animation-delay: -1s;
         }
 
-        .superman-loader .loader > span > span:nth-child(4) {
+        .superman-loader .loader-superman > span > span:nth-child(4) {
             top: 4px;
             animation: fazer4 1s linear infinite;
             animation-delay: -1s;
@@ -1612,6 +2100,7 @@
     <nav class="nav-menu" id="navMenu">
         <ul>
             <li><a href="#inicio" onclick="toggleMenu()">🏠 Inicio</a></li>
+            <li><a href="#servicios" onclick="toggleMenu()">💧 Servicios</a></li>
             <li><a href="#clientes" onclick="toggleMenu()">🌊 Clientes</a></li>
             <li><a href="#plantillas" onclick="toggleMenu()">🎨 Plantillas</a></li>
             <li><a href="#proceso" onclick="toggleMenu()">⚙️ Proceso</a></li>
@@ -1664,13 +2153,27 @@
     </section>
 
     <!-- SERVICIOS -->
-    <section class="section">
-         <h2 class="section-title fade-in">Servicios del Agua</h2>
+    <section class="section" id="servicios">
+        <h2 class="section-title fade-in">Servicios del Agua</h2>
         <h2 class="section-title fade-in">Desarrollo Web</h2>
         <div class="services-grid">
             <div class="service-card enhanced-container fade-in">
                 <div class="glow-effect"></div>
-                <span class="service-icon">🌐</span>
+                <div class="service-icon">
+                    <div class="spinner-container">
+                        <div class="spinner">
+                            <div class="spinner">
+                                <div class="spinner">
+                                    <div class="spinner">
+                                        <div class="spinner">
+                                            <div class="spinner"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <h3 class="service-title">Páginas Web Responsivas</h3>
                 <p>Sitios web adaptativos que fluyen perfectamente en cualquier dispositivo</p>
                 <div class="service-price">Desde $200.000</div>
@@ -1684,7 +2187,20 @@
 
             <div class="service-card enhanced-container fade-in">
                 <div class="glow-effect"></div>
-                <span class="service-icon">🎨</span>
+                <div class="service-icon">
+                    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" class="monalisa-loader">
+                        <path pathLength="360" d="M 56.3752 2 H 7.6248 C 7.2797 2 6.9999 2.268 6.9999 2.5985 V 61.4015 C 6.9999 61.7321 7.2797 62 7.6248 62 H 56.3752 C 56.7203 62 57.0001 61.7321 57.0001 61.4015 V 2.5985 C 57.0001 2.268 56.7203 2 56.3752 2 Z"></path>
+                        <path pathLength="360" d="M 55.7503 60.803 H 8.2497 V 3.1971 H 55.7503 V 60.803 Z"></path>
+                        <path pathLength="360" d="M 29.7638 47.6092 C 29.4971 47.3997 29.1031 47.4368 28.8844 47.6925 C 28.6656 47.9481 28.7046 48.3253 28.9715 48.5348 L 32.8768 51.6023 C 32.9931 51.6936 33.1333 51.738 33.2727 51.738 C 33.4533 51.738 33.6328 51.6634 33.7562 51.519 C 33.975 51.2634 33.936 50.8862 33.6692 50.6767 L 29.7638 47.6092 Z"></path>
+                        <path pathLength="360" d="M 42.3557 34.9046 C 38.4615 34.7664 36.9617 37.6749 36.7179 39.2213 L 35.8587 44.2341 C 35.8029 44.5604 36.0335 44.8681 36.374 44.9218 C 36.4084 44.9272 36.4424 44.9299 36.476 44.9299 C 36.7766 44.9299 37.0415 44.7214 37.0918 44.4281 L 37.9523 39.4076 C 37.9744 39.2673 38.544 35.9737 42.311 36.1007 C 42.6526 36.1124 42.9454 35.8544 42.9577 35.524 C 42.9702 35.1937 42.7006 34.9164 42.3557 34.9046 Z"></path>
+                        <path pathLength="360" d="M 13.1528 55.5663 C 13.1528 55.8968 13.4326 56.1648 13.7777 56.1648 H 50.2223 C 50.5674 56.1648 50.8472 55.8968 50.8472 55.5663 V 8.4339 C 50.8472 8.1034 50.5674 7.8354 50.2223 7.8354 H 13.7777 C 13.4326 7.8354 13.1528 8.1034 13.1528 8.4339 V 55.5663 Z"></path>
+                        <path pathLength="360" d="M 25.3121 26.5567 C 24.9717 27.4941 25.0042 28.8167 25.0634 29.5927 C 23.6244 29.8484 20.3838 31.0913 18.9478 37.0352 C 18.5089 37.5603 17.8746 38.1205 17.2053 38.7114 C 16.2598 39.546 15.2351 40.4515 14.4027 41.5332 V 20.5393 H 23.7222 C 23.7178 22.6817 24.1666 25.4398 25.3121 26.5567 Z"></path>
+                        <path pathLength="360" d="M 49.5975 43.4819 C 48.3838 39.1715 46.3138 33.6788 43.4709 29.7736 C 42.6161 28.5995 40.7095 27.0268 39.6852 26.1818 L 39.6352 26.1405 C 39.4176 24.783 39.1158 22.5803 38.8461 20.5394 H 49.5976 V 43.4819 Z"></path>
+                        <path pathLength="360" d="M 27.8056 17.9207 C 27.8041 17.9207 27.8025 17.9207 27.8012 17.9207 L 27.0155 17.9259 L 26.8123 15.4718 C 26.8174 15.4609 26.8238 15.4501 26.8282 15.4389 C 27.2218 15.0856 28.158 14.3463 29.1923 14.252 C 31.0985 14.0778 33.442 14.3386 33.8213 16.5565 L 34.0564 23.0299 L 33.2927 23.6566 C 32.6306 24.2004 31.7888 24.4889 30.9118 24.4703 L 30.7437 24.4673 C 29.7977 24.4473 28.8841 24.0555 28.2376 23.3933 C 27.9671 23.1152 27.748 22.7967 27.5871 22.4474 C 27.426 22.0961 27.3292 21.7272 27.2989 21.3494 L 27.1145 19.1223 L 27.8097 19.1178 C 28.1548 19.1154 28.4327 18.8457 28.4303 18.5152 C 28.4278 18.186 28.1487 17.9207 27.8056 17.9207 Z"></path>
+                        <path pathLength="360" d="M 49.5975 9.0325 V 19.3422 H 38.689 C 38.5937 18.6105 38.5061 17.9301 38.4329 17.3569 C 38.2063 15.5828 37.4422 13.9868 36.2237 12.7413 C 34.8748 11.3624 33.2514 10.6633 31.3984 10.6633 C 27.3688 10.6633 25.8233 13.5309 25.556 15.0901 C 25.1526 15.5932 24.3175 16.7856 23.916 18.46 C 23.8568 18.7069 23.8106 19.0066 23.7778 19.3421 H 14.4025 V 9.0323 H 49.5975 Z"></path>
+                        <path pathLength="360" d="M 30.2223 21.2875 C 30.5674 21.2875 30.8471 21.0195 30.8471 20.6889 V 18.92 L 31.9916 18.9675 C 32.3376 18.9833 32.628 18.7259 32.643 18.3956 C 32.658 18.0654 32.3907 17.786 32.0459 17.7717 L 30.2495 17.6969 C 30.077 17.6889 29.9133 17.7497 29.7902 17.8624 C 29.6671 17.9753 29.5976 18.1315 29.5976 18.2948 V 20.6889 C 29.5974 21.0195 29.8772 21.2875 30.2223 21.2875 Z"></path>
+                    </svg>
+                </div>
                 <h3 class="service-title">Identidad Visual Digital</h3>
                 <p>Logos, paletas de colores y sistemas de diseño coherentes</p>
                 <div class="service-price">Desde $100.000</div>
@@ -1698,7 +2214,14 @@
 
             <div class="service-card enhanced-container fade-in">
                 <div class="glow-effect"></div>
-                <span class="service-icon">🚀</span>
+                <div class="service-icon">
+                    <div class="planeta-container">
+                        <div class="sphere-core"></div>
+                        <div class="ring ring-1"></div>
+                        <div class="ring ring-2"></div>
+                        <div class="ring ring-3"></div>
+                    </div>
+                </div>
                 <h3 class="service-title">Optimización & SEO</h3>
                 <p>Mejora el rendimiento y aumenta la visibilidad en buscadores</p>
                 <div class="service-price">Desde $280.000</div>
@@ -1759,7 +2282,7 @@
             <div class="plantillas-preview enhanced-container fade-in">
                 <div class="glow-effect"></div>
                 <div class="superman-loader">
-                    <div class="loader">
+                    <div class="loader-superman">
                         <span><span></span><span></span><span></span><span></span></span>
                         <div class="base">
                             <span></span>
@@ -1828,25 +2351,86 @@
             <h3 class="tools-title">Tecnologías y Herramientas</h3>
             <div class="tools-grid">
                 <div class="tool-item">
-                    <div class="tool-icon">🎨</div>
+                    <div class="tool-icon">
+                        <div class="spinning-number">
+                            <div style="color:#2ECC71;--l:3em;--m:22;--t:22s;--r1:normal;--s:1" class="wheel">
+                                <div style="--a:0deg;--i:0" class="number"></div>
+                                <div style="--a:16deg;--i:1;--r:reverse" class="number"></div>
+                                <div style="--a:32deg;--i:2;--r:reverse" class="number"></div>
+                                <div style="--a:49deg;--i:3" class="number"></div>
+                                <div style="--a:65deg;--i:4;--r:reverse" class="number"></div>
+                                <div style="--a:81deg;--i:5;--r:reverse" class="number"></div>
+                                <div style="--a:98deg;--i:6;--r:reverse" class="number"></div>
+                                <div style="--a:114deg;--i:7;--r:reverse" class="number"></div>
+                                <div style="--a:130deg;--i:8;--r:reverse" class="number"></div>
+                                <div style="--a:147deg;--i:9" class="number"></div>
+                                <div style="--a:163deg;--i:10;--r:reverse" class="number"></div>
+                                <div style="--a:180deg;--i:11" class="number"></div>
+                                <div style="--a:196deg;--i:12;--r:reverse" class="number"></div>
+                                <div style="--a:212deg;--i:13" class="number"></div>
+                                <div style="--a:229deg;--i:14" class="number"></div>
+                                <div style="--a:245deg;--i:15" class="number"></div>
+                                <div style="--a:261deg;--i:16;--r:reverse" class="number"></div>
+                                <div style="--a:278deg;--i:17" class="number"></div>
+                                <div style="--a:294deg;--i:18;--r:reverse" class="number"></div>
+                                <div style="--a:310deg;--i:19;--r:reverse" class="number"></div>
+                                <div style="--a:327deg;--i:20" class="number"></div>
+                                <div style="--a:343deg;--i:21;--r:reverse" class="number"></div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="tool-name">HTML5</div>
                     <div class="tool-desc">Estructura semántica y accesible para tus proyectos web.</div>
                 </div>
                 
                 <div class="tool-item">
-                    <div class="tool-icon">✨</div>
+                    <div class="tool-icon">
+                        <div class="dino-loader">
+                            <div class="pixel"></div>
+                        </div>
+                    </div>
                     <div class="tool-name">CSS3</div>
                     <div class="tool-desc">Diseños responsivos y animaciones fluidas que cautivan.</div>
                 </div>
                 
                 <div class="tool-item">
-                    <div class="tool-icon">⚡</div>
+                    <div class="tool-icon">
+                        <div class="animation-container">
+                            <div class="animation-top">
+                                <div class="animation-square"></div>
+                            </div>
+                            <div class="animation-bottom">
+                                <div class="animation-square"></div>
+                            </div>
+                            <div class="animation-left">
+                                <div class="animation-square"></div>
+                            </div>
+                            <div class="animation-right">
+                                <div class="animation-square"></div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="tool-name">JavaScript</div>
                     <div class="tool-desc">Interactividad dinámica y funcionalidades avanzadas.</div>
                 </div>
                 
                 <div class="tool-item">
-                    <div class="tool-icon">🤖</div>
+                    <div class="tool-icon">
+                        <div class="eva-modelViewPort">
+                            <div class="eva">
+                                <div class="head">
+                                    <div class="eyeChamber">
+                                        <div class="eye"></div>
+                                        <div class="eye"></div>
+                                    </div>
+                                </div>
+                                <div class="eva-body">
+                                    <div class="eva-hand"></div>
+                                    <div class="eva-hand"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="tool-name">Inteligencia Artificial</div>
                     <div class="tool-desc">Optimización de UX/UI y análisis de datos inteligente.</div>
                 </div>
