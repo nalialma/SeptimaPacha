@@ -81,7 +81,7 @@
 
         @keyframes fadeOut {
             to { 
-                opacity: 0; 
+                opacity: 0;
                 visibility: hidden; 
             }
         }
@@ -103,7 +103,9 @@
             width: 300px;
             height: 300px;
             font-size: 3rem;
-            left: 20%;
+            top: 25%;
+            left: 50%;
+            transform: translateX(-50%);
             animation: bubbleIn 3s ease-out, bubbleExplode 0.6s ease-out 4s forwards;
         }
 
@@ -111,7 +113,9 @@
             width: 300px;
             height: 300px;
             font-size: 3rem;
-            right: 20%;
+            top: 60%;
+            left: 50%;
+            transform: translateX(-50%);
             animation: bubbleIn 3s ease-out 0.5s, bubbleExplode 0.6s ease-out 4.3s forwards;
         }
 
@@ -395,8 +399,8 @@
             position: fixed;
             top: 2rem;
             left: 2rem;
-            width: 70px;
-            height: 70px;
+            width: 50px;
+            height: 50px;
             background: transparent;
             border: none;
             cursor: pointer;
@@ -415,7 +419,7 @@
             --color-four: rgba(26, 188, 156, 0.5);
             --color-five: rgba(46, 204, 113, 0.25);
             --time-animation: 2s;
-            --size: 0.7;
+            --size: 0.5;
             position: relative;
             border-radius: 50%;
             transform: scale(var(--size));
@@ -736,6 +740,12 @@
             line-height: 1.6;
         }
 
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
         /* SECCIONES */
         .section {
             min-height: 80vh;
@@ -827,78 +837,89 @@
             color: var(--agua-accent);
         }
 
-        /* PLANTILLAS */
-        .plantillas {
+        /* PLANTILLAS INFO */
+        .plantillas-info {
             background: linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 100%);
+            padding: 5rem 2rem;
         }
 
-        .plantillas-grid {
+        .plantillas-content {
+            max-width: 1200px;
+            margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            max-width: 1400px;
-            width: 100%;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
         }
 
-        .plantilla-card {
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
+        .plantillas-text h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            color: var(--agua-primary);
+            margin-bottom: 1.5rem;
         }
 
-        .plantilla-card:hover {
-            transform: translateY(-15px) scale(1.02);
+        .plantillas-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 1rem;
         }
 
-        .plantilla-preview {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            background: linear-gradient(135deg, var(--agua-accent) 0%, var(--agua-primary) 100%);
+        .plantillas-features {
+            list-style: none;
+            margin: 2rem 0;
+        }
+
+        .plantillas-features li {
+            padding: 0.8rem 0;
+            font-size: 1.1rem;
             display: flex;
             align-items: center;
+            gap: 1rem;
+        }
+
+        .plantillas-features li::before {
+            content: '✓';
+            color: var(--agua-primary);
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .plantillas-preview {
+            background: linear-gradient(135deg, rgba(46, 204, 113, 0.2), rgba(52, 152, 219, 0.2));
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             justify-content: center;
-            font-size: 2.5rem;
+            min-height: 400px;
         }
 
-        .plantilla-oferta {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: linear-gradient(135deg, #FF4500, #DC143C);
-            color: white;
-            padding: 0.6rem 1.2rem;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            z-index: 5;
-            animation: ofertaPulsa 2s ease-in-out infinite;
+        .plantillas-preview-icon {
+            font-size: 6rem;
+            margin-bottom: 2rem;
+            animation: float 4s ease-in-out infinite;
         }
 
-        @keyframes ofertaPulsa {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.08); }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
         }
 
-        .plantilla-info {
-            padding: 1rem;
-        }
-
-        .plantilla-nombre {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 0.4rem;
+        .plantillas-preview-text {
+            font-size: 1.3rem;
             color: var(--agua-accent);
+            margin-bottom: 1rem;
         }
 
-        .plantilla-precio {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #F39C12;
-            margin: 0.8rem 0;
+        .plantillas-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
         }
 
         /* PROCESO */
@@ -1026,6 +1047,215 @@
             font-style: italic;
         }
 
+        /* SUPERMAN LOADER */
+        .superman-loader {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+        }
+
+        .superman-loader .loader {
+            position: absolute;
+            top: 50%;
+            margin-left: -50px;
+            left: 50%;
+            animation: speeder 0.4s linear infinite;
+        }
+
+        .superman-loader .loader > span {
+            height: 5px;
+            width: 35px;
+            background: var(--agua-primary);
+            position: absolute;
+            top: -19px;
+            left: 60px;
+            border-radius: 2px 10px 1px 0;
+        }
+
+        .superman-loader .base span {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent;
+            border-right: 100px solid var(--agua-accent);
+            border-bottom: 6px solid transparent;
+        }
+
+        .superman-loader .base span:before {
+            content: "";
+            height: 22px;
+            width: 22px;
+            border-radius: 50%;
+            background: var(--agua-accent);
+            position: absolute;
+            right: -110px;
+            top: -16px;
+        }
+
+        .superman-loader .base span:after {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-top: 0 solid transparent;
+            border-right: 55px solid var(--agua-accent);
+            border-bottom: 16px solid transparent;
+            top: -16px;
+            right: -98px;
+        }
+
+        .superman-loader .face {
+            position: absolute;
+            height: 12px;
+            width: 20px;
+            background: var(--agua-accent);
+            border-radius: 20px 20px 0 0;
+            transform: rotate(-40deg);
+            right: -125px;
+            top: -15px;
+        }
+
+        .superman-loader .face:after {
+            content: "";
+            height: 12px;
+            width: 12px;
+            background: var(--agua-accent);
+            right: 4px;
+            top: 7px;
+            position: absolute;
+            transform: rotate(40deg);
+            transform-origin: 50% 50%;
+            border-radius: 0 0 0 2px;
+        }
+
+        .superman-loader .loader > span > span:nth-child(1),
+        .superman-loader .loader > span > span:nth-child(2),
+        .superman-loader .loader > span > span:nth-child(3),
+        .superman-loader .loader > span > span:nth-child(4) {
+            width: 30px;
+            height: 1px;
+            background: var(--agua-primary);
+            position: absolute;
+            animation: fazer1 0.2s linear infinite;
+        }
+
+        .superman-loader .loader > span > span:nth-child(2) {
+            top: 3px;
+            animation: fazer2 0.4s linear infinite;
+        }
+
+        .superman-loader .loader > span > span:nth-child(3) {
+            top: 1px;
+            animation: fazer3 0.4s linear infinite;
+            animation-delay: -1s;
+        }
+
+        .superman-loader .loader > span > span:nth-child(4) {
+            top: 4px;
+            animation: fazer4 1s linear infinite;
+            animation-delay: -1s;
+        }
+
+        @keyframes fazer1 {
+            0% { left: 0; }
+            100% { left: -80px; opacity: 0; }
+        }
+
+        @keyframes fazer2 {
+            0% { left: 0; }
+            100% { left: -100px; opacity: 0; }
+        }
+
+        @keyframes fazer3 {
+            0% { left: 0; }
+            100% { left: -50px; opacity: 0; }
+        }
+
+        @keyframes fazer4 {
+            0% { left: 0; }
+            100% { left: -150px; opacity: 0; }
+        }
+
+        @keyframes speeder {
+            0% { transform: translate(2px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -3px) rotate(-1deg); }
+            20% { transform: translate(-2px, 0px) rotate(1deg); }
+            30% { transform: translate(1px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 3px) rotate(-1deg); }
+            60% { transform: translate(-1px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-2px, -1px) rotate(1deg); }
+            90% { transform: translate(2px, 1px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+
+        .superman-loader .longfazers {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .superman-loader .longfazers span {
+            position: absolute;
+            height: 2px;
+            width: 20%;
+            background: var(--agua-secondary);
+        }
+
+        .superman-loader .longfazers span:nth-child(1) {
+            top: 20%;
+            animation: lf 0.6s linear infinite;
+            animation-delay: -5s;
+        }
+
+        .superman-loader .longfazers span:nth-child(2) {
+            top: 40%;
+            animation: lf2 0.8s linear infinite;
+            animation-delay: -1s;
+        }
+
+        .superman-loader .longfazers span:nth-child(3) {
+            top: 60%;
+            animation: lf3 0.6s linear infinite;
+        }
+
+        .superman-loader .longfazers span:nth-child(4) {
+            top: 80%;
+            animation: lf4 0.5s linear infinite;
+            animation-delay: -3s;
+        }
+
+        @keyframes lf {
+            0% { left: 200%; }
+            100% { left: -200%; opacity: 0; }
+        }
+
+        @keyframes lf2 {
+            0% { left: 200%; }
+            100% { left: -200%; opacity: 0; }
+        }
+
+        @keyframes lf3 {
+            0% { left: 200%; }
+            100% { left: -100%; opacity: 0; }
+        }
+
+        @keyframes lf4 {
+            0% { left: 200%; }
+            100% { left: -100%; opacity: 0; }
+        }
+
+        .plantillas-super-message {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--agua-primary);
+            margin-top: 2rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
         /* ANIMACIONES */
         .fade-in {
             opacity: 0;
@@ -1047,6 +1277,10 @@
             .hero-subtitle {
                 max-width: 100%;
             }
+
+            .plantillas-content {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 768px) {
@@ -1054,11 +1288,6 @@
                 width: 80vw;
                 left: -80vw;
                 max-width: 300px;
-            }
-
-            .plantillas-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1.2rem;
             }
 
             .services-grid {
@@ -1104,12 +1333,12 @@
             }
 
             .menu-btn {
-                width: 60px;
-                height: 60px;
+                width: 45px;
+                height: 45px;
             }
 
             .loader {
-                --size: 0.6;
+                --size: 0.45;
             }
 
             .model-container {
@@ -1118,6 +1347,29 @@
 
             model-viewer {
                 min-height: 450px;
+            }
+
+            .hero-buttons {
+                width: 100%;
+            }
+
+            .hero-buttons .animated-button {
+                min-width: 140px;
+            }
+
+            .splash-bubble.code,
+            .splash-bubble.agua {
+                width: 250px;
+                height: 250px;
+                font-size: 2.5rem;
+            }
+
+            .splash-bubble.code {
+                top: 28%;
+            }
+
+            .splash-bubble.agua {
+                top: 62%;
             }
         }
 
@@ -1128,14 +1380,14 @@
             }
 
             .menu-btn {
-                width: 55px;
-                height: 55px;
+                width: 40px;
+                height: 40px;
                 top: 1.5rem;
                 left: 1.5rem;
             }
 
             .loader {
-                --size: 0.55;
+                --size: 0.4;
             }
 
             .nav-back {
@@ -1158,11 +1410,6 @@
                 font-size: 1.3rem;
                 bottom: 1.5rem;
                 right: 1.5rem;
-            }
-
-            .plantillas-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
             }
 
             .services-grid {
@@ -1230,6 +1477,45 @@
 
             model-viewer {
                 min-height: 350px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .hero-buttons .animated-button {
+                width: 100%;
+                min-width: unset;
+            }
+
+            .plantillas-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .plantillas-buttons .animated-button {
+                width: 100%;
+            }
+
+            .splash-bubble.code,
+            .splash-bubble.agua {
+                width: 200px;
+                height: 200px;
+                font-size: 2rem;
+            }
+
+            .splash-bubble.code {
+                top: 30%;
+            }
+
+            .splash-bubble.agua {
+                top: 60%;
+            }
+
+            .splash-bubble.small {
+                width: 80px;
+                height: 80px;
             }
         }
     </style>
@@ -1338,9 +1624,24 @@
     <!-- HERO SECTION -->
     <section class="hero-codigo" id="inicio">
         <div class="hero-left">
-            <p class ="section-title fade-in">CODE AGUA</p>
+            <p class="section-title fade-in">CODE AGUA</p>
             <h1 class="hero-title">Desarrollo Web en Salta</h1>
             <p class="hero-subtitle">Especializados en <strong>diseño de páginas web profesionales</strong> en Salta, Argentina. Creamos sitios web responsivos que convierten visitantes en clientes.</p>
+            
+            <div class="hero-buttons">
+                <button class="animated-button" onclick="window.open('https://wa.me/543872271144?text=Quiero%20consultar%20sobre%20desarrollo%20web','_blank')">
+                    <div class="bg"></div>
+                    <div class="wrap">
+                        <div class="content">Consultar 💬</div>
+                    </div>
+                </button>
+                <button class="animated-button" onclick="window.location.href='plantillas.html'">
+                    <div class="bg"></div>
+                    <div class="wrap">
+                        <div class="content">Ver Plantillas 🎨</div>
+                    </div>
+                </button>
+            </div>
         </div>
         <div class="hero-right">
             <div class="model-container">
@@ -1356,7 +1657,8 @@
                     auto-rotate
                     rotation-per-second="30deg">
                 </model-viewer>
-                <p class="section-title fade-in">¡Hola Terrícola!</p> <p class="service-title">Creamos tu espacio digital</p>
+                <p class="section-title fade-in" style="margin-bottom: 0.5rem;">¡Hola Terrícola!</p>
+                <p class="service-title" style="margin-top: 0;">Creamos tu espacio digital</p>
             </div>
         </div>
     </section>
@@ -1422,170 +1724,59 @@
         </div>
     </section>
 
-    <!-- PLANTILLAS BLACK FRIDAY -->
-    <section class="section plantillas" id="plantillas">
-        <h2 class="section-title fade-in">🎄 Ofertas Especiales 2024 🎉</h2>
-        <div class="plantillas-grid">
-            <div class="plantilla-card enhanced-container fade-in">
-                <div class="glow-effect"></div>
-                <div class="plantilla-preview">
-                    <div class="plantilla-oferta">OFERTA</div>
-                    📩
-                </div>
-                <div class="plantilla-info">
-                    <div class="plantilla-nombre">Squeeze Page</div>
-                    <div class="plantilla-precio">$180.000</div>
-                    <button class="animated-button" onclick="window.open('https://nalialma.github.io/Squeeze-page-A/','_blank')" style="width: 100%">
+    <!-- CATÁLOGO DE PLANTILLAS -->
+    <section class="plantillas-info" id="plantillas">
+        <div class="plantillas-content">
+            <div class="plantillas-text">
+                <h2 class="fade-in">Nuestro Catálogo de Plantillas</h2>
+                <p class="fade-in">Diseños profesionales listos para usar, 100% personalizables según las necesidades de tu marca.</p>
+                
+                <ul class="plantillas-features fade-in">
+                    <li>Modifica colores a tu paleta corporativa</li>
+                    <li>Cambia tipografías según tu identidad</li>
+                    <li>Actualiza todo el contenido e imágenes</li>
+                    <li>Diseño responsive optimizado</li>
+                    <li>SEO incluido y configurado</li>
+                    <li>Soporte técnico 30 días</li>
+                </ul>
+
+                <div class="plantillas-buttons">
+                    <button class="animated-button" onclick="window.location.href='plantillas.html'">
                         <div class="bg"></div>
                         <div class="wrap">
-                            <div class="content">Demo</div>
+                            <div class="content">Ver Catálogo</div>
+                        </div>
+                    </button>
+                    <button class="animated-button" onclick="window.open('https://wa.me/543872271144?text=Quiero%20consultar%20sobre%20las%20plantillas','_blank')">
+                        <div class="bg"></div>
+                        <div class="wrap">
+                            <div class="content">Consultar</div>
                         </div>
                     </button>
                 </div>
             </div>
 
-            <div class="plantilla-card enhanced-container fade-in">
+            <div class="plantillas-preview enhanced-container fade-in">
                 <div class="glow-effect"></div>
-                <div class="plantilla-preview">
-                    <div class="plantilla-oferta">OFERTA</div>
-                    🎨
-                </div>
-                <div class="plantilla-info">
-                    <div class="plantilla-nombre">ColorVives</div>
-                    <div class="plantilla-precio">$180.000</div>
-                    <button class="animated-button" onclick="window.open('https://nalialma.github.io/Plantilla-COLORVIVES/','_blank')" style="width: 100%">
-                        <div class="bg"></div>
-                        <div class="wrap">
-                            <div class="content">Demo</div>
+                <div class="superman-loader">
+                    <div class="loader">
+                        <span><span></span><span></span><span></span><span></span></span>
+                        <div class="base">
+                            <span></span>
+                            <div class="face"></div>
                         </div>
-                    </button>
+                    </div>
+                    <div class="longfazers">
+                        <span></span><span></span><span></span><span></span>
+                    </div>
                 </div>
-            </div>
-
-            <div class="plantilla-card enhanced-container fade-in">
-                <div class="glow-effect"></div>
-                <div class="plantilla-preview">
-                    <div class="plantilla-oferta">OFERTA</div>
-                    🔮
-                </div>
-                <div class="plantilla-info">
-                    <div class="plantilla-nombre">Tarot en Luz</div>
-                    <div class="plantilla-precio">$250.000</div>
-                    <button class="animated-button" onclick="window.open('https://nalialma.github.io/Tarot-en-Luz/','_blank')" style="width: 100%">
-                        <div class="bg"></div>
-                        <div class="wrap">
-                            <div class="content">Demo</div>
-                        </div>
-                    </button>
-                </div>
-            </div>
-
-            <div class="plantilla-card enhanced-container fade-in">
-                <div class="glow-effect"></div>
-                <div class="plantilla-preview">
-                    <div class="plantilla-oferta">OFERTA</div>
-                    🎯
-                </div>
-                <div class="plantilla-info">
-                    <div class="plantilla-nombre">Landing Premium</div>
-                    <div class="plantilla-precio">$280.000</div>
-                    <button class="animated-button" onclick="window.open('https://nalialma.github.io/Landing-Page-A1/','_blank')" style="width: 100%">
-                        <div class="bg"></div>
-                        <div class="wrap">
-                            <div class="content">Demo</div>
-                        </div>
-                    </button>
-                </div>
-            </div>
-
-            <div class="plantilla-card enhanced-container fade-in">
-                <div class="glow-effect"></div>
-                <div class="plantilla-preview">
-                    <div class="plantilla-oferta">OFERTA</div>
-                    💼
-                </div>
-                <div class="plantilla-info">
-                    <div class="plantilla-nombre">Catálogo Servicios</div>
-                    <div class="plantilla-precio">$300.000</div>
-                    <button class="animated-button" onclick="window.open('https://nalialma.github.io/servicios-plantilla/','_blank')" style="width: 100%">
-                        <div class="bg"></div>
-                        <div class="wrap">
-                            <div class="content">Demo</div>
-                        </div>
-                    </button>
-                </div>
-            </div>
-
-            <div class="plantilla-card enhanced-container fade-in">
-                <div class="glow-effect"></div>
-                <div class="plantilla-preview">
-                    <div class="plantilla-oferta">OFERTA</div>
-                    🖼️
-                </div>
-                <div class="plantilla-info">
-                    <div class="plantilla-nombre">ArtePluma</div>
-                    <div class="plantilla-precio">$120.000</div>
-                    <button class="animated-button" onclick="window.open('https://nalialma.github.io/ArtePluma/','_blank')" style="width: 100%">
-                        <div class="bg"></div>
-                        <div class="wrap">
-                            <div class="content">Demo</div>
-                        </div>
-                    </button>
-                </div>
-            </div>
-
-            <div class="plantilla-card enhanced-container fade-in">
-                <div class="glow-effect"></div>
-                <div class="plantilla-preview">
-                    <div class="plantilla-oferta">OFERTA</div>
-                    ⚖️
-                </div>
-                <div class="plantilla-info">
-                    <div class="plantilla-nombre">Despacho Legal</div>
-                    <div class="plantilla-precio">$250.000</div>
-                    <button class="animated-button" onclick="window.open('https://nalialma.github.io/plantilla-abogado/','_blank')" style="width: 100%">
-                        <div class="bg"></div>
-                        <div class="wrap">
-                            <div class="content">Demo</div>
-                        </div>
-                    </button>
-                </div>
-            </div>
-
-            <div class="plantilla-card enhanced-container fade-in">
-                <div class="glow-effect"></div>
-                <div class="plantilla-preview">
-                    <div class="plantilla-oferta">OFERTA</div>
-                    🖌️
-                </div>
-                <div class="plantilla-info">
-                    <div class="plantilla-nombre">Arte Minimalista</div>
-                    <div class="plantilla-precio">$170.000</div>
-                    <button class="animated-button" onclick="window.open('https://nalialma.github.io/arte-basic/','_blank')" style="width: 100%">
-                        <div class="bg"></div>
-                        <div class="wrap">
-                            <div class="content">Demo</div>
-                        </div>
-                    </button>
-                </div>
-            </div>
-
-            <div class="plantilla-card enhanced-container fade-in">
-                <div class="glow-effect"></div>
-                <div class="plantilla-preview">
-                    <div class="plantilla-oferta">OFERTA</div>
-                    🛍️
-                </div>
-                <div class="plantilla-info">
-                    <div class="plantilla-nombre">Tienda Online</div>
-                    <div class="plantilla-precio">$380.000</div>
-                    <button class="animated-button" onclick="window.open('https://nalialma.github.io/Plantilla-Tienda/','_blank')" style="width: 100%">
-                        <div class="bg"></div>
-                        <div class="wrap">
-                            <div class="content">Demo</div>
-                        </div>
-                    </button>
-                </div>
+                <p class="plantillas-super-message">Lleva tu negocio al siguiente nivel</p>
+                <button class="animated-button" onclick="window.location.href='plantillas.html'" style="margin-top: 1.5rem;">
+                    <div class="bg"></div>
+                    <div class="wrap">
+                        <div class="content">Ver Plantillas 🚀</div>
+                    </div>
+                </button>
             </div>
         </div>
     </section>
