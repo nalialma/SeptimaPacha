@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO ESENCIAL -->
+    <title>Servicios y Precios | Desarrollo Web Salta - Séptima Pacha Co.</title>
+    <meta name="description" content="Conoce nuestros servicios de desarrollo web y precios accesibles en Salta, Argentina. Páginas web profesionales desde $200.000">
+    <meta name="keywords" content="precios desarrollo web salta, tarifas diseño web, presupuesto web salta">
+    <meta name="robots" content="index, follow">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --agua-primary: #2ECC71;
+            --agua-secondary: #3498DB;
+            --agua-accent: #1ABC9C;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #0a1a2a 0%, #1a2a3a 50%, #0a2a1a 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 4rem;
+            padding-top: 2rem;
+        }
+
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            background: linear-gradient(45deg, var(--agua-primary), var(--agua-secondary), var(--agua-accent));
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: waterGradient 4s ease-in-out infinite;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes waterGradient {
+            0%, 100% { background-position: 0% 50%; }
+            33% { background-position: 100% 50%; }
+            66% { background-position: 50% 100%; }
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: transparent;
+            border: 1px solid var(--agua-primary);
+            border-radius: 50px;
+            color: var(--agua-primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .back-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: var(--agua-primary);
+            transform: translate(-50%, -50%);
+            transition: width 0.4s ease, height 0.4s ease;
+            z-index: -1;
+        }
+
+        .back-button:hover {
+            color: #0a1a2a;
+            box-shadow: 0 0 20px rgba(46, 204, 113, 0.5);
+        }
+
+        .back-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .services-section {
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--agua-accent);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .service-card {
+            background: rgba(10, 26, 42, 0.6);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(46, 204, 113, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .service-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 2px;
+            background: linear-gradient(135deg, #2ECC71, #3498DB, #1ABC9C);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(46, 204, 113, 0.3);
+        }
+
+        .service-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .service-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--agua-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .service-description {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .price-tag {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #F39C12;
+            margin: 1.5rem 0;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .features-list {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+
+        .features-list li {
+            padding: 0.6rem 0;
+            color: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+        }
+
+        .features-list li::before {
+            content: '✓';
+            color: var(--agua-primary);
+            font-weight: bold;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .contact-cta {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: rgba(46, 204, 113, 0.1);
+            border-radius: 20px;
+            margin-top: 4rem;
+        }
+
+        .contact-cta h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--agua-primary);
+            margin-bottom: 1rem;
+        }
+
+        .contact-cta p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 3rem;
+            background: linear-gradient(135deg, var(--agua-primary), var(--agua-secondary));
+            border-radius: 50px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(46, 204, 113, 0.6);
+        }
+
+        .note {
+            background: rgba(52, 152, 219, 0.1);
+            border-left: 4px solid var(--agua-secondary);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 10px;
+        }
+
+        .note-title {
+            font-weight: 700;
+            color: var(--agua-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .price-tag {
+                font-size: 2rem;
+            }
+
+            body {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Servicios & Precios</h1>
+            <p class="subtitle">Soluciones digitales profesionales para tu negocio en Salta</p>
+            <a href="agua-code.html" class="back-button">← Volver</a>
+        </div>
+
+        <!-- DESARROLLO WEB -->
+        <div class="services-section">
+            <h2 class="section-title">Desarrollo Web</h2>
+            
+            <div class="services-grid">
+                <!-- Landing Page -->
+                <div class="service-card">
+                    <div class="service-header">
+                        <h3 class="service-name">Landing Page</h3>
+                        <p class="service-description">Página de aterrizaje profesional diseñada para convertir visitantes en clientes</p>
+                    </div>
+                    <div class="price-tag">$200.000</div>
+                    <ul class="features-list">
+                        <li>Diseño responsive (móvil, tablet, desktop)</li>
+                        <li>Hasta 5 secciones personalizadas</li>
+                        <li>Formulario de contacto funcional</li>
+                        <li>Optimización SEO básica</li>
+                        <li>Integración con redes sociales</li>
+                        <li>1 revisión de diseño incluida</li>
+                        <li>Entrega: 7-10 días hábiles</li>
+                    </ul>
+                </div>
+
+                <!-- Web Corporativa -->
+                <div class="service-card">
+                    <div class="service-header">
+                        <h3 class="service-name">Sitio Web Corporativo</h3>
+                        <p class="service-description">Presencia web completa para empresas y profesionales</p>
+                    </div>
+                    <div class="price-tag">$450.000</div>
+                    <ul class="features-list">
+                        <li>Hasta 10 páginas/secciones</li>
+                        <li>Diseño responsive profesional</li>
+                        <li>Sistema de gestión de contenidos</li>
+                        <li>Blog integrado</li>
+                        <li>Formularios de contacto avanzados</li>
+                        <li>Galería de imágenes/portfolio</li>
+                        <li>Optimización SEO avanzada</li>
+                        <li>2 revisiones de diseño</li>
+                        <li>Entrega: 15-20 días hábiles</li>
+                    </ul>
+                </div>
+
+                <!-- E-commerce -->
+                <div class="service-card">
+                    <div class="service-header">
+                        <h3 class="service-name">Tienda Online</h3>
+                        <p class="service-description">Solución completa para vender tus productos en línea</p>
+                    </div>
+                    <div class="price-tag">$800.000</div>
+                    <ul class="features-list">
+                        <li>Catálogo de hasta 50 productos</li>
+                        <li>Carrito de compras funcional</li>
+                        <li>Pasarela de pago integrada</li>
+                        <li>Panel de administración</li>
+                        <li>Gestión de inventario</li>
+                        <li>Sistema de envíos</li>
+                        <li>Diseño responsive premium</li>
+                        <li>3 revisiones de diseño</li>
+                        <li>Capacitación de uso incluida</li>
+                        <li>Entrega: 30-40 días hábiles</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- DISEÑO Y BRANDING -->
+        <div class="services-section">
+            <h2 class="section-title">Diseño & Branding</h2>
+            
+            <div class="services-grid">
+                <!-- Identidad Visual -->
+                <div class="service-card">
+                    <div class="service-header">
+                        <h3 class="service-name">Identidad Visual</h3>
+                        <p class="service-description">Diseño de marca completo para tu negocio</p>
+                    </div>
+                    <div class="price-tag">$150.000</div>
+                    <ul class="features-list">
+                        <li>Diseño de logotipo (3 propuestas)</li>
+                        <li>Paleta de colores corporativa</li>
+                        <li>Tipografía de marca</li>
+                        <li>Manual de uso básico</li>
+                        <li>Archivos en formatos vectoriales</li>
+                        <li>2 revisiones incluidas</li>
+                        <li>Entrega: 7 días hábiles</li>
+                    </ul>
+                </div>
+
+                <!-- Rediseño Web -->
+                <div class="service-card">
+                    <div class="service-header">
+                        <h3 class="service-name">Rediseño Web</h3>
+                        <p class="service-description">Moderniza tu sitio web existente</p>
+                    </div>
+                    <div class="price-tag">$350.000</div>
+                    <ul class="features-list">
+                        <li>Análisis del sitio actual</li>
+                        <li>Nuevo diseño moderno y responsivo</li>
+                        <li>Mejoras en UX/UI</li>
+                        <li>Optimización de velocidad</li>
+                        <li>Actualización de contenidos</li>
+                        <li>Mejora de SEO</li>
+                        <li>2 revisiones de diseño</li>
+                        <li>Entrega: 15 días hábiles</li>
+                    </ul>
+                </div>
+
+                <!-- Material Gráfico -->
+                <div class="service-card">
+                    <div class="service-header">
+                        <h3 class="service-name">Diseño Gráfico</h3>
+                        <p class="service-description">Piezas gráficas para tus redes y marketing</p>
+                    </div>
+                    <div class="price-tag">$80.000</div>
+                    <ul class="features-list">
+                        <li>5 diseños para redes sociales</li>
+                        <li>Tarjetas de presentación</li>
+                        <li>Flyers digitales</li>
+                        <li>Banners web</li>
+                        <li>Archivos listos para imprimir/publicar</li>
+                        <li>1 revisión por diseño</li>
+                        <li>Entrega: 5 días hábiles</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEO Y OPTIMIZACIÓN -->
+        <div class="services-section">
+            <h2 class="section-title">SEO & Optimización</h2>
+            
+            <div class="services-grid">
+                <!-- SEO Básico -->
+                <div class="service-card">
+                    <div class="service-header">
+                        <h3 class="service-name">Optimización SEO Básica</h3>
+                        <p class="service-description">Mejora tu posicionamiento en Google</p>
+                    </div>
+                    <div class="price-tag">$180.000</div>
+                    <ul class="features-list">
+                        <li>Análisis de palabras clave</li>
+                        <li>Optimización de metadatos</li>
+                        <li>Mejora de velocidad de carga</li>
+                        <li>Optimización de imágenes</li>
+                        <li>Integración Google Analytics</li>
+                        <li>Informe inicial de rendimiento</li>
+                        <li>Entrega: 5-7 días hábiles</li>
+                    </ul>
+                </div>
+
+                <!-- SEO Avanzado -->
+                <div class="service-card">
+                    <div class="service-header">
+                        <h3 class="service-name">SEO Avanzado + Mantenimiento</h3>
+                        <p class="service-description">Estrategia SEO completa mensual</p>
+                    </div>
+                    <div class="price-tag">$280.000/mes</div>
+                    <ul class="features-list">
+                        <li>Todo lo de SEO Básico</li>
+                        <li>Creación de contenido optimizado</li>
+                        <li>Link building estratégico</li>
+                        <li>Monitoreo de competencia</li>
+                        <li>Informes mensuales detallados</li>
+                        <li>Ajustes y mejoras continuas</li>
+                        <li>Consultoría mensual</li>
+                    </ul>
+                </div>
+
+                <!-- Mantenimiento Web -->
+                <div class="service-card">
+                    <div class="service-header">
+                        <h3 class="service-name">Mantenimiento Web</h3>
+                        <p class="service-description">Mantén tu sitio actualizado y seguro</p>
+                    </div>
+                    <div class="price-tag">$100.000/mes</div>
+                    <ul class="features-list">
+                        <li>Actualizaciones de seguridad</li>
+                        <li>Backups semanales</li>
+                        <li>Actualizaciones de contenido (2 por mes)</li>
+                        <li>Monitoreo de uptime</li>
+                        <li>Soporte técnico prioritario</li>
+                        <li>Correcciones menores incluidas</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- NOTAS IMPORTANTES -->
+        <div class="note">
+            <div class="note-title">📌 Información Importante</div>
+            <p>• Todos los precios están expresados en pesos argentinos (ARS)</p>
+            <p>• Precios válidos para Cliente B según tarifario</p>
+            <p>• Los tiempos de entrega pueden variar según complejidad del proyecto</p>
+            <p>• Se requiere anticipo del 50% para iniciar cualquier proyecto</p>
+            <p>• Hosting y dominio no incluidos (se pueden contratar aparte)</p>
+            <p>• Soporte post-entrega: 30 días sin cargo</p>
+        </div>
+
+        <!-- CALL TO ACTION -->
+        <div class="contact-cta">
+            <h2>¿Listo para comenzar tu proyecto?</h2>
+            <p>Contáctanos ahora y recibe una cotización personalizada sin compromiso</p>
+            <a href="https://wa.me/543872271144?text=Hola,%20quiero%20consultar%20sobre%20sus%20servicios%20de%20desarrollo%20web" class="cta-button" target="_blank">
+                Solicitar Presupuesto 💬
+            </a>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem;">
+            <a href="agua-code.html" class="back-button">← Volver a Inicio</a>
+        </div>
+    </div>
+</body>
+</html>
