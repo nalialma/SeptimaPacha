@@ -355,7 +355,7 @@
             transform: translate(6px, -6px);
         }
 
-             /* BOTÓN MINIMALISTA */
+        /* BOTÓN MINIMALISTA */
         .info-button {
             display: inline-block;
             padding: 0.8rem 2rem;
@@ -848,7 +848,7 @@
         }
 
         /* ANIMACIONES DE SERVICIOS */
-        /* Círculo Spinner (circulo--e.txt) */
+        /* Círculo Spinner */
         .spinner-container {
             width: 150px;
             height: 150px;
@@ -872,28 +872,31 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Mona Lisa Loader - Completo */
+        /* Mona Lisa Loader - ARREGLADO */
         .monalisa-loader {
             width: 150px;
             height: 150px;
             margin: 0 auto;
+            display: block;
         }
 
         .monalisa-loader path {
             stroke: var(--agua-accent);
-            stroke-width: 0.8px;
+            stroke-width: 1.2px;
             fill: none;
-            animation: dashArray 4s ease-in-out infinite,
-                      dashOffset 4s linear infinite;
+            stroke-dasharray: 0 1 359 0;
+            stroke-dashoffset: 365;
+            animation: monalisaDash 4s ease-in-out infinite,
+                      monalisaOffset 4s linear infinite;
         }
 
-        @keyframes dashArray {
+        @keyframes monalisaDash {
             0% { stroke-dasharray: 0 1 359 0; }
             50% { stroke-dasharray: 0 359 1 0; }
             100% { stroke-dasharray: 359 1 0 0; }
         }
 
-        @keyframes dashOffset {
+        @keyframes monalisaOffset {
             0% { stroke-dashoffset: 365; }
             100% { stroke-dashoffset: 5; }
         }
@@ -983,7 +986,7 @@
         }
 
         /* ANIMACIONES DE HERRAMIENTAS */
-        /* Spinning Numbers - Corregido y centrado */
+        /* Spinning Numbers */
         .spinning-number {
             position: relative;
             width: 100px;
@@ -1039,123 +1042,122 @@
             100% { content: "1"; }
         }
 
-        /* Dino Loader - Mejorado y visible */
+        /* Dino Loader - ARREGLADO Y MEJORADO */
         .dino-loader {
             position: relative;
-            width: 100px;
-            height: 100px;
+            width: 120px;
+            height: 80px;
             margin: 0 auto;
             display: flex;
             align-items: center;
             justify-content: center;
+            transform: scale(1.2);
         }
 
         .dino-loader .pixel {
-            width: 4px;
-            height: 4px;
+            width: 6px;
+            height: 6px;
             background: transparent;
+            position: relative;
             box-shadow: 
-                /* Cabeza */
-                20px 0px var(--agua-primary), 24px 0px var(--agua-primary),
-                28px 0px var(--agua-primary), 32px 0px var(--agua-primary),
-                16px 4px var(--agua-primary), 20px 4px var(--agua-primary),
-                24px 4px var(--agua-primary), 28px 4px var(--agua-primary),
-                32px 4px var(--agua-primary), 36px 4px var(--agua-primary),
-                /* Ojos */
-                16px 8px var(--agua-primary), 20px 8px var(--agua-primary),
-                32px 8px var(--agua-primary), 36px 8px var(--agua-primary),
-                40px 8px var(--agua-primary), 44px 8px var(--agua-primary),
-                /* Cuerpo superior */
-                16px 12px var(--agua-primary), 20px 12px var(--agua-primary),
-                32px 12px var(--agua-primary), 36px 12px var(--agua-primary),
-                40px 12px var(--agua-primary), 44px 12px var(--agua-primary),
-                /* Cuerpo medio */
-                16px 16px var(--agua-primary), 20px 16px var(--agua-primary),
-                24px 16px var(--agua-primary), 28px 16px var(--agua-primary),
-                32px 16px var(--agua-primary), 36px 16px var(--agua-primary),
-                40px 16px var(--agua-primary), 44px 16px var(--agua-primary),
-                /* Cola */
-                16px 20px var(--agua-primary), 20px 20px var(--agua-primary),
-                24px 20px var(--agua-primary), 28px 20px var(--agua-primary),
-                32px 20px var(--agua-primary), 36px 20px var(--agua-primary),
-                40px 20px var(--agua-primary), 44px 20px var(--agua-primary),
-                /* Más cola */
-                16px 24px var(--agua-primary), 20px 24px var(--agua-primary),
-                24px 24px var(--agua-primary), 28px 24px var(--agua-primary),
-                32px 24px var(--agua-primary), 36px 24px var(--agua-primary),
-                /* Patas frame 1 */
-                16px 28px var(--agua-primary), 20px 28px var(--agua-primary),
-                24px 28px var(--agua-primary), 28px 28px var(--agua-primary),
-                32px 28px var(--agua-primary), 36px 28px var(--agua-primary),
+                /* Cabeza - fila 1 */
+                24px 0px var(--agua-primary), 30px 0px var(--agua-primary),
+                36px 0px var(--agua-primary), 42px 0px var(--agua-primary),
+                /* Cabeza - fila 2 */
+                18px 6px var(--agua-primary), 24px 6px var(--agua-primary),
+                30px 6px var(--agua-primary), 36px 6px var(--agua-primary),
+                42px 6px var(--agua-primary), 48px 6px var(--agua-primary),
+                /* Ojos - fila 3 */
+                18px 12px var(--agua-primary), 24px 12px var(--agua-primary),
+                42px 12px var(--agua-primary), 48px 12px var(--agua-primary),
+                54px 12px var(--agua-primary), 60px 12px var(--agua-primary),
+                /* Cuerpo - fila 4 */
+                18px 18px var(--agua-primary), 24px 18px var(--agua-primary),
+                42px 18px var(--agua-primary), 48px 18px var(--agua-primary),
+                54px 18px var(--agua-primary), 60px 18px var(--agua-primary),
+                /* Cuerpo - fila 5 */
+                18px 24px var(--agua-primary), 24px 24px var(--agua-primary),
+                30px 24px var(--agua-primary), 36px 24px var(--agua-primary),
+                42px 24px var(--agua-primary), 48px 24px var(--agua-primary),
+                54px 24px var(--agua-primary), 60px 24px var(--agua-primary),
+                /* Cola - fila 6 */
+                18px 30px var(--agua-primary), 24px 30px var(--agua-primary),
+                30px 30px var(--agua-primary), 36px 30px var(--agua-primary),
+                42px 30px var(--agua-primary), 48px 30px var(--agua-primary),
+                54px 30px var(--agua-primary), 60px 30px var(--agua-primary),
+                /* Cola - fila 7 */
+                18px 36px var(--agua-primary), 24px 36px var(--agua-primary),
+                30px 36px var(--agua-primary), 36px 36px var(--agua-primary),
+                42px 36px var(--agua-primary), 48px 36px var(--agua-primary),
+                /* Patas - cambian en animación */
+                18px 42px var(--agua-primary), 24px 42px var(--agua-primary),
+                30px 42px var(--agua-primary),
                 /* Pies */
-                16px 32px var(--agua-primary), 20px 32px var(--agua-primary),
-                24px 32px var(--agua-primary), 28px 32px var(--agua-primary),
-                32px 32px var(--agua-primary), 36px 32px var(--agua-primary);
-            animation: dino-walk 0.4s steps(2) infinite;
+                18px 48px var(--agua-primary), 24px 48px var(--agua-primary),
+                30px 48px var(--agua-primary);
+            animation: dino-walk 0.5s steps(2) infinite;
         }
 
         @keyframes dino-walk {
             0% {
                 box-shadow: 
-                    /* Cabeza */
-                    20px 0px var(--agua-primary), 24px 0px var(--agua-primary),
-                    28px 0px var(--agua-primary), 32px 0px var(--agua-primary),
-                    16px 4px var(--agua-primary), 20px 4px var(--agua-primary),
-                    24px 4px var(--agua-primary), 28px 4px var(--agua-primary),
-                    32px 4px var(--agua-primary), 36px 4px var(--agua-primary),
-                    16px 8px var(--agua-primary), 20px 8px var(--agua-primary),
-                    32px 8px var(--agua-primary), 36px 8px var(--agua-primary),
-                    40px 8px var(--agua-primary), 44px 8px var(--agua-primary),
-                    16px 12px var(--agua-primary), 20px 12px var(--agua-primary),
-                    32px 12px var(--agua-primary), 36px 12px var(--agua-primary),
-                    40px 12px var(--agua-primary), 44px 12px var(--agua-primary),
-                    16px 16px var(--agua-primary), 20px 16px var(--agua-primary),
-                    24px 16px var(--agua-primary), 28px 16px var(--agua-primary),
-                    32px 16px var(--agua-primary), 36px 16px var(--agua-primary),
-                    40px 16px var(--agua-primary), 44px 16px var(--agua-primary),
-                    16px 20px var(--agua-primary), 20px 20px var(--agua-primary),
-                    24px 20px var(--agua-primary), 28px 20px var(--agua-primary),
-                    32px 20px var(--agua-primary), 36px 20px var(--agua-primary),
-                    40px 20px var(--agua-primary), 44px 20px var(--agua-primary),
-                    16px 24px var(--agua-primary), 20px 24px var(--agua-primary),
-                    24px 24px var(--agua-primary), 28px 24px var(--agua-primary),
-                    32px 24px var(--agua-primary), 36px 24px var(--agua-primary),
-                    /* Patas izquierda */
-                    16px 28px var(--agua-primary), 20px 28px var(--agua-primary),
-                    24px 28px var(--agua-primary),
-                    16px 32px var(--agua-primary), 20px 32px var(--agua-primary),
-                    24px 32px var(--agua-primary);
+                    24px 0px var(--agua-primary), 30px 0px var(--agua-primary),
+                    36px 0px var(--agua-primary), 42px 0px var(--agua-primary),
+                    18px 6px var(--agua-primary), 24px 6px var(--agua-primary),
+                    30px 6px var(--agua-primary), 36px 6px var(--agua-primary),
+                    42px 6px var(--agua-primary), 48px 6px var(--agua-primary),
+                    18px 12px var(--agua-primary), 24px 12px var(--agua-primary),
+                    42px 12px var(--agua-primary), 48px 12px var(--agua-primary),
+                    54px 12px var(--agua-primary), 60px 12px var(--agua-primary),
+                    18px 18px var(--agua-primary), 24px 18px var(--agua-primary),
+                    42px 18px var(--agua-primary), 48px 18px var(--agua-primary),
+                    54px 18px var(--agua-primary), 60px 18px var(--agua-primary),
+                    18px 24px var(--agua-primary), 24px 24px var(--agua-primary),
+                    30px 24px var(--agua-primary), 36px 24px var(--agua-primary),
+                    42px 24px var(--agua-primary), 48px 24px var(--agua-primary),
+                    54px 24px var(--agua-primary), 60px 24px var(--agua-primary),
+                    18px 30px var(--agua-primary), 24px 30px var(--agua-primary),
+                    30px 30px var(--agua-primary), 36px 30px var(--agua-primary),
+                    42px 30px var(--agua-primary), 48px 30px var(--agua-primary),
+                    54px 30px var(--agua-primary), 60px 30px var(--agua-primary),
+                    18px 36px var(--agua-primary), 24px 36px var(--agua-primary),
+                    30px 36px var(--agua-primary), 36px 36px var(--agua-primary),
+                    42px 36px var(--agua-primary), 48px 36px var(--agua-primary),
+                    /* Pata izquierda abajo */
+                    18px 42px var(--agua-primary), 24px 42px var(--agua-primary),
+                    30px 42px var(--agua-primary),
+                    18px 48px var(--agua-primary), 24px 48px var(--agua-primary),
+                    30px 48px var(--agua-primary);
             }
             50% {
                 box-shadow: 
-                    /* Cabeza igual */
-                    20px 0px var(--agua-primary), 24px 0px var(--agua-primary),
-                    28px 0px var(--agua-primary), 32px 0px var(--agua-primary),
-                    16px 4px var(--agua-primary), 20px 4px var(--agua-primary),
-                    24px 4px var(--agua-primary), 28px 4px var(--agua-primary),
-                    32px 4px var(--agua-primary), 36px 4px var(--agua-primary),
-                    16px 8px var(--agua-primary), 20px 8px var(--agua-primary),
-                    32px 8px var(--agua-primary), 36px 8px var(--agua-primary),
-                    40px 8px var(--agua-primary), 44px 8px var(--agua-primary),
-                    16px 12px var(--agua-primary), 20px 12px var(--agua-primary),
-                    32px 12px var(--agua-primary), 36px 12px var(--agua-primary),
-                    40px 12px var(--agua-primary), 44px 12px var(--agua-primary),
-                    16px 16px var(--agua-primary), 20px 16px var(--agua-primary),
-                    24px 16px var(--agua-primary), 28px 16px var(--agua-primary),
-                    32px 16px var(--agua-primary), 36px 16px var(--agua-primary),
-                    40px 16px var(--agua-primary), 44px 16px var(--agua-primary),
-                    16px 20px var(--agua-primary), 20px 20px var(--agua-primary),
-                    24px 20px var(--agua-primary), 28px 20px var(--agua-primary),
-                    32px 20px var(--agua-primary), 36px 20px var(--agua-primary),
-                    40px 20px var(--agua-primary), 44px 20px var(--agua-primary),
-                    16px 24px var(--agua-primary), 20px 24px var(--agua-primary),
-                    24px 24px var(--agua-primary), 28px 24px var(--agua-primary),
-                    32px 24px var(--agua-primary), 36px 24px var(--agua-primary),
-                    /* Patas derecha */
-                    28px 28px var(--agua-primary), 32px 28px var(--agua-primary),
-                    36px 28px var(--agua-primary),
-                    28px 32px var(--agua-primary), 32px 32px var(--agua-primary),
-                    36px 32px var(--agua-primary);
+                    24px 0px var(--agua-primary), 30px 0px var(--agua-primary),
+                    36px 0px var(--agua-primary), 42px 0px var(--agua-primary),
+                    18px 6px var(--agua-primary), 24px 6px var(--agua-primary),
+                    30px 6px var(--agua-primary), 36px 6px var(--agua-primary),
+                    42px 6px var(--agua-primary), 48px 6px var(--agua-primary),
+                    18px 12px var(--agua-primary), 24px 12px var(--agua-primary),
+                    42px 12px var(--agua-primary), 48px 12px var(--agua-primary),
+                    54px 12px var(--agua-primary), 60px 12px var(--agua-primary),
+                    18px 18px var(--agua-primary), 24px 18px var(--agua-primary),
+                    42px 18px var(--agua-primary), 48px 18px var(--agua-primary),
+                    54px 18px var(--agua-primary), 60px 18px var(--agua-primary),
+                    18px 24px var(--agua-primary), 24px 24px var(--agua-primary),
+                    30px 24px var(--agua-primary), 36px 24px var(--agua-primary),
+                    42px 24px var(--agua-primary), 48px 24px var(--agua-primary),
+                    54px 24px var(--agua-primary), 60px 24px var(--agua-primary),
+                    18px 30px var(--agua-primary), 24px 30px var(--agua-primary),
+                    30px 30px var(--agua-primary), 36px 30px var(--agua-primary),
+                    42px 30px var(--agua-primary), 48px 30px var(--agua-primary),
+                    54px 30px var(--agua-primary), 60px 30px var(--agua-primary),
+                    18px 36px var(--agua-primary), 24px 36px var(--agua-primary),
+                    30px 36px var(--agua-primary), 36px 36px var(--agua-primary),
+                    42px 36px var(--agua-primary), 48px 36px var(--agua-primary),
+                    /* Pata derecha abajo */
+                    36px 42px var(--agua-primary), 42px 42px var(--agua-primary),
+                    48px 42px var(--agua-primary),
+                    36px 48px var(--agua-primary), 42px 48px var(--agua-primary),
+                    48px 48px var(--agua-primary);
             }
         }
 
@@ -1210,7 +1212,7 @@
             100% { transform: translateX(0) translateY(0) rotate(0); }
         }
 
-        /* Eva Loader - Optimizado */
+        /* Eva Loader */
         .eva-modelViewPort {
             perspective: 1000px;
             width: 100px;
@@ -1899,6 +1901,11 @@
             .splash-bubble.agua {
                 top: 62%;
             }
+
+            /* Dino más pequeño en móvil */
+            .dino-loader {
+                transform: scale(1);
+            }
         }
 
         @media (max-width: 480px) {
@@ -2044,6 +2051,11 @@
             .splash-bubble.small {
                 width: 80px;
                 height: 80px;
+            }
+
+            /* Dino aún más pequeño en pantallas muy pequeñas */
+            .dino-loader {
+                transform: scale(0.8);
             }
         }
     </style>
@@ -2192,7 +2204,7 @@
         </div>
     </section>
 
-      <!-- SERVICIOS -->
+    <!-- SERVICIOS -->
     <section class="section" id="servicios">
         <div style="text-align: center; margin-bottom: 3rem;">
             <a href="servicios.html" class="info-button">Más info</a>
@@ -2227,14 +2239,6 @@
                 <div class="glow-effect"></div>
                 <div class="service-icon">
                     <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" class="monalisa-loader">
-                       
-                    </svg>
-                </div>
-                <h3 class="service-title">Identidad Visual Digital</h3>
-                <p>Logos, paletas de colores y sistemas de diseño coherentes</p>
-                <div class="service-price">Desde $100.000</div>
-            </div>
-  <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" class="monalisa-loader">
         <path pathLength="360" d="M 56.3752 2 H 7.6248 C 7.2797 2 6.9999 2.268 6.9999 2.5985 V 61.4015 C 6.9999 61.7321 7.2797 62 7.6248 62 H 56.3752 C 56.7203 62 57.0001 61.7321 57.0001 61.4015 V 2.5985 C 57.0001 2.268 56.7203 2 56.3752 2 Z"></path>
         <path pathLength="360" d="M 55.7503 60.803 H 8.2497 V 3.1971 H 55.7503 V 60.803 Z"></path>
         <path pathLength="360" d="M 29.7638 47.6092 C 29.4971 47.3997 29.1031 47.4368 28.8844 47.6925 C 28.6656 47.9481 28.7046 48.3253 28.9715 48.5348 L 32.8768 51.6023 C 32.9931 51.6936 33.1333 51.738 33.2727 51.738 C 33.4533 51.738 33.6328 51.6634 33.7562 51.519 C 33.975 51.2634 33.936 50.8862 33.6692 50.6767 L 29.7638 47.6092 Z"></path>
@@ -2251,11 +2255,21 @@
         <path pathLength="360" d="M 49.5975 9.0325 V 19.3422 H 38.689 C 38.5937 18.6105 38.5061 17.9301 38.4329 17.3569 C 38.2063 15.5828 37.4422 13.9868 36.2237 12.7413 C 34.8748 11.3624 33.2514 10.6633 31.3984 10.6633 C 27.3688 10.6633 25.8233 13.5309 25.556 15.0901 C 25.1526 15.5932 24.3175 16.7856 23.916 18.46 C 23.8568 18.7069 23.8106 19.0066 23.7778 19.3421 H 14.4025 V 9.0323 H 49.5975 Z"></path>
         <path pathLength="360" d="M 30.2223 21.2875 C 30.5674 21.2875 30.8471 21.0195 30.8471 20.6889 V 18.92 L 31.9916 18.9675 C 32.3376 18.9833 32.628 18.7259 32.643 18.3956 C 32.658 18.0654 32.3907 17.786 32.0459 17.7717 L 30.2495 17.6969 C 30.077 17.6889 29.9133 17.7497 29.7902 17.8624 C 29.6671 17.9753 29.5976 18.1315 29.5976 18.2948 V 20.6889 C 29.5974 21.0195 29.8772 21.2875 30.2223 21.2875 Z"></path>
     </svg>
+                </div>
+                <h3 class="service-title">Identidad Visual Digital</h3>
+                <p>Logos, paletas de colores y sistemas de diseño coherentes</p>
+                <div class="service-price">Desde $100.000</div>
+            </div>
+
             <div class="service-card enhanced-container fade-in">
                 <div class="glow-effect"></div>
                 <div class="service-icon">
-  
-</div>
+                    <div class="planeta-container">
+                        <div class="sphere-core"></div>
+                        <div class="ring ring-1"></div>
+                        <div class="ring ring-2"></div>
+                        <div class="ring ring-3"></div>
+                    </div>
                 </div>
                 <h3 class="service-title">Optimización & SEO</h3>
                 <p>Mejora el rendimiento y aumenta la visibilidad en buscadores</p>
@@ -2399,149 +2413,148 @@
                                 <div style="--a:147deg;--i:9" class="number"></div>
                                 <div style="--a:163deg;--i:10;--r:reverse" class="number"></div>
                                 <div style="--a:180deg;--i:11" class="number"></div>
-                                <div style="--a:196deg;--i:12;--r:reverse" class="number"></div>
-                                <div style="--a:212deg;--i:13" class="number"></div>
-                                <div style="--a:229deg;--i:14" class="number"></div>
-                                <div style="--a:245deg;--i:15" class="number"></div>
-                                <div style="--a:261deg;--i:16;--r:reverse" class="number"></div>
-                                <div style="--a:278deg;--i:17" class="number"></div>
-                                <div style="--a:294deg;--i:18;--r:reverse" class="number"></div>
-                                <div style="--a:310deg;--i:19;--r:reverse" class="number"></div>
-                                <div style="--a:327deg;--i:20" class="number"></div>
-                                <div style="--a:343deg;--i:21;--r:reverse" class="number"></div>
-                            </div>
+<div style="--a:196deg;--i:12;--r:reverse" class="number"></div>
+<div style="--a:212deg;--i:13" class="number"></div>
+<div style="--a:229deg;--i:14" class="number"></div>
+<div style="--a:245deg;--i:15" class="number"></div>
+<div style="--a:261deg;--i:16;--r:reverse" class="number"></div>
+<div style="--a:278deg;--i:17" class="number"></div>
+<div style="--a:294deg;--i:18;--r:reverse" class="number"></div>
+<div style="--a:310deg;--i:19;--r:reverse" class="number"></div>
+<div style="--a:327deg;--i:20" class="number"></div>
+<div style="--a:343deg;--i:21;--r:reverse" class="number"></div>
+</div>
+</div>
+</div>
+<div class="tool-name">HTML5</div>
+<div class="tool-desc">Estructura semántica y accesible para tus proyectos web.</div>
+</div>
+            <div class="tool-item">
+                <div class="tool-icon">
+                    <div class="dino-loader">
+                        <div class="pixel"></div>
+                    </div>
+                </div>
+                <div class="tool-name">CSS3</div>
+                <div class="tool-desc">Diseños responsivos y animaciones fluidas que cautivan.</div>
+            </div>
+            
+            <div class="tool-item">
+                <div class="tool-icon">
+                    <div class="animation-container">
+                        <div class="animation-top">
+                            <div class="animation-square"></div>
+                        </div>
+                        <div class="animation-bottom">
+                            <div class="animation-square"></div>
+                        </div>
+                        <div class="animation-left">
+                            <div class="animation-square"></div>
+                        </div>
+                        <div class="animation-right">
+                            <div class="animation-square"></div>
                         </div>
                     </div>
-                    <div class="tool-name">HTML5</div>
-                    <div class="tool-desc">Estructura semántica y accesible para tus proyectos web.</div>
                 </div>
-                
-                <div class="tool-item">
-                    <div class="tool-icon">
-                        <div class="dino-loader">
-                            <div class="pixel"></div>
-                        </div>
-                    </div>
-                    <div class="tool-name">CSS3</div>
-                    <div class="tool-desc">Diseños responsivos y animaciones fluidas que cautivan.</div>
-                </div>
-                
-                <div class="tool-item">
-                    <div class="tool-icon">
-                        <div class="animation-container">
-                            <div class="animation-top">
-                                <div class="animation-square"></div>
-                            </div>
-                            <div class="animation-bottom">
-                                <div class="animation-square"></div>
-                            </div>
-                            <div class="animation-left">
-                                <div class="animation-square"></div>
-                            </div>
-                            <div class="animation-right">
-                                <div class="animation-square"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tool-name">JavaScript</div>
-                    <div class="tool-desc">Interactividad dinámica y funcionalidades avanzadas.</div>
-                </div>
-                
-                <div class="tool-item">
-                    <div class="tool-icon">
-                        <div class="eva-modelViewPort">
-                            <div class="eva">
-                                <div class="head">
-                                    <div class="eyeChamber">
-                                        <div class="eye"></div>
-                                        <div class="eye"></div>
-                                    </div>
-                                </div>
-                                <div class="eva-body">
-                                    <div class="eva-hand"></div>
-                                    <div class="eva-hand"></div>
+                <div class="tool-name">JavaScript</div>
+                <div class="tool-desc">Interactividad dinámica y funcionalidades avanzadas.</div>
+            </div>
+            
+            <div class="tool-item">
+                <div class="tool-icon">
+                    <div class="eva-modelViewPort">
+                        <div class="eva">
+                            <div class="head">
+                                <div class="eyeChamber">
+                                    <div class="eye"></div>
+                                    <div class="eye"></div>
                                 </div>
                             </div>
+                            <div class="eva-body">
+                                <div class="eva-hand"></div>
+                                <div class="eva-hand"></div>
+                            </div>
                         </div>
                     </div>
-                    <div class="tool-name">Inteligencia Artificial</div>
-                    <div class="tool-desc">Optimización de UX/UI y análisis de datos inteligente.</div>
                 </div>
+                <div class="tool-name">Inteligencia Artificial</div>
+                <div class="tool-desc">Optimización de UX/UI y análisis de datos inteligente.</div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- FILOSOFÍA -->
-    <section class="section">
-        <div class="philosophy-section enhanced-container fade-in">
-            <div class="glow-effect"></div>
-            <p class="philosophy-text">
-                "El código es agua digital que fluye entre servidores y pantallas, adaptándose a cada necesidad, tomando la forma de cada sueño."
-            </p>
-        </div>
-    </section>
+<!-- FILOSOFÍA -->
+<section class="section">
+    <div class="philosophy-section enhanced-container fade-in">
+        <div class="glow-effect"></div>
+        <p class="philosophy-text">
+            "El código es agua digital que fluye entre servidores y pantallas, adaptándose a cada necesidad, tomando la forma de cada sueño."
+        </p>
+    </div>
+</section>
 
-    <script>
-        gsap.registerPlugin(ScrollTrigger);
+<script>
+    gsap.registerPlugin(ScrollTrigger);
 
-        // SPLASH SCREEN
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                document.getElementById('splash').classList.add('out');
-            }, 5000);
+    // SPLASH SCREEN
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            document.getElementById('splash').classList.add('out');
+        }, 5000);
 
-            // EXPLOTAR BURBUJAS FLOTANTES
-            setTimeout(() => {
-                for (let i = 1; i <= 5; i++) {
-                    const bubble = document.getElementById('b' + i);
-                    if (bubble) {
-                        bubble.classList.add('exploded');
-                        setTimeout(() => bubble.remove(), 600);
-                    }
+        // EXPLOTAR BURBUJAS FLOTANTES
+        setTimeout(() => {
+            for (let i = 1; i <= 5; i++) {
+                const bubble = document.getElementById('b' + i);
+                if (bubble) {
+                    bubble.classList.add('exploded');
+                    setTimeout(() => bubble.remove(), 600);
                 }
-            }, 5000);
-        });
+            }
+        }, 5000);
+    });
 
-        // CURSOR PERSONALIZADO
-        const cursor = document.querySelector('.custom-cursor');
-        document.addEventListener('mousemove', (e) => {
-            gsap.to(cursor, {
-                x: e.clientX - 12,
-                y: e.clientY - 12,
-                duration: 0.1
-            });
+    // CURSOR PERSONALIZADO
+    const cursor = document.querySelector('.custom-cursor');
+    document.addEventListener('mousemove', (e) => {
+        gsap.to(cursor, {
+            x: e.clientX - 12,
+            y: e.clientY - 12,
+            duration: 0.1
         });
+    });
 
-        // ANIMACIONES DE SCROLL
-        gsap.utils.toArray('.fade-in').forEach(el => {
-            gsap.fromTo(el, 
-                { y: 50, opacity: 0 },
-                { 
-                    y: 0, 
-                    opacity: 1, 
-                    duration: 0.8,
-                    scrollTrigger: {
-                        trigger: el,
-                        start: "top 80%"
-                    }
+    // ANIMACIONES DE SCROLL
+    gsap.utils.toArray('.fade-in').forEach(el => {
+        gsap.fromTo(el, 
+            { y: 50, opacity: 0 },
+            { 
+                y: 0, 
+                opacity: 1, 
+                duration: 0.8,
+                scrollTrigger: {
+                    trigger: el,
+                    start: "top 80%"
                 }
-            );
-        });
+            }
+        );
+    });
 
-        // TOGGLE MENU
-        function toggleMenu() {
-            const menu = document.getElementById('navMenu');
-            const btn = document.getElementById('menuBtn');
-            menu.classList.toggle('active');
-            btn.classList.toggle('active');
-        }
+    // TOGGLE MENU
+    function toggleMenu() {
+        const menu = document.getElementById('navMenu');
+        const btn = document.getElementById('menuBtn');
+        menu.classList.toggle('active');
+        btn.classList.toggle('active');
+    }
 
-        // TOGGLE IDIOMA
-        let lang = 'es';
-        function toggleLang() {
-            lang = lang === 'es' ? 'en' : 'es';
-            document.getElementById('lang').textContent = lang === 'es' ? 'EN' : 'ES';
-        }
-    </script>
+    // TOGGLE IDIOMA
+    let lang = 'es';
+    function toggleLang() {
+        lang = lang === 'es' ? 'en' : 'es';
+        document.getElementById('lang').textContent = lang === 'es' ? 'EN' : 'ES';
+    }
+</script>
 </body>
 </html>
