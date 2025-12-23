@@ -30,62 +30,6 @@
     <meta name="twitter:title" content="Plantillas Web Profesionales | Séptima Pacha Co.">
     <meta name="twitter:description" content="Diseños web personalizables desde $120.000. Salta, Argentina.">
     
-    <!-- STRUCTURED DATA -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "ItemList",
-        "name": "Plantillas Web Profesionales - Séptima Pacha Co.",
-        "description": "Catálogo de plantillas web personalizables para negocios en Salta y Latinoamérica",
-        "itemListElement": [
-            {
-                "@type": "Product",
-                "position": 1,
-                "name": "Squeeze Page",
-                "description": "Página de captura de leads personalizable",
-                "offers": {
-                    "@type": "Offer",
-                    "price": "180000",
-                    "priceCurrency": "ARS"
-                }
-            },
-            {
-                "@type": "Product",
-                "position": 2,
-                "name": "ColorVives",
-                "description": "Plantilla creativa para artistas y creativos",
-                "offers": {
-                    "@type": "Offer",
-                    "price": "180000",
-                    "priceCurrency": "ARS"
-                }
-            },
-            {
-                "@type": "Product",
-                "position": 3,
-                "name": "Tarot en Luz",
-                "description": "Diseño místico para profesionales del tarot",
-                "offers": {
-                    "@type": "Offer",
-                    "price": "250000",
-                    "priceCurrency": "ARS"
-                }
-            }
-        ],
-        "provider": {
-            "@type": "LocalBusiness",
-            "name": "Séptima Pacha Co.",
-            "telephone": "+543872271144",
-            "address": {
-                "@type": "PostalAddress",
-                "addressLocality": "Salta",
-                "addressRegion": "Salta",
-                "addressCountry": "AR"
-            }
-        }
-    }
-    </script>
-    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
@@ -668,22 +612,32 @@
         /* PLANTILLAS GRID */
         .plantillas-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
             max-width: 1400px;
             width: 100%;
+            padding: 1rem;
         }
 
         .plantilla-card {
-            overflow: hidden;
+            overflow: visible;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
             display: flex;
             flex-direction: column;
+            height: 100%;
+            min-height: 550px;
         }
 
         .plantilla-card:hover {
-            transform: translateY(-15px) scale(1.02);
+            transform: translateY(-10px);
+            z-index: 10;
+        }
+
+        .plantilla-card .enhanced-container {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
 
         .plantilla-preview {
@@ -694,7 +648,22 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.5rem;
+            font-size: 3rem;
+            border-radius: 20px 20px 0 0;
+            overflow: hidden;
+        }
+
+        .plantilla-preview::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+            animation: shine 3s linear infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%); }
+            100% { transform: translateX(100%) translateY(100%); }
         }
 
         .plantilla-oferta {
@@ -718,13 +687,16 @@
 
         .plantilla-info {
             padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .plantilla-nombre {
             font-family: 'Playfair Display', serif;
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             font-weight: 600;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
             color: var(--agua-accent);
         }
 
@@ -733,38 +705,44 @@
             color: rgba(255, 255, 255, 0.8);
             margin-bottom: 1rem;
             line-height: 1.6;
+            flex-grow: 0;
         }
 
         .plantilla-caracteristicas {
             list-style: none;
             margin: 1rem 0;
+            flex-grow: 0;
         }
 
         .plantilla-caracteristicas li {
-            padding: 0.4rem 0;
+            padding: 0.5rem 0;
             font-size: 0.9rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            color: rgba(255, 255, 255, 0.9);
         }
 
         .plantilla-caracteristicas li::before {
             content: '→';
             color: var(--agua-accent);
             font-weight: bold;
+            font-size: 1.2rem;
         }
 
         .plantilla-precio {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: 700;
             color: #F39C12;
-            margin: 1rem 0;
+            margin: 1.2rem 0;
+            text-shadow: 0 0 10px rgba(243, 156, 18, 0.3);
         }
 
         .plantilla-actions {
             display: flex;
             gap: 1rem;
-            margin-top: 1rem;
+            margin-top: auto;
+            padding-top: 1rem;
         }
 
         /* BENEFICIOS */
@@ -824,6 +802,11 @@
             .hero-subtitle {
                 max-width: 100%;
             }
+
+            .plantillas-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 2rem;
+            }
         }
 
         @media (max-width: 768px) {
@@ -834,8 +817,13 @@
             }
 
             .plantillas-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1.5rem;
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                padding: 0.5rem;
+            }
+
+            .plantilla-card {
+                min-height: auto;
             }
 
             .section {
@@ -859,6 +847,14 @@
 
             .loader {
                 --size: 0.6;
+            }
+
+            .plantilla-actions {
+                flex-direction: row;
+            }
+
+            .plantilla-actions .animated-button {
+                min-width: 120px;
             }
         }
 
@@ -903,7 +899,7 @@
 
             .plantillas-grid {
                 grid-template-columns: 1fr;
-                gap: 1.2rem;
+                gap: 1.5rem;
             }
 
             .section {
@@ -921,10 +917,20 @@
 
             .plantilla-actions {
                 flex-direction: column;
+                gap: 0.8rem;
             }
 
-            .animated-button {
+            .plantilla-actions .animated-button {
                 width: 100%;
+                min-width: auto;
+            }
+
+            .plantilla-nombre {
+                font-size: 1.3rem;
+            }
+
+            .plantilla-precio {
+                font-size: 1.4rem;
             }
         }
     </style>
@@ -963,34 +969,34 @@
 
     <nav class="nav-menu" id="navMenu">
         <ul>
-            <li><a href="#inicio" onclick="toggleMenu()">🏠 Inicio</a></li>
-            <li><a href="#catalogo" onclick="toggleMenu()">🎨 Catálogo</a></li>
-            <li><a href="#beneficios" onclick="toggleMenu()">✨ Beneficios</a></li>
-            <li><a href="agua-code.html">💧 Desarrollo Web</a></li>
-            <li><a href="index.html">🌊 Séptima Pacha</a></li>
+            <li><a href="#inicio" onclick="toggleMenu()" data-i18n="menuInicio">🏠 Inicio</a></li>
+            <li><a href="#catalogo" onclick="toggleMenu()" data-i18n="menuCatalogo">🎨 Catálogo</a></li>
+            <li><a href="#beneficios" onclick="toggleMenu()" data-i18n="menuBeneficios">✨ Beneficios</a></li>
+            <li><a href="agua-code.html" data-i18n="menuDesarrollo">💧 Desarrollo Web</a></li>
+            <li><a href="index.html" data-i18n="menuSeptima">🌊 Séptima Pacha</a></li>
         </ul>
     </nav>
 
-    <a href="agua-code.html" class="nav-back">← Volver</a>
+    <a href="agua-code.html" class="nav-back" data-i18n="volver">← Volver</a>
     <a href="https://wa.me/543872271144?text=Hola%20quiero%20una%20plantilla%20web" class="whatsapp-float" target="_blank">💬</a>
 
     <!-- HERO SECTION -->
     <section class="hero-plantillas" id="inicio">
         <div class="hero-left">
-            <h1 class="hero-title">Plantillas Web Profesionales</h1>
-            <p class="hero-subtitle">Diseños listos para usar, 100% personalizables en colores, tipografía y contenido. Tu sitio web profesional en tiempo récord.</p>
+            <h1 class="hero-title" data-i18n="heroTitle">Plantillas Web Profesionales</h1>
+            <p class="hero-subtitle" data-i18n="heroSubtitle">Diseños listos para usar, 100% personalizables en colores, tipografía y contenido. Tu sitio web profesional en tiempo récord.</p>
             
             <ul class="hero-features">
-                <li>Totalmente personalizable</li>
-                <li>Diseño responsive</li>
-                <li>Optimizado para SEO</li>
-                <li>Soporte incluido</li>
+                <li data-i18n="heroFeature1">Totalmente personalizable</li>
+                <li data-i18n="heroFeature2">Diseño responsive</li>
+                <li data-i18n="heroFeature3">Optimizado para SEO</li>
+                <li data-i18n="heroFeature4">Soporte incluido</li>
             </ul>
 
             <button class="animated-button" onclick="window.location.href='#catalogo'">
                 <div class="bg"></div>
                 <div class="wrap">
-                    <div class="content">Ver Catálogo</div>
+                    <div class="content" data-i18n="heroCTA">Ver Catálogo</div>
                 </div>
             </button>
         </div>
@@ -1003,349 +1009,349 @@
 
     <!-- BENEFICIOS -->
     <section class="section" id="beneficios">
-        <h2 class="section-title fade-in">¿Por qué elegir nuestras plantillas?</h2>
+        <h2 class="section-title fade-in" data-i18n="beneficiosTitle">¿Por qué elegir nuestras plantillas?</h2>
         <div class="beneficios-grid">
             <div class="beneficio-card enhanced-container fade-in">
                 <div class="glow-effect"></div>
                 <div class="beneficio-icon">🎨</div>
-                <h3 class="beneficio-title">100% Personalizable</h3>
-                <p class="beneficio-description">Modifica colores, tipografías, imágenes y contenido a tu gusto. Tu marca, tu estilo.</p>
+                <h3 class="beneficio-title" data-i18n="beneficio1Title">100% Personalizable</h3>
+                <p class="beneficio-description" data-i18n="beneficio1Desc">Modifica colores, tipografías, imágenes y contenido a tu gusto. Tu marca, tu estilo.</p>
             </div>
 
             <div class="beneficio-card enhanced-container fade-in">
                 <div class="glow-effect"></div>
                 <div class="beneficio-icon">📱</div>
-                <h3 class="beneficio-title">Totalmente Responsive</h3>
-                <p class="beneficio-description">Funciona perfectamente en móviles, tablets y computadoras. Adaptación automática.</p>
+                <h3 class="beneficio-title" data-i18n="beneficio2Title">Totalmente Responsive</h3>
+                <p class="beneficio-description" data-i18n="beneficio2Desc">Funciona perfectamente en móviles, tablets y computadoras. Adaptación automática.</p>
             </div>
 
             <div class="beneficio-card enhanced-container fade-in">
                 <div class="glow-effect"></div>
                 <div class="beneficio-icon">🚀</div>
-                <h3 class="beneficio-title">Optimizado SEO</h3>
-                <p class="beneficio-description">Código limpio y optimizado para aparecer en Google. Posicionamiento incluido.</p>
+                <h3 class="beneficio-title" data-i18n="beneficio3Title">Optimizado SEO</h3>
+                <p class="beneficio-description" data-i18n="beneficio3Desc">Código limpio y optimizado para aparecer en Google. Posicionamiento incluido.</p>
             </div>
 
             <div class="beneficio-card enhanced-container fade-in">
                 <div class="glow-effect"></div>
                 <div class="beneficio-icon">⚡</div>
-                <h3 class="beneficio-title">Entrega Rápida</h3>
-                <p class="beneficio-description">Tu sitio listo en 3-5 días hábiles. Implementación rápida y eficiente.</p>
+                <h3 class="beneficio-title" data-i18n="beneficio4Title">Entrega Rápida</h3>
+                <p class="beneficio-description" data-i18n="beneficio4Desc">Tu sitio listo en 3-5 días hábiles. Implementación rápida y eficiente.</p>
             </div>
 
             <div class="beneficio-card enhanced-container fade-in">
                 <div class="glow-effect"></div>
                 <div class="beneficio-icon">💬</div>
-                <h3 class="beneficio-title">Soporte Dedicado</h3>
-                <p class="beneficio-description">Asistencia técnica por 30 días. Te acompañamos en todo el proceso.</p>
+                <h3 class="beneficio-title" data-i18n="beneficio5Title">Soporte Dedicado</h3>
+                <p class="beneficio-description" data-i18n="beneficio5Desc">Asistencia técnica por 30 días. Te acompañamos en todo el proceso.</p>
             </div>
 
             <div class="beneficio-card enhanced-container fade-in">
                 <div class="glow-effect"></div>
                 <div class="beneficio-icon">💰</div>
-                <h3 class="beneficio-title">Precio Accesible</h3>
-                <p class="beneficio-description">Soluciones profesionales a costos reducidos. Calidad sin comprometer tu presupuesto.</p>
+                <h3 class="beneficio-title" data-i18n="beneficio6Title">Precio Accesible</h3>
+                <p class="beneficio-description" data-i18n="beneficio6Desc">Soluciones profesionales a costos reducidos. Calidad sin comprometer tu presupuesto.</p>
             </div>
         </div>
     </section>
 
     <!-- CATÁLOGO DE PLANTILLAS -->
     <section class="section" id="catalogo">
-        <h2 class="section-title fade-in">Catálogo de Plantillas</h2>
-        <p class="section-subtitle fade-in">Cada plantilla incluye personalización de colores, tipografías, imágenes y contenido. Dominio y hosting no incluidos.</p>
+        <h2 class="section-title fade-in" data-i18n="catalogoTitle">Catálogo de Plantillas</h2>
+        <p class="section-subtitle fade-in" data-i18n="catalogoSubtitle">Cada plantilla incluye personalización de colores, tipografías, imágenes y contenido. Dominio y hosting no incluidos.</p>
         
         <div class="plantillas-grid">
-            <!-- Squeeze Page -->
+            <!-- Plantilla 1: Squeeze Page -->
             <div class="plantilla-card enhanced-container fade-in">
                 <div class="glow-effect"></div>
                 <div class="plantilla-preview">
-                    <div class="plantilla-oferta">OFERTA</div>
+                    <div class="plantilla-oferta" data-i18n="oferta">OFERTA</div>
                     📩
                 </div>
                 <div class="plantilla-info">
-                    <h3 class="plantilla-nombre">Squeeze Page</h3>
-                    <p class="plantilla-descripcion">Página de captura de leads ideal para campañas de marketing y lanzamientos.</p>
+                    <h3 class="plantilla-nombre" data-i18n="plantilla1Nombre">Squeeze Page</h3>
+                    <p class="plantilla-descripcion" data-i18n="plantilla1Desc">Página de captura de leads ideal para campañas de marketing y lanzamientos.</p>
                     <ul class="plantilla-caracteristicas">
-                        <li>Formulario de captura</li>
-                        <li>Diseño minimalista</li>
-                        <li>Alta conversión</li>
+                        <li data-i18n="plantilla1Feature1">Formulario de captura</li>
+                        <li data-i18n="plantilla1Feature2">Diseño minimalista</li>
+                        <li data-i18n="plantilla1Feature3">Alta conversión</li>
                     </ul>
                     <div class="plantilla-precio">$158.000</div>
                     <div class="plantilla-actions">
                         <button class="animated-button" onclick="window.open('https://nalialma.github.io/Squeeze-page-A/','_blank')" style="width: 48%">
                             <div class="bg"></div>
                             <div class="wrap">
-                                <div class="content">Ver Demo</div>
+                                <div class="content" data-i18n="verDemo">Ver Demo</div>
                             </div>
                         </button>
                         <button class="animated-button" onclick="window.open('https://wa.me/543872271144?text=Quiero%20la%20plantilla%20Squeeze%20Page','_blank')" style="width: 48%">
                             <div class="bg"></div>
                             <div class="wrap">
-                                <div class="content">Comprar</div>
+                                <div class="content" data-i18n="comprar">Comprar</div>
                             </div>
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- ColorVives -->
+            <!-- Plantilla 2: ColorVives -->
             <div class="plantilla-card enhanced-container fade-in">
                 <div class="glow-effect"></div>
                 <div class="plantilla-preview">
-                    <div class="plantilla-oferta">OFERTA</div>
+                    <div class="plantilla-oferta" data-i18n="oferta">OFERTA</div>
                     🎨
                 </div>
                 <div class="plantilla-info">
-                    <h3 class="plantilla-nombre">ColorVives</h3>
-                    <p class="plantilla-descripcion">Diseño vibrante y creativo perfecto para artistas, diseñadores y creativos.</p>
+                    <h3 class="plantilla-nombre" data-i18n="plantilla2Nombre">ColorVives</h3>
+                    <p class="plantilla-descripcion" data-i18n="plantilla2Desc">Diseño vibrante y creativo perfecto para artistas, diseñadores y creativos.</p>
                     <ul class="plantilla-caracteristicas">
-                        <li>Galería de trabajos</li>
-                        <li>Diseño colorido</li>
-                        <li>Portfolio interactivo</li>
+                        <li data-i18n="plantilla2Feature1">Galería de trabajos</li>
+                        <li data-i18n="plantilla2Feature2">Diseño colorido</li>
+                        <li data-i18n="plantilla2Feature3">Portfolio interactivo</li>
                     </ul>
                     <div class="plantilla-precio">$120.000</div>
                     <div class="plantilla-actions">
                         <button class="animated-button" onclick="window.open('https://nalialma.github.io/Plantilla-COLORVIVES/','_blank')" style="width: 48%">
                             <div class="bg"></div>
                             <div class="wrap">
-                                <div class="content">Ver Demo</div>
+                                <div class="content" data-i18n="verDemo">Ver Demo</div>
                             </div>
                         </button>
                         <button class="animated-button" onclick="window.open('https://wa.me/543872271144?text=Quiero%20la%20plantilla%20ColorVives','_blank')" style="width: 48%">
                             <div class="bg"></div>
                             <div class="wrap">
-                                <div class="content">Comprar</div>
+                                <div class="content" data-i18n="comprar">Comprar</div>
                             </div>
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- servicios esotericos -->
+            <!-- Plantilla 3: Servicios Alternativos -->
             <div class="plantilla-card enhanced-container fade-in">
                 <div class="glow-effect"></div>
                 <div class="plantilla-preview">
-                    <div class="plantilla-oferta">OFERTA</div>
+                    <div class="plantilla-oferta" data-i18n="oferta">OFERTA</div>
                     🔮
                 </div>
                 <div class="plantilla-info">
-                    <h3 class="plantilla-nombre">Servivios alternativos</h3>
-                    <p class="plantilla-descripcion">Diseño místico y elegante para profesionales del tarot y servicios esotéricos.</p>
+                    <h3 class="plantilla-nombre" data-i18n="plantilla3Nombre">Servicios Alternativos</h3>
+                    <p class="plantilla-descripcion" data-i18n="plantilla3Desc">Diseño místico y elegante para profesionales del tarot y servicios esotéricos.</p>
                     <ul class="plantilla-caracteristicas">
-                        <li>Estética mística</li>
-                        <li>Sección de servicios</li>
-                        <li>Reserva de consultas</li>
+                        <li data-i18n="plantilla3Feature1">Estética mística</li>
+                        <li data-i18n="plantilla3Feature2">Sección de servicios</li>
+                        <li data-i18n="plantilla3Feature3">Reserva de consultas</li>
                     </ul>
-                    <div class="plantilla-precio">$270,600 ARS </div>
+                    <div class="plantilla-precio">$270.600</div>
                     <div class="plantilla-actions">
                         <button class="animated-button" onclick="window.open('https://nalialma.github.io/Servicios-alternativo/','_blank')" style="width: 48%">
                             <div class="bg"></div>
                             <div class="wrap">
-                                <div class="content">Ver Demo</div>
+                                <div class="content" data-i18n="verDemo">Ver Demo</div>
                             </div>
                         </button>
                         <button class="animated-button" onclick="window.open('https://wa.me/543872271144?text=Quiero%20la%20plantilla%20Tarot%20en%20Luz','_blank')" style="width: 48%">
                             <div class="bg"></div>
                             <div class="wrap">
-                                <div class="content">Comprar</div>
+                                <div class="content" data-i18n="comprar">Comprar</div>
                             </div>
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Landing Premium -->
+            <!-- Plantilla 4: Landing Premium -->
             <div class="plantilla-card enhanced-container fade-in">
                 <div class="glow-effect"></div>
                 <div class="plantilla-preview">
-                    <div class="plantilla-oferta">OFERTA</div>
+                    <div class="plantilla-oferta" data-i18n="oferta">OFERTA</div>
                     🎯
                 </div>
                 <div class="plantilla-info">
-                    <h3 class="plantilla-nombre">Landing Premium</h3>
-                    <p class="plantilla-descripcion">Landing page profesional para productos o servicios con alta conversión.</p>
+                    <h3 class="plantilla-nombre" data-i18n="plantilla4Nombre">Landing Premium</h3>
+                    <p class="plantilla-descripcion" data-i18n="plantilla4Desc">Landing page profesional para productos o servicios con alta conversión.</p>
                     <ul class="plantilla-caracteristicas">
-                        <li>Call to action efectivo</li>
-                        <li>Secciones optimizadas</li>
-                        <li>Formulario integrado</li>
+                        <li data-i18n="plantilla4Feature1">Call to action efectivo</li>
+                        <li data-i18n="plantilla4Feature2">Secciones optimizadas</li>
+                        <li data-i18n="plantilla4Feature3">Formulario integrado</li>
                     </ul>
                     <div class="plantilla-precio">$159.000</div>
                     <div class="plantilla-actions">
                         <button class="animated-button" onclick="window.open('https://nalialma.github.io/Landing-premium/','_blank')" style="width: 48%">
                             <div class="bg"></div>
                             <div class="wrap">
-                                <div class="content">Ver Demo</div>
+                                <div class="content" data-i18n="verDemo">Ver Demo</div>
                             </div>
                         </button>
                         <button class="animated-button" onclick="window.open('https://wa.me/543872271144?text=Quiero%20la%20plantilla%20Landing%20Premium','_blank')" style="width: 48%">
                             <div class="bg"></div>
                             <div class="wrap">
-                                <div class="content">Comprar</div>
+                                <div class="content" data-i18n="comprar">Comprar</div>
                             </div>
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Catálogo Servicios -->
+            <!-- Plantilla 5: Catálogo Servicios -->
             <div class="plantilla-card enhanced-container fade-in">
                 <div class="glow-effect"></div>
                 <div class="plantilla-preview">
-                    <div class="plantilla-oferta">OFERTA</div>
+                    <div class="plantilla-oferta" data-i18n="oferta">OFERTA</div>
                     💼
                 </div>
                 <div class="plantilla-info">
-                    <h3 class="plantilla-nombre">Catálogo Servicios</h3>
-                    <p class="plantilla-descripcion">Sitio completo para mostrar tus servicios de forma profesional y organizada.</p>
+                    <h3 class="plantilla-nombre" data-i18n="plantilla5Nombre">Catálogo Servicios</h3>
+                    <p class="plantilla-descripcion" data-i18n="plantilla5Desc">Sitio completo para mostrar tus servicios de forma profesional y organizada.</p>
                     <ul class="plantilla-caracteristicas">
-                        <li>Múltiples servicios</li>
-                        <li>Precios y paquetes</li>
-                        <li>Formulario de contacto</li>
+                        <li data-i18n="plantilla5Feature1">Múltiples servicios</li>
+                        <li data-i18n="plantilla5Feature2">Precios y paquetes</li>
+                        <li data-i18n="plantilla5Feature3">Formulario de contacto</li>
                     </ul>
                     <div class="plantilla-precio">$300.000</div>
                     <div class="plantilla-actions">
                         <button class="animated-button" onclick="window.open('https://nalialma.github.io/servicios-plantilla/','_blank')" style="width: 48%">
                             <div class="bg"></div>
                             <div class="wrap">
-                                <div class="content">Ver Demo</div>
+                                <div class="content" data-i18n="verDemo">Ver Demo</div>
                             </div>
                         </button>
                         <button class="animated-button" onclick="window.open('https://wa.me/543872271144?text=Quiero%20la%20plantilla%20Catálogo%20Servicios','_blank')" style="width: 48%">
                             <div class="bg"></div>
                             <div class="wrap">
-                                <div class="content">Comprar</div>
+                                <div class="content" data-i18n="comprar">Comprar</div>
                             </div>
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- ArtePluma -->
+            <!-- Plantilla 6: ArtePluma -->
             <div class="plantilla-card enhanced-container fade-in">
                 <div class="glow-effect"></div>
                 <div class="plantilla-preview">
-                    <div class="plantilla-oferta">OFERTA</div>
+                    <div class="plantilla-oferta" data-i18n="oferta">OFERTA</div>
                     🖼️
                 </div>
                 <div class="plantilla-info">
-                    <h3 class="plantilla-nombre">ArtePluma</h3>
-                    <p class="plantilla-descripcion">Portfolio minimalista para escritores, ilustradores y artistas visuales.</p>
+                    <h3 class="plantilla-nombre" data-i18n="plantilla6Nombre">ArtePluma</h3>
+                    <p class="plantilla-descripcion" data-i18n="plantilla6Desc">Portfolio minimalista para escritores, ilustradores y artistas visuales.</p>
                     <ul class="plantilla-caracteristicas">
-                        <li>Galería de obras</li>
-                        <li>Diseño limpio</li>
-                        <li>Biografía del artista</li>
+                        <li data-i18n="plantilla6Feature1">Galería de obras</li>
+                        <li data-i18n="plantilla6Feature2">Diseño limpio</li>
+                        <li data-i18n="plantilla6Feature3">Biografía del artista</li>
                     </ul>
                     <div class="plantilla-precio">$120.000</div>
                     <div class="plantilla-actions">
                         <button class="animated-button" onclick="window.open('https://nalialma.github.io/ArtePluma/','_blank')" style="width: 48%">
                             <div class="bg"></div>
                             <div class="wrap">
-                                <div class="content">Ver Demo</div>
+                                <div class="content" data-i18n="verDemo">Ver Demo</div>
                             </div>
                         </button>
                         <button class="animated-button" onclick="window.open('https://wa.me/543872271144?text=Quiero%20la%20plantilla%20ArtePluma','_blank')" style="width: 48%">
                             <div class="bg"></div>
                             <div class="wrap">
-                                <div class="content">Comprar</div>
+                                <div class="content" data-i18n="comprar">Comprar</div>
                             </div>
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Despacho Legal -->
+            <!-- Plantilla 7: Despacho Legal -->
             <div class="plantilla-card enhanced-container fade-in">
                 <div class="glow-effect"></div>
                 <div class="plantilla-preview">
-                    <div class="plantilla-oferta">OFERTA</div>
+                    <div class="plantilla-oferta" data-i18n="oferta">OFERTA</div>
                     ⚖️
                 </div>
                 <div class="plantilla-info">
-                    <h3 class="plantilla-nombre">Despacho Legal</h3>
-                    <p class="plantilla-descripcion">Sitio profesional para abogados y estudios jurídicos con diseño serio y confiable.</p>
+                    <h3 class="plantilla-nombre" data-i18n="plantilla7Nombre">Despacho Legal</h3>
+                    <p class="plantilla-descripcion" data-i18n="plantilla7Desc">Sitio profesional para abogados y estudios jurídicos con diseño serio y confiable.</p>
                     <ul class="plantilla-caracteristicas">
-                        <li>Áreas de práctica</li>
-                        <li>Equipo profesional</li>
-                        <li>Formulario consultas</li>
+                        <li data-i18n="plantilla7Feature1">Áreas de práctica</li>
+                        <li data-i18n="plantilla7Feature2">Equipo profesional</li>
+                        <li data-i18n="plantilla7Feature3">Formulario consultas</li>
                     </ul>
                     <div class="plantilla-precio">$250.000</div>
                     <div class="plantilla-actions">
                         <button class="animated-button" onclick="window.open('https://nalialma.github.io/plantilla-abogado/','_blank')" style="width: 48%">
                             <div class="bg"></div>
                             <div class="wrap">
-                                <div class="content">Ver Demo</div>
+                                <div class="content" data-i18n="verDemo">Ver Demo</div>
                             </div>
                         </button>
                         <button class="animated-button" onclick="window.open('https://wa.me/543872271144?text=Quiero%20la%20plantilla%20Despacho%20Legal','_blank')" style="width: 48%">
                             <div class="bg"></div>
                             <div class="wrap">
-                                <div class="content">Comprar</div>
+                                <div class="content" data-i18n="comprar">Comprar</div>
                             </div>
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Arte Minimalista -->
+            <!-- Plantilla 8: Arte Minimalista -->
             <div class="plantilla-card enhanced-container fade-in">
                 <div class="glow-effect"></div>
                 <div class="plantilla-preview">
-                    <div class="plantilla-oferta">OFERTA</div>
+                    <div class="plantilla-oferta" data-i18n="oferta">OFERTA</div>
                     🖌️
                 </div>
                 <div class="plantilla-info">
-                    <h3 class="plantilla-nombre">Arte Minimalista</h3>
-                    <p class="plantilla-descripcion">Diseño ultra minimalista para artistas que prefieren que sus obras hablen.</p>
+                    <h3 class="plantilla-nombre" data-i18n="plantilla8Nombre">Arte Minimalista</h3>
+                    <p class="plantilla-descripcion" data-i18n="plantilla8Desc">Diseño ultra minimalista para artistas que prefieren que sus obras hablen.</p>
                     <ul class="plantilla-caracteristicas">
-                        <li>Enfoque en el arte</li>
-                        <li>Navegación simple</li>
-                        <li>Carga ultrarrápida</li>
+                        <li data-i18n="plantilla8Feature1">Enfoque en el arte</li>
+                        <li data-i18n="plantilla8Feature2">Navegación simple</li>
+                        <li data-i18n="plantilla8Feature3">Carga ultrarrápida</li>
                     </ul>
                     <div class="plantilla-precio">$170.000</div>
                     <div class="plantilla-actions">
                         <button class="animated-button" onclick="window.open('https://nalialma.github.io/arte-basic/','_blank')" style="width: 48%">
                             <div class="bg"></div>
                             <div class="wrap">
-                                <div class="content">Ver Demo</div>
+                                <div class="content" data-i18n="verDemo">Ver Demo</div>
                             </div>
                         </button>
                         <button class="animated-button" onclick="window.open('https://wa.me/543872271144?text=Quiero%20la%20plantilla%20Arte%20Minimalista','_blank')" style="width: 48%">
                             <div class="bg"></div>
                             <div class="wrap">
-                                <div class="content">Comprar</div>
+                                <div class="content" data-i18n="comprar">Comprar</div>
                             </div>
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Tienda Online -->
+            <!-- Plantilla 9: Tienda Online -->
             <div class="plantilla-card enhanced-container fade-in">
                 <div class="glow-effect"></div>
                 <div class="plantilla-preview">
-                    <div class="plantilla-oferta">OFERTA</div>
+                    <div class="plantilla-oferta" data-i18n="oferta">OFERTA</div>
                     🛍️
                 </div>
                 <div class="plantilla-info">
-                    <h3 class="plantilla-nombre">Tienda Online</h3>
-                    <p class="plantilla-descripcion">E-commerce completo para vender tus productos online con catálogo integrado.</p>
+                    <h3 class="plantilla-nombre" data-i18n="plantilla9Nombre">Tienda Online</h3>
+                    <p class="plantilla-descripcion" data-i18n="plantilla9Desc">E-commerce completo para vender tus productos online con catálogo integrado.</p>
                     <ul class="plantilla-caracteristicas">
-                        <li>Catálogo de productos</li>
-                        <li>Carrito de compras</li>
-                        <li>Pasarela de pago</li>
+                        <li data-i18n="plantilla9Feature1">Catálogo de productos</li>
+                        <li data-i18n="plantilla9Feature2">Carrito de compras</li>
+                        <li data-i18n="plantilla9Feature3">Pasarela de pago</li>
                     </ul>
                     <div class="plantilla-precio">$380.000</div>
                     <div class="plantilla-actions">
                         <button class="animated-button" onclick="window.open('https://nalialma.github.io/Plantilla-Tienda/','_blank')" style="width: 48%">
                             <div class="bg"></div>
                             <div class="wrap">
-                                <div class="content">Ver Demo</div>
+                                <div class="content" data-i18n="verDemo">Ver Demo</div>
                             </div>
                         </button>
                         <button class="animated-button" onclick="window.open('https://wa.me/543872271144?text=Quiero%20la%20plantilla%20Tienda%20Online','_blank')" style="width: 48%">
                             <div class="bg"></div>
                             <div class="wrap">
-                                <div class="content">Comprar</div>
+                                <div class="content" data-i18n="comprar">Comprar</div>
                             </div>
                         </button>
                     </div>
@@ -1391,11 +1397,218 @@
             btn.classList.toggle('active');
         }
 
-        // TOGGLE IDIOMA
-        let lang = 'es';
+        // SISTEMA DE TRADUCCIÓN
+        const translations = {
+            es: {
+                // Menú
+                menuInicio: '🏠 Inicio',
+                menuCatalogo: '🎨 Catálogo',
+                menuBeneficios: '✨ Beneficios',
+                menuDesarrollo: '💧 Desarrollo Web',
+                menuSeptima: '🌊 Séptima Pacha',
+                volver: '← Volver',
+                
+                // Hero
+                heroTitle: 'Plantillas Web Profesionales',
+                heroSubtitle: 'Diseños listos para usar, 100% personalizables en colores, tipografía y contenido. Tu sitio web profesional en tiempo récord.',
+                heroFeature1: 'Totalmente personalizable',
+                heroFeature2: 'Diseño responsive',
+                heroFeature3: 'Optimizado para SEO',
+                heroFeature4: 'Soporte incluido',
+                heroCTA: 'Ver Catálogo',
+                
+                // Beneficios
+                beneficiosTitle: '¿Por qué elegir nuestras plantillas?',
+                beneficio1Title: '100% Personalizable',
+                beneficio1Desc: 'Modifica colores, tipografías, imágenes y contenido a tu gusto. Tu marca, tu estilo.',
+                beneficio2Title: 'Totalmente Responsive',
+                beneficio2Desc: 'Funciona perfectamente en móviles, tablets y computadoras. Adaptación automática.',
+                beneficio3Title: 'Optimizado SEO',
+                beneficio3Desc: 'Código limpio y optimizado para aparecer en Google. Posicionamiento incluido.',
+                beneficio4Title: 'Entrega Rápida',
+                beneficio4Desc: 'Tu sitio listo en 3-5 días hábiles. Implementación rápida y eficiente.',
+                beneficio5Title: 'Soporte Dedicado',
+                beneficio5Desc: 'Asistencia técnica por 30 días. Te acompañamos en todo el proceso.',
+                beneficio6Title: 'Precio Accesible',
+                beneficio6Desc: 'Soluciones profesionales a costos reducidos. Calidad sin comprometer tu presupuesto.',
+                
+                // Catálogo
+                catalogoTitle: 'Catálogo de Plantillas',
+                catalogoSubtitle: 'Cada plantilla incluye personalización de colores, tipografías, imágenes y contenido. Dominio y hosting no incluidos.',
+                oferta: 'OFERTA',
+                verDemo: 'Ver Demo',
+                comprar: 'Comprar',
+                
+                // Plantillas
+                plantilla1Nombre: 'Squeeze Page',
+                plantilla1Desc: 'Página de captura de leads ideal para campañas de marketing y lanzamientos.',
+                plantilla1Feature1: 'Formulario de captura',
+                plantilla1Feature2: 'Diseño minimalista',
+                plantilla1Feature3: 'Alta conversión',
+                
+                plantilla2Nombre: 'ColorVives',
+                plantilla2Desc: 'Diseño vibrante y creativo perfecto para artistas, diseñadores y creativos.',
+                plantilla2Feature1: 'Galería de trabajos',
+                plantilla2Feature2: 'Diseño colorido',
+                plantilla2Feature3: 'Portfolio interactivo',
+                
+                plantilla3Nombre: 'Servicios Alternativos',
+                plantilla3Desc: 'Diseño místico y elegante para profesionales del tarot y servicios esotéricos.',
+                plantilla3Feature1: 'Estética mística',
+                plantilla3Feature2: 'Sección de servicios',
+                plantilla3Feature3: 'Reserva de consultas',
+                
+                plantilla4Nombre: 'Landing Premium',
+                plantilla4Desc: 'Landing page profesional para productos o servicios con alta conversión.',
+                plantilla4Feature1: 'Call to action efectivo',
+                plantilla4Feature2: 'Secciones optimizadas',
+                plantilla4Feature3: 'Formulario integrado',
+                
+                plantilla5Nombre: 'Catálogo Servicios',
+                plantilla5Desc: 'Sitio completo para mostrar tus servicios de forma profesional y organizada.',
+                plantilla5Feature1: 'Múltiples servicios',
+                plantilla5Feature2: 'Precios y paquetes',
+                plantilla5Feature3: 'Formulario de contacto',
+                
+                plantilla6Nombre: 'ArtePluma',
+                plantilla6Desc: 'Portfolio minimalista para escritores, ilustradores y artistas visuales.',
+                plantilla6Feature1: 'Galería de obras',
+                plantilla6Feature2: 'Diseño limpio',
+                plantilla6Feature3: 'Biografía del artista',
+                
+                plantilla7Nombre: 'Despacho Legal',
+                plantilla7Desc: 'Sitio profesional para abogados y estudios jurídicos con diseño serio y confiable.',
+                plantilla7Feature1: 'Áreas de práctica',
+                plantilla7Feature2: 'Equipo profesional',
+                plantilla7Feature3: 'Formulario consultas',
+                
+                plantilla8Nombre: 'Arte Minimalista',
+                plantilla8Desc: 'Diseño ultra minimalista para artistas que prefieren que sus obras hablen.',
+                plantilla8Feature1: 'Enfoque en el arte',
+                plantilla8Feature2: 'Navegación simple',
+                plantilla8Feature3: 'Carga ultrarrápida',
+                
+                plantilla9Nombre: 'Tienda Online',
+                plantilla9Desc: 'E-commerce completo para vender tus productos online con catálogo integrado.',
+                plantilla9Feature1: 'Catálogo de productos',
+                plantilla9Feature2: 'Carrito de compras',
+                plantilla9Feature3: 'Pasarela de pago'
+            },
+            en: {
+                // Menu
+                menuInicio: '🏠 Home',
+                menuCatalogo: '🎨 Catalog',
+                menuBeneficios: '✨ Benefits',
+                menuDesarrollo: '💧 Web Development',
+                menuSeptima: '🌊 Séptima Pacha',
+                volver: '← Back',
+                
+                // Hero
+                heroTitle: 'Professional Web Templates',
+                heroSubtitle: 'Ready-to-use designs, 100% customizable in colors, typography and content. Your professional website in record time.',
+                heroFeature1: 'Fully customizable',
+                heroFeature2: 'Responsive design',
+                heroFeature3: 'SEO optimized',
+                heroFeature4: 'Support included',
+                heroCTA: 'View Catalog',
+                
+                // Benefits
+                beneficiosTitle: 'Why choose our templates?',
+                beneficio1Title: '100% Customizable',
+                beneficio1Desc: 'Modify colors, fonts, images and content to your liking. Your brand, your style.',
+                beneficio2Title: 'Fully Responsive',
+                beneficio2Desc: 'Works perfectly on mobile, tablets and computers. Automatic adaptation.',
+                beneficio3Title: 'SEO Optimized',
+                beneficio3Desc: 'Clean and optimized code to appear on Google. Positioning included.',
+                beneficio4Title: 'Fast Delivery',
+                beneficio4Desc: 'Your site ready in 3-5 business days. Quick and efficient implementation.',
+                beneficio5Title: 'Dedicated Support',
+                beneficio5Desc: 'Technical assistance for 30 days. We accompany you throughout the process.',
+                beneficio6Title: 'Affordable Price',
+                beneficio6Desc: 'Professional solutions at reduced costs. Quality without compromising your budget.',
+                
+                // Catalog
+                catalogoTitle: 'Template Catalog',
+                catalogoSubtitle: 'Each template includes customization of colors, fonts, images and content. Domain and hosting not included.',
+                oferta: 'OFFER',
+                verDemo: 'View Demo',
+                comprar: 'Buy',
+                
+                // Templates
+                plantilla1Nombre: 'Squeeze Page',
+                plantilla1Desc: 'Lead capture page ideal for marketing campaigns and launches.',
+                plantilla1Feature1: 'Capture form',
+                plantilla1Feature2: 'Minimalist design',
+                plantilla1Feature3: 'High conversion',
+                
+                plantilla2Nombre: 'ColorVives',
+                plantilla2Desc: 'Vibrant and creative design perfect for artists, designers and creatives.',
+                plantilla2Feature1: 'Work gallery',
+                plantilla2Feature2: 'Colorful design',
+                plantilla2Feature3: 'Interactive portfolio',
+                
+                plantilla3Nombre: 'Alternative Services',
+                plantilla3Desc: 'Mystical and elegant design for tarot professionals and esoteric services.',
+                plantilla3Feature1: 'Mystical aesthetic',
+                plantilla3Feature2: 'Services section',
+                plantilla3Feature3: 'Consultation booking',
+                
+                plantilla4Nombre: 'Premium Landing',
+                plantilla4Desc: 'Professional landing page for products or services with high conversion.',
+                plantilla4Feature1: 'Effective call to action',
+                plantilla4Feature2: 'Optimized sections',
+                plantilla4Feature3: 'Integrated form',
+                
+                plantilla5Nombre: 'Services Catalog',
+                plantilla5Desc: 'Complete site to showcase your services professionally and organized.',
+                plantilla5Feature1: 'Multiple services',
+                plantilla5Feature2: 'Prices and packages',
+                plantilla5Feature3: 'Contact form',
+                
+                plantilla6Nombre: 'ArtePluma',
+                plantilla6Desc: 'Minimalist portfolio for writers, illustrators and visual artists.',
+                plantilla6Feature1: 'Works gallery',
+                plantilla6Feature2: 'Clean design',
+                plantilla6Feature3: 'Artist biography',
+                
+                plantilla7Nombre: 'Legal Office',
+                plantilla7Desc: 'Professional site for lawyers and law firms with serious and reliable design.',
+                plantilla7Feature1: 'Practice areas',
+                plantilla7Feature2: 'Professional team',
+                plantilla7Feature3: 'Consultation form',
+                
+                plantilla8Nombre: 'Minimalist Art',
+                plantilla8Desc: 'Ultra minimalist design for artists who prefer their works to speak.',
+                plantilla8Feature1: 'Focus on art',
+                plantilla8Feature2: 'Simple navigation',
+                plantilla8Feature3: 'Ultra-fast loading',
+                
+                plantilla9Nombre: 'Online Store',
+                plantilla9Desc: 'Complete e-commerce to sell your products online with integrated catalog.',
+                plantilla9Feature1: 'Product catalog',
+                plantilla9Feature2: 'Shopping cart',
+                plantilla9Feature3: 'Payment gateway'
+            }
+        };
+
+        let currentLang = 'es';
+
         function toggleLang() {
-            lang = lang === 'es' ? 'en' : 'es';
-            document.getElementById('lang').textContent = lang === 'es' ? 'EN' : 'ES';
+            currentLang = currentLang === 'es' ? 'en' : 'es';
+            document.getElementById('lang').textContent = currentLang === 'es' ? 'EN' : 'ES';
+            updateContent();
+        }
+
+        function updateContent() {
+            const t = translations[currentLang];
+            
+            // Actualizar todos los elementos con data-i18n
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (t[key]) {
+                    element.textContent = t[key];
+                }
+            });
         }
     </script>
 </body>
