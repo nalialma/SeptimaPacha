@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es-AR">
+<html lang="es-AR" data-lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,6 +23,8 @@
             --agua-primary: #2ECC71;
             --agua-secondary: #3498DB;
             --agua-accent: #1ABC9C;
+            --usd-oficial: 1210;
+            --usd-blue: 1470;
         }
 
         html { scroll-behavior: smooth; }
@@ -69,7 +71,15 @@
             margin-bottom: 2rem;
         }
 
-        .back-button {
+        .controls-bar {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .back-button, .lang-toggle, .currency-toggle {
             display: inline-block;
             padding: 0.8rem 2rem;
             background: transparent;
@@ -82,9 +92,10 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            cursor: pointer;
         }
 
-        .back-button::before {
+        .back-button::before, .lang-toggle::before, .currency-toggle::before {
             content: '';
             position: absolute;
             top: 50%;
@@ -98,14 +109,19 @@
             z-index: -1;
         }
 
-        .back-button:hover {
+        .back-button:hover, .lang-toggle:hover, .currency-toggle:hover {
             color: #0a1a2a;
             box-shadow: 0 0 20px rgba(46, 204, 113, 0.5);
         }
 
-        .back-button:hover::before {
+        .back-button:hover::before, .lang-toggle:hover::before, .currency-toggle:hover::before {
             width: 300px;
             height: 300px;
+        }
+
+        .currency-toggle.active {
+            background: var(--agua-primary);
+            color: #0a1a2a;
         }
 
         .services-section {
@@ -181,6 +197,13 @@
             font-family: 'Playfair Display', serif;
         }
 
+        .price-original {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: line-through;
+            margin-left: 0.5rem;
+        }
+
         .features-list {
             list-style: none;
             margin: 1.5rem 0;
@@ -200,6 +223,35 @@
             font-weight: bold;
             font-size: 1.2rem;
             flex-shrink: 0;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-example {
+            flex: 1;
+            min-width: 140px;
+            padding: 0.8rem 1.5rem;
+            background: linear-gradient(135deg, var(--agua-secondary), var(--agua-accent));
+            border: none;
+            border-radius: 50px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .btn-example:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.5);
         }
 
         .contact-cta {
@@ -255,6 +307,61 @@
             margin-bottom: 0.5rem;
         }
 
+        /* Modal de ejemplo */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #0a1a2a 0%, #1a2a3a 100%);
+            margin: 5% auto;
+            padding: 2rem;
+            border: 2px solid var(--agua-primary);
+            border-radius: 20px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close-modal {
+            color: var(--agua-primary);
+            float: right;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: #fff;
+            transform: scale(1.2);
+        }
+
+        .modal h3 {
+            color: var(--agua-primary);
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .modal iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+            border-radius: 10px;
+            margin-top: 1rem;
+        }
+
         @media (max-width: 768px) {
             .services-grid {
                 grid-template-columns: 1fr;
@@ -275,200 +382,367 @@
             body {
                 padding: 1rem;
             }
+
+            .controls-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .back-button, .lang-toggle, .currency-toggle {
+                width: 100%;
+            }
+
+            .card-actions {
+                flex-direction: column;
+            }
+
+            .btn-example {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>Servicios & Precios</h1>
-            <p class="subtitle">Soluciones digitales profesionales para tu negocio en Salta</p>
-            <a href="agua-code.html" class="back-button">← Volver</a>
+            <h1 data-translate="title">Servicios & Precios</h1>
+            <p class="subtitle" data-translate="subtitle">Soluciones digitales profesionales para tu negocio en Salta</p>
+            
+            <div class="controls-bar">
+                <a href="agua-code.html" class="back-button" data-translate="back">← Volver</a>
+                <button class="lang-toggle" onclick="toggleLanguage()" data-translate="langToggle">🌐 English</button>
+                <button class="currency-toggle" onclick="toggleCurrency()" id="currencyBtn">
+                    <span data-translate="currencyARS">💵 Ver en USD</span>
+                </button>
+            </div>
         </div>
 
-        <!-- DESARROLLO WEB -->
+        <!-- LANDING PAGES SINERGIA -->
         <div class="services-section">
-            <h2 class="section-title">Desarrollo Web</h2>
+            <h2 class="section-title" data-translate="sectionLanding">Landing Pages Profesionales</h2>
             
             <div class="services-grid">
-                <!-- Landing Page -->
+                <!-- Landing Básica -->
                 <div class="service-card">
                     <div class="service-header">
-                        <h3 class="service-name">Landing Page</h3>
-                        <p class="service-description">Página de aterrizaje profesional diseñada para convertir visitantes en clientes</p>
+                        <h3 class="service-name" data-translate="landingBasic">🏗 Landing Page Básica</h3>
+                        <p class="service-description" data-translate="landingBasicDesc">Página de aterrizaje profesional para lanzamiento rápido de proyectos</p>
                     </div>
-                    <div class="price-tag">$200.000</div>
+                    <div class="price-tag">
+                        <span class="price-ars">$202.000</span>
+                        <span class="price-usd" style="display: none;">USD $137</span>
+                    </div>
                     <ul class="features-list">
-                        <li>Diseño responsive (móvil, tablet, desktop)</li>
-                        <li>Hasta 4 secciones personalizadas</li>
-                        <li>Formulario de contacto funcional</li>
-                        <li>Optimización SEO básica</li>
-                        <li>Integración con redes sociales</li>
-                        <li>1 revisión de diseño incluida</li>
-                        <li>Entrega: 7-10 días hábiles</li>
+                        <li data-translate="feat1">Diseño responsive (móvil, tablet, desktop)</li>
+                        <li data-translate="feat2">Hasta 4 secciones: Hero, Proyectos, Empresa, Contacto</li>
+                        <li data-translate="feat3">Formulario de contacto con validación</li>
+                        <li data-translate="feat4">Integración Google Maps</li>
+                        <li data-translate="feat5">Optimización SEO básica</li>
+                        <li data-translate="feat6">1 ronda de revisiones</li>
+                        <li data-translate="delivery">Entrega: 7-10 días hábiles</li>
                     </ul>
+                    <div class="card-actions">
+                        <a href="#" class="btn-example" onclick="showExample('landing-basic'); return false;" data-translate="btnExample">👁 Ver Ejemplo</a>
+                    </div>
                 </div>
 
-                <!-- Web Corporativa -->
+                <!-- Landing Intermedia -->
                 <div class="service-card">
                     <div class="service-header">
-                        <h3 class="service-name">Sitio Web Corporativo</h3>
-                        <p class="service-description">Presencia web completa para empresas y profesionales</p>
+                        <h3 class="service-name" data-translate="landingMid">🏢 Landing Page Intermedia</h3>
+                        <p class="service-description" data-translate="landingMidDesc">Solución completa para generar leads con confianza</p>
                     </div>
-                    <div class="price-tag">$450.000</div>
+                    <div class="price-tag">
+                        <span class="price-ars">$315.000</span>
+                        <span class="price-usd" style="display: none;">USD $214</span>
+                    </div>
                     <ul class="features-list">
-                        <li>Hasta 10 páginas/secciones</li>
-                        <li>Diseño responsive profesional</li>
-                        <li>Sistema de gestión de contenidos</li>
-                        <li>Blog integrado</li>
-                        <li>Formularios de contacto avanzados</li>
-                        <li>Galería de imágenes/portfolio</li>
-                        <li>Optimización SEO avanzada</li>
-                        <li>2 revisiones de diseño</li>
-                        <li>Entrega: 15-20 días hábiles</li>
+                        <li data-translate="featMid1">Todo lo de la opción básica +</li>
+                        <li data-translate="featMid2">Galería visual con lightbox/carrusel</li>
+                        <li data-translate="featMid3">Sección de testimonios o clientes</li>
+                        <li data-translate="featMid4">Animaciones suaves (scroll-based)</li>
+                        <li data-translate="featMid5">Integración WhatsApp Business</li>
+                        <li data-translate="featMid6">Formulario con Google Sheets/Mailchimp</li>
+                        <li data-translate="featMid7">SEO avanzado (schema markup)</li>
+                        <li data-translate="featMid8">2 rondas de revisiones</li>
+                        <li data-translate="deliveryMid">Entrega: 8-12 días hábiles</li>
                     </ul>
+                    <div class="card-actions">
+                        <a href="#" class="btn-example" onclick="showExample('landing-mid'); return false;" data-translate="btnExample">👁 Ver Ejemplo</a>
+                    </div>
                 </div>
 
-                <!-- E-commerce -->
+                <!-- Landing Premium -->
                 <div class="service-card">
                     <div class="service-header">
-                        <h3 class="service-name">Tienda Online</h3>
-                        <p class="service-description">Solución completa para vender tus productos en línea</p>
+                        <h3 class="service-name" data-translate="landingPremium">🏙 Landing Page Premium</h3>
+                        <p class="service-description" data-translate="landingPremiumDesc">Para lanzamientos inmobiliarios premium y campañas de alto valor</p>
                     </div>
-                    <div class="price-tag">$800.000</div>
+                    <div class="price-tag">
+                        <span class="price-ars">$450.000</span>
+                        <span class="price-usd" style="display: none;">USD $306</span>
+                    </div>
                     <ul class="features-list">
-                        <li>Catálogo de hasta 50 productos</li>
-                        <li>Carrito de compras funcional</li>
-                        <li>Pasarela de pago integrada</li>
-                        <li>Panel de administración</li>
-                        <li>Gestión de inventario</li>
-                        <li>Sistema de envíos</li>
-                        <li>Diseño responsive premium</li>
-                        <li>3 revisiones de diseño</li>
-                        <li>Capacitación de uso incluida</li>
-                        <li>Entrega: 30-40 días hábiles</li>
+                        <li data-translate="featPrem1">Todo lo de la opción intermedia +</li>
+                        <li data-translate="featPrem2">Sección interactiva "Explorá el proyecto"</li>
+                        <li data-translate="featPrem3">Mockup 360° o planos interactivos</li>
+                        <li data-translate="featPrem4">Integración CRM avanzado (HubSpot/Zoho)</li>
+                        <li data-translate="featPrem5">Microanimaciones personalizadas</li>
+                        <li data-translate="featPrem6">Optimización completa para conversión</li>
+                        <li data-translate="featPrem7">Accesibilidad básica (ARIA)</li>
+                        <li data-translate="featPrem8">3 rondas de revisiones + ajustes post-entrega</li>
+                        <li data-translate="deliveryPrem">Entrega: 12-18 días hábiles</li>
                     </ul>
+                    <div class="card-actions">
+                        <a href="#" class="btn-example" onclick="showExample('landing-premium'); return false;" data-translate="btnExample">👁 Ver Ejemplo</a>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- DISEÑO Y BRANDING -->
+        <!-- SERVICIOS WEB DEL PDF -->
         <div class="services-section">
-            <h2 class="section-title">Diseño & Branding</h2>
+            <h2 class="section-title" data-translate="sectionWeb">Desarrollo Web Completo</h2>
             
             <div class="services-grid">
-                <!-- Identidad Visual -->
+                <!-- Presentación Digital -->
                 <div class="service-card">
                     <div class="service-header">
-                        <h3 class="service-name">Identidad Visual</h3>
-                        <p class="service-description">Diseño de marca completo para tu negocio</p>
+                        <h3 class="service-name" data-translate="webPresent">💼 Presentación Digital</h3>
+                        <p class="service-description" data-translate="webPresentDesc">Portafolio o presentación multimedia profesional</p>
                     </div>
-                    <div class="price-tag">$150.000</div>
+                    <div class="price-tag">
+                        <span class="price-ars">$220.536</span>
+                        <span class="price-usd" style="display: none;">USD $150</span>
+                    </div>
                     <ul class="features-list">
-                        <li>Diseño de logotipo (3 propuestas)</li>
-                        <li>Paleta de colores corporativa</li>
-                        <li>Tipografía de marca</li>
-                        <li>Manual de uso básico</li>
-                        <li>Archivos en formatos vectoriales</li>
-                        <li>2 revisiones incluidas</li>
-                        <li>Entrega: 7 días hábiles</li>
+                        <li data-translate="webFeat1">Diseño interactivo y moderno</li>
+                        <li data-translate="webFeat2">Integración multimedia</li>
+                        <li data-translate="webFeat3">Responsive design</li>
+                        <li data-translate="webFeat4">Optimización de carga</li>
                     </ul>
+                    <div class="card-actions">
+                        <a href="#" class="btn-example" onclick="showExample('presentacion'); return false;" data-translate="btnExample">👁 Ver Ejemplo</a>
+                    </div>
                 </div>
 
-                <!-- Rediseño Web -->
+                <!-- Web Site Institucional -->
                 <div class="service-card">
                     <div class="service-header">
-                        <h3 class="service-name">Rediseño Web</h3>
-                        <p class="service-description">Moderniza tu sitio web existente</p>
+                        <h3 class="service-name" data-translate="webInstitutional">🏛 Web Site Institucional</h3>
+                        <p class="service-description" data-translate="webInstitutionalDesc">Sitio web completo para empresas e instituciones</p>
                     </div>
-                    <div class="price-tag">$350.000</div>
+                    <div class="price-tag">
+                        <span class="price-ars">$416.071</span>
+                        <span class="price-usd" style="display: none;">USD $283</span>
+                    </div>
                     <ul class="features-list">
-                        <li>Análisis del sitio actual</li>
-                        <li>Nuevo diseño moderno y responsivo</li>
-                        <li>Mejoras en UX/UI</li>
-                        <li>Optimización de velocidad</li>
-                        <li>Actualización de contenidos</li>
-                        <li>Mejora de SEO</li>
-                        <li>2 revisiones de diseño</li>
-                        <li>Entrega: 15 días hábiles</li>
+                        <li data-translate="instFeat1">Múltiples secciones institucionales</li>
+                        <li data-translate="instFeat2">Sistema de navegación completo</li>
+                        <li data-translate="instFeat3">Integración de contenidos</li>
+                        <li data-translate="instFeat4">Panel de actualización</li>
                     </ul>
+                    <div class="card-actions">
+                        <a href="#" class="btn-example" onclick="showExample('institucional'); return false;" data-translate="btnExample">👁 Ver Ejemplo</a>
+                    </div>
                 </div>
 
-                <!-- Material Gráfico -->
+                <!-- Sitio Responsivo -->
                 <div class="service-card">
                     <div class="service-header">
-                        <h3 class="service-name">Diseño Gráfico</h3>
-                        <p class="service-description">Piezas gráficas para tus redes y marketing</p>
+                        <h3 class="service-name" data-translate="webResponsive">📱 Sitio Responsivo Avanzado</h3>
+                        <p class="service-description" data-translate="webResponsiveDesc">Web optimizada para todos los dispositivos</p>
                     </div>
-                    <div class="price-tag">$80.000</div>
+                    <div class="price-tag">
+                        <span class="price-ars">$829.189</span>
+                        <span class="price-usd" style="display: none;">USD $564</span>
+                    </div>
                     <ul class="features-list">
-                        <li>5 diseños para redes sociales</li>
-                        <li>Tarjetas de presentación</li>
-                        <li>Flyers digitales</li>
-                        <li>Banners web</li>
-                        <li>Archivos listos para imprimir/publicar</li>
-                        <li>1 revisión por diseño</li>
-                        <li>Entrega: 5 días hábiles</li>
+                        <li data-translate="respFeat1">Diseño mobile-first</li>
+                        <li data-translate="respFeat2">Optimización multi-dispositivo</li>
+                        <li data-translate="respFeat3">Velocidad de carga optimizada</li>
+                        <li data-translate="respFeat4">UX/UI profesional</li>
                     </ul>
+                    <div class="card-actions">
+                        <a href="#" class="btn-example" onclick="showExample('responsive'); return false;" data-translate="btnExample">👁 Ver Ejemplo</a>
+                    </div>
+                </div>
+
+                <!-- Sitio con Base de Datos -->
+                <div class="service-card">
+                    <div class="service-header">
+                        <h3 class="service-name" data-translate="webDatabase">🗄 Sitio con Base de Datos</h3>
+                        <p class="service-description" data-translate="webDatabaseDesc">HTML/CSS/PHP/MySQL - Aplicación web completa</p>
+                    </div>
+                    <div class="price-tag">
+                        <span class="price-ars">$740.979</span>
+                        <span class="price-usd" style="display: none;">USD $504</span>
+                    </div>
+                    <ul class="features-list">
+                        <li data-translate="dbFeat1">Backend con PHP y MySQL</li>
+                        <li data-translate="dbFeat2">Sistema de gestión de datos</li>
+                        <li data-translate="dbFeat3">Panel de administración</li>
+                        <li data-translate="dbFeat4">Formularios dinámicos</li>
+                    </ul>
+                    <div class="card-actions">
+                        <a href="#" class="btn-example" onclick="showExample('database'); return false;" data-translate="btnExample">👁 Ver Ejemplo</a>
+                    </div>
+                </div>
+
+                <!-- Interfaz Flash/Animada -->
+                <div class="service-card">
+                    <div class="service-header">
+                        <h3 class="service-name" data-translate="webAnimated">✨ Interfaz Animada Premium</h3>
+                        <p class="service-description" data-translate="webAnimatedDesc">Experiencia web interactiva con animaciones avanzadas</p>
+                    </div>
+                    <div class="price-tag">
+                        <span class="price-ars">$846.835</span>
+                        <span class="price-usd" style="display: none;">USD $576</span>
+                    </div>
+                    <ul class="features-list">
+                        <li data-translate="animFeat1">Animaciones GSAP/CSS avanzadas</li>
+                        <li data-translate="animFeat2">Interacciones personalizadas</li>
+                        <li data-translate="animFeat3">Transiciones fluidas</li>
+                        <li data-translate="animFeat4">Efectos visuales premium</li>
+                    </ul>
+                    <div class="card-actions">
+                        <a href="#" class="btn-example" onclick="showExample('animated'); return false;" data-translate="btnExample">👁 Ver Ejemplo</a>
+                    </div>
+                </div>
+
+                <!-- Implementación CMS -->
+                <div class="service-card">
+                    <div class="service-header">
+                        <h3 class="service-name" data-translate="webCMS">⚙️ Implementación CMS</h3>
+                        <p class="service-description" data-translate="webCMSDesc">Sistema de gestión de contenidos autoadministrable</p>
+                    </div>
+                    <div class="price-tag">
+                        <span class="price-ars">$445.475</span>
+                        <span class="price-usd" style="display: none;">USD $303</span>
+                    </div>
+                    <ul class="features-list">
+                        <li data-translate="cmsFeat1">WordPress/CMS personalizado</li>
+                        <li data-translate="cmsFeat2">Panel de administración intuitivo</li>
+                        <li data-translate="cmsFeat3">Actualización de contenidos fácil</li>
+                        <li data-translate="cmsFeat4">Capacitación incluida</li>
+                    </ul>
+                    <div class="card-actions">
+                        <a href="#" class="btn-example" onclick="showExample('cms'); return false;" data-translate="btnExample">👁 Ver Ejemplo</a>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- SEO Y OPTIMIZACIÓN -->
+        <!-- COMPONENTES Y EXTRAS -->
         <div class="services-section">
-            <h2 class="section-title">SEO & Optimización</h2>
+            <h2 class="section-title" data-translate="sectionComponents">Componentes y Extras</h2>
             
             <div class="services-grid">
-                <!-- SEO Básico -->
+                <!-- Formulario Web -->
                 <div class="service-card">
                     <div class="service-header">
-                        <h3 class="service-name">Optimización SEO Básica</h3>
-                        <p class="service-description">Mejora tu posicionamiento en Google</p>
+                        <h3 class="service-name" data-translate="compForm">📝 Formulario Web Avanzado</h3>
+                        <p class="service-description" data-translate="compFormDesc">Formularios personalizados con validación y envío</p>
                     </div>
-                    <div class="price-tag">$180.000</div>
+                    <div class="price-tag">
+                        <span class="price-ars">$68.801</span>
+                        <span class="price-usd" style="display: none;">USD $47</span>
+                    </div>
                     <ul class="features-list">
-                        <li>Análisis de palabras clave</li>
-                        <li>Optimización de metadatos</li>
-                        <li>Mejora de velocidad de carga</li>
-                        <li>Optimización de imágenes</li>
-                        <li>Integración Google Analytics</li>
-                        <li>Informe inicial de rendimiento</li>
-                        <li>Entrega: 5-7 días hábiles</li>
+                        <li data-translate="formFeat1">Validación en tiempo real</li>
+                        <li data-translate="formFeat2">Envío a email/base de datos</li>
+                        <li data-translate="formFeat3">Diseño responsive</li>
+                        <li data-translate="formFeat4">Anti-spam integrado</li>
                     </ul>
                 </div>
 
-                <!-- SEO Avanzado -->
+                <!-- Galería Personalizada -->
                 <div class="service-card">
                     <div class="service-header">
-                        <h3 class="service-name">SEO Avanzado + Mantenimiento</h3>
-                        <p class="service-description">Estrategia SEO completa mensual</p>
+                        <h3 class="service-name" data-translate="compGallery">🖼 Galería Personalizada</h3>
+                        <p class="service-description" data-translate="compGalleryDesc">Sistema de galería de imágenes interactivo</p>
                     </div>
-                    <div class="price-tag">$280.000/mes</div>
+                    <div class="price-tag">
+                        <span class="price-ars">$49.392</span>
+                        <span class="price-usd" style="display: none;">USD $34</span>
+                    </div>
                     <ul class="features-list">
-                        <li>Todo lo de SEO Básico</li>
-                        <li>Creación de contenido optimizado</li>
-                        <li>Link building estratégico</li>
-                        <li>Monitoreo de competencia</li>
-                        <li>Informes mensuales detallados</li>
-                        <li>Ajustes y mejoras continuas</li>
-                        <li>Consultoría mensual</li>
+                        <li data-translate="gallFeat1">Lightbox profesional</li>
+                        <li data-translate="gallFeat2">Carga lazy loading</li>
+                        <li data-translate="gallFeat3">Categorización de imágenes</li>
+                        <li data-translate="gallFeat4">Optimización automática</li>
                     </ul>
                 </div>
 
-                <!-- Mantenimiento Web -->
+                <!-- Galería de Videos -->
                 <div class="service-card">
                     <div class="service-header">
-                        <h3 class="service-name">Mantenimiento Web</h3>
-                        <p class="service-description">Mantén tu sitio actualizado y seguro</p>
+                        <h3 class="service-name" data-translate="compVideo">🎥 Galería de Videos</h3>
+                        <p class="service-description" data-translate="compVideoDesc">Reproductor de videos embebidos y optimizados</p>
                     </div>
-                    <div class="price-tag">$100.000/mes</div>
+                    <div class="price-tag">
+                        <span class="price-ars">$68.801</span>
+                        <span class="price-usd" style="display: none;">USD $47</span>
+                    </div>
                     <ul class="features-list">
-                        <li>Actualizaciones de seguridad</li>
-                        <li>Backups semanales</li>
-                        <li>Actualizaciones de contenido (2 por mes)</li>
-                        <li>Monitoreo de uptime</li>
-                        <li>Soporte técnico prioritario</li>
-                        <li>Correcciones menores incluidas</li>
+                        <li data-translate="vidFeat1">Integración YouTube/Vimeo</li>
+                        <li data-translate="vidFeat2">Player personalizado</li>
+                        <li data-translate="vidFeat3">Carga optimizada</li>
+                        <li data-translate="vidFeat4">Responsive video</li>
+                    </ul>
+                </div>
+
+                <!-- Blog con Comentarios -->
+                <div class="service-card">
+                    <div class="service-header">
+                        <h3 class="service-name" data-translate="compBlog">📰 Blog con Comentarios</h3>
+                        <p class="service-description" data-translate="compBlogDesc">Sistema de blog completo con interacción</p>
+                    </div>
+                    <div class="price-tag">
+                        <span class="price-ars">$74.981</span>
+                        <span class="price-usd" style="display: none;">USD $51</span>
+                    </div>
+                    <ul class="features-list">
+                        <li data-translate="blogFeat1">Sistema de publicación</li>
+                        <li data-translate="blogFeat2">Comentarios moderados</li>
+                        <li data-translate="blogFeat3">Categorías y tags</li>
+                        <li data-translate="blogFeat4">RSS feed integrado</li>
+                    </ul>
+                </div>
+
+                <!-- Firma de Email -->
+                <div class="service-card">
+                    <div class="service-header">
+                        <h3 class="service-name" data-translate="compSignature">✉️ Firma de E-mail</h3>
+                        <p class="service-description" data-translate="compSignatureDesc">Firma profesional para correos corporativos</p>
+                    </div>
+                    <div class="price-tag">
+                        <span class="price-ars">$63.523</span>
+                        <span class="price-usd" style="display: none;">USD $43</span>
+                    </div>
+                    <ul class="features-list">
+                        <li data-translate="signFeat1">Diseño corporativo</li>
+                        <li data-translate="signFeat2">Compatible con todos los clientes</li>
+                        <li data-translate="signFeat3">Links a redes sociales</li>
+                        <li data-translate="signFeat4">Instalación incluida</li>
+                    </ul>
+                </div>
+
+                <!-- Plantilla Mailing -->
+                <div class="service-card">
+                    <div class="service-header">
+                        <h3 class="service-name" data-translate="compMailing">📧 Plantilla para Mailing</h3>
+                        <p class="service-description" data-translate="compMailingDesc">Template HTML para campañas de email marketing</p>
+                    </div>
+                    <div class="price-tag">
+                        <span class="price-ars">$79.388</span>
+                        <span class="price-usd" style="display: none;">USD $54</span>
+                    </div>
+                    <ul class="features-list">
+                        <li data-translate="mailFeat1">Responsive para móviles</li>
+                        <li data-translate="mailFeat2">Compatible Mailchimp/otros</li>
+                        <li data-translate="mailFeat3">Diseño persuasivo</li>
+                        <li data-translate="mailFeat4">Call-to-action optimizado</li>
                     </ul>
                 </div>
             </div>
@@ -476,27 +750,227 @@
 
         <!-- NOTAS IMPORTANTES -->
         <div class="note">
-            <div class="note-title">📌 Información Importante</div>
-            <p>• Todos los precios están expresados en pesos argentinos (ARS)</p>
-            <p>• Precios válidos para Cliente B según tarifario</p>
-            <p>• Los tiempos de entrega pueden variar según complejidad del proyecto</p>
-            <p>• Se requiere anticipo del 50% para iniciar cualquier proyecto</p>
-            <p>• Hosting y dominio no incluidos (se pueden contratar aparte)</p>
-            <p>• Soporte post-entrega: 30 días sin cargo</p>
+            <div class="note-title" data-translate="noteTitle">📌 Información Importante</div>
+            <p data-translate="note1">• Todos los precios están expresados en pesos argentinos (ARS)</p>
+            <p data-translate="note2">• Conversión a USD al tipo de cambio blue: $1.470 ARS = 1 USD</p>
+            <p data-translate="note3">• Los tiempos de entrega pueden variar según complejidad del proyecto</p>
+            <p data-translate="note4">• Se requiere anticipo del 50% para iniciar cualquier proyecto</p>
+            <p data-translate="note5">• Hosting y dominio no incluidos (se pueden contratar aparte)</p>
+            <p data-translate="note6">• Soporte post-entrega: 30 días sin cargo</p>
         </div>
 
         <!-- CALL TO ACTION -->
         <div class="contact-cta">
-            <h2>¿Listo para comenzar tu proyecto?</h2>
-            <p>Contáctanos ahora y recibe una cotización personalizada sin compromiso</p>
-            <a href="https://wa.me/543872271144?text=Hola,%20quiero%20consultar%20sobre%20sus%20servicios%20de%20desarrollo%20web" class="cta-button" target="_blank">
+            <h2 data-translate="ctaTitle">¿Listo para comenzar tu proyecto?</h2>
+            <p data-translate="ctaText">Contáctanos ahora y recibe una cotización personalizada sin compromiso</p>
+            <a href="https://wa.me/543872271144?text=Hola,%20quiero%20consultar%20sobre%20sus%20servicios%20de%20desarrollo%20web" class="cta-button" target="_blank" data-translate="ctaButton">
                 Solicitar Presupuesto 💬
             </a>
         </div>
 
         <div style="text-align: center; margin-top: 3rem;">
-            <a href="agua-code.html" class="back-button">← Volver a Inicio</a>
+            <a href="agua-code.html" class="back-button" data-translate="back">← Volver a Inicio</a>
         </div>
     </div>
+
+    <!-- MODAL PARA EJEMPLOS -->
+    <div id="exampleModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h3 id="modalTitle">Ejemplo de Proyecto</h3>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        // Configuración de traducciones
+        const translations = {
+            es: {
+                title: "Servicios & Precios",
+                subtitle: "Soluciones digitales profesionales para tu negocio en Salta",
+                back: "← Volver",
+                langToggle: "🌐 English",
+                currencyARS: "💵 Ver en USD",
+                currencyUSD: "💵 Ver en ARS",
+                sectionLanding: "Landing Pages Profesionales",
+                landingBasic: "🏗 Landing Page Básica",
+                landingBasicDesc: "Página de aterrizaje profesional para lanzamiento rápido de proyectos",
+                landingMid: "🏢 Landing Page Intermedia",
+                landingMidDesc: "Solución completa para generar leads con confianza",
+                landingPremium: "🏙 Landing Page Premium",
+                landingPremiumDesc: "Para lanzamientos inmobiliarios premium y campañas de alto valor",
+                sectionWeb: "Desarrollo Web Completo",
+                sectionComponents: "Componentes y Extras",
+                btnExample: "👁 Ver Ejemplo",
+                noteTitle: "📌 Información Importante",
+                note1: "• Todos los precios están expresados en pesos argentinos (ARS)",
+                note2: "• Conversión a USD al tipo de cambio blue: $1.470 ARS = 1 USD",
+                note3: "• Los tiempos de entrega pueden variar según complejidad del proyecto",
+                note4: "• Se requiere anticipo del 50% para iniciar cualquier proyecto",
+                note5: "• Hosting y dominio no incluidos (se pueden contratar aparte)",
+                note6: "• Soporte post-entrega: 30 días sin cargo",
+                ctaTitle: "¿Listo para comenzar tu proyecto?",
+                ctaText: "Contáctanos ahora y recibe una cotización personalizada sin compromiso",
+                ctaButton: "Solicitar Presupuesto 💬",
+                feat1: "Diseño responsive (móvil, tablet, desktop)",
+                feat2: "Hasta 4 secciones: Hero, Proyectos, Empresa, Contacto",
+                feat3: "Formulario de contacto con validación",
+                feat4: "Integración Google Maps",
+                feat5: "Optimización SEO básica",
+                feat6: "1 ronda de revisiones",
+                delivery: "Entrega: 7-10 días hábiles"
+            },
+            en: {
+                title: "Services & Pricing",
+                subtitle: "Professional digital solutions for your business in Salta",
+                back: "← Back",
+                langToggle: "🌐 Español",
+                currencyARS: "💵 View in ARS",
+                currencyUSD: "💵 View in USD",
+                sectionLanding: "Professional Landing Pages",
+                landingBasic: "🏗 Basic Landing Page",
+                landingBasicDesc: "Professional landing page for quick project launches",
+                landingMid: "🏢 Intermediate Landing Page",
+                landingMidDesc: "Complete solution to generate leads with confidence",
+                landingPremium: "🏙 Premium Landing Page",
+                landingPremiumDesc: "For premium real estate launches and high-value campaigns",
+                sectionWeb: "Complete Web Development",
+                sectionComponents: "Components & Extras",
+                btnExample: "👁 View Example",
+                noteTitle: "📌 Important Information",
+                note1: "• All prices are in Argentine pesos (ARS)",
+                note2: "• USD conversion at blue rate: $1,470 ARS = 1 USD",
+                note3: "• Delivery times may vary depending on project complexity",
+                note4: "• 50% advance payment required to start any project",
+                note5: "• Hosting and domain not included (can be contracted separately)",
+                note6: "• Post-delivery support: 30 days free",
+                ctaTitle: "Ready to start your project?",
+                ctaText: "Contact us now and receive a personalized quote with no commitment",
+                ctaButton: "Request Quote 💬",
+                feat1: "Responsive design (mobile, tablet, desktop)",
+                feat2: "Up to 4 sections: Hero, Projects, Company, Contact",
+                feat3: "Contact form with validation",
+                feat4: "Google Maps integration",
+                feat5: "Basic SEO optimization",
+                feat6: "1 review round",
+                delivery: "Delivery: 7-10 business days"
+            }
+        };
+
+        let currentLang = 'es';
+        let currentCurrency = 'ARS';
+        const USD_BLUE_RATE = 1470;
+
+        // Cambiar idioma
+        function toggleLanguage() {
+            currentLang = currentLang === 'es' ? 'en' : 'es';
+            document.documentElement.setAttribute('data-lang', currentLang);
+            updateTranslations();
+            
+            // Si está en inglés, cambiar automáticamente a USD
+            if (currentLang === 'en' && currentCurrency === 'ARS') {
+                toggleCurrency();
+            }
+        }
+
+        // Actualizar traducciones
+        function updateTranslations() {
+            document.querySelectorAll('[data-translate]').forEach(elem => {
+                const key = elem.getAttribute('data-translate');
+                if (translations[currentLang][key]) {
+                    elem.textContent = translations[currentLang][key];
+                }
+            });
+        }
+
+        // Cambiar moneda
+        function toggleCurrency() {
+            currentCurrency = currentCurrency === 'ARS' ? 'USD' : 'ARS';
+            const btn = document.getElementById('currencyBtn');
+            
+            document.querySelectorAll('.price-tag').forEach(priceTag => {
+                const arsPrice = priceTag.querySelector('.price-ars');
+                const usdPrice = priceTag.querySelector('.price-usd');
+                
+                if (currentCurrency === 'USD') {
+                    arsPrice.style.display = 'none';
+                    usdPrice.style.display = 'inline';
+                    btn.innerHTML = currentLang === 'es' ? 
+                        '<span data-translate="currencyUSD">💵 Ver en ARS</span>' :
+                        '<span data-translate="currencyARS">💵 View in ARS</span>';
+                } else {
+                    arsPrice.style.display = 'inline';
+                    usdPrice.style.display = 'none';
+                    btn.innerHTML = currentLang === 'es' ? 
+                        '<span data-translate="currencyARS">💵 Ver en USD</span>' :
+                        '<span data-translate="currencyUSD">💵 View in USD</span>';
+                }
+            });
+            
+            btn.classList.toggle('active');
+        }
+
+        // Mostrar modal de ejemplo
+        function showExample(type) {
+            const modal = document.getElementById('exampleModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalBody = document.getElementById('modalBody');
+            
+            const examples = {
+                'landing-basic': {
+                    title: 'Ejemplo: Landing Page Básica',
+                    url: 'https://septimapacha.com' // Aquí puedes poner URLs reales de tus proyectos
+                },
+                'landing-mid': {
+                    title: 'Ejemplo: Landing Page Intermedia',
+                    url: 'https://septimapacha.com'
+                },
+                'landing-premium': {
+                    title: 'Ejemplo: Landing Page Premium',
+                    url: 'https://septimapacha.com'
+                }
+            };
+            
+            if (examples[type]) {
+                modalTitle.textContent = examples[type].title;
+                modalBody.innerHTML = `
+                    <p style="color: rgba(255,255,255,0.8); margin-bottom: 1rem;">
+                        ${currentLang === 'es' ? 'Vista previa del proyecto:' : 'Project preview:'}
+                    </p>
+                    <iframe src="${examples[type].url}"></iframe>
+                    <p style="color: rgba(255,255,255,0.6); margin-top: 1rem; font-size: 0.9rem;">
+                        ${currentLang === 'es' ? 
+                        'Este es un ejemplo de proyecto similar. Tu sitio será 100% personalizado.' :
+                        'This is an example of a similar project. Your site will be 100% customized.'}
+                    </p>
+                `;
+                modal.style.display = 'block';
+            }
+        }
+
+        // Cerrar modal
+        function closeModal() {
+            document.getElementById('exampleModal').style.display = 'none';
+        }
+
+        // Cerrar modal al hacer clic fuera
+        window.onclick = function(event) {
+            const modal = document.getElementById('exampleModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Calcular y mostrar precios en USD
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.price-tag').forEach(priceTag => {
+                const arsText = priceTag.querySelector('.price-ars').textContent;
+                const arsValue = parseInt(arsText.replace(/[^0-9]/g, ''));
+                const usdValue = Math.round(arsValue / USD_BLUE_RATE);
+                
+                priceTag.querySelector('.price-usd').textContent = `USD $${usdValue}`;
+            });
+        });
+    </script>
 </body>
 </html>
