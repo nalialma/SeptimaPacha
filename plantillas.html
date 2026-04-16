@@ -764,9 +764,14 @@
         }
 
         .beneficio-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
+            font-size: 1.5rem;
+            margin-bottom: 5rem;
+             text-align: center;
+             display:flex ;
+   justify-content: center;
+   align-items: center;
+}
+        
 
         .beneficio-title {
             font-size: 1.3rem;
@@ -933,6 +938,1712 @@
                 font-size: 1.4rem;
             }
         }
+
+/* From Uiverse.io by om_5409 */ 
+.parent {
+  width: 290px;
+  height: 300px;
+  perspective: 1000px;
+  position: relative;
+}
+
+.card {
+  height: 100%;
+  border-radius: 50px;
+  background: linear-gradient(135deg, #08549a 0%, #3f5efb 100%);
+  transition: all 0.5s ease-in-out;
+  transform-style: preserve-3d;
+  box-shadow:
+    rgba(37, 5, 71, 0) 40px 50px 25px -40px,
+    rgba(34, 5, 71, 0.2) 0px 25px 25px -5px;
+  position: relative;
+  z-index: 1;
+}
+
+.glass {
+  transform-style: preserve-3d;
+  position: absolute;
+  inset: 8px;
+  border-radius: 55px;
+  border-top-right-radius: 100%;
+  background: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.349) 0%,
+    rgba(255, 255, 255, 0.815) 100%
+  );
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  transform: translate3d(0px, 0px, 25px);
+  border-left: 1px solid white;
+  border-bottom: 1px solid white;
+  transition: all 0.5s ease-in-out;
+}
+
+.contents {
+  padding: 80px 60px 0.5px 30px;
+  transform: translate3d(0, 0, 26px);
+  position: relative;
+  z-index: 10;
+}
+
+.contents .title {
+  display: block;
+
+  color: #fff;
+  font-weight: 900;
+  font-size: 25px;
+}
+
+.contents .text {
+  display: block;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 15px;
+  margin-top: 55px;
+}
+
+.bottom {
+  padding: 10px 12px;
+  transform-style: preserve-3d;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transform: translate3d(0, 0, 26px);
+  z-index: 10;
+}
+
+.bottom .social-buttons-container {
+  display: flex;
+  gap: 10px;
+  transform-style: preserve-3d;
+}
+
+.bottom .social-buttons-container .social-button {
+  width: 30px;
+  aspect-ratio: 1;
+  padding: 5px;
+  background: rgb(255, 255, 255);
+  border-radius: 50%;
+  border: none;
+  display: grid;
+  place-content: center;
+  box-shadow: rgba(28, 5, 71, 0.5) 0px 7px 5px -5px;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out,
+    background 0.2s ease-in-out;
+}
+
+.bottom .social-buttons-container .social-button:first-child {
+  transition-delay: 0.05s;
+}
+
+.bottom .social-buttons-container .social-button:nth-child(2) {
+  transition-delay: 0.1s;
+}
+
+.bottom .social-buttons-container .social-button:nth-child(3) {
+  transition-delay: 0.15s;
+}
+
+.bottom .social-buttons-container .social-button .svg {
+  width: 15px;
+  fill: #3f5efb;
+}
+
+.bottom .social-buttons-container .social-button:hover {
+  background: black;
+  transform: scale(1.1) translate3d(0, 0, 40px);
+  box-shadow: rgba(34, 5, 71, 0.4) -5px 15px 10px 0px;
+}
+
+.bottom .social-buttons-container .social-button:hover .svg {
+  fill: white;
+}
+
+.bottom .social-buttons-container .social-button:active {
+  background: rgb(136, 0, 255);
+  transform: scale(1.05) translate3d(0, 0, 30px);
+}
+
+.bottom .social-buttons-container .social-button:active .svg {
+  fill: black;
+}
+
+.logo {
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform-style: preserve-3d;
+  z-index: 5;
+}
+
+.logo .circle {
+  display: block;
+  position: absolute;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  top: 0;
+  right: 0;
+  box-shadow: rgba(100, 100, 111, 0.2) -10px 10px 20px 0px;
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  background: rgba(255, 255, 255, 0.233);
+  transition: all 0.5s ease-in-out;
+}
+
+.logo .circle1 {
+  width: 170px;
+  transform: translate3d(0, 0, 20px);
+  top: 8px;
+  right: 8px;
+}
+
+.logo .circle2 {
+  width: 140px;
+  transform: translate3d(0, 0, 40px);
+  top: 10px;
+  right: 10px;
+  -webkit-backdrop-filter: blur(1px);
+  backdrop-filter: blur(1px);
+  transition-delay: 0.1s;
+}
+
+.logo .circle3 {
+  width: 110px;
+  transform: translate3d(0, 0, 60px);
+  top: 17px;
+  right: 17px;
+  transition-delay: 0.2s;
+}
+
+.logo .circle4 {
+  width: 80px;
+  transform: translate3d(0, 0, 80px);
+  top: 23px;
+  right: 23px;
+  transition-delay: 0.3s;
+}
+
+.logo .circle5 {
+  width: 50px;
+  transform: translate3d(0, 0, 100px);
+  top: 30px;
+  right: 30px;
+  display: grid;
+  place-content: center;
+  transition-delay: 0.4s;
+}
+
+.logo .circle5 .svg {
+  width: 20px;
+  fill: white;
+}
+
+.parent:hover .card {
+  transform: rotate3d(1, 1, 0, 30deg);
+  box-shadow:
+    rgba(28, 5, 71, 0.3) 30px 50px 25px -40px,
+    rgba(28, 5, 71, 0.3) 0px 25px 30px 0px;
+}
+
+.parent:hover .card .bottom .social-buttons-container .social-button {
+  transform: translate3d(0, 0, 50px);
+  box-shadow: rgba(34, 5, 71, 0.2) -5px 20px 10px 0px;
+}
+
+.parent:hover .card .logo .circle2 {
+  transform: translate3d(0, 0, 60px);
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.parent:hover .card .logo .circle3 {
+  transform: translate3d(0, 0, 80px);
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.parent:hover .card .logo .circle4 {
+  transform: translate3d(0, 0, 100px);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.parent:hover .card .logo .circle5 {
+  transform: translate3d(0, 0, 120px);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+@media (max-width: 600px) {
+  .parent {
+    width: 250px;
+    height: 280px;
+  }
+  .content {
+    padding: 80px 40px 0px 20px;
+  }
+  .content .title {
+    font-size: 18px;
+  }
+  .content .text {
+    font-size: 13px;
+    margin-top: 15px;
+  }
+}
+
+/* From Uiverse.io by mrhyddenn */ 
+.spinner {
+  width: 2em;
+  height: 2em;
+  cursor: not-allowed;
+  border-radius: 50%;
+  border: 2px solid #444;
+  box-shadow: -10px -10px 10px #6359f8, 0px -10px 10px 0px #9c32e2, 10px -10px 10px #f36896, 10px 0 10px #ff0b0b, 10px 10px 10px 0px#ff5500, 0 10px 10px 0px #ff9500, -10px 10px 10px 0px #ffb700;
+  animation: rot55 0.7s linear infinite;
+   display:flex ;
+   justify-content: center;
+   align-items: center;
+   min-height: 55px;
+}
+
+.spinnerin {
+  border: 2px solid #444;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  position: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+    display:flex ;
+   justify-content: center;
+   align-items: center;
+}
+
+@keyframes rot55 {
+  to {
+    transform: rotate(360deg);
+  }
+}
+/* From Uiverse.io by 20essentials */ 
+.loaders {
+  --size: 200px;
+  --negative-size: -200px;
+  zoom: 0.7;
+  width: var(--size);
+  height: var(--size);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-style: preserve-3d;
+  perspective: 300px;
+  animation: rotar 10s alternate infinite both;
+  display: flex;
+  justify-content: center; /* Centrado horizontal */
+  align-items: center;     /* Centrado vertical */
+  min-height: 200px;
+
+  .side {
+    position: absolute;
+    width: var(--size);
+    height: var(--size);
+  }
+
+  .front {
+    background-color: #f0f5;
+  }
+
+  .behind {
+    background-color: #0f05;
+    transform: translate3d(0, 0, var(--negative-size));
+  }
+
+  .top {
+    background-color: #f005;
+    transform-origin: 50% 0;
+    transform: rotateX(-90deg);
+  }
+
+  .bottom {
+    background-color: #00f5;
+    transform-origin: 50% 100%;
+    transform: rotateX(90deg);
+  }
+
+  .right {
+    background-color: #0ff5;
+    transform-origin: 100% 0%;
+    transform: rotateY(-90deg);
+  }
+
+  .left {
+    background-color: #ff05;
+    transform-origin: 0% 0%;
+    transform: rotateY(90deg);
+  }
+}
+
+@keyframes rotar {
+  0% {
+    transform: translate(-50%, -50%) rotateX(0deg) rotateY(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotateX(360deg) rotateY(360deg);
+  }
+}
+
+/* From Uiverse.io by om_6153 */ 
+.loades {
+  width: 50px;
+  aspect-ratio: 1;
+  display: grid;
+}
+.loades:before,
+.loades:after {
+  content: "";
+  grid-area: 1/1;
+  margin: 0 0 15px 15px;
+  --c: #0000 calc(100% / 3), #046d8b 0 calc(2 * 100% / 3), #0000 0;
+  --c1: linear-gradient(90deg, var(--c));
+  --c2: linear-gradient(0deg, var(--c));
+  background: var(--c1), var(--c2), var(--c1), var(--c2);
+  background-size:
+    300% 4px,
+    4px 300%;
+  background-repeat: no-repeat;
+  animation: l12 1s infinite linear;
+}
+.loades:after {
+  margin: 15px 15px 0 0;
+  transform: scale(-1, -1);
+}
+@keyframes l12 {
+  0% {
+    background-position:
+      50% 0,
+      100% 100%,
+      0 100%,
+      0 0;
+  }
+  25% {
+    background-position:
+      0 0,
+      100% 50%,
+      0 100%,
+      0 0;
+  }
+  50% {
+    background-position:
+      0 0,
+      100% 0,
+      50% 100%,
+      0 0;
+  }
+  75% {
+    background-position:
+      0 0,
+      100% 0,
+      100% 100%,
+      0 50%;
+  }
+  75.01% {
+    background-position:
+      100% 0,
+      100% 0,
+      100% 100%,
+      0 50%;
+  }
+  100% {
+    background-position:
+      50% 0,
+      100% 0,
+      100% 100%,
+      0 100%;
+  }
+}
+
+/* From Uiverse.io by vinodjangid07 */ 
+.loade {
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.truckWrapper {
+  width: 200px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  align-items: center;
+  justify-content: flex-end;
+  overflow-x: hidden;
+}
+/* truck upper body */
+.truckBody {
+  width: 130px;
+  height: fit-content;
+  margin-bottom: 3px;
+  animation: motion 1s linear infinite;
+}
+/* truck suspension animation*/
+@keyframes motion {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(3px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+/* truck's tires */
+.truckTires {
+  width: 130px;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 10px 0px 15px;
+  position: absolute;
+  bottom: 0;
+}
+.truckTires svg {
+  width: 4px;
+}
+
+.road {
+  width: 100%;
+  height: 1.5px;
+  background-color: #282828;
+  position: relative;
+  bottom: 0;
+  align-self: flex-end;
+  border-radius: 3px;
+}
+.road::before {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 100%;
+  background-color: #282828;
+  right: -50%;
+  border-radius: 3px;
+  animation: roadAnimation 1.4s linear infinite;
+  border-left: 10px solid white;
+}
+.road::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 100%;
+  background-color: #282828;
+  right: -65%;
+  border-radius: 3px;
+  animation: roadAnimation 1.4s linear infinite;
+  border-left: 4px solid white;
+}
+
+.lampPost {
+  position: absolute;
+  bottom: 0;
+  right: -90%;
+  height: 90px;
+  animation: roadAnimation 1.4s linear infinite;
+}
+
+@keyframes roadAnimation {
+  0% {
+    transform: translateX(0px);
+  }
+  100% {
+    transform: translateX(-350px);
+  }
+}
+
+
+/* From Uiverse.io by abhinav_7137 */ 
+.wallet-loader {
+  --wallet-color: #8b4513;
+  /* SaddleBrown */
+  --wallet-dark: #5a2d0c;
+  --bill-color: #66cdaa;
+  /* MediumAquamarine */
+  --bill-detail: #2e8b57;
+  /* SeaGreen */
+  --txt-color: #ffffff;
+  /* White text */
+  --duration: 4s;
+
+  position: relative;
+  width: 110px;
+  height: 80px;
+}
+
+/* --- WALLET BACK --- */
+.wallet-loader .wallet-back {
+  position: absolute;
+  bottom: 10px;
+  left: 5px;
+  width: 100px;
+  height: 45px;
+  background: var(--wallet-dark);
+  border-radius: 5px 5px 0 0;
+  z-index: 0;
+}
+
+/* --- BILLS (Common Styles) --- */
+.wallet-loader .bill {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -30px;
+  width: 70px;
+  height: 40px;
+  background: var(--bill-color);
+  border-radius: 2px;
+  border: 1px solid var(--bill-detail);
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Rupee Symbol */
+.wallet-loader .bill::before {
+  content: "₹";
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 18px;
+  color: var(--bill-detail);
+  border: 2px solid var(--bill-detail);
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Bill Decorative Lines */
+.wallet-loader .bill::after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  right: 3px;
+  top: 3px;
+  bottom: 3px;
+  border: 1px dashed var(--bill-detail);
+  border-radius: 1px;
+}
+
+/* Bill Specific Animations */
+.wallet-loader .bill-1 {
+  z-index: 1;
+  animation: slide-in var(--duration) ease-in-out infinite;
+  animation-delay: 0s;
+}
+
+.wallet-loader .bill-2 {
+  z-index: 2;
+  animation: slide-in var(--duration) ease-in-out infinite;
+  animation-delay: 0.8s;
+}
+
+.wallet-loader .bill-3 {
+  z-index: 3;
+  animation: slide-in var(--duration) ease-in-out infinite;
+  animation-delay: 1.6s;
+}
+
+/* --- WALLET FRONT --- */
+.wallet-loader .wallet-front {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 110px;
+  height: 52px;
+  background: linear-gradient(180deg, var(--wallet-color), var(--wallet-dark));
+  border-radius: 6px 6px 10px 10px;
+  z-index: 10;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+
+  /* Center the text inside */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  animation: wallet-bounce var(--duration) ease-in-out infinite;
+}
+
+/* Stitching Detail */
+.wallet-loader .wallet-front::before {
+  content: "";
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  bottom: 6px;
+  top: 6px;
+  border: 1px dashed rgba(60, 30, 0, 0.3);
+  border-radius: 4px 4px 8px 8px;
+  pointer-events: none;
+}
+
+/* --- TEXT STYLING --- */
+.wallet-loader .text {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--txt-color);
+  letter-spacing: 0.5px;
+  text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+}
+
+/* The moving dots */
+.wallet-loader .dot {
+  display: inline-block;
+  animation: wave 1.5s infinite;
+}
+
+.wallet-loader .dot:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.wallet-loader .dot:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.wallet-loader .dot:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+/* --- ANIMATIONS --- */
+
+/* Money Falling In */
+@keyframes slide-in {
+  0% {
+    top: -30px;
+    opacity: 0;
+    transform: translateX(-50%) scale(0.8);
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  25% {
+    top: 18px;
+    transform: translateX(-50%) scale(1);
+  }
+
+  90% {
+    top: 18px;
+    opacity: 1;
+  }
+
+  100% {
+    top: 18px;
+    opacity: 0;
+  }
+}
+
+/* Wallet Reaction (Squish/Bounce) */
+@keyframes wallet-bounce {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  12% {
+    transform: scale(1.02, 0.98);
+  }
+
+  15% {
+    transform: scale(1);
+  }
+
+  32% {
+    transform: scale(1.02, 0.98);
+  }
+
+  35% {
+    transform: scale(1);
+  }
+
+  52% {
+    transform: scale(1.02, 0.98);
+  }
+
+  55% {
+    transform: scale(1);
+  }
+}
+
+/* Dot Wave Animation */
+@keyframes wave {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+  }
+
+  30% {
+    transform: translateY(-4px);
+  }
+}
+/* From Uiverse.io by FWDJc */ 
+.eye-lid {
+  background-color: rgb(0, 0, 0);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 9px 0 2px rgba(0, 0, 0, 0.2);
+  width: 150px;
+  height: 150px;
+}
+
+.eye {
+  background-color: #ffbc03;
+  border-radius: 50%;
+  transform: translate3d(0, 0, 0) rotate(90deg);
+  width: 120px;
+  height: 120px;
+  animation: eye 5s infinite;
+}
+
+@keyframes eye {
+  12%,
+  25% {
+    width: 100px;
+    height: 110px;
+  }
+
+  37%, 
+  50% {
+    width: 60px;
+    height: 130px;
+  }
+
+  63%, 
+  75% {
+    width: 100px;
+    height: 103px;
+  }
+
+  87% {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+.cornea {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(0, 0, 0);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: eye-color 5s infinite;
+}
+
+@keyframes eye-color {
+  63%, 75% {
+    background-color: rgb(8, 20, 96);
+  }
+}
+
+.white-pupil {
+  position: absolute;
+  top: 9%;
+  left: 10%;
+  border-radius: 50%;
+  background-color: #ffbc03;
+  width: 20px;
+  height: 20px;
+}
+
+/* From Uiverse.io by Peary74 */ 
+.loaderi {
+  position: absolute;
+}
+
+.cercle {
+  position: absolute;
+  background: #3f7ee8;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  top: -40px;
+  left: -70px;
+  animation: move-up6 .4s ease-in infinite alternate-reverse;
+}
+
+.cercle:nth-child(2) {
+  width: 25px;
+  height: 25px;
+  top: -2px;
+  left: -5px;
+  background: #de4032;
+  animation: move-down1 .4s ease-in infinite alternate-reverse;
+}
+
+.cercle:nth-child(3) {
+  width: 30px;
+  height: 30px;
+  top: 35px;
+  left: -7px;
+  background: #eeb205;
+  animation: move-updown1 .4s ease-in infinite alternate-reverse;
+}
+
+.cercle:nth-child(4) {
+  width: 12px;
+  height: 12px;
+  top: -10px;
+  left: 25px;
+  background: #31aa52;
+  animation: move-up6 .4s ease-in infinite alternate-reverse;
+}
+
+@keyframes move-up6 {
+  to {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes move-down1 {
+  to {
+    transform: translateY(5px);
+  }
+}
+
+@keyframes move-updown1 {
+  to {
+    transform: translateY(10px);
+  }
+
+  from {
+    transform: translateY(-7px);
+  }
+}
+
+
+/* From Uiverse.io by wolf_3808 */ 
+.loaderi-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 900px;
+  perspective: 500px;
+}
+
+.loaderi-3d {
+  width: 40px;
+  height: 40px;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: rotate-3d 6s infinite linear;
+}
+
+.loader-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: pulse 1.5s infinite ease-in-out alternate;
+}
+
+.loader-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0.9;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 8px rgba(100, 200, 255, 0.4);
+}
+
+.loader-face-front {
+  background: linear-gradient(45deg, #ff3366, #ff3366 50%, transparent 50%),
+    linear-gradient(-45deg, #8844ee, #8844ee 50%, transparent 50%);
+  background-size: 10px 10px;
+  transform: translateZ(20px);
+}
+
+.loader-face-back {
+  background: repeating-linear-gradient(
+      0deg,
+      #00ffcc,
+      #00ffcc 3px,
+      transparent 3px,
+      transparent 6px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      #00ffcc,
+      #00ffcc 3px,
+      transparent 3px,
+      transparent 6px
+    );
+  transform: rotateY(180deg) translateZ(20px);
+}
+
+.loader-face-right {
+  background: radial-gradient(circle, #ffcc00 20%, transparent 20%),
+    radial-gradient(circle, transparent 20%, #ffcc00 20%, transparent 30%);
+  background-size: 15px 15px;
+  background-position:
+    0 0,
+    7px 7px;
+  transform: rotateY(90deg) translateZ(20px);
+}
+
+.loader-face-left {
+  background: linear-gradient(135deg, #ff0066 25%, transparent 25%),
+    linear-gradient(225deg, #ff0066 25%, transparent 25%),
+    linear-gradient(315deg, #ff0066 25%, transparent 25%),
+    linear-gradient(45deg, #ff0066 25%, transparent 25%);
+  background-size: 10px 10px;
+  transform: rotateY(-90deg) translateZ(20px);
+}
+
+.loader-face-top {
+  background: conic-gradient(
+    from 90deg at 50% 50%,
+    #00ff99,
+    #9900ff,
+    #ff0099,
+    #00ff99
+  );
+  transform: rotateX(90deg) translateZ(20px);
+}
+
+.loader-face-bottom {
+  background: repeating-linear-gradient(
+    45deg,
+    #ff6600,
+    #ff6600 5px,
+    #ffcc00 5px,
+    #ffcc00 10px
+  );
+  transform: rotateX(-90deg) translateZ(20px);
+}
+
+@keyframes rotate-3d {
+  0% {
+    transform: rotateX(0) rotateY(0) rotateZ(0);
+  }
+  100% {
+    transform: rotateX(360deg) rotateY(720deg) rotateZ(360deg);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale3d(0.8, 0.8, 0.8);
+  }
+  100% {
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+}
+/* From Uiverse.io by tmpMonster */ 
+.matrix-loader-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.matrix-loader {
+  perspective: 1000px;
+}
+
+.matrix-loader .cube {
+  width: 90px;
+  height: 90px;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: cubeSpin 12s infinite linear;
+}
+
+.matrix-loader .layer {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+  gap: 3px;
+  transform-style: preserve-3d;
+  border: 1px solid #444;
+  background: rgba(255, 255, 255, 0.015);
+  box-shadow: inset 0 0 6px #00f8ff22;
+}
+
+.matrix-loader .l1 {
+  transform: translateZ(-20px);
+}
+.matrix-loader .l2 {
+  transform: translateZ(0);
+}
+.matrix-loader .l3 {
+  transform: translateZ(20px);
+}
+
+.matrix-loader .block {
+  width: 26px;
+  height: 26px;
+  border-radius: 3px;
+  transform: translateZ(-80px) scale(0.3);
+  opacity: 0;
+  box-shadow: 0 0 6px #ffffff11;
+  animation: riseIn 3s infinite ease-in-out;
+}
+
+.matrix-loader .l1 .block {
+  background: #ff595e;
+}
+.matrix-loader .l2 .block {
+  background: #ffca3a;
+}
+.matrix-loader .l3 .block {
+  background: #8ac926;
+}
+
+.matrix-loader .layer .block:nth-child(1) {
+  animation-delay: 0s;
+}
+.matrix-loader .layer .block:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.matrix-loader .layer .block:nth-child(3) {
+  animation-delay: 0.2s;
+}
+.matrix-loader .layer .block:nth-child(4) {
+  animation-delay: 0.3s;
+}
+.matrix-loader .layer .block:nth-child(5) {
+  animation-delay: 0.4s;
+}
+.matrix-loader .layer .block:nth-child(6) {
+  animation-delay: 0.5s;
+}
+.matrix-loader .layer .block:nth-child(7) {
+  animation-delay: 0.6s;
+}
+.matrix-loader .layer .block:nth-child(8) {
+  animation-delay: 0.7s;
+}
+.matrix-loader .layer .block:nth-child(9) {
+  animation-delay: 0.8s;
+}
+
+@keyframes riseIn {
+  0% {
+    transform: translateZ(-80px) scale(0.3);
+    opacity: 0;
+  }
+  50% {
+    transform: translateZ(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateZ(20px) scale(0.5);
+    opacity: 0.4;
+  }
+}
+
+@keyframes cubeSpin {
+  0% {
+    transform: rotateX(0deg) rotateY(0deg);
+  }
+  100% {
+    transform: rotateX(360deg) rotateY(360deg);
+  }
+}
+/* From Uiverse.io by 0x-maker */ 
+.loaderis {
+  display: flex;
+  width: 8rem;
+  height: 8rem;
+  justify-items: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.head {
+  width: 100%;
+  height: 100%;
+  background-color: #e5f295;
+  border-radius: 50%;
+  animation: move 3s linear infinite;
+  box-shadow: 0 1rem 1rem #5beebd;
+  filter: blur(0.3rem);
+  z-index: 1;
+}
+
+.eye {
+  display: flex;
+  position: absolute;
+  width: 4rem;
+  height: 4rem;
+  background-color: #efffc8;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  box-shadow: 0 0 1rem #000000;
+  animation: move 5s alternate infinite;
+}
+
+.eye::before {
+  content: "";
+  display: flex;
+  width: 1rem;
+  height: 2rem;
+  background-color: #000;
+  border-radius: 50%;
+  animation: blink 4s ease-in-out alternate infinite;
+}
+
+.flames {
+  display: flex;
+  position: absolute;
+  z-index: 0;
+}
+
+.particle {
+  display: flex;
+  position: absolute;
+  background-color: #e5f295;
+  border-radius: 50%;
+  filter: blur(0.3rem);
+  border-top: 5px solid #e5f295;
+  border-left: 5px solid #e5f295;
+}
+
+.flames::before {
+  content: "";
+  position: absolute;
+  width: 8rem;
+  height: 8rem;
+  background: #e5f295;
+  filter: blur(5rem);
+  opacity: 0.5;
+  border-radius: 50%;
+  top: -8rem;
+  left: -4rem;
+  z-index: 4;
+  animation: pulse 3s linear infinite;
+}
+
+.particle:nth-child(1) {
+  width: 4rem;
+  height: 4rem;
+  top: -6rem;
+  animation: move 7s alternate-reverse infinite;
+}
+
+.particle:nth-child(2) {
+  width: 1.5rem;
+  height: 1.5rem;
+  top: -8rem;
+  left: -5rem;
+  animation: move 1.5s ease-in-out reverse infinite;
+}
+
+.particle:nth-child(3) {
+  width: 4rem;
+  height: 4rem;
+  top: -5rem;
+  left: -4rem;
+  animation: move 8s alternate-reverse infinite;
+}
+
+.particle:nth-child(4) {
+  width: 3rem;
+  height: 3rem;
+  top: -7.5rem;
+  animation: move 4s alternate-reverse infinite;
+}
+
+.particle:nth-child(5) {
+  width: 2rem;
+  height: 2rem;
+  top: -9rem;
+  left: 1rem;
+  animation: move 2.5s alternate-reverse infinite;
+}
+
+.particle:nth-child(6) {
+  width: 2rem;
+  height: 2rem;
+  top: -6.8rem;
+  left: -1.5rem;
+  animation: move 5s alternate-reverse infinite;
+}
+
+.particle:nth-child(7) {
+  width: 1rem;
+  height: 1rem;
+  top: -10rem;
+  left: -1rem;
+  animation: move 1.2s alternate-reverse infinite;
+}
+
+.particle:nth-child(8) {
+  width: 1.3rem;
+  height: 1.3rem;
+  top: -7.5rem;
+  left: -2rem;
+  animation: move 2.5s alternate-reverse infinite;
+}
+
+@keyframes move {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(4px, 6px);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes blink {
+  20% {
+    transform: translate(0, 0);
+    height: 2rem;
+  }
+
+  30% {
+    height: 0;
+  }
+
+  40% {
+    transform: translate(5px, 10px);
+    height: 0;
+  }
+
+  50% {
+    height: 2rem;
+  }
+
+  70% {
+    transform: translate(-10px, -10px);
+  }
+
+  90% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.5;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.5;
+  }
+}
+
+/* From Uiverse.io by abhinav_7137 */ 
+/* --- LOADER CONTAINER & RESPONSIVE SCALING --- */
+.cart-loader {
+  --loader-scale: 1;
+  position: relative;
+  width: 160px;
+  height: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  transform: scale(var(--loader-scale));
+  transform-origin: center center;
+}
+
+@media (max-width: 768px) {
+  .cart-loader {
+    --loader-scale: 0.85;
+  }
+}
+@media (max-width: 480px) {
+  .cart-loader {
+    --loader-scale: 0.7;
+  }
+}
+@media (min-width: 1400px) {
+  .cart-loader {
+    --loader-scale: 1.2;
+  }
+}
+
+/* --- ITEMS LAYER (Z-index 1: Behind Cart Front) --- */
+.items-container {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  z-index: 1;
+}
+
+/* Base class for all falling items */
+.item {
+  position: absolute;
+  opacity: 0;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  animation: drop-item 4s cubic-bezier(0.3, 0, 0.5, 1) infinite;
+}
+
+/* 1. Mobile Phone */
+#item-mobile {
+  top: -15px;
+  left: 58px;
+  width: 20px;
+  height: 32px;
+  --end-rot: -15deg;
+  animation-delay: 0.05s;
+  background-image: url("data:image/svg+xml,%3Csvg%20viewBox='0%200%2024%2036'%20xmlns='://www.w3.org/2000/svg'%3E%3Crect%20x='2'%20y='2'%20width='20'%20height='32'%20rx='3'%20fill='%233b82f6'/%3E%3Crect%20x='4'%20y='4'%20width='16'%20height='25'%20rx='1'%20fill='%23eff6ff'/%3E%3Ccircle%20cx='12'%20cy='31.5'%20r='1.5'%20fill='%23eff6ff'/%3E%3C/svg%3E");
+}
+
+/* 2. Laptop */
+#item-laptop {
+  top: -10px;
+  left: 70px;
+  width: 35px;
+  height: 26px;
+  --end-rot: 10deg;
+  animation-delay: 0.8s;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 40 30' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='6' y='4' width='28' height='18' rx='1' fill='%2364748b'/%3E%3Crect x='8' y='6' width='24' height='14' fill='%23cbd5e1'/%3E%3Cpolygon points='2,24 38,24 40,28 0,28' fill='%23334155' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+/* 3. Tablet/Tab */
+#item-tab {
+  top: -20px;
+  left: 85px;
+  width: 24px;
+  height: 32px;
+  --end-rot: 25deg;
+  animation-delay: 1.6s;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 32 40' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='2' y='2' width='28' height='36' rx='2' fill='%23a855f7'/%3E%3Crect x='4' y='4' width='24' height='32' fill='%23faf5ff'/%3E%3C/svg%3E");
+}
+
+/* 4. Headphones */
+#item-headphone {
+  top: -15px;
+  left: 58px;
+  width: 28px;
+  height: 28px;
+  --end-rot: -5deg;
+  animation-delay: 2.4s;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M 6 16 C 6 4, 26 4, 26 16' fill='none' stroke='%23ef4444' stroke-width='4'/%3E%3Crect x='2' y='14' width='8' height='14' rx='4' fill='%23ef4444'/%3E%3Crect x='22' y='14' width='8' height='14' rx='4' fill='%23ef4444'/%3E%3C/svg%3E");
+}
+
+/* 5. Mixer */
+#item-mixer {
+  top: -25px;
+  left: 75px;
+  width: 26px;
+  height: 34px;
+  --end-rot: 5deg;
+  animation-delay: 3.2s;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 32 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M 8 20 L 24 20 L 28 36 L 4 36 Z' fill='%2314b8a6' stroke-linejoin='round'/%3E%3Ccircle cx='16' cy='28' r='4' fill='%23ccfbf1'/%3E%3Cpolygon points='10,20 22,20 24,8 8,8' fill='%23cbd5e1'/%3E%3Crect x='6' y='4' width='20' height='4' rx='2' fill='%230f766e'/%3E%3Cpath d='M 8 10 L 3 10 L 3 18 L 8 18' fill='none' stroke='%2394a3b8' stroke-width='2.5' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+/* --- CART LAYER (Z-index 2: In Front of Items) --- */
+#cart-icon {
+  position: relative;
+  z-index: 2;
+  width: 140px;
+  height: 120px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 140 120' width='140' height='120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23334155' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'%3E%3C!-- Base Line --%3E%3Cline x1='35' y1='90' x2='110' y2='90' /%3E%3C!-- Back Support Leg --%3E%3Cline x1='40' y1='90' x2='50' y2='70' /%3E%3C!-- Handle --%3E%3Cpolyline points='10,15 25,15 40,30' /%3E%3C!-- Basket Vertical Lines --%3E%3Cline x1='40' y1='30' x2='50' y2='70' /%3E%3Cline x1='68' y1='30' x2='71' y2='70' /%3E%3Cline x1='96' y1='30' x2='93' y2='70' /%3E%3Cline x1='125' y1='30' x2='115' y2='70' /%3E%3C!-- Basket Horizontal Lines --%3E%3Cline x1='40' y1='30' x2='125' y2='30' /%3E%3Cline x1='43' y1='43' x2='122' y2='43' /%3E%3Cline x1='47' y1='57' x2='118' y2='57' /%3E%3Cline x1='50' y1='70' x2='115' y2='70' /%3E%3C!-- Wheels --%3E%3Ccircle cx='45' cy='105' r='8' /%3E%3Ccircle cx='105' cy='105' r='8' /%3E%3C/g%3E%3C/svg%3E");
+  animation: cart-bounce 0.8s ease-in-out infinite;
+  animation-delay: 0.2s;
+}
+
+/* --- TEXT STYLING --- */
+.loading-text {
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #1e293b;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.dot {
+  display: inline-block;
+  animation: wave 1.5s infinite;
+}
+.dot:nth-child(1) {
+  animation-delay: 0s;
+}
+.dot:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.dot:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+/* --- ANIMATIONS --- */
+@keyframes drop-item {
+  0% {
+    transform: translateY(-20px) scale(0.8) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(20px) scale(1) rotate(calc(var(--end-rot) / 2));
+  }
+  25% {
+    transform: translateY(55px) scale(1) rotate(var(--end-rot));
+    opacity: 1;
+  }
+  35%,
+  100% {
+    transform: translateY(75px) scale(0.9) rotate(var(--end-rot));
+    opacity: 0;
+  }
+}
+
+@keyframes cart-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(2.5px);
+  }
+  60% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes wave {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-3px);
+  }
+}
+/* From Uiverse.io by toniflutter */ 
+.parachute-loader {
+  width: 300px;
+  height: 300px;
+  position: relative;
+  overflow: hidden;
+  background-color: #333;
+  border-radius: 12px;
+  font-family: sans-serif;
+}
+
+.parachute-loader .wind-line {
+  position: absolute;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 2px;
+  bottom: -50px;
+  animation: windUp 0.8s linear infinite;
+}
+
+.parachute-loader .wind-1 {
+  left: 20%;
+  height: 40px;
+  animation-delay: 0s;
+  animation-duration: 0.5s;
+}
+.parachute-loader .wind-2 {
+  left: 80%;
+  height: 60px;
+  animation-delay: 0.2s;
+  animation-duration: 0.7s;
+}
+.parachute-loader .wind-3 {
+  left: 10%;
+  height: 30px;
+  animation-delay: 0.4s;
+  animation-duration: 0.6s;
+}
+.parachute-loader .wind-4 {
+  left: 90%;
+  height: 50px;
+  animation-delay: 0.1s;
+  animation-duration: 0.8s;
+}
+.parachute-loader .wind-5 {
+  left: 50%;
+  height: 25px;
+  animation-delay: 0.5s;
+  animation-duration: 0.4s;
+}
+
+.parachute-loader .cloud {
+  position: absolute;
+  background: #fff;
+  border-radius: 50%;
+  bottom: -100px;
+  opacity: 0.8;
+  animation: moveCloudsUp 3s linear infinite;
+}
+
+.parachute-loader .cloud::after,
+.parachute-loader .cloud::before {
+  content: "";
+  position: absolute;
+  background: inherit;
+  border-radius: 50%;
+}
+
+.parachute-loader .cloud-1 {
+  width: 60px;
+  height: 60px;
+  left: 10%;
+  animation-duration: 2.5s;
+}
+.parachute-loader .cloud-1::after {
+  width: 40px;
+  height: 40px;
+  top: -20px;
+  left: 10px;
+}
+.parachute-loader .cloud-1::before {
+  width: 50px;
+  height: 50px;
+  top: -10px;
+  left: 30px;
+}
+
+.parachute-loader .cloud-2 {
+  width: 80px;
+  height: 80px;
+  right: 15%;
+  animation-duration: 3.2s;
+  animation-delay: 1s;
+  opacity: 0.6;
+}
+.parachute-loader .cloud-2::after {
+  width: 50px;
+  height: 50px;
+  top: -25px;
+  left: 15px;
+}
+.parachute-loader .cloud-2::before {
+  width: 60px;
+  height: 60px;
+  top: -15px;
+  left: 40px;
+}
+
+.parachute-loader .parachutist-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 120px;
+  animation: sway 3s ease-in-out infinite;
+  z-index: 10;
+}
+
+.parachute-loader .parachute-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.1));
+}
+
+.parachute-loader .loading-text {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  animation: pulse 1.5s infinite;
+  z-index: 20;
+}
+
+@keyframes sway {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) rotate(-5deg);
+  }
+  50% {
+    transform: translate(-50%, -45%) rotate(5deg);
+  }
+}
+
+@keyframes moveCloudsUp {
+  0% {
+    bottom: -100px;
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.9;
+  }
+  80% {
+    opacity: 0.9;
+  }
+  100% {
+    bottom: 350px;
+    opacity: 0;
+  }
+}
+
+@keyframes windUp {
+  0% {
+    bottom: -60px;
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    bottom: 350px;
+    opacity: 0;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
     </style>
 </head>
 <body>
@@ -969,11 +2680,11 @@
 
     <nav class="nav-menu" id="navMenu">
         <ul>
-            <li><a href="#inicio" onclick="toggleMenu()" data-i18n="menuInicio">🏠 Inicio</a></li>
-            <li><a href="#catalogo" onclick="toggleMenu()" data-i18n="menuCatalogo">🎨 Catálogo</a></li>
-            <li><a href="#beneficios" onclick="toggleMenu()" data-i18n="menuBeneficios">✨ Beneficios</a></li>
-            <li><a href="agua-code.html" data-i18n="menuDesarrollo">💧 Desarrollo Web</a></li>
-            <li><a href="index.html" data-i18n="menuSeptima">🌊 Séptima Pacha</a></li>
+            <li><a href="#inicio" onclick="toggleMenu()" data-i18n="menuInicio">Inicio</a></li>
+            <li><a href="#catalogo" onclick="toggleMenu()" data-i18n="menuCatalogo">Catálogo</a></li>
+            <li><a href="#beneficios" onclick="toggleMenu()" data-i18n="menuBeneficios">Beneficios</a></li>
+            <li><a href="agua-code.html" data-i18n="menuDesarrollo">Desarrollo Web</a></li>
+            <li><a href="index.html" data-i18n="menuSeptima">Séptima Pacha</a></li>
         </ul>
     </nav>
 
@@ -1002,7 +2713,30 @@
         </div>
         <div class="hero-right">
             <div class="hero-visual">
-                🎨
+                <div class="parent">
+        <div class="card">
+            <div class="logo">
+                <span class="circle circle1"></span>
+                <span class="circle circle2"></span>
+                <span class="circle circle3"></span>
+                <span class="circle circle4"></span>
+                <span class="circle circle5">
+                  
+                        <path id="Path_6" data-name="Path 6" d="M12.827,1.628A1.561,1.561,0,0,1,14.31,0h2.964a1.561,1.561,0,0,1,1.483,1.628v11.9a9.252,9.252,0,0,1-2.432,6.852q-2.432,2.409-6.963,2.409T2.4,20.452Q0,18.094,0,13.669V1.628A1.561,1.561,0,0,1,1.483,0h2.98A1.561,1.561,0,0,1,5.947,1.628V13.191a5.635,5.635,0,0,0,.85,3.451,3.153,3.153,0,0,0,2.632,1.094,3.032,3.032,0,0,0,2.582-1.076,5.836,5.836,0,0,0,.816-3.486Z" transform="translate(0 0)"></path>
+                        <path id="Path_7" data-name="Path 7" d="M75.207,20.857a1.561,1.561,0,0,1-1.483,1.628h-2.98a1.561,1.561,0,0,1-1.483-1.628V1.628A1.561,1.561,0,0,1,70.743,0h2.98a1.561,1.561,0,0,1,1.483,1.628Z" transform="translate(-45.91 0)"></path>
+                        <path id="Path_8" data-name="Path 8" d="M0,80.018A1.561,1.561,0,0,1,1.483,78.39h26.7a1.561,1.561,0,0,1,1.483,1.628v2.006a1.561,1.561,0,0,1-1.483,1.628H1.483A1.561,1.561,0,0,1,0,82.025Z" transform="translate(0 -51.963)"></path>
+                      </svg>
+                </span>
+
+            </div>
+            <div class="glass"></div>
+            <div class="contents">
+                <span class="title">Plantillas </span>
+                <span class="text">Encuentra la plantilla diseñada para que tu emprendimiento. </span>
+            </div>
+            </div>
+        </div>
+    </div>
             </div>
         </div>
     </section>
@@ -1013,42 +2747,212 @@
         <div class="beneficios-grid">
             <div class="beneficio-card enhanced-container fade-in">
                 <div class="glow-effect"></div>
-                <div class="beneficio-icon">🎨</div>
+                <div class="beneficio-icon"><!-- From Uiverse.io by mrhyddenn --> 
+<div class="spinner">
+    <div class="spinnerin"></div>
+</div></div>
                 <h3 class="beneficio-title" data-i18n="beneficio1Title">100% Personalizable</h3>
                 <p class="beneficio-description" data-i18n="beneficio1Desc">Modifica colores, tipografías, imágenes y contenido a tu gusto. Tu marca, tu estilo.</p>
             </div>
 
             <div class="beneficio-card enhanced-container fade-in">
                 <div class="glow-effect"></div>
-                <div class="beneficio-icon">📱</div>
+                <div class="beneficio-icon"><!-- From Uiverse.io by om_6153 --> 
+<div class="loades"></div>
+</div>
                 <h3 class="beneficio-title" data-i18n="beneficio2Title">Totalmente Responsive</h3>
                 <p class="beneficio-description" data-i18n="beneficio2Desc">Funciona perfectamente en móviles, tablets y computadoras. Adaptación automática.</p>
             </div>
 
             <div class="beneficio-card enhanced-container fade-in">
                 <div class="glow-effect"></div>
-                <div class="beneficio-icon">🚀</div>
+                <div class="beneficio-icon"><!-- From Uiverse.io by 20essentials --> 
+<div class="loaders">
+  <div class="side front"></div>
+  <div class="side top"></div>
+  <div class="side bottom"></div>
+  <div class="side behind"></div>
+  <div class="side left"></div>
+  <div class="side right"></div>
+</div>
+</div>
                 <h3 class="beneficio-title" data-i18n="beneficio3Title">Optimizado SEO</h3>
                 <p class="beneficio-description" data-i18n="beneficio3Desc">Código limpio y optimizado para aparecer en Google. Posicionamiento incluido.</p>
             </div>
 
             <div class="beneficio-card enhanced-container fade-in">
                 <div class="glow-effect"></div>
-                <div class="beneficio-icon">⚡</div>
+                <div class="beneficio-icon">
+<!-- From Uiverse.io by vinodjangid07 --> 
+<div class="loade">
+  <div class="truckWrapper">
+    <div class="truckBody">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 198 93"
+        class="trucksvg"
+      >
+        <path
+          stroke-width="3"
+          stroke="#282828"
+          fill="#F83D3D"
+          d="M135 22.5H177.264C178.295 22.5 179.22 23.133 179.594 24.0939L192.33 56.8443C192.442 57.1332 192.5 57.4404 192.5 57.7504V89C192.5 90.3807 191.381 91.5 190 91.5H135C133.619 91.5 132.5 90.3807 132.5 89V25C132.5 23.6193 133.619 22.5 135 22.5Z"
+        ></path>
+        <path
+          stroke-width="3"
+          stroke="#282828"
+          fill="#7D7C7C"
+          d="M146 33.5H181.741C182.779 33.5 183.709 34.1415 184.078 35.112L190.538 52.112C191.16 53.748 189.951 55.5 188.201 55.5H146C144.619 55.5 143.5 54.3807 143.5 53V36C143.5 34.6193 144.619 33.5 146 33.5Z"
+        ></path>
+        <path
+          stroke-width="2"
+          stroke="#282828"
+          fill="#282828"
+          d="M150 65C150 65.39 149.763 65.8656 149.127 66.2893C148.499 66.7083 147.573 67 146.5 67C145.427 67 144.501 66.7083 143.873 66.2893C143.237 65.8656 143 65.39 143 65C143 64.61 143.237 64.1344 143.873 63.7107C144.501 63.2917 145.427 63 146.5 63C147.573 63 148.499 63.2917 149.127 63.7107C149.763 64.1344 150 64.61 150 65Z"
+        ></path>
+        <rect
+          stroke-width="2"
+          stroke="#282828"
+          fill="#FFFCAB"
+          rx="1"
+          height="7"
+          width="5"
+          y="63"
+          x="187"
+        ></rect>
+        <rect
+          stroke-width="2"
+          stroke="#282828"
+          fill="#282828"
+          rx="1"
+          height="11"
+          width="4"
+          y="81"
+          x="193"
+        ></rect>
+        <rect
+          stroke-width="3"
+          stroke="#282828"
+          fill="#DFDFDF"
+          rx="2.5"
+          height="90"
+          width="121"
+          y="1.5"
+          x="6.5"
+        ></rect>
+        <rect
+          stroke-width="2"
+          stroke="#282828"
+          fill="#DFDFDF"
+          rx="2"
+          height="4"
+          width="6"
+          y="84"
+          x="1"
+        ></rect>
+      </svg>
+    </div>
+    <div class="truckTires">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 30 30"
+        class="tiresvg"
+      >
+        <circle
+          stroke-width="3"
+          stroke="#282828"
+          fill="#282828"
+          r="13.5"
+          cy="15"
+          cx="15"
+        ></circle>
+        <circle fill="#DFDFDF" r="7" cy="15" cx="15"></circle>
+      </svg>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 30 30"
+        class="tiresvg"
+      >
+        <circle
+          stroke-width="3"
+          stroke="#282828"
+          fill="#282828"
+          r="13.5"
+          cy="15"
+          cx="15"
+        ></circle>
+        <circle fill="#DFDFDF" r="7" cy="15" cx="15"></circle>
+      </svg>
+    </div>
+    <div class="road"></div>
+
+    <svg
+      xml:space="preserve"
+      viewBox="0 0 453.459 453.459"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      xmlns="http://www.w3.org/2000/svg"
+      id="Capa_1"
+      version="1.1"
+      fill="#000000"
+      class="lampPost"
+    >
+      <path
+        d="M252.882,0c-37.781,0-68.686,29.953-70.245,67.358h-6.917v8.954c-26.109,2.163-45.463,10.011-45.463,19.366h9.993
+c-1.65,5.146-2.507,10.54-2.507,16.017c0,28.956,23.558,52.514,52.514,52.514c28.956,0,52.514-23.558,52.514-52.514
+c0-5.478-0.856-10.872-2.506-16.017h9.992c0-9.354-19.352-17.204-45.463-19.366v-8.954h-6.149C200.189,38.779,223.924,16,252.882,16
+c29.952,0,54.32,24.368,54.32,54.32c0,28.774-11.078,37.009-25.105,47.437c-17.444,12.968-37.216,27.667-37.216,78.884v113.914
+h-0.797c-5.068,0-9.174,4.108-9.174,9.177c0,2.844,1.293,5.383,3.321,7.066c-3.432,27.933-26.851,95.744-8.226,115.459v11.202h45.75
+v-11.202c18.625-19.715-4.794-87.527-8.227-115.459c2.029-1.683,3.322-4.223,3.322-7.066c0-5.068-4.107-9.177-9.176-9.177h-0.795
+V196.641c0-43.174,14.942-54.283,30.762-66.043c14.793-10.997,31.559-23.461,31.559-60.277C323.202,31.545,291.656,0,252.882,0z
+M232.77,111.694c0,23.442-19.071,42.514-42.514,42.514c-23.442,0-42.514-19.072-42.514-42.514c0-5.531,1.078-10.957,3.141-16.017
+h78.747C231.693,100.736,232.77,106.162,232.77,111.694z"
+      ></path>
+    </svg>
+  </div>
+</div>
+
+                </div>
                 <h3 class="beneficio-title" data-i18n="beneficio4Title">Entrega Rápida</h3>
                 <p class="beneficio-description" data-i18n="beneficio4Desc">Tu sitio listo en 3-5 días hábiles. Implementación rápida y eficiente.</p>
             </div>
 
             <div class="beneficio-card enhanced-container fade-in">
                 <div class="glow-effect"></div>
-                <div class="beneficio-icon">💬</div>
+                <div class="beneficio-icon"> 
+                    <!-- From Uiverse.io by FWDJc --> 
+  <div class="eye-lid">
+    <div class="eye">
+      <div class="cornea">
+        <div class="white-pupil"></div>
+      </div>
+    </div>
+  </div>
+                </div>
                 <h3 class="beneficio-title" data-i18n="beneficio5Title">Soporte Dedicado</h3>
                 <p class="beneficio-description" data-i18n="beneficio5Desc">Asistencia técnica por 30 días. Te acompañamos en todo el proceso.</p>
             </div>
 
             <div class="beneficio-card enhanced-container fade-in">
                 <div class="glow-effect"></div>
-                <div class="beneficio-icon">💰</div>
+                <div class="beneficio-icon">
+                    <!-- From Uiverse.io by abhinav_7137 --> 
+<div class="wallet-loader">
+  <div class="wallet-back"></div>
+  <div class="bill bill-1"></div>
+  <div class="bill bill-2"></div>
+  <div class="bill bill-3"></div>
+  <div class="wallet-front">
+    <div class="text">
+      Loading<span class="dot">.</span><span class="dot">.</span
+      ><span class="dot">.</span>
+    </div>
+  </div>
+</div>
+
+                </div>
                 <h3 class="beneficio-title" data-i18n="beneficio6Title">Precio Accesible</h3>
                 <p class="beneficio-description" data-i18n="beneficio6Desc">Soluciones profesionales a costos reducidos. Calidad sin comprometer tu presupuesto.</p>
             </div>
@@ -1061,12 +2965,313 @@
         <p class="section-subtitle fade-in" data-i18n="catalogoSubtitle">Cada plantilla incluye personalización de colores, tipografías, imágenes y contenido. Dominio y hosting no incluidos.</p>
         
         <div class="plantillas-grid">
-            <!-- Plantilla 1: Squeeze Page -->
+       
+            <!-- Plantilla 1: ColorVives -->
             <div class="plantilla-card enhanced-container fade-in">
                 <div class="glow-effect"></div>
                 <div class="plantilla-preview">
                     <div class="plantilla-oferta" data-i18n="oferta">OFERTA</div>
-                    📩
+               <!-- From Uiverse.io by Peary74 --> 
+<div class="loaderi">
+
+  <div class="cercle">
+  </div>
+  <div class="cercle">
+  </div>
+  <div class="cercle">
+  </div>
+  <div class="cercle">
+  </div>
+
+</div>
+
+
+                </div>
+                <div class="plantilla-info">
+                    <h3 class="plantilla-nombre" data-i18n="plantilla2Nombre">ColorVives</h3>
+                    <p class="plantilla-descripcion" data-i18n="plantilla2Desc">Diseño vibrante y creativo perfecto para artistas, diseñadores y creativos.</p>
+                    <ul class="plantilla-caracteristicas">
+                        <li data-i18n="plantilla2Feature1">Galería de trabajos</li>
+                        <li data-i18n="plantilla2Feature2">Diseño colorido</li>
+                        <li data-i18n="plantilla2Feature3">Portfolio interactivo</li>
+                    </ul>
+                    <div class="plantilla-precio">$212,800</div>
+                    <div class="plantilla-actions">
+                        <button class="animated-button" onclick="window.open('https://nalialma.github.io/Plantilla-COLORVIVES/','_blank')" style="width: 48%">
+                            <div class="bg"></div>
+                            <div class="wrap">
+                                <div class="content" data-i18n="verDemo">Ver Demo</div>
+                            </div>
+                        </button>
+                        <button class="animated-button" onclick="window.open('https://wa.me/543872271144?text=Quiero%20la%20plantilla%20ColorVives','_blank')" style="width: 48%">
+                            <div class="bg"></div>
+                            <div class="wrap">
+                                <div class="content" data-i18n="comprar">Comprar</div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        <!-- Plantilla 2: Glich -->
+            <div class="plantilla-card enhanced-container fade-in">
+                <div class="glow-effect"></div>
+                <div class="plantilla-preview">
+                    <div class="plantilla-oferta" data-i18n="oferta">OFERTA <n>Relámpago</n></div>
+                    <!-- From Uiverse.io by wolf_3808 --> 
+<div class="loaderi-container">
+  <div class="loaderi-3d">
+    <div class="loader-inner">
+      <div class="loader-face loader-face-front"></div>
+      <div class="loader-face loader-face-back"></div>
+      <div class="loader-face loader-face-right"></div>
+      <div class="loader-face loader-face-left"></div>
+      <div class="loader-face loader-face-top"></div>
+      <div class="loader-face loader-face-bottom"></div>
+    </div>
+  </div>
+</div>
+
+
+
+                </div>
+                <div class="plantilla-info">
+                    <h3 class="plantilla-nombre" data-i18n="plantilla6Nombre">Glich</h3>
+                    <p class="plantilla-descripcion" data-i18n="plantilla6Desc">Portfolio estilo retro glich.</p>
+                    <ul class="plantilla-caracteristicas">
+                        <li data-i18n="plantilla6Feature1">5 Secciones</li>
+                        <li data-i18n="plantilla6Feature2">Galeria interactiva</li>
+                        <li data-i18n="plantilla6Feature3">Experiencia 360°</li>
+                    </ul>
+                    <div class="plantilla-precio">$224.000</div>
+                    <div class="plantilla-actions">
+                        <button class="animated-button" onclick="window.open('https://nalialma.github.io/GLICH-PAGE/','_blank')" style="width: 48%">
+                            <div class="bg"></div>
+                            <div class="wrap">
+                                <div class="content" data-i18n="verDemo">Ver Demo</div>
+                            </div>
+                        </button>
+                        <button class="animated-button" onclick="window.open('https://wa.me/543872271144?text=Quiero%20la%20plantilla%20Glich','_blank')" style="width: 48%">
+                            <div class="bg"></div>
+                            <div class="wrap">
+                                <div class="content" data-i18n="comprar">Comprar</div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        <!-- Plantilla 3: Realismo - inmersivo  -->
+            <div class="plantilla-card enhanced-container fade-in">
+                <div class="glow-effect"></div>
+                <div class="plantilla-preview">
+                    <div class="plantilla-oferta" data-i18n="oferta">OFERTA <n>Relámpago</n></div>
+                    
+                    <!-- From Uiverse.io by tmpMonster --> 
+<div class="matrix-loader-wrapper">
+  <div class="matrix-loader">
+    <div class="cube">
+      <div class="layer l1">
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+      </div>
+      <div class="layer l2">
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+      </div>
+      <div class="layer l3">
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+                </div>
+                <div class="plantilla-info">
+                    <h3 class="plantilla-nombre" data-i18n="plantilla6Nombre">Realismo Inmersivo</h3>
+                    <p class="plantilla-descripcion" data-i18n="plantilla6Desc">Portfolio adaptable para distintos rubros.</p>
+                    <ul class="plantilla-caracteristicas">
+                        <li data-i18n="plantilla6Feature1">Efecto 3D</li>
+                        <li data-i18n="plantilla6Feature2">Diseño limpio</li>
+                        <li data-i18n="plantilla6Feature3">Diseño hiperdetallada</li>
+                    </ul>
+                    <div class="plantilla-precio">$201.600</div>
+                    <div class="plantilla-actions">
+                        <button class="animated-button" onclick="window.open('https://nalialma.github.io/Realismo-Inmersivo/','_blank')" style="width: 48%">
+                            <div class="bg"></div>
+                            <div class="wrap">
+                                <div class="content" data-i18n="verDemo">Ver Demo</div>
+                            </div>
+                        </button>
+                        <button class="animated-button" onclick="window.open('https://wa.me/543872271144?text=Quiero%20la%20plantilla%20realismo-inmersivo','_blank')" style="width: 48%">
+                            <div class="bg"></div>
+                            <div class="wrap">
+                                <div class="content" data-i18n="comprar">Comprar</div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Plantilla 4:Servicios Alternativos S -->
+            <div class="plantilla-card enhanced-container fade-in">
+                <div class="glow-effect"></div>
+                <div class="plantilla-preview">
+                    <div class="plantilla-oferta" data-i18n="oferta">OFERTA</div>
+                   <!-- From Uiverse.io by 0x-maker --> 
+<div class="loaderis">
+  <div class="head"></div>
+
+  <div class="flames">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+
+  <div class="eye"></div>
+</div>
+
+
+                </div>
+                <div class="plantilla-info">
+                    <h3 class="plantilla-nombre" data-i18n="plantilla3Nombre">Servicios Alternativos</h3>
+                    <p class="plantilla-descripcion" data-i18n="plantilla3Desc">Diseño místico y elegante para profesionales del tarot y servicios esotéricos.</p>
+                    <ul class="plantilla-caracteristicas">
+                        <li data-i18n="plantilla3Feature1">Estética mística</li>
+                        <li data-i18n="plantilla3Feature2">Sección de servicios</li>
+                        <li data-i18n="plantilla3Feature3">Reserva de consultas</li>
+                    </ul>
+                    <div class="plantilla-precio">$303.072</div>
+                    <div class="plantilla-actions">
+                        <button class="animated-button" onclick="window.open('https://nalialma.github.io/Servicios-alternativo/','_blank')" style="width: 48%">
+                            <div class="bg"></div>
+                            <div class="wrap">
+                                <div class="content" data-i18n="verDemo">Ver Demo</div>
+                            </div>
+                        </button>
+                        <button class="animated-button" onclick="window.open('https://wa.me/543872271144?text=Quiero%20la%20plantilla%20Tarot%20en%20Luz','_blank')" style="width: 48%">
+                            <div class="bg"></div>
+                            <div class="wrap">
+                                <div class="content" data-i18n="comprar">Comprar</div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+     <!-- Plantilla 5: Squeeze Page -->
+            <div class="plantilla-card enhanced-container fade-in">
+                <div class="glow-effect"></div>
+                <div class="plantilla-preview">
+                    <div class="plantilla-oferta" data-i18n="oferta">OFERTA</div>
+                    
+<!-- From Uiverse.io by toniflutter --> 
+<div class="parachute-loader">
+  <div class="wind-line wind-1"></div>
+  <div class="wind-line wind-2"></div>
+  <div class="wind-line wind-3"></div>
+  <div class="wind-line wind-4"></div>
+  <div class="wind-line wind-5"></div>
+
+  <div class="cloud cloud-1"></div>
+  <div class="cloud cloud-2"></div>
+
+  <div class="parachutist-wrapper">
+    <svg
+      class="parachute-svg"
+      viewBox="0 0 100 120"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <line
+        x1="10"
+        y1="40"
+        x2="45"
+        y2="80"
+        stroke="#eee"
+        stroke-width="2"
+      ></line>
+      <line
+        x1="90"
+        y1="40"
+        x2="55"
+        y2="80"
+        stroke="#eee"
+        stroke-width="2"
+      ></line>
+      <line
+        x1="50"
+        y1="35"
+        x2="50"
+        y2="80"
+        stroke="#eee"
+        stroke-width="2"
+      ></line>
+
+      <path d="M 10 40 Q 50 -10 90 40 Z" fill="#FF6B6B"></path>
+      <path
+        d="M 30 28 Q 50 0 70 28 L 50 35 Z"
+        fill="#FFFFFF"
+        opacity="0.3"
+      ></path>
+
+      <circle cx="50" cy="85" r="8" fill="#FFFFFF"></circle>
+      <rect x="42" y="93" width="16" height="20" rx="5" fill="#1E90FF"></rect>
+      <path
+        d="M 42 95 L 30 85"
+        stroke="#000000"
+        stroke-width="3"
+        stroke-linecap="round"
+      ></path>
+      <path
+        d="M 58 95 L 70 85"
+        stroke="#000000"
+        stroke-width="3"
+        stroke-linecap="round"
+      ></path>
+      <path
+        d="M 45 113 L 40 120"
+        stroke="#000000"
+        stroke-width="3"
+        stroke-linecap="round"
+      ></path>
+      <path
+        d="M 55 113 L 60 120"
+        stroke="#000000"
+        stroke-width="3"
+        stroke-linecap="round"
+      ></path>
+    </svg>
+  </div>
+
+  <div class="loading-text"></div>
+</div>
+
+
                 </div>
                 <div class="plantilla-info">
                     <h3 class="plantilla-nombre" data-i18n="plantilla1Nombre">Squeeze Page</h3>
@@ -1094,73 +3299,7 @@
                 </div>
             </div>
 
-            <!-- Plantilla 2: ColorVives -->
-            <div class="plantilla-card enhanced-container fade-in">
-                <div class="glow-effect"></div>
-                <div class="plantilla-preview">
-                    <div class="plantilla-oferta" data-i18n="oferta">OFERTA</div>
-                    🎨
-                </div>
-                <div class="plantilla-info">
-                    <h3 class="plantilla-nombre" data-i18n="plantilla2Nombre">ColorVives</h3>
-                    <p class="plantilla-descripcion" data-i18n="plantilla2Desc">Diseño vibrante y creativo perfecto para artistas, diseñadores y creativos.</p>
-                    <ul class="plantilla-caracteristicas">
-                        <li data-i18n="plantilla2Feature1">Galería de trabajos</li>
-                        <li data-i18n="plantilla2Feature2">Diseño colorido</li>
-                        <li data-i18n="plantilla2Feature3">Portfolio interactivo</li>
-                    </ul>
-                    <div class="plantilla-precio">$212,800</div>
-                    <div class="plantilla-actions">
-                        <button class="animated-button" onclick="window.open('https://nalialma.github.io/Plantilla-COLORVIVES/','_blank')" style="width: 48%">
-                            <div class="bg"></div>
-                            <div class="wrap">
-                                <div class="content" data-i18n="verDemo">Ver Demo</div>
-                            </div>
-                        </button>
-                        <button class="animated-button" onclick="window.open('https://wa.me/543872271144?text=Quiero%20la%20plantilla%20ColorVives','_blank')" style="width: 48%">
-                            <div class="bg"></div>
-                            <div class="wrap">
-                                <div class="content" data-i18n="comprar">Comprar</div>
-                            </div>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Plantilla 3:Servicios Alternativos S -->
-            <div class="plantilla-card enhanced-container fade-in">
-                <div class="glow-effect"></div>
-                <div class="plantilla-preview">
-                    <div class="plantilla-oferta" data-i18n="oferta">OFERTA</div>
-                    🔮
-                </div>
-                <div class="plantilla-info">
-                    <h3 class="plantilla-nombre" data-i18n="plantilla3Nombre">Servicios Alternativos</h3>
-                    <p class="plantilla-descripcion" data-i18n="plantilla3Desc">Diseño místico y elegante para profesionales del tarot y servicios esotéricos.</p>
-                    <ul class="plantilla-caracteristicas">
-                        <li data-i18n="plantilla3Feature1">Estética mística</li>
-                        <li data-i18n="plantilla3Feature2">Sección de servicios</li>
-                        <li data-i18n="plantilla3Feature3">Reserva de consultas</li>
-                    </ul>
-                    <div class="plantilla-precio">$303.072</div>
-                    <div class="plantilla-actions">
-                        <button class="animated-button" onclick="window.open('https://nalialma.github.io/Servicios-alternativo/','_blank')" style="width: 48%">
-                            <div class="bg"></div>
-                            <div class="wrap">
-                                <div class="content" data-i18n="verDemo">Ver Demo</div>
-                            </div>
-                        </button>
-                        <button class="animated-button" onclick="window.open('https://wa.me/543872271144?text=Quiero%20la%20plantilla%20Tarot%20en%20Luz','_blank')" style="width: 48%">
-                            <div class="bg"></div>
-                            <div class="wrap">
-                                <div class="content" data-i18n="comprar">Comprar</div>
-                            </div>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Plantilla 4: Landing Premium -->
+            <!-- Plantilla 6: Landing Premium -->
             <div class="plantilla-card enhanced-container fade-in">
                 <div class="glow-effect"></div>
                 <div class="plantilla-preview">
@@ -1193,7 +3332,7 @@
                 </div>
             </div>
 
-            <!-- Plantilla 5: Catálogo Servicios -->
+            <!-- Plantilla 7: Catálogo Servicios -->
             <div class="plantilla-card enhanced-container fade-in">
                 <div class="glow-effect"></div>
                 <div class="plantilla-preview">
@@ -1226,7 +3365,7 @@
                 </div>
             </div>
 
-            <!-- Plantilla 6: ArtePluma -->
+            <!-- Plantilla 8: ArtePluma -->
             <div class="plantilla-card enhanced-container fade-in">
                 <div class="glow-effect"></div>
                 <div class="plantilla-preview">
@@ -1259,7 +3398,7 @@
                 </div>
             </div>
 
-            <!-- Plantilla 7: Despacho Legal -->
+            <!-- Plantilla 9: Despacho Legal -->
             <div class="plantilla-card enhanced-container fade-in">
                 <div class="glow-effect"></div>
                 <div class="plantilla-preview">
@@ -1292,7 +3431,7 @@
                 </div>
             </div>
 
-            <!-- Plantilla 8: Arte Minimalista -->
+            <!-- Plantilla 10: Arte Minimalista -->
             <div class="plantilla-card enhanced-container fade-in">
                 <div class="glow-effect"></div>
                 <div class="plantilla-preview">
@@ -1325,12 +3464,29 @@
                 </div>
             </div>
 
-            <!-- Plantilla 9: Tienda Online -->
+            <!-- Plantilla 11: Tienda Online -->
             <div class="plantilla-card enhanced-container fade-in">
                 <div class="glow-effect"></div>
                 <div class="plantilla-preview">
                     <div class="plantilla-oferta" data-i18n="oferta">OFERTA</div>
-                    🛍️
+                    
+                    <!-- From Uiverse.io by abhinav_7137 --> 
+<div class="cart-loader">
+  <div class="items-container">
+    <div id="item-mobile" class="item"></div>
+    <div id="item-laptop" class="item"></div>
+    <div id="item-tab" class="item"></div>
+    <div id="item-headphone" class="item"></div>
+    <div id="item-mixer" class="item"></div>
+  </div>
+
+  <div id="cart-icon"></div>
+
+  <div class="loading-text"><span class="dot">.</span><span class="dot">.</span
+    ><span class="dot">.</span>
+  </div>
+</div>
+
                 </div>
                 <div class="plantilla-info">
                     <h3 class="plantilla-nombre" data-i18n="plantilla9Nombre">Tienda Online</h3>
