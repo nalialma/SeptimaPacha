@@ -1,1436 +1,1428 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Nali: Muralista y tattoo artist from Argentina in Poland. Arte andino contemporáneo para espacios y piel. Murals & tattoos with soul. Reserva tu proyecto.">
-    <meta name="keywords" content="mural artist Poland, tattoo artist Europe, Argentine artist, Andean art, guest tattoo Poland, street art Salta">
-    <meta name="geo.region" content="PL">
-    <meta name="author" content="Séptima Pacha">
-    <meta name="robots" content="index, follow">
-    <meta property="og:title" content="Nali | Mural Artist & Tattooist from Argentina in Poland | Séptima Pacha">
-    <meta property="og:description" content="Celebra la creatividad ancestral y contemporánea del norte argentino con Nali Art">
-    <meta property="og:type" content="website">
-    <link rel="alternate" hreflang="pl" href="https://septimapacha.com/tierra-pl.html">
-    <link rel="alternate" hreflang="en" href="https://septimapacha.com/tierra-en.html">
-    <title>Nali | Mural Artist & Tattooist from Argentina in Poland | Séptima Pacha</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <style>
-        *, *::before, *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --tierra:  #8B4513;
-            --fuego:   #FF6B35;
-            --agua:    #2ECC71;
-            --aire:    #4A90E2;
-            --oro:     #F39C12;
-            --dark-bg: #0f0f0f;
-            --dark-bg2:#1a1a1a;
-            --day-bg:  #87CEEB;
-            --day-bg2: #E0F6FF;
-        }
-
-        html, body {
-            width: 100%;
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-bg2) 100%);
-            color: #fff;
-            transition: background 0.8s ease, color 0.8s ease;
-        }
-
-        body.day-mode {
-            background: linear-gradient(135deg, var(--day-bg) 0%, var(--day-bg2) 100%);
-            color: #1a1a1a;
-        }
-
-        /* ══════════════════════════════════════
-           CIELO ESTRELLADO
-        ══════════════════════════════════════ */
-        .starry-sky {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .star {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            animation: twinkle 3s infinite;
-        }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.3; }
-            50%       { opacity: 1;   }
-        }
-
-        .cloud {
-            position: absolute;
-            background: white;
-            border-radius: 100px;
-            opacity: 0;
-            transition: opacity 0.8s ease;
-        }
-
-        body.day-mode .cloud {
-            opacity: 0.6;
-            animation: cloudFloat 15s infinite ease-in-out;
-        }
-
-        @keyframes cloudFloat {
-            0%, 100% { transform: translateX(0);    }
-            50%       { transform: translateX(50px); }
-        }
-
-        .cloud::before,
-        .cloud::after {
-            content: '';
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-        }
-
-        .cloud::before { width: 50px; height: 50px; top: -25px; left: 10px;  }
-        .cloud::after  { width: 40px; height: 40px; top: -20px; right: 10px; }
-
-        /* ══════════════════════════════════════
-           ÁRBOL DE LA VIDA – FONDO
-        ══════════════════════════════════════ */
-        .tree-of-life-bg {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 1;
-            opacity: 0.12;
-        }
-
-        .tree-svg { width: 100%; height: 100%; }
-
-        .tree-line {
-            animation: growTree 6s ease-out forwards;
-        }
-
-        .tree-leaf {
-            animation: bloomLeaf 4s ease-out forwards;
-        }
-
-        .tree-flower {
-            animation: bloomFlower 3.5s ease-out forwards;
-        }
-
-        @keyframes growTree {
-            from { stroke-dasharray: 1000; stroke-dashoffset: 1000; opacity: 0; }
-            to   { stroke-dasharray: 1000; stroke-dashoffset: 0;    opacity: 1; }
-        }
-
-        @keyframes bloomLeaf {
-            from { opacity: 0; r: 0;  }
-            to   { opacity: 0.8; r: 20; }
-        }
-
-        @keyframes bloomFlower {
-            from { opacity: 0; r: 0;  }
-            to   { opacity: 0.7; r: 15; }
-        }
-
-        /* ══════════════════════════════════════
-           SPLASH SCREEN
-        ══════════════════════════════════════ */
-        .splash-screen {
-            position: fixed;
-            inset: 0;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            overflow: hidden;
-            transition: opacity 0.8s ease-out;
-        }
-
-        .splash-canvas {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            display: block;
-        }
-
-        .splash-content {
-            position: relative;
-            z-index: 10;
-            text-align: center;
-            font-family: 'Playfair Display', serif;
-            animation: fadeInContent 1.5s ease-out 1s forwards;
-            opacity: 0;
-        }
-
-        .splash-title {
-            font-size: clamp(2.5rem, 15vw, 8rem);
-            font-weight: 900;
-            line-height: 0.95;
-            letter-spacing: -2px;
-        }
-
-        .splash-palabra-tierra {
-            display: block;
-            color: #8B4513;
-            text-shadow: 0 0 40px rgba(139, 69, 19, 0.5);
-            animation: slideInLeft 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s forwards;
-            opacity: 0;
-        }
-
-        .splash-palabra-viva {
-            display: block;
-            background: linear-gradient(135deg, #F39C12, #FF6B35);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-top: 0.5rem;
-            animation: slideInRight 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 0.7s forwards;
-            opacity: 0;
-            font-weight: 900;
-        }
-
-        .pincel-emoji {
-            display: inline-block;
-            margin-left: 0.8rem;
-            font-size: 1em;
-            animation: paintStroke 2s ease-in-out infinite;
-            filter: drop-shadow(0 0 10px rgba(255, 107, 53, 0.6));
-        }
-
-        @keyframes paintStroke {
-            0%   { transform: rotate(0deg)   scale(1);    }
-            50%  { transform: rotate(-15deg) scale(1.1);  }
-            100% { transform: rotate(0deg)   scale(1);    }
-        }
-
-        @keyframes slideInLeft {
-            from { opacity: 0; transform: translateX(-50px); }
-            to   { opacity: 1; transform: translateX(0);     }
-        }
-
-        @keyframes slideInRight {
-            from { opacity: 0; transform: translateX(50px); }
-            to   { opacity: 1; transform: translateX(0);    }
-        }
-
-        @keyframes fadeInContent {
-            from { opacity: 0; }
-            to   { opacity: 1; }
-        }
-
-        /* ══════════════════════════════════════
-           BOTÓN TEMA (arriba-derecha)
-        ══════════════════════════════════════ */
-        .theme-toggle-btn {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 999;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #8B4513, #F39C12);
-            border: none;
-            cursor: pointer;
-            font-size: 1.3rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(139, 69, 19, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .theme-toggle-btn:hover {
-            transform: scale(1.15);
-            box-shadow: 0 15px 40px rgba(243, 156, 18, 0.4);
-        }
-
-        body.day-mode .theme-toggle-btn {
-            background: linear-gradient(135deg, #87CEEB, #FFD700);
-        }
-
-        /* ══════════════════════════════════════
-           NAVEGACIÓN FLOTANTE
-        ══════════════════════════════════════ */
-        .floating-nav {
-            position: fixed;
-            bottom: 25px;
-            right: 20px;
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-            align-items: flex-end;
-        }
-
-        .nav-toggle-btn {
-            width: 58px;
-            height: 58px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #8B4513, #F39C12);
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.4rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(139, 69, 19, 0.3);
-            color: #fff;
-        }
-
-        .nav-toggle-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 15px 40px rgba(243, 156, 18, 0.4);
-        }
-
-        body.day-mode .nav-toggle-btn {
-            background: linear-gradient(135deg, #87CEEB, #FFD700);
-        }
-
-        /* Menú flotante */
-        .floating-menu {
-            display: none;
-            flex-direction: column;
-            gap: 0.6rem;
-            background: rgba(15, 15, 15, 0.94);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            padding: 1.2rem 1rem;
-            border-radius: 18px;
-            border: 1.5px solid rgba(139, 69, 19, 0.4);
-            min-width: 200px;
-            animation: slideUp 0.3s ease;
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
-        }
-
-        body.day-mode .floating-menu {
-            background: rgba(255, 255, 255, 0.94);
-            border-color: rgba(135, 206, 235, 0.4);
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
-        }
-
-        .floating-menu.active { display: flex; }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(15px); }
-            to   { opacity: 1; transform: translateY(0);    }
-        }
-
-        /* Links y botones dentro del menú */
-        .floating-menu a,
-        .floating-menu button {
-            padding: 0.7rem 1.1rem;
-            border-radius: 10px;
-            border: none;
-            background: rgba(243, 156, 18, 0.1);
-            color: #fff;
-            text-decoration: none;
-            cursor: pointer;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 500;
-            font-size: 0.88rem;
-            transition: all 0.25s ease;
-            text-align: left;
-            width: 100%;
-            display: block;
-        }
-
-        body.day-mode .floating-menu a,
-        body.day-mode .floating-menu button {
-            background: rgba(135, 206, 235, 0.2);
-            color: #1a1a1a;
-        }
-
-        .floating-menu a:hover,
-        .floating-menu button:hover {
-            background: linear-gradient(135deg, #8B4513, #F39C12);
-            color: #fff;
-            transform: translateX(-4px);
-        }
-
-        body.day-mode .floating-menu a:hover,
-        body.day-mode .floating-menu button:hover {
-            background: linear-gradient(135deg, #87CEEB, #FFD700);
-            color: #fff;
-        }
-
-        /* Botón cerrar menú */
-        .menu-close-btn {
-            background: rgba(255, 107, 53, 0.15) !important;
-            border: 1.5px solid var(--fuego) !important;
-            color: var(--fuego) !important;
-            width: 38px !important;
-            height: 38px !important;
-            padding: 0 !important;
-            border-radius: 50% !important;
-            font-size: 1rem !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            align-self: flex-end;
-            margin-bottom: 0.3rem;
-        }
-
-        .menu-close-btn:hover {
-            background: var(--fuego) !important;
-            color: #fff !important;
-            transform: none !important;
-        }
-
-        /* Botón de idioma — 3 estados */
-        .lang-btn {
-            border: 1.5px solid var(--oro) !important;
-            background: transparent !important;
-            color: var(--oro) !important;
-            font-weight: 700 !important;
-            text-align: center !important;
-            letter-spacing: 0.5px;
-        }
-
-        body.day-mode .lang-btn {
-            color: #e08c00 !important;
-            border-color: #e08c00 !important;
-        }
-
-        .lang-btn:hover {
-            background: linear-gradient(135deg, #8B4513, #F39C12) !important;
-            color: #fff !important;
-        }
-
-        /* Botón volver */
-        .back-btn {
-            background: linear-gradient(135deg, #8B4513, #F39C12) !important;
-            color: #fff !important;
-        }
-
-        /* ══════════════════════════════════════
-           CONTENT WRAPPER
-        ══════════════════════════════════════ */
-        .content-wrapper {
-            position: relative;
-            z-index: 2;
-        }
-
-        /* ══════════════════════════════════════
-           HERO
-        ══════════════════════════════════════ */
-        .hero {
-            min-height: 100svh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 5rem 1.5rem 4rem;
-            position: relative;
-            overflow: hidden;
-            transition: background 0.8s ease;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 10;
-            text-align: center;
-            max-width: 900px;
-            width: 100%;
-        }
-
-        .hero-title {
-            font-family: 'Playfair Display', serif;
-            line-height: 0.9;
-            margin-bottom: 2.5rem;
-        }
-
-        .hero-title .palabra-tierra {
-            display: block;
-            font-size: clamp(2.4rem, 8vw, 5.5rem);
-            font-weight: 900;
-            color: #8B4513;
-            text-shadow: 0 0 40px rgba(139, 69, 19, 0.4),
-                         0 20px 60px rgba(139, 69, 19, 0.2);
-            letter-spacing: -2px;
-            animation: slideInLeftHero 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 4.5s both;
-        }
-
-        body.day-mode .hero-title .palabra-tierra {
-            color: #654321;
-        }
-
-        .hero-title .palabra-viva {
-            display: block;
-            font-size: clamp(2rem, 7vw, 4.5rem);
-            font-weight: 900;
-            background: linear-gradient(135deg, #F39C12 0%, #FF6B35 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -1px;
-            margin-top: 0.5rem;
-            animation: slideInRightHero 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 4.7s both;
-        }
-
-        body.day-mode .hero-title .palabra-viva {
-            background: linear-gradient(135deg, #FFA500 0%, #FF8C00 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .pincel-grande {
-            display: inline-block;
-            margin-left: 0.8rem;
-            animation: paintStrokeHero 2.5s ease-in-out infinite;
-            filter: drop-shadow(0 0 15px rgba(255, 107, 53, 0.7));
-            transform-origin: 70% 30%;
-        }
-
-        @keyframes paintStrokeHero {
-            0%   { transform: rotate(0deg)   scale(1);    }
-            50%  { transform: rotate(-20deg) scale(1.15); }
-            100% { transform: rotate(0deg)   scale(1);    }
-        }
-
-        @keyframes slideInLeftHero {
-            from { opacity: 0; transform: translateX(-80px); }
-            to   { opacity: 1; transform: translateX(0);     }
-        }
-
-        @keyframes slideInRightHero {
-            from { opacity: 0; transform: translateX(80px); }
-            to   { opacity: 1; transform: translateX(0);    }
-        }
-
-        .hero-subtitle {
-            font-size: clamp(0.9rem, 2.2vw, 1.1rem);
-            line-height: 1.8;
-            letter-spacing: 0.4px;
-            margin-bottom: 2.5rem;
-            animation: fadeInUp 1s ease-out 5.2s both;
-            opacity: 0.85;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        body.day-mode .hero-subtitle { color: #333; }
-
-        .hero-cta-btn {
-            background: linear-gradient(135deg, #FF6B35, #8B4513);
-            color: white;
-            border: none;
-            padding: 1rem 2.5rem;
-            border-radius: 35px;
-            cursor: pointer;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: 1rem;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            text-decoration: none;
-            display: inline-block;
-            letter-spacing: 0.5px;
-            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.25);
-            animation: fadeInUp 1s ease-out 5.4s both;
-        }
-
-        body.day-mode .hero-cta-btn {
-            background: linear-gradient(135deg, #FFA500, #FF8C00);
-        }
-
-        .hero-cta-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 45px rgba(255, 107, 53, 0.4);
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to   { opacity: 1; transform: translateY(0);    }
-        }
-
-        /* ══════════════════════════════════════
-           SECCIONES DE ARTE
-        ══════════════════════════════════════ */
-        .art-section {
-            padding: 6rem 1.5rem;
-            border-top: 2px solid rgba(139, 69, 19, 0.3);
-            position: relative;
-            overflow: hidden;
-            scroll-margin-top: 80px;
-            transition: background 0.8s ease;
-        }
-
-        body.day-mode .art-section {
-            border-top-color: rgba(135, 206, 235, 0.3);
-        }
-
-        .art-container {
-            max-width: 1280px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
-        }
-
-        .art-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .art-title {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2rem, 6vw, 3.5rem);
-            font-weight: 900;
-            background: linear-gradient(135deg, #8B4513 0%, #F39C12 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 1.2rem;
-            letter-spacing: -1px;
-        }
-
-        body.day-mode .art-title {
-            background: linear-gradient(135deg, #FF8C00 0%, #FFA500 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .art-description {
-            font-size: clamp(0.9rem, 2vw, 1.05rem);
-            opacity: 0.85;
-            max-width: 750px;
-            margin: 0 auto;
-            line-height: 1.8;
-        }
-
-        body.day-mode .art-description { color: #333; }
-
-        /* ══════════════════════════════════════
-           GRID DE ARTISTAS
-        ══════════════════════════════════════ */
-        .artists-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 3rem;
-        }
-
-        .artist-card {
-            text-align: center;
-            animation: fadeInUp 0.8s ease-out;
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .artist-card:hover { transform: translateY(-12px); }
-
-        .artist-image-wrapper {
-            position: relative;
-            width: 160px;
-            height: 160px;
-            margin: 0 auto 1.8rem;
-        }
-
-        .artist-image {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            border: 4px solid #8B4513;
-            object-fit: cover;
-            box-shadow: 0 12px 35px rgba(139, 69, 19, 0.3);
-            transition: all 0.4s ease;
-        }
-
-        body.day-mode .artist-image {
-            border-color: #FF8C00;
-        }
-
-        .artist-card:hover .artist-image {
-            transform: scale(1.07);
-            box-shadow: 0 20px 50px rgba(243, 156, 18, 0.4);
-            border-color: #F39C12;
-        }
-
-        .artist-badge {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: linear-gradient(135deg, #8B4513, #F39C12);
-            color: white;
-            border-radius: 50%;
-            width: 44px;
-            height: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.1rem;
-            box-shadow: 0 5px 15px rgba(139, 69, 19, 0.4);
-        }
-
-        body.day-mode .artist-badge {
-            background: linear-gradient(135deg, #FF8C00, #FFA500);
-        }
-
-        .artist-name {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(1.2rem, 3vw, 1.6rem);
-            font-weight: 900;
-            background: linear-gradient(135deg, #8B4513, #F39C12);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 0.7rem;
-        }
-
-        body.day-mode .artist-name {
-            background: linear-gradient(135deg, #FF8C00, #FFA500);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .artist-description {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            margin-bottom: 1.5rem;
-            line-height: 1.7;
-            min-height: 2.8rem;
-        }
-
-        body.day-mode .artist-description { color: #333; }
-
-        .artist-btn {
-            background: linear-gradient(135deg, #8B4513, #FF6B35);
-            color: white;
-            border: none;
-            padding: 0.8rem 2rem;
-            border-radius: 30px;
-            cursor: pointer;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            text-decoration: none;
-            display: inline-block;
-            font-size: 0.9rem;
-            letter-spacing: 0.5px;
-            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.2);
-        }
-
-        body.day-mode .artist-btn {
-            background: linear-gradient(135deg, #FF8C00, #FFA500);
-        }
-
-        .artist-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 14px 30px rgba(255, 107, 53, 0.4);
-        }
-
-        /* ══════════════════════════════════════
-           FOOTER CTA
-        ══════════════════════════════════════ */
-        .footer-cta {
-            padding: 7rem 1.5rem;
-            text-align: center;
-            background: linear-gradient(135deg, rgba(139,69,19,0.1) 0%, rgba(0,0,0,0.5) 100%);
-            border-top: 2px solid rgba(139, 69, 19, 0.3);
-            position: relative;
-            overflow: hidden;
-            transition: background 0.8s ease;
-        }
-
-        body.day-mode .footer-cta {
-            background: linear-gradient(135deg, rgba(255,165,0,0.08) 0%, rgba(255,200,100,0.08) 100%);
-            border-top-color: rgba(255, 165, 0, 0.3);
-        }
-
-        .footer-cta-title {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(1.8rem, 5vw, 3rem);
-            font-weight: 900;
-            background: linear-gradient(135deg, #8B4513, #F39C12);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 1.2rem;
-        }
-
-        body.day-mode .footer-cta-title {
-            background: linear-gradient(135deg, #FF8C00, #FFA500);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .footer-cta-text {
-            font-size: clamp(0.9rem, 2vw, 1.05rem);
-            opacity: 0.85;
-            max-width: 700px;
-            margin: 0 auto 2.5rem;
-            line-height: 1.8;
-        }
-
-        body.day-mode .footer-cta-text { color: #333; }
-
-        .cta-btn {
-            background: linear-gradient(135deg, #FF6B35, #8B4513);
-            color: white;
-            border: none;
-            padding: 1.1rem 2.8rem;
-            border-radius: 35px;
-            cursor: pointer;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: 1rem;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            text-decoration: none;
-            display: inline-block;
-            letter-spacing: 0.5px;
-            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.25);
-        }
-
-        body.day-mode .cta-btn {
-            background: linear-gradient(135deg, #FFA500, #FF8C00);
-        }
-
-        .cta-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 45px rgba(255, 107, 53, 0.4);
-        }
-
-        /* ══════════════════════════════════════
-           RESPONSIVE
-        ══════════════════════════════════════ */
-        @media (max-width: 768px) {
-            .artists-grid {
-                grid-template-columns: 1fr;
-                gap: 2.5rem;
-            }
-
-            .art-section  { padding: 4.5rem 1.2rem; }
-            .footer-cta   { padding: 5rem 1.2rem; }
-
-            .floating-nav {
-                bottom: 18px;
-                right: 14px;
-            }
-
-            .nav-toggle-btn {
-                width: 52px;
-                height: 52px;
-                font-size: 1.25rem;
-            }
-
-            .theme-toggle-btn {
-                top: 14px;
-                right: 14px;
-                width: 44px;
-                height: 44px;
-                font-size: 1.1rem;
-            }
-
-            .floating-menu { min-width: 180px; }
-        }
-
-        @media (max-width: 480px) {
-            .artist-image-wrapper { width: 130px; height: 130px; }
-
-            .floating-menu {
-                min-width: 160px;
-                padding: 1rem 0.8rem;
-            }
-
-            .floating-nav {
-                bottom: 14px;
-                right: 10px;
-            }
-
-            .nav-toggle-btn {
-                width: 48px;
-                height: 48px;
-                font-size: 1.2rem;
-            }
-        }
-
-        /* ══════════════════════════════════════
-           ACCESIBILIDAD – focus visible
-        ══════════════════════════════════════ */
-        :focus-visible {
-            outline: 2px solid var(--oro);
-            outline-offset: 3px;
-            border-radius: 4px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Nali: Muralista y tattoo artist from Argentina in poland. Arte andino contemporáneo para espacios y piel. Murals & tattoos with soul.Reserva tu proyecto - Museo Virtual de Arte -">
+<meta name="keywords" content="mural artist Poland , tattoo artist Europe, Argentine artist, Andean art, guest tattoo Poland, street art Salta">
+<meta name="geo.region" content="PL"/>
+<meta name="language" content="es,pl,en"/>
+<meta name="author" content="Séptima Pacha">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Nali | Mural Artist & Tattooist from Argentina in Poland | Séptima Pacha | Salta">
+<meta property="og:description" content="Celebra la creatividad ancestral y contemporánea del norte argentino con Nali Art">
+<meta property="og:type" content="website">
+<link rel="alternate" hreflang="pl" href="https://septimapacha.com/tierra-pl.html"/>
+<link rel="alternate" hreflang="en" href="https://septimapacha.com/tierra-en.html"/>
+<title>Nali| Mural Artist & Tattooist from Argentina in Poland | Séptima Pacha | Salta</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+:root {
+--tierra: #8B4513;
+--fuego: #FF6B35;
+--agua: #2ECC71;
+--aire: #4A90E2;
+--oro: #F39C12;
+}
+html, body {
+width: 100%;
+overflow-x: hidden;
+}
+body {
+font-family: 'Montserrat', sans-serif;
+background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+color: #fff;
+transition: background 0.8s ease, color 0.8s ease;
+}
+body.day-mode {
+background: linear-gradient(135deg, #87CEEB 0%, #E0F6FF 100%);
+color: #1a1a1a;
+}
+/* ════════════ CIELO ESTRELLADO ════════════ */
+.starry-sky {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+pointer-events: none;
+z-index: 0;
+}
+.stars {
+position: absolute;
+width: 100%;
+height: 100%;
+}
+.star {
+position: absolute;
+background: white;
+border-radius: 50%;
+animation: twinkle 3s infinite;
+}
+@keyframes twinkle {
+0%, 100% { opacity: 0.3; }
+50% { opacity: 1; }
+}
+/* Nubes día */
+.cloud {
+position: absolute;
+background: white;
+border-radius: 100px;
+opacity: 0;
+transition: opacity 0.8s ease;
+}
+body.day-mode .cloud {
+opacity: 0.6;
+animation: float 15s infinite ease-in-out;
+}
+@keyframes float {
+0%, 100% { transform: translateX(0px); }
+50% { transform: translateX(50px); }
+}
+.cloud::before,
+.cloud::after {
+content: '';
+position: absolute;
+background: white;
+border-radius: 50%;
+}
+.cloud::before {
+width: 50px;
+height: 50px;
+top: -25px;
+left: 10px;
+}
+.cloud::after {
+width: 40px;
+height: 40px;
+top: -20px;
+right: 10px;
+}
+/* ════════════ SPLASH SCREEN CON RAÍCES ANIMADAS ════════════ */
+.splash-screen {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+display: flex;
+align-items: center;
+justify-content: center;
+z-index: 9999;
+overflow: hidden;
+}
+.splash-canvas-container {
+position: absolute;
+width: 100%;
+height: 100%;
+top: 0;
+left: 0;
+}
+.splash-canvas {
+width: 100%;
+height: 100%;
+display: block;
+}
+.splash-content {
+position: relative;
+z-index: 10;
+text-align: center;
+font-family: 'Playfair Display', serif;
+animation: fadeInContent 1.5s ease-out 1s forwards;
+opacity: 0;
+}
+.splash-title {
+font-size: clamp(2.5rem, 15vw, 8rem);
+font-weight: 900;
+line-height: 0.95;
+margin: 0;
+letter-spacing: -2px;
+}
+.splash-palabra-tierra {
+display: block;
+color: #8B4513;
+text-shadow: 0 0 40px rgba(139, 69, 19, 0.5);
+animation: slideInLeft 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s forwards;
+opacity: 0;
+}
+.splash-palabra-viva {
+display: block;
+background: linear-gradient(135deg, #F39C12, #FF6B35);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+text-shadow: 0 0 40px rgba(243, 156, 18, 0.5);
+margin-top: 0.5rem;
+animation: slideInRight 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 0.7s forwards;
+opacity: 0;
+font-weight: 900;
+}
+.pincel-emoji {
+display: inline-block;
+margin-left: 0.8rem;
+font-size: 1em;
+animation: paintStroke 2s ease-in-out infinite;
+filter: drop-shadow(0 0 10px rgba(255, 107, 53, 0.6));
+}
+@keyframes paintStroke {
+0% { transform: rotate(0deg) scale(1); }
+50% { transform: rotate(-15deg) scale(1.1); }
+100% { transform: rotate(0deg) scale(1); }
+}
+@keyframes slideInLeft {
+from {
+opacity: 0;
+transform: translateX(-50px);
+}
+to {
+opacity: 1;
+transform: translateX(0);
+}
+}
+@keyframes slideInRight {
+from {
+opacity: 0;
+transform: translateX(50px);
+}
+to {
+opacity: 1;
+transform: translateX(0);
+}
+}
+@keyframes fadeInContent {
+from { opacity: 0; }
+to { opacity: 1; }
+}
+/* ════════════ NAVEGACIÓN FLOTANTE ════════════ */
+.floating-nav {
+position: fixed;
+bottom: 30px;
+right: 30px;
+z-index: 1000;
+display: flex;
+flex-direction: column;
+gap: 1rem;
+align-items: flex-end;
+}
+.nav-toggle-btn {
+width: 60px;
+height: 60px;
+border-radius: 50%;
+background: linear-gradient(135deg, #8B4513, #F39C12);
+border: none;
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 1.5rem;
+transition: all 0.3s ease;
+box-shadow: 0 10px 30px rgba(139, 69, 19, 0.3);
+}
+.nav-toggle-btn:hover {
+transform: scale(1.1);
+box-shadow: 0 15px 40px rgba(243, 156, 18, 0.4);
+}
+body.day-mode .nav-toggle-btn {
+background: linear-gradient(135deg, #87CEEB, #FFD700);
+box-shadow: 0 10px 30px rgba(135, 206, 235, 0.3);
+}
+.floating-menu {
+display: none;
+flex-direction: column;
+gap: 0.8rem;
+background: rgba(15, 15, 15, 0.92);
+backdrop-filter: blur(15px);
+-webkit-backdrop-filter: blur(15px);
+padding: 1.5rem;
+border-radius: 20px;
+border: 2px solid rgba(139, 69, 19, 0.4);
+min-width: 220px;
+animation: slideUp 0.3s ease;
+box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+}
+body.day-mode .floating-menu {
+background: rgba(255, 255, 255, 0.92);
+border-color: rgba(135, 206, 235, 0.4);
+box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+}
+.floating-menu.active {
+display: flex;
+}
+@keyframes slideUp {
+from {
+opacity: 0;
+transform: translateY(20px);
+}
+to {
+opacity: 1;
+transform: translateY(0);
+}
+}
+.floating-menu a, .floating-menu button {
+padding: 0.8rem 1.2rem;
+border-radius: 10px;
+border: none;
+background: rgba(243, 156, 18, 0.1);
+color: #fff;
+text-decoration: none;
+cursor: pointer;
+font-weight: 500;
+transition: all 0.3s ease;
+font-size: 0.9rem;
+}
+body.day-mode .floating-menu a,
+body.day-mode .floating-menu button {
+background: rgba(135, 206, 235, 0.2);
+color: #1a1a1a;
+}
+.floating-menu a:hover, .floating-menu button:hover {
+background: linear-gradient(135deg, #8B4513, #F39C12);
+color: #fff;
+transform: translateX(-5px);
+}
+body.day-mode .floating-menu a:hover,
+body.day-mode .floating-menu button:hover {
+background: linear-gradient(135deg, #87CEEB, #FFD700);
+color: #fff;
+}
+.menu-close-btn {
+align-self: flex-end;
+background: rgba(255, 107, 53, 0.2) !important;
+border: 2px solid var(--fuego) !important;
+color: var(--fuego) !important;
+width: 45px !important;
+height: 45px !important;
+padding: 0 !important;
+display: flex !important;
+align-items: center !important;
+justify-content: center !important;
+font-size: 1.3rem !important;
+border-radius: 50% !important;
+margin-bottom: 0.5rem;
+}
+body.day-mode .menu-close-btn {
+background: rgba(255, 165, 0, 0.2) !important;
+color: #FFA500 !important;
+border-color: #FFA500 !important;
+}
+.menu-close-btn:hover {
+background: var(--fuego) !important;
+color: #fff !important;
+}
+body.day-mode .menu-close-btn:hover {
+background: #FFA500 !important;
+}
+.lang-btn {
+border: 2px solid var(--oro) !important;
+background: transparent !important;
+color: var(--oro) !important;
+}
+body.day-mode .lang-btn {
+color: #FFD700 !important;
+border-color: #FFD700 !important;
+}
+.lang-btn:hover {
+background: linear-gradient(135deg, #8B4513, #F39C12) !important;
+color: #fff !important;
+}
+body.day-mode .lang-btn:hover {
+background: linear-gradient(135deg, #87CEEB, #FFD700) !important;
+}
+/* ════════════ BOTÓN TEMA FLOTANTE ════════════ */
+.theme-toggle-btn {
+position: fixed;
+top: 30px;
+right: 30px;
+z-index: 999;
+width: 50px;
+height: 50px;
+border-radius: 50%;
+background: linear-gradient(135deg, #8B4513, #F39C12);
+border: none;
+cursor: pointer;
+font-size: 1.3rem;
+transition: all 0.3s ease;
+box-shadow: 0 10px 30px rgba(139, 69, 19, 0.3);
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.theme-toggle-btn:hover {
+transform: scale(1.15);
+box-shadow: 0 15px 40px rgba(243, 156, 18, 0.4);
+}
+body.day-mode .theme-toggle-btn {
+background: linear-gradient(135deg, #87CEEB, #FFD700);
+box-shadow: 0 10px 30px rgba(135, 206, 235, 0.3);
+}
+/* ════════════ ÁRBOL DE LA VIDA - FONDO ════════════ */
+.tree-of-life-bg {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+pointer-events: none;
+z-index: 1;
+opacity: 0.12;
+}
+.tree-svg {
+width: 100%;
+height: 100%;
+}
+/* ════════════ CONTENT WRAPPER ════════════ */
+.content-wrapper {
+position: relative;
+z-index: 2;
+}
+/* ════════════ HERO ════════════ */
+.hero {
+min-height: 100vh;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 4rem 2rem;
+background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+position: relative;
+overflow: hidden;
+transition: background 0.8s ease;
+}
+body.day-mode .hero {
+background: linear-gradient(135deg, #87CEEB 0%, #E0F6FF 100%);
+}
+.hero-content {
+position: relative;
+z-index: 10;
+text-align: center;
+max-width: 900px;
+}
+.hero-title {
+font-family: 'Playfair Display', serif;
+line-height: 0.85;
+margin-bottom: 3rem;
+word-spacing: 9999px;
+}
+.hero-title .palabra-tierra {
+display: block;
+font-size: clamp(4rem, 18vw, 9rem);
+font-weight: 900;
+color: #8B4513;
+text-shadow:
+0 0 40px rgba(139, 69, 19, 0.4),
+0 20px 60px rgba(139, 69, 19, 0.2);
+letter-spacing: -3px;
+animation: slideInLeftHero 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 4.5s forwards;
+opacity: 0;
+transition: text-shadow 0.8s ease;
+}
+body.day-mode .hero-title .palabra-tierra {
+color: #654321;
+text-shadow: 0 5px 15px rgba(101, 67, 33, 0.3);
+}
+.hero-title .palabra-viva {
+display: block;
+font-size: clamp(3rem, 14vw, 7rem);
+font-weight: 900;
+background: linear-gradient(135deg, #F39C12 0%, #FF6B35 100%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+text-shadow: 0 0 40px rgba(243, 156, 18, 0.3);
+letter-spacing: -2px;
+margin-top: 0.5rem;
+animation: slideInRightHero 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 4.7s forwards;
+opacity: 0;
+transition: text-shadow 0.8s ease;
+}
+body.day-mode .hero-title .palabra-viva {
+background: linear-gradient(135deg, #FFA500 0%, #FF8C00 100%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+}
+.pincel-grande {
+display: inline-block;
+font-size: 1.3em;
+margin-left: 1rem;
+animation: paintStrokeHero 2.5s ease-in-out infinite;
+filter: drop-shadow(0 0 15px rgba(255, 107, 53, 0.7));
+transform-origin: 70% 30%;
+}
+@keyframes paintStrokeHero {
+0% { transform: rotate(0deg) scale(1); }
+50% { transform: rotate(-20deg) scale(1.15); }
+100% { transform: rotate(0deg) scale(1); }
+}
+@keyframes slideInLeftHero {
+from {
+opacity: 0;
+transform: translateX(-80px);
+}
+to {
+opacity: 1;
+transform: translateX(0);
+}
+}
+@keyframes slideInRightHero {
+from {
+opacity: 0;
+transform: translateX(80px);
+}
+to {
+opacity: 1;
+transform: translateX(0);
+}
+}
+.hero-subtitle {
+font-size: clamp(1rem, 2.5vw, 1.3rem);
+opacity: 0.85;
+line-height: 1.8;
+animation: fadeInUp 1s ease-out 5.2s forwards;
+opacity: 0;
+letter-spacing: 0.5px;
+transition: color 0.8s ease;
+margin-bottom: 3rem;
+}
+body.day-mode .hero-subtitle {
+color: #333;
+}
+.hero-cta-btn {
+background: linear-gradient(135deg, #FF6B35, #8B4513);
+color: white;
+border: none;
+padding: 1.1rem 2.8rem;
+border-radius: 35px;
+cursor: pointer;
+font-weight: 700;
+font-size: 1rem;
+transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+text-decoration: none;
+display: inline-block;
+letter-spacing: 0.5px;
+box-shadow: 0 10px 30px rgba(255, 107, 53, 0.25);
+animation: fadeInUp 1s ease-out 5.4s forwards;
+opacity: 0;
+}
+body.day-mode .hero-cta-btn {
+background: linear-gradient(135deg, #FFA500, #FF8C00);
+}
+.hero-cta-btn:hover {
+transform: translateY(-5px);
+box-shadow: 0 20px 45px rgba(255, 107, 53, 0.4);
+}
+@keyframes fadeInUp {
+from {
+opacity: 0;
+transform: translateY(30px);
+}
+to {
+opacity: 0.85;
+transform: translateY(0);
+}
+}
+/* ════════════ SECCIONES DE ARTE ════════════ */
+.art-section {
+padding: 8rem 2rem;
+border-top: 3px solid rgba(139, 69, 19, 0.3);
+position: relative;
+overflow: hidden;
+scroll-margin-top: 100px;
+background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+transition: background 0.8s ease;
+}
+body.day-mode .art-section {
+background: linear-gradient(135deg, #f0f8ff 0%, #e6f5ff 100%);
+border-top-color: rgba(135, 206, 235, 0.3);
+}
+.art-container {
+max-width: 1300px;
+margin: 0 auto;
+position: relative;
+z-index: 2;
+}
+.art-header {
+text-align: center;
+margin-bottom: 5rem;
+animation: fadeInUp 1s ease-out;
+}
+.art-title {
+font-family: 'Playfair Display', serif;
+font-size: clamp(2.5rem, 7vw, 4rem);
+font-weight: 900;
+background: linear-gradient(135deg, #8B4513 0%, #F39C12 100%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+margin-bottom: 1.5rem;
+letter-spacing: -1px;
+transition: background 0.8s ease;
+}
+body.day-mode .art-title {
+background: linear-gradient(135deg, #FF8C00 0%, #FFA500 100%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+}
+.art-description {
+font-size: clamp(0.95rem, 2.2vw, 1.15rem);
+opacity: 0.85;
+max-width: 800px;
+margin: 0 auto;
+line-height: 1.8;
+letter-spacing: 0.3px;
+transition: color 0.8s ease;
+}
+body.day-mode .art-description {
+color: #333;
+}
+/* ════════════ GALERÍA DE FOTOS ════════════ */
+.gallery-section {
+margin-top: 4rem;
+}
+.gallery-title {
+font-family: 'Playfair Display', serif;
+font-size: clamp(1.8rem, 5vw, 2.5rem);
+text-align: center;
+margin-bottom: 2.5rem;
+background: linear-gradient(135deg, #F39C12, #FF6B35);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+}
+.gallery-grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+gap: 1.5rem;
+margin-bottom: 3rem;
+}
+.gallery-item {
+position: relative;
+overflow: hidden;
+border-radius: 15px;
+cursor: pointer;
+aspect-ratio: 1;
+box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.gallery-item:hover {
+transform: translateY(-5px);
+box-shadow: 0 15px 40px rgba(243, 156, 18, 0.4);
+}
+.gallery-item img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+transition: transform 0.5s ease;
+}
+.gallery-item:hover img {
+transform: scale(1.1);
+}
+.gallery-overlay {
+position: absolute;
+bottom: 0;
+left: 0;
+right: 0;
+background: linear-gradient(to top, rgba(139, 69, 19, 0.9), transparent);
+padding: 1.5rem 1rem 1rem;
+color: white;
+transform: translateY(100%);
+transition: transform 0.3s ease;
+}
+.gallery-item:hover .gallery-overlay {
+transform: translateY(0);
+}
+.gallery-overlay h4 {
+font-family: 'Playfair Display', serif;
+font-size: 1.1rem;
+margin-bottom: 0.3rem;
+}
+.gallery-overlay p {
+font-size: 0.85rem;
+opacity: 0.9;
+}
+/* Lightbox */
+.lightbox {
+display: none;
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(0, 0, 0, 0.95);
+z-index: 10000;
+justify-content: center;
+align-items: center;
+}
+.lightbox.active {
+display: flex;
+}
+.lightbox-content {
+position: relative;
+max-width: 90%;
+max-height: 90%;
+}
+.lightbox-img {
+max-width: 100%;
+max-height: 90vh;
+object-fit: contain;
+border-radius: 10px;
+}
+.lightbox-close {
+position: absolute;
+top: -40px;
+right: 0;
+background: none;
+border: none;
+color: white;
+font-size: 2.5rem;
+cursor: pointer;
+transition: transform 0.3s ease;
+}
+.lightbox-close:hover {
+transform: scale(1.2);
+color: #FF6B35;
+}
+.lightbox-caption {
+position: absolute;
+bottom: -50px;
+left: 0;
+right: 0;
+text-align: center;
+color: white;
+font-size: 1.2rem;
+}
+/* ════════════ ARTISTAS ════════════ */
+.artists-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+gap: 3.5rem;
+margin-bottom: 3rem;
+}
+.artist-card {
+text-align: center;
+animation: fadeInUp 0.8s ease-out;
+transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.artist-card:hover {
+transform: translateY(-15px);
+}
+.artist-image-wrapper {
+position: relative;
+width: 180px;
+height: 180px;
+margin: 0 auto 2rem;
+}
+.artist-image {
+width: 100%;
+height: 100%;
+border-radius: 50%;
+border: 4px solid #8B4513;
+object-fit: cover;
+box-shadow: 0 15px 40px rgba(139, 69, 19, 0.3);
+transition: all 0.4s ease;
+}
+body.day-mode .artist-image {
+border-color: #FF8C00;
+box-shadow: 0 15px 40px rgba(255, 140, 0, 0.2);
+}
+.artist-card:hover .artist-image {
+transform: scale(1.08);
+box-shadow: 0 20px 50px rgba(243, 156, 18, 0.4);
+border-color: #F39C12;
+}
+body.day-mode .artist-card:hover .artist-image {
+box-shadow: 0 20px 50px rgba(255, 165, 0, 0.4);
+border-color: #FFA500;
+}
+.artist-badge {
+position: absolute;
+top: -10px;
+right: -10px;
+background: linear-gradient(135deg, #8B4513, #F39C12);
+color: white;
+border-radius: 50%;
+width: 50px;
+height: 50px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-weight: 700;
+font-size: 1.2rem;
+box-shadow: 0 5px 15px rgba(139, 69, 19, 0.4);
+transition: background 0.8s ease;
+}
+body.day-mode .artist-badge {
+background: linear-gradient(135deg, #FF8C00, #FFA500);
+}
+.artist-name {
+font-family: 'Playfair Display', serif;
+font-size: clamp(1.4rem, 3.5vw, 1.8rem);
+font-weight: 900;
+background: linear-gradient(135deg, #8B4513, #F39C12);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+margin-bottom: 0.8rem;
+letter-spacing: -0.5px;
+transition: background 0.8s ease;
+}
+body.day-mode .artist-name {
+background: linear-gradient(135deg, #FF8C00, #FFA500);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+}
+.artist-description {
+font-size: 0.95rem;
+opacity: 0.8;
+margin-bottom: 2rem;
+line-height: 1.7;
+height: 3.4rem;
+overflow: hidden;
+transition: color 0.8s ease;
+}
+body.day-mode .artist-description {
+color: #333;
+opacity: 0.7;
+}
+.artist-btn {
+background: linear-gradient(135deg, #8B4513, #FF6B35);
+color: white;
+border: none;
+padding: 0.9rem 2.2rem;
+border-radius: 30px;
+cursor: pointer;
+font-weight: 700;
+transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+text-decoration: none;
+display: inline-block;
+font-size: 0.95rem;
+letter-spacing: 0.5px;
+box-shadow: 0 10px 25px rgba(255, 107, 53, 0.2);
+}
+body.day-mode .artist-btn {
+background: linear-gradient(135deg, #FF8C00, #FFA500);
+}
+.artist-btn:hover {
+transform: translateY(-3px);
+box-shadow: 0 15px 35px rgba(255, 107, 53, 0.4);
+}
+/* ════════════ CTA FOOTER ════════════ */
+.footer-cta {
+padding: 8rem 2rem;
+text-align: center;
+background: linear-gradient(135deg, rgba(139, 69, 19, 0.1) 0%, rgba(0, 0, 0, 0.5) 100%);
+border-top: 3px solid rgba(139, 69, 19, 0.3);
+position: relative;
+overflow: hidden;
+transition: background 0.8s ease;
+}
+body.day-mode .footer-cta {
+background: linear-gradient(135deg, rgba(255, 165, 0, 0.1) 0%, rgba(255, 200, 100, 0.1) 100%);
+border-top-color: rgba(255, 165, 0, 0.3);
+}
+.footer-cta-title {
+font-family: 'Playfair Display', serif;
+font-size: clamp(2rem, 6vw, 3.5rem);
+font-weight: 900;
+background: linear-gradient(135deg, #8B4513, #F39C12);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+margin-bottom: 1.5rem;
+letter-spacing: -1px;
+transition: background 0.8s ease;
+}
+body.day-mode .footer-cta-title {
+background: linear-gradient(135deg, #FF8C00, #FFA500);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+}
+.footer-cta-text {
+font-size: clamp(0.95rem, 2.2vw, 1.1rem);
+opacity: 0.85;
+max-width: 800px;
+margin: 0 auto 2.5rem;
+line-height: 1.8;
+letter-spacing: 0.3px;
+transition: color 0.8s ease;
+}
+body.day-mode .footer-cta-text {
+color: #333;
+}
+.cta-btn {
+background: linear-gradient(135deg, #FF6B35, #8B4513);
+color: white;
+border: none;
+padding: 1.2rem 3rem;
+border-radius: 35px;
+cursor: pointer;
+font-weight: 700;
+font-size: 1.05rem;
+transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+text-decoration: none;
+display: inline-block;
+letter-spacing: 0.5px;
+box-shadow: 0 10px 30px rgba(255, 107, 53, 0.25);
+}
+body.day-mode .cta-btn {
+background: linear-gradient(135deg, #FFA500, #FF8C00);
+}
+.cta-btn:hover {
+transform: translateY(-5px);
+box-shadow: 0 20px 45px rgba(255, 107, 53, 0.4);
+}
+/* ════════════ RESPONSIVE ════════════ */
+@media (max-width: 768px) {
+.artists-grid {
+grid-template-columns: 1fr;
+gap: 3rem;
+}
+.gallery-grid {
+grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+gap: 1rem;
+}
+.hero {
+padding: 3rem 1.5rem;
+}
+.art-section {
+padding: 5rem 1.5rem;
+}
+.floating-nav {
+bottom: 20px;
+right: 20px;
+}
+.nav-toggle-btn {
+width: 55px;
+height: 55px;
+}
+.theme-toggle-btn {
+top: 20px;
+right: 20px;
+width: 45px;
+height: 45px;
+font-size: 1.1rem;
+}
+.artist-image-wrapper {
+width: 140px;
+height: 140px;
+}
+}
+@media (max-width: 480px) {
+.hero-title .palabra-tierra {
+font-size: 2.5rem;
+}
+.hero-title .palabra-viva {
+font-size: 2rem;
+}
+.art-title {
+font-size: 1.8rem;
+}
+.gallery-grid {
+grid-template-columns: repeat(2, 1fr);
+}
+.floating-nav {
+bottom: 15px;
+right: 15px;
+}
+.nav-toggle-btn {
+width: 50px;
+height: 50px;
+font-size: 1.3rem;
+}
+.floating-menu {
+min-width: 150px;
+padding: 1rem;
+}
+.theme-toggle-btn {
+top: 15px;
+right: 15px;
+width: 45px;
+height: 45px;
+}
+}
+</style>
 </head>
 <body>
+<!-- CIELO ESTRELLADO NOCTURNO -->
+<div class="starry-sky" id="starrySky">
+<div class="stars" id="starsContainer"></div>
+<div id="cloudsContainer"></div>
+</div>
+<!-- ÁRBOL DE LA VIDA - FONDO -->
+<div class="tree-of-life-bg">
+<svg class="tree-svg" viewBox="0 0 1000 1200" preserveAspectRatio="none">
+<defs>
+<style>
+.tree-line { animation: growTree 6s ease-out forwards; }
+.tree-leaf { animation: bloomLeaf 4s ease-out forwards; }
+.tree-flower { animation: bloomFlower 3.5s ease-out forwards; }
+@keyframes growTree {
+from {
+stroke-dasharray: 1000;
+stroke-dashoffset: 1000;
+opacity: 0;
+}
+to {
+stroke-dasharray: 1000;
+stroke-dashoffset: 0;
+opacity: 1;
+}
+}
+@keyframes bloomLeaf {
+from {
+opacity: 0;
+r: 0;
+}
+to {
+opacity: 0.8;
+r: 20;
+}
+}
+@keyframes bloomFlower {
+from {
+opacity: 0;
+r: 0;
+}
+to {
+opacity: 0.7;
+r: 15;
+}
+}
+</style>
+</defs>
+<!-- RAÍCES (abajo) -->
+<path class="tree-line" d="M 500 1100 Q 400 900 300 700" fill="none" stroke="#8B4513" stroke-width="4" style="animation-delay: 0s;"/>
+<path class="tree-line" d="M 500 1100 Q 600 900 700 700" fill="none" stroke="#8B4513" stroke-width="4" style="animation-delay: 0.2s;"/>
+<path class="tree-line" d="M 500 1100 L 500 900" fill="none" stroke="#8B4513" stroke-width="5" style="animation-delay: 0.4s;"/>
+<path class="tree-line" d="M 300 700 Q 200 600 150 500" fill="none" stroke="#8B4513" stroke-width="3" style="animation-delay: 0.6s;"/>
+<path class="tree-line" d="M 700 700 Q 800 600 850 500" fill="none" stroke="#8B4513" stroke-width="3" style="animation-delay: 0.8s;"/>
+<!-- TRONCO (centro) -->
+<path class="tree-line" d="M 500 900 Q 480 700 500 500 Q 520 300 500 100" fill="none" stroke="#8B4513" stroke-width="6" style="animation-delay: 1s;"/>
+<!-- RAMAS PRINCIPALES (arriba) -->
+<path class="tree-line" d="M 500 500 Q 350 400 250 300" fill="none" stroke="#8B4513" stroke-width="4" style="animation-delay: 1.2s;"/>
+<path class="tree-line" d="M 500 500 Q 650 400 750 300" fill="none" stroke="#8B4513" stroke-width="4" style="animation-delay: 1.4s;"/>
+<!-- RAMAS SECUNDARIAS -->
+<path class="tree-line" d="M 250 300 Q 200 250 150 200" fill="none" stroke="#8B4513" stroke-width="3" style="animation-delay: 1.6s;"/>
+<path class="tree-line" d="M 250 300 Q 300 250 350 200" fill="none" stroke="#8B4513" stroke-width="3" style="animation-delay: 1.8s;"/>
+<path class="tree-line" d="M 750 300 Q 700 250 650 200" fill="none" stroke="#8B4513" stroke-width="3" style="animation-delay: 2s;"/>
+<path class="tree-line" d="M 750 300 Q 800 250 850 200" fill="none" stroke="#8B4513" stroke-width="3" style="animation-delay: 2.2s;"/>
+<!-- RAMAS TERCIARIAS -->
+<path class="tree-line" d="M 500 300 Q 450 250 400 200" fill="none" stroke="#8B4513" stroke-width="2" style="animation-delay: 2.4s;"/>
+<path class="tree-line" d="M 500 300 Q 550 250 600 200" fill="none" stroke="#8B4513" stroke-width="2" style="animation-delay: 2.6s;"/>
+<!-- HOJAS (círculos verdes) -->
+<circle class="tree-leaf" cx="150" cy="200" r="0" fill="#2ECC71" style="animation-delay: 3s;"/>
+<circle class="tree-leaf" cx="350" cy="200" r="0" fill="#2ECC71" style="animation-delay: 3.1s;"/>
+<circle class="tree-leaf" cx="650" cy="200" r="0" fill="#2ECC71" style="animation-delay: 3.2s;"/>
+<circle class="tree-leaf" cx="850" cy="200" r="0" fill="#2ECC71" style="animation-delay: 3.3s;"/>
+<circle class="tree-leaf" cx="400" cy="200" r="0" fill="#2ECC71" style="animation-delay: 3.4s;"/>
+<circle class="tree-leaf" cx="600" cy="200" r="0" fill="#2ECC71" style="animation-delay: 3.5s;"/>
+<circle class="tree-leaf" cx="250" cy="350" r="0" fill="#2ECC71" style="animation-delay: 3.6s;"/>
+<circle class="tree-leaf" cx="750" cy="350" r="0" fill="#2ECC71" style="animation-delay: 3.7s;"/>
+<circle class="tree-leaf" cx="300" cy="700" r="0" fill="#2ECC71" style="animation-delay: 3.8s;"/>
+<circle class="tree-leaf" cx="700" cy="700" r="0" fill="#2ECC71" style="animation-delay: 3.9s;"/>
+<!-- FLORES (círculos naranjas/dorados) -->
+<circle class="tree-flower" cx="100" cy="200" r="0" fill="#FF6B35" style="animation-delay: 3.5s;"/>
+<circle class="tree-flower" cx="180" cy="220" r="0" fill="#F39C12" style="animation-delay: 3.6s;"/>
+<circle class="tree-flower" cx="850" cy="180" r="0" fill="#FF6B35" style="animation-delay: 3.7s;"/>
+<circle class="tree-flower" cx="920" cy="200" r="0" fill="#F39C12" style="animation-delay: 3.8s;"/>
+<circle class="tree-flower" cx="500" cy="150" r="0" fill="#FF6B35" style="animation-delay: 3.9s;"/>
+</svg>
+</div>
+<!-- SPLASH SCREEN CON RAÍCES ANIMADAS -->
+<div class="splash-screen" id="splashScreen">
+<div class="splash-canvas-container">
+<canvas class="splash-canvas" id="rootsCanvas"></canvas>
+</div>
+<div class="splash-content">
+<h2 class="splash-title">
+<span class="splash-palabra-tierra">Nali</span>
+<span class="splash-palabra-viva">Art<span class="pincel-emoji">🖌️</span></span>
+</h2>
+</div>
+</div>
+<!-- BOTÓN TEMA FLOTANTE (ARRIBA DERECHA) -->
+<button class="theme-toggle-btn" id="themeToggleBtn" title="Cambiar tema día/noche">☀️</button>
+<!-- NAVEGACIÓN FLOTANTE -->
+<div class="floating-nav">
+<button class="nav-toggle-btn" id="navToggleBtn" title="Menú">☰</button>
+<div class="floating-menu" id="floatingMenu">
+<button class="menu-close-btn" id="menuCloseBtn" title="Cerrar menú">✕</button>
+<a href="#hero" data-es="Inicio" data-en="Home" data-pl="Start">Inicio</a>
+<a href="#murales" data-es="Murales" data-en="Murals" data-pl="Murale">Murales</a>
+<a href="#tatuajes" data-es="Tatuajes" data-en="Tattoos" data-pl="Tatuaże">Tatuajes</a>
+<a href="#pintura" data-es="Pintura" data-en="Painting" data-pl="Malarstwo">Pintura</a>
+<a href="#dibujo" data-es="Dibujo" data-en="Drawing" data-pl="Rysunek">Dibujo</a>
+<a href="#artesanias" data-es="Artesanías" data-en="Crafts" data-pl="Rzemiosło">Artesanías</a>
+<button class="lang-btn" id="langToggle" data-es="English" data-en="Polski" data-pl="Español">English</button>
+<a href="index.html" style="background: linear-gradient(135deg, #8B4513, #F39C12) !important; color: white !important;" data-es="← Volver" data-en="← Back" data-pl="← Powrót">← Volver</a>
+</div>
+</div>
+<!-- CONTENT -->
+<div class="content-wrapper">
+<!-- HERO -->
+<section class="hero" id="hero">
+<div class="hero-content">
+<h1 class="hero-title">
+<span class="palabra-tierra" data-es="Nali- Artista Muralista & Tatuadora" data-en="Nali - Mural Artist & Tattooist" data-pl="Nali - Artystka Muralistka i Tatuażystka">Nali- Artista Muralista & Tatuadora</span>
+<span class="palabra-viva" data-es="De Salta a Polonia 🖌️" data-en="From Salta to Poland 🖌️" data-pl="Z Salta do Polski 🖌️">De Salta a Polonia <span class="pincel-grande">🖌️</span></span>
+</h1>
+<p class="hero-subtitle" data-es="Llevo el alma andina a muros y piel en Europa. Disponible para proyectos de murales y sesiones de tatuaje en Polonia durante 2026" data-en="I bring the Andean soul to walls and skin in Europe. Available for mural projects and tattoo sessions in Poland during 2026." data-pl="Wnoszę andyjską duszę na ściany i skórę w Europie. Dostępna do projektów murali i sesji tatuażu w Polsce w 2026 roku.">
+Llevo el alma andina a muros y piel en Europa. Disponible para proyectos de murales y sesiones de tatuaje en Polonia durante 2026
+</p>
+<a href="museopacha.html" class="hero-cta-btn" data-es="Visita Galería Interactiva" data-en="Visit Interactive Gallery" data-pl="Odwiedź Galerię Interaktywną">Visita Galería Interactiva</a>
+</div>
+</section>
+<!-- SECCIONES DE ARTE -->
+<section class="art-section" id="murales">
+<div class="art-container">
+<div class="art-header">
+<h2 class="art-title" data-es="Murales" data-en="Murals" data-pl="Murale">Murales</h2>
+<p class="art-description" data-es="Arte urbano que conecta culturas. Murales que transforman espacios y cuentan historias del norte argentino en Europa." data-en="Urban art that connects cultures. Murals that transform spaces and tell stories from northern Argentina in Europe." data-pl="Sztuka uliczna łącząca kultury. Murale przekształcające przestrzenie i opowiadające historie z północnej Argentyny w Europie.">
+Arte urbano que conecta culturas. Murales que transforman espacios y cuentan historias del norte argentino en Europa.
+</p>
+</div>
+<div class="artists-grid" id="gridMurales"></div>
+<div class="gallery-section">
+<h3 class="gallery-title" data-es="Galería de Murales" data-en="Murals Gallery" data-pl="Galeria Murali">Galería de Murales</h3>
+<div class="gallery-grid" id="galleryMurales"></div>
+</div>
+</div>
+</section>
 
-    <!-- CIELO ESTRELLADO -->
-    <div class="starry-sky" id="starrySky" aria-hidden="true">
-        <div id="starsContainer"></div>
-        <div id="cloudsContainer"></div>
-    </div>
+<!-- NUEVA SECCIÓN TATUAJES -->
+<section class="art-section" id="tatuajes">
+<div class="art-container">
+<div class="art-header">
+<h2 class="art-title" data-es="Tatuajes" data-en="Tattoos" data-pl="Tatuaże">Tatuajes</h2>
+<p class="art-description" data-es="Llevo 7 años tatuando en Salta, Argentina. Actualmente tengo mi local en el centro de la ciudad: Alvarado 521 - Galería Alvarado Local E. Estaré disponible para tatuar en Polonia." data-en="I've been tattooing for 7 years in Salta, Argentina. I currently have my studio in the city center: Alvarado 521 - Galería Alvarado Local E. I will be available to tattoo in Poland." data-pl="Od 7 lat tatuuję w Salta w Argentynie. Obecnie mam studio w centrum miasta: Alvarado 521 - Galería Alvarado Local E. Będę dostępna na tatuaże w Polsce.">
+Llevo 7 años tatuando en Salta, Argentina. Actualmente tengo mi local en el centro de la ciudad: Alvarado 521 - Galería Alvarado Local E. Estaré disponible para tatuar en Polonia.
+</p>
+</div>
+<div class="artists-grid" id="gridTatuajes"></div>
+<div class="gallery-section">
+<h3 class="gallery-title" data-es="Galería de Tatuajes" data-en="Tattoos Gallery" data-pl="Galeria Tatuaży">Galería de Tatuajes</h3>
+<div class="gallery-grid" id="galleryTatuajes"></div>
+</div>
+</div>
+</section>
 
-    <!-- ÁRBOL DE LA VIDA – FONDO -->
-    <div class="tree-of-life-bg" aria-hidden="true">
-        <svg class="tree-svg" viewBox="0 0 1000 1200" preserveAspectRatio="none">
-            <!-- RAÍCES -->
-            <path class="tree-line" d="M 500 1100 Q 400 900 300 700" fill="none" stroke="#8B4513" stroke-width="4" style="animation-delay:0s"/>
-            <path class="tree-line" d="M 500 1100 Q 600 900 700 700" fill="none" stroke="#8B4513" stroke-width="4" style="animation-delay:.2s"/>
-            <path class="tree-line" d="M 500 1100 L 500 900"          fill="none" stroke="#8B4513" stroke-width="5" style="animation-delay:.4s"/>
-            <path class="tree-line" d="M 300 700 Q 200 600 150 500"  fill="none" stroke="#8B4513" stroke-width="3" style="animation-delay:.6s"/>
-            <path class="tree-line" d="M 700 700 Q 800 600 850 500"  fill="none" stroke="#8B4513" stroke-width="3" style="animation-delay:.8s"/>
-            <!-- TRONCO -->
-            <path class="tree-line" d="M 500 900 Q 480 700 500 500 Q 520 300 500 100" fill="none" stroke="#8B4513" stroke-width="6" style="animation-delay:1s"/>
-            <!-- RAMAS PRINCIPALES -->
-            <path class="tree-line" d="M 500 500 Q 350 400 250 300" fill="none" stroke="#8B4513" stroke-width="4" style="animation-delay:1.2s"/>
-            <path class="tree-line" d="M 500 500 Q 650 400 750 300" fill="none" stroke="#8B4513" stroke-width="4" style="animation-delay:1.4s"/>
-            <!-- RAMAS SECUNDARIAS -->
-            <path class="tree-line" d="M 250 300 Q 200 250 150 200" fill="none" stroke="#8B4513" stroke-width="3" style="animation-delay:1.6s"/>
-            <path class="tree-line" d="M 250 300 Q 300 250 350 200" fill="none" stroke="#8B4513" stroke-width="3" style="animation-delay:1.8s"/>
-            <path class="tree-line" d="M 750 300 Q 700 250 650 200" fill="none" stroke="#8B4513" stroke-width="3" style="animation-delay:2s"/>
-            <path class="tree-line" d="M 750 300 Q 800 250 850 200" fill="none" stroke="#8B4513" stroke-width="3" style="animation-delay:2.2s"/>
-            <path class="tree-line" d="M 500 300 Q 450 250 400 200" fill="none" stroke="#8B4513" stroke-width="2" style="animation-delay:2.4s"/>
-            <path class="tree-line" d="M 500 300 Q 550 250 600 200" fill="none" stroke="#8B4513" stroke-width="2" style="animation-delay:2.6s"/>
-            <!-- HOJAS -->
-            <circle class="tree-leaf" cx="150" cy="200" r="0" fill="#2ECC71" style="animation-delay:3s"/>
-            <circle class="tree-leaf" cx="350" cy="200" r="0" fill="#2ECC71" style="animation-delay:3.1s"/>
-            <circle class="tree-leaf" cx="650" cy="200" r="0" fill="#2ECC71" style="animation-delay:3.2s"/>
-            <circle class="tree-leaf" cx="850" cy="200" r="0" fill="#2ECC71" style="animation-delay:3.3s"/>
-            <circle class="tree-leaf" cx="400" cy="200" r="0" fill="#2ECC71" style="animation-delay:3.4s"/>
-            <circle class="tree-leaf" cx="600" cy="200" r="0" fill="#2ECC71" style="animation-delay:3.5s"/>
-            <circle class="tree-leaf" cx="250" cy="350" r="0" fill="#2ECC71" style="animation-delay:3.6s"/>
-            <circle class="tree-leaf" cx="750" cy="350" r="0" fill="#2ECC71" style="animation-delay:3.7s"/>
-            <!-- FLORES -->
-            <circle class="tree-flower" cx="100" cy="200" r="0" fill="#FF6B35" style="animation-delay:3.5s"/>
-            <circle class="tree-flower" cx="180" cy="220" r="0" fill="#F39C12" style="animation-delay:3.6s"/>
-            <circle class="tree-flower" cx="850" cy="180" r="0" fill="#FF6B35" style="animation-delay:3.7s"/>
-            <circle class="tree-flower" cx="920" cy="200" r="0" fill="#F39C12" style="animation-delay:3.8s"/>
-            <circle class="tree-flower" cx="500" cy="150" r="0" fill="#FF6B35" style="animation-delay:3.9s"/>
-        </svg>
-    </div>
+<section class="art-section" id="pintura">
+<div class="art-container">
+<div class="art-header">
+<h2 class="art-title" data-es="Pintura" data-en="Painting" data-pl="Malarstwo">Pintura</h2>
+<p class="art-description" data-es="Colores que danzan en el lienzo. Pintura que expresa mundos interiores y realidades expandidas." data-en="Colors that dance on canvas. Painting that expresses inner worlds and expanded realities." data-pl="Kolory tańczące na płótnie. Malarstwo wyrażające wewnętrzne światy i rozszerzone rzeczywistości.">
+Colores que danzan en el lienzo. Pintura que expresa mundos interiores y realidades expandidas.
+</p>
+</div>
+<div class="artists-grid" id="gridPintura"></div>
+<div class="gallery-section">
+<h3 class="gallery-title" data-es="Galería de Pinturas" data-en="Paintings Gallery" data-pl="Galeria Obrazów">Galería de Pinturas</h3>
+<div class="gallery-grid" id="galleryPintura"></div>
+</div>
+</div>
+</section>
+<section class="art-section" id="dibujo">
+<div class="art-container">
+<div class="art-header">
+<h2 class="art-title" data-es="Dibujo" data-en="Drawing" data-pl="Rysunek">Dibujo</h2>
+<p class="art-description" data-es="El trazo como lenguaje. Dibujos que capturan la esencia, la emoción y la belleza en cada línea." data-en="The line as language. Drawings that capture essence, emotion and beauty in every stroke." data-pl="Linia jako język. Rysunki przechwytujące esencję, emocje i piękno w każdym pociągnięciu.">
+El trazo como lenguaje. Dibujos que capturan la esencia, la emoción y la belleza en cada línea.
+</p>
+</div>
+<div class="artists-grid" id="gridDibujo"></div>
+<div class="gallery-section">
+<h3 class="gallery-title" data-es="Galería de Dibujos" data-en="Drawings Gallery" data-pl="Galeria Rysunków">Galería de Dibujos</h3>
+<div class="gallery-grid" id="galleryDibujo"></div>
+</div>
+</div>
+</section>
+<section class="art-section" id="artesanias">
+<div class="art-container">
+<div class="art-header">
+<h2 class="art-title" data-es="Artesanías" data-en="Crafts" data-pl="Rzemiosło">Artesanías</h2>
+<p class="art-description" data-es="Arte ancestral transformado en piezas contemporáneas. Cada pieza es un diálogo entre tierra, agua, fuego y las manos del artista." data-en="Ancestral art transformed into contemporary pieces. Each piece is a dialogue between earth, water, fire and the artist's hands." data-pl="Sztuka przodków przekształcona we współczesne dzieła. Każde dzieło to dialog między ziemią, wodą, ogniem i rękami artysty.">
+Arte ancestral transformado en piezas contemporáneas. Cada pieza es un diálogo entre tierra, agua, fuego y las manos del artista.
+</p>
+</div>
+<div class="artists-grid" id="gridArtesanias"></div>
+<div class="gallery-section">
+<h3 class="gallery-title" data-es="Galería de Artesanías" data-en="Crafts Gallery" data-pl="Galeria Rzemiosła">Galería de Artesanías</h3>
+<div class="gallery-grid" id="galleryArtesanias"></div>
+</div>
+</div>
+</section>
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+<div class="lightbox-content">
+<button class="lightbox-close" id="lightboxClose">&times;</button>
+<img src="" alt="" class="lightbox-img" id="lightboxImg">
+<div class="lightbox-caption" id="lightboxCaption"></div>
+</div>
+</div>
+<!-- FOOTER CTA -->
+<section class="footer-cta">
+<h2 class="footer-cta-title" data-es="¿Quieres contactarme?" data-en="Do you want to contact me?" data-pl="Chcesz się ze mną skontaktować?">¿Quieres contactarme?</h2>
+<p class="footer-cta-text" data-es="Si quieres contratar nuestros servicios, escríbenos por WhatsApp." data-en="If you want to contact me to hire my services, connect with us via WhatsApp." data-pl="Jeśli chcesz skorzystać z moich usług, skontaktuj się z nami przez WhatsApp.">
+Si quieres contratar nuestros servicios, escríbenos por WhatsApp.
+</p>
+<a href="https://wa.me/48692971895?text=Hola%2C%20me%20interesa%20contratar%20parte%20de%20su%20Servicio" target="_blank" class="cta-btn" data-es="Conectar por WhatsApp" data-en="Connect via WhatsApp" data-pl="Połącz przez WhatsApp">
+Conectar por WhatsApp
+</a>
+</section>
+</div>
+<script>
+let currentLang = 'es';
+const languages = ['es', 'en', 'pl'];
+let isDayMode = false;
 
-    <!-- SPLASH SCREEN -->
-    <div class="splash-screen" id="splashScreen" role="status" aria-label="Cargando…">
-        <canvas class="splash-canvas" id="rootsCanvas" aria-hidden="true"></canvas>
-        <div class="splash-content" aria-hidden="true">
-            <h2 class="splash-title">
-                <span class="splash-palabra-tierra">Nali</span>
-                <span class="splash-palabra-viva">Art<span class="pincel-emoji">🖌️</span></span>
-            </h2>
-        </div>
-    </div>
+// Traducciones completas
+const translations = {
+es: { langButton: 'English', menu: { inicio: 'Inicio', murales: 'Murales', tatuajes: 'Tatuajes', pintura: 'Pintura', dibujo: 'Dibujo', artesanias: 'Artesanías', volver: '← Volver' } },
+en: { langButton: 'Polski', menu: { inicio: 'Home', murales: 'Murals', tatuajes: 'Tattoos', pintura: 'Painting', dibujo: 'Drawing', artesanias: 'Crafts', volver: '← Back' } },
+pl: { langButton: 'Español', menu: { inicio: 'Start', murales: 'Murale', tatuajes: 'Tatuaże', pintura: 'Malarstwo', dibujo: 'Rysunek', artesanias: 'Rzemiosło', volver: '← Powrót' } }
+};
 
-    <!-- BOTÓN TEMA -->
-    <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Cambiar tema día/noche">☀️</button>
+// Datos de galerías por sección
+const galeriasData = {
+murales: [
+{ img: 'https://images.unsplash.com/photo-1571115764595-644a1f56a55c?w=600&h=600&fit=crop', title: 'Mural Andino', desc: 'Salta, Argentina' },
+{ img: 'https://images.unsplash.com/photo-1549887534-1543e9761934?w=600&h=600&fit=crop', title: 'Arte Urbano', desc: 'Kraków, Poland' },
+{ img: 'https://images.unsplash.com/photo-1561214115-6d2f1b0609fa?w=600&h=600&fit=crop', title: 'Cultura Viva', desc: 'Buenos Aires' },
+{ img: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=600&h=600&fit=crop', title: 'Identidad', desc: 'Salta' },
+{ img: 'https://images.unsplash.com/photo-1578301978018-3005759b48f7?w=600&h=600&fit=crop', title: 'Raíces Profundas', desc: 'Warsaw, Poland' },
+{ img: 'https://images.unsplash.com/photo-1561830269-4a27a9a8346b?w=600&h=600&fit=crop', title: 'Conexión', desc: 'Gdańsk, Poland' }
+],
+tatuajes: [
+{ img: 'https://images.unsplash.com/photo-1598371839696-5c5bb00bdc28?w=600&h=600&fit=crop', title: 'Arte en la Piel', desc: 'Diseños personalizados' },
+{ img: 'https://images.unsplash.com/photo-1562962230-16e4623d36e6?w=600&h=600&fit=crop', title: 'Trabajo en Proceso', desc: 'Salta Studio' },
+{ img: 'https://images.unsplash.com/photo-1590246814883-57c511557629?w=600&h=600&fit=crop', title: 'Estilo Andino', desc: 'Líneas y geometría' },
+{ img: 'https://images.unsplash.com/photo-1581343677377-6c497244e238?w=600&h=600&fit=crop', title: 'Detalle Final', desc: 'Poland Tour 2026' },
+{ img: 'https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?w=600&h=600&fit=crop', title: 'Estudio Central', desc: 'Alvarado 521' },
+{ img: 'https://images.unsplash.com/photo-1565626424177-822050660d00?w=600&h=600&fit=crop', title: 'Conexión Cultural', desc: 'Andes & Europe' }
+],
+pintura: [
+{ img: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=600&h=600&fit=crop', title: 'Paisaje Andino', desc: 'Óleo sobre lienzo' },
+{ img: 'https://images.unsplash.com/photo-1541961017753-75d1e6451f65?w=600&h=600&fit=crop', title: 'Colores del Norte', desc: 'Acrílico' },
+{ img: 'https://images.unsplash.com/photo-1578645490210-3a3513ab3fa6?w=600&h=600&fit=crop', title: 'Espíritu Pacha', desc: 'Técnica mixta' },
+{ img: 'https://images.unsplash.com/photo-1577720580479-7d839d829c73?w=600&h=600&fit=crop', title: 'Montañas Sagradas', desc: 'Óleo' },
+{ img: 'https://images.unsplash.com/photo-1578301978018-3005759b48f7?w=600&h=600&fit=crop', title: 'Ceremonia', desc: 'Acrílico sobre tela' },
+{ img: 'https://images.unsplash.com/photo-1561830269-4a27a9a8346b?w=600&h=600&fit=crop', title: 'Tierra Viva', desc: 'Pintura digital' }
+],
+dibujo: [
+{ img: 'https://images.unsplash.com/photo-1578926078328-123c32e126e2?w=600&h=600&fit=crop', title: 'Retrato Andino', desc: 'Carbón' },
+{ img: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600&h=600&fit=crop', title: 'Estudio de Manos', desc: 'Lápiz' },
+{ img: 'https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?w=600&h=600&fit=crop', title: 'Expresión', desc: 'Tinta' },
+{ img: 'https://images.unsplash.com/photo-1578500494198-246f612d03b3?w=600&h=600&fit=crop', title: 'Raíces', desc: 'Bolígrafo' },
+{ img: 'https://images.unsplash.com/photo-1515405295579-ba7b45403062?w=600&h=600&fit=crop', title: 'Mirada', desc: 'Grafito' },
+{ img: 'https://images.unsplash.com/photo-1460723237484-1f8d7b1a9e6f?w=600&h=600&fit=crop', title: 'Esencia', desc: 'Técnica mixta' }
+],
+artesanias: [
+{ img: 'https://images.unsplash.com/photo-1578500494198-246f612d03b3?w=600&h=600&fit=crop', title: 'Cerámica Ancestral', desc: 'Barro cocido' },
+{ img: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=600&h=600&fit=crop', title: 'Vasijas Sagradas', desc: 'Técnica tradicional' },
+{ img: 'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=600&h=600&fit=crop', title: 'Textiles Andinos', desc: 'Lana de llama' },
+{ img: 'https://images.unsplash.com/photo-1605648916303-7a5a33e6f2b1?w=600&h=600&fit=crop', title: 'Alfarería', desc: 'Arcilla natural' },
+{ img: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=600&h=600&fit=crop', title: 'Tejidos', desc: 'Algodón orgánico' },
+{ img: 'https://images.unsplash.com/photo-1578500494198-246f612d03b3?w=600&h=600&fit=crop', title: 'Arte en Barro', desc: 'Cerámica contemporánea' }
+]
+};
 
-    <!-- NAVEGACIÓN FLOTANTE -->
-    <nav class="floating-nav" aria-label="Navegación principal">
-        <button class="nav-toggle-btn" id="navToggleBtn" aria-label="Abrir menú" aria-expanded="false">☰</button>
-        <div class="floating-menu" id="floatingMenu" role="menu">
-            <button class="menu-close-btn" id="menuCloseBtn" aria-label="Cerrar menú">✕</button>
+// Datos de artistas con fotos
+const artistasData = {
+murales: [
+{ name: 'Nali Murales', desc: 'Arte urbano con identidad andina', descEn: 'Urban art with Andean identity', descPl: 'Sztuka uliczna z tożsamością andyjską', img: 'https://images.unsplash.com/photo-1571115764595-644a1f56a55c?w=400&h=400&fit=crop', keywords: 'mural, street art, andean, poland, salta' },
+{ name: 'Guest Artist', desc: 'Colaboraciones internacionales', descEn: 'International collaborations', descPl: 'Międzynarodowe colaboracje', img: 'https://images.unsplash.com/photo-1549887534-1543e9761934?w=400&h=400&fit=crop', keywords: 'mural, collaboration, international' }
+],
+tatuajes: [
+{ name: 'Nali Tattoo', desc: '7 años de trayectoria en Salta', descEn: '7 years of experience in Salta', descPl: '7 lat doświadczenia w Salta', img: 'https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?w=400&h=400&fit=crop', keywords: 'tattoo, tatuaje, salta, poland, andean art' }
+],
+pintura: [
+{ name: 'Nali Pintura', desc: 'Colores del norte argentino', descEn: 'Colors of northern Argentina', descPl: 'Kolory północnej Argentyny', img: 'https://images.unsplash.com/photo-1561214115-6d2f1b0609fa?w=400&h=400&fit=crop', keywords: 'pintura, arte, norte argentino, salta, colores' }
+],
+dibujo: [
+{ name: 'Nali Art', desc: 'Retratos con alma y línea', descEn: 'Portraits with soul and line', descPl: 'Portrety z duszą i linią', img: 'https://images.unsplash.com/photo-1578926078328-123c32e126e2?w=400&h=400&fit=crop', keywords: 'dibujo, arte, retratos, naliart, salta' }
+],
+artesanias: [
+{ name: 'ALHUA Cerámica', desc: 'Cerámica ancestral con diseño contemporáneo', descEn: 'Ancestral ceramics with contemporary design', descPl: 'Ancestralna ceramika ze współczesnym designem', img: 'https://images.unsplash.com/photo-1578500494198-246f612d03b3?w=400&h=400&fit=crop', keywords: 'artesanía, cerámica, salta, argentina, arte ancestral' },
+{ name: 'Artesano Local', desc: 'Creaciones de barro y tradición', descEn: 'Clay and tradition creations', descPl: 'Twórczość z gliny i tradycji', img: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=400&h=400&fit=crop', keywords: 'artesano, barro, tradición, salta' }
+]
+};
 
-            <a href="#hero"       role="menuitem" data-i18n="nav_home">Inicio</a>
-            <a href="#murales"    role="menuitem" data-i18n="nav_murales">Murales</a>
-            <a href="#pintura"    role="menuitem" data-i18n="nav_pintura">Pintura</a>
-            <a href="#dibujo"     role="menuitem" data-i18n="nav_dibujo">Dibujo</a>
-            <a href="#artesanias" role="menuitem" data-i18n="nav_artesanias">Artesanías</a>
+// CREAR ESTRELLAS
+function createStars() {
+const starsContainer = document.getElementById('starsContainer');
+for (let i = 0; i < 100; i++) {
+const star = document.createElement('div');
+star.className = 'star';
+star.style.left = Math.random() * 100 + '%';
+star.style.top = Math.random() * 100 + '%';
+star.style.width = Math.random() * 2 + 1 + 'px';
+star.style.height = star.style.width;
+star.style.animationDelay = Math.random() * 3 + 's';
+starsContainer.appendChild(star);
+}
+}
+// CREAR NUBES
+function createClouds() {
+const cloudsContainer = document.getElementById('cloudsContainer');
+for (let i = 0; i < 5; i++) {
+const cloud = document.createElement('div');
+cloud.className = 'cloud';
+cloud.style.left = Math.random() * 100 + '%';
+cloud.style.top = Math.random() * 30 + '%';
+cloud.style.width = Math.random() * 100 + 80 + 'px';
+cloud.style.height = Math.random() * 40 + 30 + 'px';
+cloud.style.animationDelay = Math.random() * 5 + 's';
+cloudsContainer.appendChild(cloud);
+}
+}
+// SPLASH SCREEN CON CANVAS
+function animateSplash() {
+const canvas = document.getElementById('rootsCanvas');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+ctx.strokeStyle = 'rgba(139, 69, 19, 0.6)';
+ctx.lineWidth = 3;
+const startTime = Date.now();
+const duration = 3000;
+function drawRoots() {
+const elapsed = Date.now() - startTime;
+const progress = Math.min(elapsed / duration, 1);
+ctx.clearRect(0, 0, canvas.width, canvas.height);
+drawLine(ctx, canvas.width / 2, 0, canvas.width / 2, canvas.height * progress, 4);
+drawLine(ctx, canvas.width / 2, 0, canvas.width / 4, canvas.height * progress * 0.8, 3);
+drawLine(ctx, canvas.width / 2, 0, canvas.width * 3 / 4, canvas.height * progress * 0.8, 3);
+if (progress > 0.3) {
+drawLine(ctx, canvas.width / 2, canvas.height * 0.3, canvas.width / 6, canvas.height * progress * 0.7, 2);
+drawLine(ctx, canvas.width / 2, canvas.height * 0.3, canvas.width * 5 / 6, canvas.height * progress * 0.7, 2);
+}
+if (progress > 0.5) {
+drawLine(ctx, canvas.width / 2, canvas.height * 0.5, canvas.width / 8, canvas.height * progress * 0.6, 2);
+drawLine(ctx, canvas.width / 2, canvas.height * 0.5, canvas.width * 7 / 8, canvas.height * progress * 0.6, 2);
+}
+if (progress < 1) requestAnimationFrame(drawRoots);
+}
+function drawLine(ctx, x1, y1, x2, y2, width) {
+ctx.lineWidth = width; ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+}
+drawRoots();
+}
+// OCULTAR SPLASH
+window.addEventListener('load', () => {
+createStars(); createClouds(); animateSplash();
+setTimeout(() => {
+const splash = document.getElementById('splashScreen');
+splash.style.opacity = '0'; splash.style.transition = 'opacity 0.8s ease-out';
+setTimeout(() => splash.style.display = 'none', 800);
+}, 4500);
+});
+// MENÚ FLOTANTE
+const navToggleBtn = document.getElementById('navToggleBtn');
+const menuCloseBtn = document.getElementById('menuCloseBtn');
+const floatingMenu = document.getElementById('floatingMenu');
+navToggleBtn.addEventListener('click', () => floatingMenu.classList.toggle('active'));
+menuCloseBtn.addEventListener('click', () => floatingMenu.classList.remove('active'));
+floatingMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => floatingMenu.classList.remove('active')));
+window.addEventListener('scroll', () => { if (floatingMenu.classList.contains('active')) floatingMenu.classList.remove('active'); });
 
-            <!-- Selector de idioma: cicla ES → EN → PL → ES -->
-            <button class="lang-btn" id="langToggle" role="menuitem" aria-label="Cambiar idioma">🌐 ES</button>
+// TEMA DÍA/NOCHE
+const themeToggleBtn = document.getElementById('themeToggleBtn');
+themeToggleBtn.addEventListener('click', () => {
+isDayMode = !isDayMode; document.body.classList.toggle('day-mode');
+themeToggleBtn.textContent = isDayMode ? '🌙' : '☀️'; localStorage.setItem('theme', isDayMode ? 'day' : 'night');
+});
+const savedTheme = localStorage.getItem('theme') || 'night';
+if (savedTheme === 'day') { isDayMode = true; document.body.classList.add('day-mode'); themeToggleBtn.textContent = '🌙'; } else { themeToggleBtn.textContent = '☀️'; }
 
-            <a href="index.html" class="back-btn" role="menuitem" data-i18n="nav_back">← Volver</a>
-        </div>
-    </nav>
+// LENGUAJE - CICLO ENTRE 3 IDIOMAS
+const langToggle = document.getElementById('langToggle');
+function translatePage() {
+document.querySelectorAll('[data-es][data-en][data-pl]').forEach(el => {
+const text = el.getAttribute(`data-${currentLang}`); if (text) el.textContent = text;
+});
+langToggle.textContent = translations[currentLang].langButton;
+renderArtistas(); renderGalerias();
+}
+langToggle.addEventListener('click', () => {
+const currentIndex = languages.indexOf(currentLang);
+currentLang = languages[(currentIndex + 1) % languages.length];
+translatePage();
+});
 
-    <!-- CONTENIDO PRINCIPAL -->
-    <div class="content-wrapper">
+// RENDERIZAR GALERÍAS
+function renderGalerias() {
+Object.keys(galeriasData).forEach(categoria => {
+const gridId = `gallery${categoria.charAt(0).toUpperCase() + categoria.slice(1)}`;
+const grid = document.getElementById(gridId);
+if (grid) {
+grid.innerHTML = galeriasData[categoria].map((item, idx) => `
+<div class="gallery-item" data-index="${idx}" data-category="${categoria}">
+<img src="${item.img}" alt="${item.title}" loading="lazy">
+<div class="gallery-overlay"><h4>${item.title}</h4><p>${item.desc}</p></div>
+</div>`).join('');
+grid.querySelectorAll('.gallery-item').forEach(item => item.addEventListener('click', () => {
+openLightbox(galeriasData[item.dataset.category][parseInt(item.dataset.index)]);
+}));
+}
+});
+}
+// LIGHTBOX
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightboxImg');
+const lightboxCaption = document.getElementById('lightboxCaption');
+const lightboxClose = document.getElementById('lightboxClose');
+function openLightbox(item) {
+lightboxImg.src = item.img; lightboxCaption.textContent = `${item.title} - ${item.desc}`;
+lightbox.classList.add('active'); document.body.style.overflow = 'hidden';
+}
+function closeLightbox() { lightbox.classList.remove('active'); document.body.style.overflow = ''; }
+lightboxClose.addEventListener('click', closeLightbox);
+lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && lightbox.classList.contains('active')) closeLightbox(); });
 
-        <!-- HERO -->
-        <section class="hero" id="hero">
-            <div class="hero-content">
-                <h1 class="hero-title">
-                    <span class="palabra-tierra" data-i18n="hero_title_line1">Nali – Muralista &amp; Tatuadora</span>
-                    <span class="palabra-viva" data-i18n="hero_title_line2">De Salta a Polonia <span class="pincel-grande">🖌️</span></span>
-                </h1>
-                <p class="hero-subtitle" data-i18n="hero_subtitle">
-                    Llevo el alma andina a muros y piel en Europa. Disponible para proyectos de murales y sesiones de tatuaje en Polonia durante 2026.
-                </p>
-                <a href="museopacha.html" class="hero-cta-btn" data-i18n="hero_cta">Visitar Galería Interactiva</a>
-            </div>
-        </section>
-
-        <!-- MURALES -->
-        <section class="art-section" id="murales">
-            <div class="art-container">
-                <div class="art-header">
-                    <h2 class="art-title" data-i18n="sec_murales_title">Murales</h2>
-                    <p class="art-description" data-i18n="sec_murales_desc">
-                        Arte monumental que dialoga con la ciudad. Colores del norte argentino trasladados a muros de Europa.
-                    </p>
-                </div>
-                <div class="artists-grid" id="gridMurales"></div>
-            </div>
-        </section>
-
-        <!-- PINTURA -->
-        <section class="art-section" id="pintura">
-            <div class="art-container">
-                <div class="art-header">
-                    <h2 class="art-title" data-i18n="sec_pintura_title">Pintura</h2>
-                    <p class="art-description" data-i18n="sec_pintura_desc">
-                        Colores que danzan en el lienzo. Mundos interiores y realidades expandidas en cada pincelada.
-                    </p>
-                </div>
-                <div class="artists-grid" id="gridPintura"></div>
-            </div>
-        </section>
-
-        <!-- DIBUJO -->
-        <section class="art-section" id="dibujo">
-            <div class="art-container">
-                <div class="art-header">
-                    <h2 class="art-title" data-i18n="sec_dibujo_title">Dibujo</h2>
-                    <p class="art-description" data-i18n="sec_dibujo_desc">
-                        El trazo como lenguaje. Dibujos que capturan la esencia, la emoción y la belleza en cada línea.
-                    </p>
-                </div>
-                <div class="artists-grid" id="gridDibujo"></div>
-            </div>
-        </section>
-
-        <!-- ARTESANÍAS -->
-        <section class="art-section" id="artesanias">
-            <div class="art-container">
-                <div class="art-header">
-                    <h2 class="art-title" data-i18n="sec_artesanias_title">Artesanías</h2>
-                    <p class="art-description" data-i18n="sec_artesanias_desc">
-                        Cerámica, barro y tradición. Objetos únicos que guardan la memoria de los pueblos andinos.
-                    </p>
-                </div>
-                <div class="artists-grid" id="gridArtesanias"></div>
-            </div>
-        </section>
-
-        <!-- FOOTER CTA -->
-        <section class="footer-cta">
-            <h2 class="footer-cta-title" data-i18n="cta_title">¿Querés contactarme?</h2>
-            <p class="footer-cta-text" data-i18n="cta_text">
-                Si querés contratar mis servicios de mural o tatuaje, escribime por WhatsApp. Estoy disponible en Polonia durante 2026.
-            </p>
-            <a href="https://wa.me/48692971895?text=Hola%2C%20me%20interesa%20contratar%20tus%20servicios"
-               target="_blank" rel="noopener noreferrer"
-               class="cta-btn"
-               data-i18n="cta_btn">
-                💬 Conectar por WhatsApp
-            </a>
-        </section>
-
-    </div><!-- /content-wrapper -->
-
-    <script>
-    /* ═══════════════════════════════════════════════════
-       TRADUCCIONES — 3 idiomas: es | en | pl
-    ═══════════════════════════════════════════════════ */
-    const LANGS = ['es', 'en', 'pl'];
-    let langIdx = 0;   // índice actual en LANGS[]
-    let currentLang = 'es';
-
-    const i18n = {
-        /* NAVEGACIÓN */
-        nav_home:        { es: 'Inicio',      en: 'Home',       pl: 'Start'          },
-        nav_murales:     { es: 'Murales',     en: 'Murals',     pl: 'Murale'         },
-        nav_pintura:     { es: 'Pintura',     en: 'Painting',   pl: 'Malarstwo'      },
-        nav_dibujo:      { es: 'Dibujo',      en: 'Drawing',    pl: 'Rysunek'        },
-        nav_artesanias:  { es: 'Artesanías',  en: 'Crafts',     pl: 'Rękodzieło'     },
-        nav_back:        { es: '← Volver',    en: '← Back',     pl: '← Powrót'       },
-
-        /* HERO */
-        hero_title_line1:{ es: 'Nali – Muralista & Tatuadora',
-                           en: 'Nali – Muralist & Tattoo Artist',
-                           pl: 'Nali – Muralistka & Tatuażystka' },
-        hero_title_line2:{ es: 'De Salta a Polonia 🖌️',
-                           en: 'From Salta to Poland 🖌️',
-                           pl: 'Z Salty do Polski 🖌️' },
-        hero_subtitle:   { es: 'Llevo el alma andina a muros y piel en Europa. Disponible para proyectos de murales y sesiones de tatuaje en Polonia durante 2026.',
-                           en: 'I bring the Andean soul to walls and skin in Europe. Available for mural projects and tattoo sessions in Poland during 2026.',
-                           pl: 'Wnoszę andyjską duszę na ściany i skórę w Europie. Dostępna na projekty murali i sesje tatuażu w Polsce w 2026 roku.' },
-        hero_cta:        { es: 'Visitar Galería Interactiva',
-                           en: 'Visit Interactive Gallery',
-                           pl: 'Odwiedź Galerię Interaktywną' },
-
-        /* SECCIONES */
-        sec_murales_title:   { es: 'Murales',     en: 'Murals',    pl: 'Murale'       },
-        sec_murales_desc:    { es: 'Arte monumental que dialoga con la ciudad. Colores del norte argentino trasladados a muros de Europa.',
-                               en: 'Monumental art that speaks to the city. Colors of northern Argentina brought to European walls.',
-                               pl: 'Monumentalna sztuka rozmawiająca z miastem. Kolory północnej Argentyny przeniesione na europejskie mury.' },
-
-        sec_pintura_title:   { es: 'Pintura',     en: 'Painting',  pl: 'Malarstwo'    },
-        sec_pintura_desc:    { es: 'Colores que danzan en el lienzo. Mundos interiores y realidades expandidas en cada pincelada.',
-                               en: 'Colors that dance on canvas. Inner worlds and expanded realities in every brushstroke.',
-                               pl: 'Kolory tańczące na płótnie. Wewnętrzne światy i rozszerzone rzeczywistości w każdym pociągnięciu pędzla.' },
-
-        sec_dibujo_title:    { es: 'Dibujo',      en: 'Drawing',   pl: 'Rysunek'      },
-        sec_dibujo_desc:     { es: 'El trazo como lenguaje. Dibujos que capturan la esencia, la emoción y la belleza en cada línea.',
-                               en: 'The line as language. Drawings that capture essence, emotion and beauty in every stroke.',
-                               pl: 'Kreska jako język. Rysunki oddające istotę, emocje i piękno w każdej linii.' },
-
-        sec_artesanias_title:{ es: 'Artesanías',  en: 'Crafts',    pl: 'Rękodzieło'   },
-        sec_artesanias_desc: { es: 'Cerámica, barro y tradición. Objetos únicos que guardan la memoria de los pueblos andinos.',
-                               en: 'Ceramics, clay and tradition. Unique objects that hold the memory of Andean peoples.',
-                               pl: 'Ceramika, glina i tradycja. Wyjątkowe przedmioty przechowujące pamięć ludów andyjskich.' },
-
-        /* FOOTER CTA */
-        cta_title:{ es: '¿Querés contactarme?',
-                    en: 'Want to get in touch?',
-                    pl: 'Chcesz się ze mną skontaktować?' },
-        cta_text: { es: 'Si querés contratar mis servicios de mural o tatuaje, escribime por WhatsApp. Estoy disponible en Polonia durante 2026.',
-                    en: 'If you want to hire my mural or tattoo services, message me on WhatsApp. Available in Poland during 2026.',
-                    pl: 'Jeśli chcesz zamówić murale lub tatuaż, napisz do mnie na WhatsApp. Dostępna w Polsce w 2026 roku.' },
-        cta_btn:  { es: '💬 Conectar por WhatsApp',
-                    en: '💬 Connect via WhatsApp',
-                    pl: '💬 Napisz na WhatsApp' },
-
-        /* ARTISTAS — textos dinámicos */
-        artist_btn:    { es: 'Ver Galería',  en: 'View Gallery', pl: 'Zobacz Galerię' },
-        artist_label:  { es: 'Artista',      en: 'Artist',       pl: 'Artysta'        },
-    };
-
-    function t(key) {
-        return (i18n[key] && i18n[key][currentLang]) || '';
-    }
-
-    /* Aplica las traducciones estáticas */
-    function translatePage() {
-        document.querySelectorAll('[data-i18n]').forEach(el => {
-            const key = el.dataset.i18n;
-            const text = t(key);
-            if (!text) return;
-            // Para hero_title_line2 hay un span interior (emoji pincel) — no lo sobreescribimos
-            if (key === 'hero_title_line2') {
-                el.childNodes[0].textContent = t(key).replace('🖌️', '').trim() + ' ';
-            } else {
-                el.textContent = text;
-            }
-        });
-
-        // Botón de idioma muestra el SIGUIENTE idioma
-        const nextIdx  = (langIdx + 1) % LANGS.length;
-        const nextLang = LANGS[nextIdx].toUpperCase();
-        document.getElementById('langToggle').textContent = `🌐 ${nextLang}`;
-
-        // Re-renderizar tarjetas con nuevo idioma
-        renderArtistas();
-    }
-
-    /* ═══════════════════════════════════════════════════
-       DATOS DE ARTISTAS
-    ═══════════════════════════════════════════════════ */
-    const artistasData = {
-        murales: [
-            {
-                name: 'Naliart – Mural Andino',
-                desc: { es: 'Murales con geometría andina y colores del NOA.',
-                        en: 'Murals with Andean geometry and NOA colors.',
-                        pl: 'Murale z geometrią andyjską i barwami NOA.' },
-                seoDesc: 'Murales artísticos con diseño andino contemporáneo en Polonia.',
-                img: 'https://images.unsplash.com/photo-1561214115-6d2f1b0609fa?w=400&h=400&fit=crop',
-                keywords: 'mural, arte andino, polonia, salta, naliart'
-            },
-            {
-                name: 'Street Art Cracovia',
-                desc: { es: 'Intervenciones urbanas en Polonia con alma argentina.',
-                        en: 'Urban interventions in Poland with Argentine soul.',
-                        pl: 'Interwencje miejskie w Polsce z argentyńską duszą.' },
-                seoDesc: 'Street art urbano con influencia latinoamericana en Cracovia.',
-                img: 'https://images.unsplash.com/photo-1578926078328-123c32e126e2?w=400&h=400&fit=crop',
-                keywords: 'street art, cracovia, latinoamerica, mural, urbano'
-            }
-        ],
-        pintura: [
-            {
-                name: 'Colores del NOA',
-                desc: { es: 'Paletas del norte argentino sobre lienzo europeo.',
-                        en: 'Northern Argentine palettes on European canvas.',
-                        pl: 'Palety z północnej Argentyny na europejskim płótnie.' },
-                seoDesc: 'Pintura contemporánea inspirada en el norte argentino.',
-                img: 'https://images.unsplash.com/photo-1561214115-6d2f1b0609fa?w=400&h=400&fit=crop',
-                keywords: 'pintura, norte argentino, salta, arte, colores'
-            }
-        ],
-        dibujo: [
-            {
-                name: 'Naliart – Retratos',
-                desc: { es: 'Retratos con alma y trazo único.',
-                        en: 'Portraits with soul and unique line.',
-                        pl: 'Portrety z duszą i unikalną kreską.' },
-                seoDesc: 'Retratos artísticos de alta expresividad.',
-                img: 'https://images.unsplash.com/photo-1578926078328-123c32e126e2?w=400&h=400&fit=crop',
-                keywords: 'dibujo, retratos, naliart, arte, salta'
-            }
-        ],
-        artesanias: [
-            {
-                name: 'ALHUA Cerámica',
-                desc: { es: 'Cerámica ancestral con diseño contemporáneo.',
-                        en: 'Ancestral ceramics with contemporary design.',
-                        pl: 'Ceramika tradycyjna ze współczesnym designem.' },
-                seoDesc: 'Artesanías de cerámica única en Salta, Argentina.',
-                img: 'https://images.unsplash.com/photo-1578500494198-246f612d03b3?w=400&h=400&fit=crop',
-                keywords: 'artesanía, cerámica, salta, argentina, arte ancestral'
-            },
-            {
-                name: 'Barro y Tradición',
-                desc: { es: 'Creaciones de barro que honran los pueblos originarios.',
-                        en: 'Clay creations honoring indigenous peoples.',
-                        pl: 'Wyroby gliniane honorujące rdzenną ludność.' },
-                seoDesc: 'Artesanías tradicionales de barro por artesanos salteños.',
-                img: 'https://images.unsplash.com/photo-1578500494198-246f612d03b3?w=400&h=400&fit=crop',
-                keywords: 'artesano, barro, tradición, salta, indígena'
-            }
-        ]
-    };
-
-    function renderArtistas() {
-        const mappings = {
-            murales:    'gridMurales',
-            pintura:    'gridPintura',
-            dibujo:     'gridDibujo',
-            artesanias: 'gridArtesanias'
-        };
-
-        Object.entries(mappings).forEach(([categoria, gridId]) => {
-            const grid = document.getElementById(gridId);
-            if (!grid) return;
-            const items = artistasData[categoria];
-            if (!items || items.length === 0) {
-                grid.innerHTML = '';
-                return;
-            }
-
-            grid.innerHTML = items.map((artist, idx) => `
-                <article class="artist-card" data-artist="${artist.name}" data-category="${categoria}">
-                    <div class="artist-image-wrapper">
-                        <img
-                            src="${artist.img}"
-                            alt="${artist.name} – ${t('artist_label')}"
-                            title="${artist.seoDesc}"
-                            class="artist-image"
-                            loading="lazy"
-                            width="160" height="160"
-                        >
-                        <div class="artist-badge" aria-hidden="true">${idx + 1}</div>
-                    </div>
-                    <h3 class="artist-name">${artist.name}</h3>
-                    <p class="artist-description">${artist.desc[currentLang] || artist.desc.es}</p>
-                    <a href="#" class="artist-btn" data-keywords="${artist.keywords}">
-                        ${t('artist_btn')}
-                    </a>
-                </article>
-            `).join('');
-        });
-    }
-
-    /* ═══════════════════════════════════════════════════
-       TEMA DÍA / NOCHE
-    ═══════════════════════════════════════════════════ */
-    let isDayMode = false;
-    const themeBtn = document.getElementById('themeToggleBtn');
-
-    function applyTheme(day) {
-        isDayMode = day;
-        document.body.classList.toggle('day-mode', isDayMode);
-        themeBtn.textContent = isDayMode ? '🌙' : '☀️';
-        themeBtn.setAttribute('aria-label', isDayMode ? 'Activar modo noche' : 'Activar modo día');
-        localStorage.setItem('theme', isDayMode ? 'day' : 'night');
-    }
-
-    themeBtn.addEventListener('click', () => applyTheme(!isDayMode));
-
-    // Restaurar tema guardado
-    const savedTheme = localStorage.getItem('theme') || 'night';
-    applyTheme(savedTheme === 'day');
-
-    /* ═══════════════════════════════════════════════════
-       SELECTOR DE IDIOMA — cicla ES → EN → PL → ES
-    ═══════════════════════════════════════════════════ */
-    document.getElementById('langToggle').addEventListener('click', () => {
-        langIdx     = (langIdx + 1) % LANGS.length;
-        currentLang = LANGS[langIdx];
-        document.documentElement.lang = currentLang;
-        translatePage();
-    });
-
-    /* ═══════════════════════════════════════════════════
-       MENÚ FLOTANTE
-    ═══════════════════════════════════════════════════ */
-    const navToggleBtn = document.getElementById('navToggleBtn');
-    const menuCloseBtn = document.getElementById('menuCloseBtn');
-    const floatingMenu = document.getElementById('floatingMenu');
-
-    function toggleMenu(open) {
-        floatingMenu.classList.toggle('active', open);
-        navToggleBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    }
-
-    navToggleBtn.addEventListener('click', () => toggleMenu(!floatingMenu.classList.contains('active')));
-    menuCloseBtn.addEventListener('click', () => toggleMenu(false));
-
-    // Cerrar al hacer click en un enlace
-    floatingMenu.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => toggleMenu(false));
-    });
-
-    // Cerrar al hacer scroll
-    window.addEventListener('scroll', () => {
-        if (floatingMenu.classList.contains('active')) toggleMenu(false);
-    }, { passive: true });
-
-    // Cerrar al hacer click fuera
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('.floating-nav')) toggleMenu(false);
-    });
-
-    /* ═══════════════════════════════════════════════════
-       SPLASH SCREEN — CANVAS DE RAÍCES
-    ═══════════════════════════════════════════════════ */
-    function animateSplash() {
-        const canvas = document.getElementById('rootsCanvas');
-        if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-
-        function resize() {
-            canvas.width  = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        resize();
-
-        ctx.strokeStyle = 'rgba(139, 69, 19, 0.6)';
-
-        const startTime = Date.now();
-        const duration  = 3000;
-
-        function drawLine(x1, y1, x2, y2, w) {
-            ctx.lineWidth = w;
-            ctx.beginPath();
-            ctx.moveTo(x1, y1);
-            ctx.lineTo(x2, y2);
-            ctx.stroke();
-        }
-
-        function frame() {
-            const p = Math.min((Date.now() - startTime) / duration, 1);
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            const cx = canvas.width / 2;
-            const h  = canvas.height;
-
-            drawLine(cx, 0, cx,              h * p,       4);
-            drawLine(cx, 0, cx / 2,          h * p * 0.8, 3);
-            drawLine(cx, 0, cx * 1.5,        h * p * 0.8, 3);
-            if (p > 0.3) {
-                drawLine(cx, h * 0.3, cx / 3,     h * p * 0.7, 2);
-                drawLine(cx, h * 0.3, cx * 5/3,   h * p * 0.7, 2);
-            }
-            if (p > 0.5) {
-                drawLine(cx, h * 0.5, cx / 4,     h * p * 0.6, 2);
-                drawLine(cx, h * 0.5, cx * 7/4,   h * p * 0.6, 2);
-            }
-            if (p < 1) requestAnimationFrame(frame);
-        }
-
-        frame();
-    }
-
-    /* ═══════════════════════════════════════════════════
-       ESTRELLAS Y NUBES
-    ═══════════════════════════════════════════════════ */
-    function createStars() {
-        const container = document.getElementById('starsContainer');
-        const frag = document.createDocumentFragment();
-        for (let i = 0; i < 100; i++) {
-            const s = document.createElement('div');
-            s.className = 'star';
-            const size = (Math.random() * 2 + 1) + 'px';
-            Object.assign(s.style, {
-                left:             Math.random() * 100 + '%',
-                top:              Math.random() * 100 + '%',
-                width:            size,
-                height:           size,
-                animationDelay:   Math.random() * 3 + 's',
-                animationDuration:(Math.random() * 2 + 2) + 's'
-            });
-            frag.appendChild(s);
-        }
-        container.appendChild(frag);
-    }
-
-    function createClouds() {
-        const container = document.getElementById('cloudsContainer');
-        const frag = document.createDocumentFragment();
-        for (let i = 0; i < 5; i++) {
-            const c = document.createElement('div');
-            c.className = 'cloud';
-            Object.assign(c.style, {
-                left:           Math.random() * 100 + '%',
-                top:            Math.random() * 30  + '%',
-                width:          (Math.random() * 100 + 80) + 'px',
-                height:         (Math.random() * 40  + 30) + 'px',
-                animationDelay: Math.random() * 5 + 's'
-            });
-            frag.appendChild(c);
-        }
-        container.appendChild(frag);
-    }
-
-    /* ═══════════════════════════════════════════════════
-       INIT
-    ═══════════════════════════════════════════════════ */
-    window.addEventListener('load', () => {
-        createStars();
-        createClouds();
-        animateSplash();
-
-        // Render inicial (idioma ES)
-        renderArtistas();
-        translatePage();
-
-        // Ocultar splash
-        setTimeout(() => {
-            const splash = document.getElementById('splashScreen');
-            splash.style.opacity = '0';
-            setTimeout(() => { splash.style.display = 'none'; }, 800);
-        }, 4500);
-    });
-
-    /* ═══════════════════════════════════════════════════
-       SCHEMA.ORG SEO
-    ═══════════════════════════════════════════════════ */
-    (function addSchema() {
-        const s = document.createElement('script');
-        s.type = 'application/ld+json';
-        s.textContent = JSON.stringify({
-            "@context": "https://schema.org/",
-            "@type": "Person",
-            "name": "Nali – Séptima Pacha",
-            "jobTitle": "Mural Artist & Tattoo Artist",
-            "description": "Muralista y tatuadora argentina disponible en Polonia durante 2026",
-            "url": "https://septimapacha.com",
-            "address": { "@type": "PostalAddress", "addressLocality": "Salta", "addressCountry": "AR" },
-            "contactPoint": { "@type": "ContactPoint", "contactType": "Customer Service", "telephone": "+48-692-971-895" }
-        });
-        document.head.appendChild(s);
-    })();
-    </script>
+// RENDERIZAR ARTISTAS
+function renderArtistas() {
+Object.keys(artistasData).forEach(categoria => {
+const gridId = `grid${categoria.charAt(0).toUpperCase() + categoria.slice(1)}`;
+const grid = document.getElementById(gridId);
+if (grid) {
+const descKey = currentLang === 'es' ? 'desc' : currentLang === 'en' ? 'descEn' : 'descPl';
+grid.innerHTML = artistasData[categoria].map((artist, idx) => `
+<article class="artist-card" data-artist="${artist.name}" data-category="${categoria}">
+<div class="artist-image-wrapper">
+<img src="${artist.img}" alt="${artist.name}" class="artist-image" loading="lazy">
+<div class="artist-badge">${idx + 1}</div>
+</div>
+<h3 class="artist-name">${artist.name}</h3>
+<p class="artist-description">${artist[descKey]}</p>
+<a href="#" class="artist-btn">${currentLang === 'es' ? 'Ver Galería' : currentLang === 'en' ? 'View Gallery' : 'Zobacz Galerię'}</a>
+</article>`).join('');
+}
+});
+}
+// INIT
+renderArtistas(); renderGalerias();
+// Schema.org
+function addSchemaMarkup() {
+const schemaScript = document.createElement('script'); schemaScript.type = 'application/ld+json';
+schemaScript.textContent = JSON.stringify({
+"@context": "https://schema.org/", "@type": "Museum", "name": "Tierra Viva - Museo Virtual de Arte",
+"description": "Museo Virtual de Arte que celebra la creatividad ancestral y contemporánea del norte argentino",
+"url": "https://tierra-viva.com", "address": { "@type": "PostalAddress", "addressLocality": "Salta", "addressCountry": "AR", "streetAddress": "Salta, Argentina" },
+"sameAs": ["https://wa.me/48692971895"], "contactPoint": { "@type": "ContactPoint", "contactType": "Customer Service", "telephone": "+48-692-971-895" }
+});
+document.head.appendChild(schemaScript);
+}
+addSchemaMarkup();
+</script>
 </body>
 </html>
-
