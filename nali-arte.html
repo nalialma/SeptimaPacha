@@ -1,1379 +1,1344 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tierra Viva - Museo Virtual Nali</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Cormorant+Garamond:wght@300;400;600&family=Bebas+Neue&family=Righteous&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --gold: #d4af37;
-            --dark-gold: #8b7355;
-            --cream: #f5e6d3;
-            --dark-bg: #0b1026;
-            --burgundy: #8b3a3a;
-            --terracotta: #c85a3a;
-            --sage: #6b8e6b;
-        }
-
-        body {
-            font-family: 'Cormorant Garamond', serif;
-            background: linear-gradient(135deg, #0b1026 0%, #1a2847 100%);
-            min-height: 100vh;
-            overflow: hidden;
-            color: #dfd89c;
-        }
-
-        .museum-container {
-            width: 100%;
-            height: 100vh;
-            perspective: 1000px;
-            position: relative;
-        }
-
-        /* ==================== ENTRANCE VIEW ==================== */
-        .entrance-view {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            background: linear-gradient(to bottom, #1a1a2e 0%, #0b1026 50%, #16213e 100%);
-            z-index: 1;
-        }
-
-        .entrance-view::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: 
-                radial-gradient(circle at 20% 50%, rgba(139, 115, 85, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.1) 0%, transparent 50%);
-            pointer-events: none;
-        }
-
-        .entrance-content {
-            text-align: center;
-            animation: fadeInDown 0.8s ease-out;
-            position: relative;
-            z-index: 2;
-        }
-
-        .entrance-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 4em;
-            font-weight: 900;
-            color: var(--gold);
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 8px;
-            text-shadow: 
-                0 0 20px rgba(212, 175, 55, 0.5),
-                2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        .entrance-subtitle {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.3em;
-            color: var(--dark-gold);
-            margin-bottom: 50px;
-            letter-spacing: 4px;
-            font-weight: 300;
-        }
-
-        .entrance-button {
-            background: linear-gradient(135deg, var(--gold) 0%, #daa520 100%);
-            color: #0b1026;
-            padding: 18px 50px;
-            border-radius: 2px;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 20px;
-            border: 3px solid var(--dark-gold);
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            box-shadow: 
-                0 10px 30px rgba(212, 175, 55, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .entrance-button::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.6s ease;
-        }
-
-        .entrance-button:hover {
-            background: linear-gradient(135deg, #e8c547 0%, #d4af37 100%);
-            transform: scale(1.08);
-            box-shadow: 
-                0 15px 40px rgba(212, 175, 55, 0.5),
-                inset 0 1px 0 rgba(255, 255, 255, 0.5);
-        }
-
-        /* ==================== MUSEUM INTERIOR ==================== */
-        .museum-interior {
-            width: 100%;
-            height: 100%;
-            display: none;
-            flex-direction: column;
-            background: linear-gradient(to bottom, #1a1a2e 0%, #0b1026 50%, #16213e 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .museum-interior.active {
-            display: flex;
-            animation: fadeIn 0.6s ease-out;
-        }
-
-        /* ==================== GALLERY SELECTOR ==================== */
-        .gallery-selector {
-            position: absolute;
-            top: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 200;
-            display: flex;
-            gap: 15px;
-            background: rgba(11, 16, 38, 0.9);
-            padding: 20px 30px;
-            border-radius: 0;
-            border: 3px solid var(--gold);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
-        }
-
-        .gallery-btn {
-            background: rgba(212, 175, 55, 0.15);
-            color: var(--gold);
-            border: 2px solid var(--dark-gold);
-            padding: 10px 18px;
-            border-radius: 0;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: bold;
-        }
-
-        .gallery-btn:hover {
-            background: rgba(212, 175, 55, 0.3);
-            transform: translateY(-2px);
-        }
-
-        .gallery-btn.active {
-            background: var(--gold);
-            color: #0b1026;
-            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
-        }
-
-        .gallery-indicator {
-            color: var(--dark-gold);
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-family: 'Bebas Neue', sans-serif;
-            border-left: 2px solid var(--dark-gold);
-            padding-left: 15px;
-            margin-left: 10px;
-        }
-
-        .gallery-menu-btn {
-            background: linear-gradient(135deg, rgba(139, 115, 85, 0.3), rgba(212, 175, 55, 0.2));
-            color: var(--gold);
-            border: 2px solid var(--dark-gold);
-            padding: 10px 18px;
-            border-radius: 0;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: bold;
-            margin-left: auto;
-        }
-
-        .gallery-menu-btn:hover {
-            background: linear-gradient(135deg, rgba(139, 115, 85, 0.5), rgba(212, 175, 55, 0.4));
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
-        }
-
-        /* ==================== BACK BUTTON ==================== */
-        .back-button {
-            position: absolute;
-            top: 40px;
-            left: 40px;
-            z-index: 250;
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(139, 115, 85, 0.3));
-            color: var(--gold);
-            border: 2px solid var(--gold);
-            padding: 12px 20px;
-            border-radius: 0;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            display: none;
-            font-weight: bold;
-        }
-
-        .back-button.show {
-            display: block;
-        }
-
-        .back-button:hover {
-            background: rgba(212, 175, 55, 0.4);
-            transform: translateX(-5px);
-            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
-        }
-
-        /* ==================== GALLERY PERSPECTIVE ==================== */
-        .gallery-perspective {
-            perspective: 1200px;
-            width: 100%;
-            height: 100%;
-            position: relative;
-            flex: 1;
-        }
-
-        .gallery-wall {
-            position: absolute;
-            top: 0;
-            height: 100%;
-            width: 50%;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            grid-auto-rows: auto;
-            gap: 30px;
-            padding: 140px 35px 60px;
-            overflow-y: auto;
-            overflow-x: hidden;
-            opacity: 0;
-            transition: opacity 0.5s ease-out;
-        }
-
-        .gallery-wall.active {
-            opacity: 1;
-        }
-
-        .gallery-wall::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .gallery-wall::-webkit-scrollbar-track {
-            background: rgba(139, 115, 85, 0.1);
-        }
-
-        .gallery-wall::-webkit-scrollbar-thumb {
-            background: rgba(212, 175, 55, 0.5);
-            border-radius: 4px;
-        }
-
-        .wall-left {
-            left: 0;
-            border-right: 3px dashed var(--dark-gold);
-            transform: perspective(1200px) rotateY(12deg);
-            transform-origin: right center;
-        }
-
-        .wall-right {
-            right: 0;
-            border-left: 3px dashed var(--dark-gold);
-            transform: perspective(1200px) rotateY(-12deg);
-            transform-origin: left center;
-        }
-
-        /* ==================== ART FRAMES ==================== */
-        .art-frame {
-            aspect-ratio: 1;
-            background: linear-gradient(135deg, #d4af37, #aa8c35);
-            border: 12px solid var(--dark-gold);
-            overflow: hidden;
-            box-shadow: 
-                0 10px 25px rgba(0, 0, 0, 0.7),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2),
-                inset 0 -2px 4px rgba(0, 0, 0, 0.3);
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            cursor: pointer;
-            position: relative;
-            animation: frameSlideIn 0.6s ease-out backwards;
-        }
-
-        .art-frame:hover {
-            transform: scale(1.1) translateY(-12px) rotate(1deg);
-            box-shadow: 
-                0 20px 40px rgba(212, 175, 55, 0.5),
-                inset 0 1px 0 rgba(255, 255, 255, 0.3),
-                inset 0 -2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .art-frame img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.4s ease;
-        }
-
-        .art-frame:hover img {
-            transform: scale(1.08);
-        }
-
-        .art-label {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent);
-            color: var(--gold);
-            padding: 20px 10px 12px;
-            font-size: 12px;
-            text-align: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-family: 'Bebas Neue', sans-serif;
-            font-weight: bold;
-        }
-
-        .art-frame:hover .art-label {
-            opacity: 1;
-        }
-
-        /* ==================== THEME STYLES ==================== */
-        /* VICTORIAN THEME (Default) */
-        .museum-interior.theme-victorian {
-            background: linear-gradient(135deg, #1a1520 0%, #0b1026 50%, #1a1a3a 100%);
-        }
-
-        /* CERAMIC THEME - VINTAGE */
-        .museum-interior.theme-ceramic {
-            background: linear-gradient(to bottom, 
-                #d4a574 0%, 
-                #c89968 25%, 
-                #b8885c 50%, 
-                #a87850 75%, 
-                #986844 100%);
-        }
-
-        .gallery-wall.ceramic-wall {
-            background: linear-gradient(to bottom, 
-                rgba(212, 165, 116, 0.3), 
-                rgba(200, 153, 104, 0.2));
-        }
-
-        .wall-left.ceramic-wall {
-            border-right: 3px solid rgba(139, 90, 43, 0.6);
-            background: linear-gradient(to right, 
-                rgba(139, 90, 43, 0.4), 
-                transparent);
-        }
-
-        .wall-right.ceramic-wall {
-            border-left: 3px solid rgba(139, 90, 43, 0.6);
-            background: linear-gradient(to left, 
-                rgba(139, 90, 43, 0.4), 
-                transparent);
-        }
-
-        /* TATTOO THEME */
-        .museum-interior.theme-tattoo {
-            background: linear-gradient(to bottom,
-                #1a1a1a 0%,
-                #2d2d2d 25%,
-                #1a1a1a 50%,
-                #0d0d0d 75%,
-                #000000 100%);
-        }
-
-        .gallery-wall.tattoo-wall {
-            background: linear-gradient(to bottom,
-                rgba(255, 69, 0, 0.05),
-                rgba(255, 20, 147, 0.05));
-        }
-
-        .wall-left.tattoo-wall {
-            border-right: 3px dashed rgba(255, 69, 0, 0.6);
-            background: linear-gradient(to right,
-                rgba(51, 51, 51, 0.8),
-                transparent);
-        }
-
-        .wall-right.tattoo-wall {
-            border-left: 3px dashed rgba(255, 69, 0, 0.6);
-            background: linear-gradient(to left,
-                rgba(51, 51, 51, 0.8),
-                transparent);
-        }
-
-        .art-frame.tattoo-frame {
-            border-color: #ff4500;
-            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
-            box-shadow:
-                0 0 20px rgba(255, 69, 0, 0.4),
-                0 10px 25px rgba(0, 0, 0, 0.8),
-                inset 0 1px 0 rgba(255, 100, 0, 0.2);
-        }
-
-        .art-frame.tattoo-frame:hover {
-            box-shadow:
-                0 0 30px rgba(255, 69, 0, 0.8),
-                0 20px 40px rgba(255, 69, 0, 0.3),
-                inset 0 1px 0 rgba(255, 100, 0, 0.3);
-            border-color: #ff6347;
-        }
-
-        /* NALIA ART THEME - POP ART */
-        .museum-interior.theme-nalia {
-            background: linear-gradient(135deg, #ff1493 0%, #ff69b4 20%, #ffb6c1 40%, #0a0e27 60%, #1a1a2e 80%, #0b1026 100%);
-            animation: popArtGlow 3s ease-in-out infinite;
-        }
-
-        @keyframes popArtGlow {
-            0%, 100% {
-                filter: brightness(1);
-            }
-            50% {
-                filter: brightness(1.1) saturate(1.2);
-            }
-        }
-
-        .gallery-wall.nalia-wall {
-            background: linear-gradient(to bottom,
-                rgba(255, 20, 147, 0.15),
-                rgba(0, 255, 255, 0.1),
-                rgba(255, 215, 0, 0.1));
-        }
-
-        .wall-left.nalia-wall {
-            border-right: 3px solid rgba(255, 20, 147, 0.8);
-            background: linear-gradient(to right,
-                rgba(255, 20, 147, 0.2),
-                transparent);
-        }
-
-        .wall-right.nalia-wall {
-            border-left: 3px solid rgba(0, 255, 255, 0.8);
-            background: linear-gradient(to left,
-                rgba(0, 255, 255, 0.2),
-                transparent);
-        }
-
-        .art-frame.nalia-frame {
-            border-color: #ff1493;
-            background: linear-gradient(135deg, #ff1493, #ff69b4);
-            box-shadow:
-                0 0 30px rgba(255, 20, 147, 0.6),
-                0 10px 25px rgba(0, 0, 0, 0.5),
-                inset 0 1px 0 rgba(255, 255, 0, 0.2);
-        }
-
-        .art-frame.nalia-frame:hover {
-            box-shadow:
-                0 0 50px rgba(255, 20, 147, 1),
-                0 0 30px rgba(0, 255, 255, 0.8),
-                0 20px 40px rgba(255, 20, 147, 0.5),
-                inset 0 1px 0 rgba(255, 255, 0, 0.3);
-            border-color: #00ffff;
-            animation: naliaBounce 0.6s ease;
-        }
-
-        @keyframes naliaBounce {
-            0%, 100% { transform: scale(1.1) rotate(0deg); }
-            25% { transform: scale(1.12) rotate(2deg); }
-            75% { transform: scale(1.12) rotate(-2deg); }
-        }
-
-        /* DIGITAL ART THEME */
-        .museum-interior.theme-digital {
-            background: linear-gradient(135deg, 
-                #0a0e27 0%, 
-                #1a1a3e 25%, 
-                #2d1b4e 50%, 
-                #1a1a2e 75%, 
-                #0b1026 100%);
-            animation: digitalPulse 4s ease-in-out infinite;
-        }
-
-        @keyframes digitalPulse {
-            0%, 100% {
-                filter: hue-rotate(0deg);
-            }
-            50% {
-                filter: hue-rotate(15deg);
-            }
-        }
-
-        .gallery-wall.digital-wall {
-            background: linear-gradient(to bottom,
-                rgba(138, 43, 226, 0.1),
-                rgba(0, 255, 255, 0.1),
-                rgba(138, 43, 226, 0.1));
-        }
-
-        .wall-left.digital-wall {
-            border-right: 3px solid rgba(138, 43, 226, 0.7);
-            background: linear-gradient(to right,
-                rgba(138, 43, 226, 0.2),
-                transparent);
-        }
-
-        .wall-right.digital-wall {
-            border-left: 3px solid rgba(0, 255, 255, 0.7);
-            background: linear-gradient(to left,
-                rgba(0, 255, 255, 0.2),
-                transparent);
-        }
-
-        .art-frame.digital-frame {
-            border-color: #00ffff;
-            background: linear-gradient(135deg, #2d1b4e, #1a0033);
-            box-shadow:
-                0 0 20px rgba(0, 255, 255, 0.5),
-                0 0 40px rgba(138, 43, 226, 0.3),
-                0 10px 25px rgba(0, 0, 0, 0.8),
-                inset 0 1px 0 rgba(0, 255, 255, 0.2);
-        }
-
-        .art-frame.digital-frame:hover {
-            box-shadow:
-                0 0 30px rgba(0, 255, 255, 0.9),
-                0 0 60px rgba(138, 43, 226, 0.6),
-                0 20px 40px rgba(0, 255, 255, 0.4),
-                inset 0 1px 0 rgba(0, 255, 255, 0.3);
-            border-color: #00ff88;
-        }
-
-        /* ==================== SVG DECORATIONS ==================== */
-        .svg-decoration {
-            position: absolute;
-            opacity: 0.3;
-            pointer-events: none;
-            color: var(--gold);
-            transition: color 0.5s ease;
-        }
-
-        .corner-ornament {
-            width: 120px;
-            height: 120px;
-        }
-
-        .corner-ornament-tl {
-            top: 20px;
-            left: 20px;
-        }
-
-        .corner-ornament-tr {
-            top: 20px;
-            right: 20px;
-            transform: scaleX(-1);
-        }
-
-        .corner-ornament-bl {
-            bottom: 20px;
-            left: 20px;
-            transform: scaleY(-1);
-        }
-
-        .corner-ornament-br {
-            bottom: 20px;
-            right: 20px;
-            transform: scale(-1);
-        }
-
-        /* SVG Animations */
-        .svg-animation {
-            z-index: 50;
-            opacity: 0.6;
-            color: var(--gold);
-            transition: all 0.5s ease;
-        }
-
-        .museum-interior.theme-ceramic .svg-animation {
-            color: #8b5a2b;
-        }
-
-        .museum-interior.theme-ceramic .svg-decoration {
-            color: #8b5a2b;
-            opacity: 0.5;
-        }
-
-        .museum-interior.theme-tattoo .svg-animation {
-            color: #ff4500;
-        }
-
-        .museum-interior.theme-tattoo .svg-decoration {
-            color: #ff4500;
-            opacity: 0.4;
-        }
-
-        .museum-interior.theme-nalia .svg-animation {
-            color: #ff1493;
-            filter: drop-shadow(0 0 10px rgba(255, 20, 147, 0.6));
-        }
-
-        .museum-interior.theme-nalia .svg-decoration {
-            color: #ff1493;
-            opacity: 0.7;
-            filter: drop-shadow(0 0 5px rgba(255, 20, 147, 0.4));
-        }
-
-        .museum-interior.theme-digital .svg-animation {
-            color: #00ffff;
-            filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.5));
-        }
-
-        .museum-interior.theme-digital .svg-decoration {
-            color: #00ffff;
-            opacity: 0.6;
-            filter: drop-shadow(0 0 5px rgba(0, 255, 255, 0.3));
-        }
-
-        /* ==================== ARTIST MENU MODAL ==================== */
-        .artist-menu-modal {
-            display: none;
-            position: fixed;
-            z-index: 2000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(8px);
-        }
-
-        .artist-menu-modal.active {
-            display: flex;
-            animation: fadeIn 0.4s ease-out;
-        }
-
-        .artist-menu-content {
-            position: relative;
-            max-width: 900px;
-            max-height: 90vh;
-            background: linear-gradient(135deg, rgba(26, 26, 46, 0.95), rgba(11, 16, 38, 0.95));
-            border: 3px solid var(--gold);
-            padding: 50px;
-            border-radius: 0;
-            overflow-y: auto;
-            animation: zoomIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 
-                0 0 50px rgba(212, 175, 55, 0.3),
-                inset 0 0 50px rgba(212, 175, 55, 0.05);
-        }
-
-        .menu-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 3em;
-            color: var(--gold);
-            text-align: center;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
-        }
-
-        .menu-subtitle {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.1em;
-            color: var(--dark-gold);
-            text-align: center;
-            margin-bottom: 40px;
-            letter-spacing: 2px;
-        }
-
-        .artists-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            margin-top: 30px;
-        }
-
-        .artist-card {
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(139, 115, 85, 0.1));
-            border: 2px solid var(--gold);
-            padding: 30px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            position: relative;
-            overflow: hidden;
-            border-radius: 0;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
-        }
-
-        .artist-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
-            transition: left 0.6s ease;
-        }
-
-        .artist-card:hover::before {
-            left: 100%;
-        }
-
-        .artist-card:hover {
-            transform: translateY(-15px) scale(1.05);
-            border-color: #f0e68c;
-            box-shadow: 
-                0 15px 40px rgba(212, 175, 55, 0.3),
-                0 0 20px rgba(212, 175, 55, 0.2);
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(139, 115, 85, 0.2));
-        }
-
-        .artist-icon {
-            font-size: 3em;
-            margin-bottom: 15px;
-            display: block;
-            animation: bounce 2s ease-in-out infinite;
-        }
-
-        .artist-card:hover .artist-icon {
-            animation: bounce 1s ease-in-out infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .artist-card h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.4em;
-            color: var(--gold);
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .artist-card p {
-            font-family: 'Cormorant Garamond', serif;
-            color: var(--dark-gold);
-            font-size: 0.95em;
-            margin-bottom: 15px;
-            font-style: italic;
-        }
-
-        .artist-count {
-            display: inline-block;
-            background: rgba(212, 175, 55, 0.2);
-            color: var(--gold);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.85em;
-            font-family: 'Bebas Neue', sans-serif;
-            border: 1px solid var(--gold);
-        }
-
-        /* ==================== MODAL ==================== */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(8px);
-        }
-
-        .modal.active {
-            display: flex;
-            animation: fadeIn 0.3s ease-out;
-        }
-
-        .modal-content {
-            position: relative;
-            max-width: 90%;
-            max-height: 90%;
-            animation: zoomIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .modal-content img {
-            max-width: 100%;
-            max-height: 85vh;
-            border: 15px solid var(--gold);
-            box-shadow: 0 0 50px rgba(212, 175, 55, 0.5);
-        }
-
-        .modal-close {
-            position: absolute;
-            top: -50px;
-            right: 0;
-            color: var(--gold);
-            font-size: 40px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: bold;
-        }
-
-        .modal-close:hover {
-            transform: scale(1.2) rotate(90deg);
-            color: #fff;
-        }
-
-        /* ==================== ANIMATIONS ==================== */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes zoomIn {
-            from {
-                transform: scale(0.85);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
-        @keyframes frameSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        /* ==================== RESPONSIVE ==================== */
-        @media (max-width: 768px) {
-            .entrance-title {
-                font-size: 2.5em;
-                letter-spacing: 4px;
-            }
-
-            .gallery-wall {
-                grid-template-columns: 1fr;
-                padding: 120px 15px 50px;
-                gap: 20px;
-            }
-
-            .gallery-selector {
-                flex-wrap: wrap;
-                justify-content: center;
-                width: 90%;
-                gap: 10px;
-            }
-
-            .back-button {
-                top: auto;
-                bottom: 20px;
-                left: 20px;
-            }
-
-            .svg-decoration {
-                display: none;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="Nali — Galería de Arte Visual. Murales, Pintura, Ilustración y Artesanías. Arte andino contemporáneo de Salta, Argentina.">
+<meta property="og:title" content="Nali | Arte Visual — Galería Tierra Viva">
+<meta property="og:image" content="https://i.ibb.co/DD37KnBN/IMG-20260527-WA0150-1.jpg">
+<title>Nali | Arte Visual — Galería Tierra Viva</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Barlow+Condensed:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+/* ══ TOKENS ══ */
+:root{
+  --rojo:#CC0000;--naranja:#E8720C;--amarillo:#F5C400;
+  --verde:#00913A;--azul:#005BAA;--violeta:#5C2D91;--wipblanco:#F0EAD6;
+  --noche:#07050A;
+  --oro:#C8922A;--oro-l:#E8B84B;
+  --crema:#F0E6D0;--cdim:rgba(240,230,208,.65);
+  --gb:rgba(200,146,42,.2);
+  --glass:rgba(10,4,2,.62);
+  --ffd:'Cinzel',serif;
+  --ffc:'Barlow Condensed',sans-serif;
+  --ffb:'Cormorant Garamond',serif;
+  --ease:cubic-bezier(.4,0,.2,1);
+  --tr:.38s var(--ease);
+  --nav:64px;
+
+  /* gallery themes */
+  --th-bg:   #07050A;
+  --th-acc:  #C8922A;
+  --th-acc2: #E8B84B;
+  --th-border: rgba(200,146,42,.22);
+  --th-frame:  rgba(200,146,42,.18);
+  --th-glow:   rgba(200,146,42,.3);
+  --th-wall-l: rgba(200,146,42,.06);
+  --th-wall-r: rgba(200,146,42,.06);
+}
+
+/* themes */
+.t-mural{
+  --th-bg:#070408;
+  --th-acc:#E8720C;--th-acc2:#F5C400;
+  --th-border:rgba(232,114,12,.28);
+  --th-frame:rgba(232,114,12,.2);
+  --th-glow:rgba(232,114,12,.45);
+  --th-wall-l:rgba(232,114,12,.07);
+  --th-wall-r:rgba(245,196,0,.05);
+}
+.t-pintura{
+  --th-bg:#050810;
+  --th-acc:#5C2D91;--th-acc2:#9B5EDE;
+  --th-border:rgba(92,45,145,.35);
+  --th-frame:rgba(92,45,145,.25);
+  --th-glow:rgba(92,45,145,.5);
+  --th-wall-l:rgba(92,45,145,.1);
+  --th-wall-r:rgba(155,94,222,.06);
+}
+.t-dibujo{
+  --th-bg:#050A06;
+  --th-acc:#00913A;--th-acc2:#3dd87d;
+  --th-border:rgba(0,145,58,.32);
+  --th-frame:rgba(0,145,58,.2);
+  --th-glow:rgba(0,145,58,.45);
+  --th-wall-l:rgba(0,145,58,.08);
+  --th-wall-r:rgba(61,216,125,.04);
+}
+.t-artesania{
+  --th-bg:#0A0804;
+  --th-acc:#C8922A;--th-acc2:#E8B84B;
+  --th-border:rgba(200,146,42,.32);
+  --th-frame:rgba(200,146,42,.22);
+  --th-glow:rgba(200,146,42,.45);
+  --th-wall-l:rgba(200,146,42,.1);
+  --th-wall-r:rgba(232,184,75,.05);
+}
+
+/* ══ RESET ══ */
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--ffb);
+  background:var(--th-bg);
+  color:var(--crema);
+  overflow-x:hidden;
+  transition:background .7s var(--ease);
+}
+body.locked{overflow:hidden;}
+
+/* ══ AMBIENT ══ */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 55% 65% at 10% 60%,rgba(204,0,0,.06) 0%,transparent 100%),
+    radial-gradient(ellipse 45% 55% at 90% 15%,rgba(92,45,145,.07) 0%,transparent 100%),
+    radial-gradient(ellipse 70% 45% at 50% 100%,rgba(74,32,0,.4) 0%,transparent 100%);
+}
+#stars{position:fixed;inset:0;pointer-events:none;z-index:0;}
+.star{position:absolute;background:#fff;border-radius:50%;animation:twinkle var(--d,3s) infinite var(--dl,0s);}
+@keyframes twinkle{0%,100%{opacity:.07;}50%{opacity:.55;}}
+
+/* Andean SVG pattern bg */
+.andean-bg{
+  position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M30 0L60 30L30 60L0 30Z' fill='none' stroke='%23C8922A' stroke-width='0.8'/%3E%3Crect x='20' y='20' width='20' height='20' fill='none' stroke='%23C8922A' stroke-width='0.5'/%3E%3C/svg%3E");
+  background-size:60px 60px;
+}
+
+/* ══ WIPHALA ══ */
+.wiphala{
+  width:100%;height:5px;flex-shrink:0;
+  background:linear-gradient(90deg,
+    var(--rojo) 0% 14.28%,var(--naranja) 14.28% 28.56%,
+    var(--amarillo) 28.56% 42.84%,var(--wipblanco) 42.84% 57.12%,
+    var(--verde) 57.12% 71.40%,var(--azul) 71.40% 85.68%,
+    var(--violeta) 85.68% 100%);
+}
+
+/* ══ NAV ══ */
+nav{
+  position:fixed;top:0;left:0;width:100%;z-index:500;
+  display:flex;flex-direction:column;
+}
+.nav-bar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 2rem;height:var(--nav);
+  background:rgba(7,5,10,.8);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--gb);
+  transition:background var(--tr);
+  position:relative;z-index:501;
+}
+nav.scrolled .nav-bar{background:rgba(7,5,10,.97);}
+.nav-logo{
+  font-family:var(--ffd);font-size:1.3rem;font-weight:700;
+  letter-spacing:4px;color:var(--crema);text-decoration:none;flex-shrink:0;
+}
+.nav-logo span{color:var(--oro);}
+.nav-back{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-family:var(--ffc);font-size:.8rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--cdim);text-decoration:none;
+  padding:.4rem .9rem;border-radius:30px;
+  border:1px solid var(--gb);
+  transition:var(--tr);
+}
+.nav-back:hover{color:var(--oro-l);border-color:var(--oro);}
+.nav-right{display:flex;align-items:center;gap:.6rem;}
+
+/* lang */
+.lang-sel{
+  display:flex;gap:.1rem;align-items:center;
+  background:rgba(200,146,42,.07);border:1px solid var(--gb);
+  border-radius:30px;padding:.16rem .38rem;
+}
+.lang-btn{
+  background:none;border:none;cursor:pointer;
+  font-family:var(--ffc);font-size:.7rem;font-weight:700;letter-spacing:1px;
+  color:rgba(240,230,208,.4);padding:.16rem .38rem;border-radius:14px;
+  transition:var(--tr);text-transform:uppercase;
+}
+.lang-btn.active{background:var(--oro);color:var(--noche);}
+.lang-btn:hover:not(.active){color:var(--oro-l);}
+
+/* hamburger */
+.hamburger{
+  display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;
+  cursor:pointer;background:none;border:none;width:42px;height:42px;flex-shrink:0;
+  -webkit-tap-highlight-color:transparent;
+}
+.hamburger span{
+  display:block;width:24px;height:2.5px;background:var(--oro);border-radius:3px;
+  transition:transform .35s var(--ease),opacity .35s;transform-origin:center;
+}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5.5px,5.5px);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5.5px,-5.5px);}
+
+/* mobile drawer */
+.drawer-overlay{position:fixed;inset:0;z-index:510;background:rgba(0,0,0,.6);opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s;}
+.drawer-overlay.open{opacity:1;visibility:visible;}
+.mobile-drawer{
+  position:fixed;top:0;right:0;bottom:0;width:min(300px,86vw);z-index:520;
+  background:rgba(7,5,10,.99);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-left:1px solid rgba(200,146,42,.18);
+  display:flex;flex-direction:column;overflow-y:auto;
+  transform:translateX(100%);transition:transform .38s var(--ease);
+}
+.mobile-drawer.open{transform:translateX(0);}
+.drawer-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 1.4rem;height:var(--nav);border-bottom:1px solid rgba(200,146,42,.1);flex-shrink:0;
+}
+.drawer-close{
+  background:none;border:1px solid rgba(200,146,42,.25);color:var(--oro);
+  width:38px;height:38px;border-radius:50%;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;font-size:1.1rem;
+  transition:var(--tr);-webkit-tap-highlight-color:transparent;
+}
+.drawer-close:hover{background:rgba(200,146,42,.15);}
+.drawer-body{flex:1;padding:1.2rem 1.4rem;}
+.drawer-link{
+  display:flex;align-items:center;gap:.8rem;
+  font-family:var(--ffc);font-size:1.1rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--crema);text-decoration:none;
+  padding:.9rem 0;border-bottom:1px solid rgba(200,146,42,.1);
+  transition:color .25s,padding-left .25s;min-height:50px;
+  -webkit-tap-highlight-color:transparent;
+}
+.drawer-link:hover,.drawer-link:active{color:var(--oro);padding-left:.3rem;}
+.drawer-link .di{width:28px;height:28px;border-radius:7px;background:rgba(200,146,42,.1);border:1px solid rgba(200,146,42,.2);display:flex;align-items:center;justify-content:center;font-size:.8rem;color:var(--oro);flex-shrink:0;}
+.drawer-foot{padding:1.2rem 1.4rem 1.6rem;border-top:1px solid rgba(200,146,42,.1);flex-shrink:0;}
+.drawer-lang{display:flex;gap:.45rem;flex-wrap:wrap;margin-top:1rem;}
+.drawer-lang .lang-btn{background:rgba(200,146,42,.1);border:1px solid var(--gb);border-radius:22px;padding:.5rem 1rem;font-size:.8rem;color:var(--crema);min-height:38px;min-width:44px;}
+.drawer-lang .lang-btn.active{background:var(--oro);color:var(--noche);font-weight:900;}
+
+/* ══ MUSEUM ENTRANCE ══ */
+#entrance{
+  position:fixed;inset:0;z-index:400;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#070408 0%,#0b1020 50%,#0c0810 100%);
+  transition:opacity .8s var(--ease),visibility .8s;
+}
+#entrance.out{opacity:0;visibility:hidden;pointer-events:none;}
+#entrance canvas{position:absolute;inset:0;width:100%;height:100%;}
+.ent-inner{
+  position:relative;z-index:2;text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:1.2rem;
+  padding:2rem;
+}
+.ent-eyebrow{
+  font-family:var(--ffc);font-size:.75rem;letter-spacing:5px;text-transform:uppercase;
+  color:var(--oro);
+  animation:fadeUp .8s var(--ease) .3s both;
+}
+.ent-title{
+  font-family:var(--ffd);font-weight:900;
+  font-size:clamp(3.5rem,14vw,7rem);
+  letter-spacing:6px;
+  background:linear-gradient(135deg,var(--rojo),var(--naranja),var(--amarillo),var(--oro));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:fadeUp .9s var(--ease) .6s both;
+  line-height:.9;
+}
+.ent-sub{
+  font-family:var(--ffc);font-size:clamp(.8rem,3.5vw,1.1rem);
+  letter-spacing:5px;text-transform:uppercase;color:var(--cdim);
+  animation:fadeUp .9s var(--ease) .9s both;
+}
+.ent-bar{
+  width:min(220px,65vw);height:4px;border-radius:3px;
+  background:linear-gradient(90deg,var(--rojo),var(--naranja),var(--amarillo),var(--wipblanco),var(--verde),var(--azul),var(--violeta));
+  animation:fadeUp .9s var(--ease) 1.1s both;
+}
+.ent-btn{
+  margin-top:.5rem;
+  display:inline-flex;align-items:center;gap:.7rem;
+  font-family:var(--ffd);font-size:.85rem;letter-spacing:3px;text-transform:uppercase;font-weight:700;
+  background:linear-gradient(135deg,var(--oro),#daa520);
+  color:var(--noche);
+  padding:1rem 2.5rem;border-radius:2px;border:none;cursor:pointer;
+  box-shadow:0 10px 30px rgba(200,146,42,.35);
+  transition:var(--tr);
+  animation:fadeUp .9s var(--ease) 1.4s both;
+}
+.ent-btn:hover{transform:scale(1.06);box-shadow:0 16px 40px rgba(200,146,42,.5);}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:none;}}
+
+/* ══ GALLERY TABS BAR ══ */
+.tabs-bar{
+  position:fixed;
+  top:var(--nav);left:0;width:100%;z-index:490;
+  background:rgba(7,5,10,.88);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--th-border);
+  transition:border-color .5s;
+  display:none;
+}
+.tabs-bar.show{display:block;}
+.tabs-inner{
+  max-width:1340px;margin:0 auto;
+  padding:.6rem 2rem;
+  display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;
+}
+.tab-btn{
+  font-family:var(--ffc);font-size:.75rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;
+  padding:.45rem 1.1rem;border-radius:30px;
+  border:1.5px solid rgba(200,146,42,.2);
+  background:transparent;color:var(--cdim);
+  cursor:pointer;transition:var(--tr);
+  -webkit-tap-highlight-color:transparent;
+}
+.tab-btn:hover{color:var(--oro-l);border-color:rgba(200,146,42,.45);}
+.tab-btn.active{
+  background:var(--th-acc);
+  border-color:var(--th-acc);
+  color:var(--noche);
+}
+.tab-sep{width:1px;height:20px;background:rgba(200,146,42,.15);flex-shrink:0;}
+.tab-info{
+  margin-left:auto;
+  font-family:var(--ffc);font-size:.7rem;letter-spacing:2px;text-transform:uppercase;
+  color:rgba(240,230,208,.3);white-space:nowrap;
+}
+
+/* ══ MUSEUM INTERIOR ══ */
+#museum{display:none;position:relative;z-index:1;min-height:100vh;padding-top:calc(var(--nav) + 56px);}
+#museum.show{display:block;}
+
+/* gallery sections */
+.gallery-section{display:none;}
+.gallery-section.active{display:block;}
+
+/* animated SVG decoration per section */
+.sec-deco{
+  position:absolute;pointer-events:none;opacity:.55;
+  transition:color .5s;
+}
+
+/* ══ SECTION HEADER ══ */
+.sec-header{
+  max-width:1340px;margin:0 auto;
+  padding:3.5rem 2rem 2.5rem;
+  display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:end;
+  border-bottom:1px solid var(--th-border);
+}
+.sec-eyebrow{
+  font-family:var(--ffc);font-size:.72rem;letter-spacing:4px;text-transform:uppercase;
+  color:var(--th-acc);margin-bottom:.7rem;
+  display:flex;align-items:center;gap:.7rem;
+}
+.sec-eyebrow::before{content:'';width:24px;height:1px;background:currentColor;}
+.sec-title{
+  font-family:var(--ffd);font-size:clamp(2rem,5vw,3.5rem);
+  font-weight:700;color:var(--crema);
+  letter-spacing:1px;line-height:1;margin-bottom:.6rem;
+}
+.sec-title em{
+  font-style:normal;
+  background:linear-gradient(125deg,var(--th-acc),var(--th-acc2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.sec-desc{font-size:1rem;color:var(--cdim);line-height:1.8;max-width:580px;}
+.sec-count{
+  font-family:var(--ffd);font-size:3rem;font-weight:900;
+  color:var(--th-acc);opacity:.18;white-space:nowrap;align-self:center;
+}
+
+/* ══ PERSPECTIVE WALLS ══ */
+.walls{
+  max-width:1340px;margin:0 auto;
+  padding:2.5rem 2rem 5rem;
+  display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;
+  position:relative;
+}
+.wall{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:1rem;align-content:start;
+}
+.wall-left{
+  transform:perspective(1400px) rotateY(6deg);
+  transform-origin:right center;
+}
+.wall-right{
+  transform:perspective(1400px) rotateY(-6deg);
+  transform-origin:left center;
+}
+.wall-divider{
+  position:absolute;left:50%;top:0;bottom:0;
+  width:1px;
+  background:linear-gradient(to bottom,transparent,var(--th-acc),var(--th-acc),transparent);
+  opacity:.12;transform:translateX(-50%);
+  pointer-events:none;
+}
+
+/* ══ ART FRAME ══ */
+.art-frame{
+  position:relative;
+  background:var(--th-frame);
+  border:2px solid var(--th-border);
+  border-radius:4px;
+  overflow:hidden;
+  cursor:pointer;
+  aspect-ratio:1;
+  transition:var(--tr);
+  box-shadow:0 8px 28px rgba(0,0,0,.55);
+  animation:frameIn .55s var(--ease) backwards;
+}
+.art-frame::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.04) 0%,transparent 60%);
+  pointer-events:none;z-index:1;
+}
+.art-frame:hover{
+  transform:translateY(-10px) scale(1.04);
+  border-color:var(--th-acc);
+  box-shadow:0 20px 50px rgba(0,0,0,.65),0 0 30px var(--th-glow);
+}
+.art-frame img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .6s var(--ease);
+}
+.art-frame:hover img{transform:scale(1.07);}
+
+/* Frame label */
+.frame-label{
+  position:absolute;bottom:0;left:0;right:0;
+  background:linear-gradient(to top,rgba(0,0,0,.9) 0%,transparent 100%);
+  padding:1.5rem .9rem .75rem;
+  opacity:0;transition:opacity .3s;z-index:2;
+}
+.art-frame:hover .frame-label{opacity:1;}
+.label-title{
+  font-family:var(--ffd);font-size:.75rem;font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;color:var(--crema);
+}
+.label-tech{
+  font-family:var(--ffc);font-size:.65rem;letter-spacing:1px;text-transform:uppercase;
+  color:var(--th-acc2);margin-top:.2rem;
+}
+
+/* expand btn */
+.frame-expand{
+  position:absolute;top:.75rem;right:.75rem;
+  width:34px;height:34px;border-radius:50%;
+  background:var(--th-acc);border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--noche);font-size:.8rem;
+  opacity:0;transform:scale(.8);transition:var(--tr);z-index:3;
+}
+.art-frame:hover .frame-expand{opacity:1;transform:scale(1);}
+
+@keyframes frameIn{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:none;}}
+
+/* ══ LIGHTBOX ══ */
+#lightbox{
+  display:none;position:fixed;inset:0;z-index:900;
+  background:rgba(0,0,0,.97);
+  align-items:center;justify-content:center;
+  backdrop-filter:blur(10px);
+}
+#lightbox.open{display:flex;}
+.lb-wrap{
+  position:relative;
+  display:grid;
+  grid-template-columns:1fr 360px;
+  gap:0;
+  max-width:min(1200px,96vw);
+  max-height:92vh;
+  width:100%;
+  border:1px solid var(--th-border);
+  border-radius:6px;
+  overflow:hidden;
+  box-shadow:0 0 80px rgba(0,0,0,.8);
+  animation:lbIn .35s var(--ease) both;
+}
+@keyframes lbIn{from{opacity:0;transform:scale(.93);}to{opacity:1;transform:none;}}
+
+.lb-img-area{
+  position:relative;
+  background:#000;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;min-height:300px;
+}
+.lb-img-area img{
+  max-width:100%;max-height:92vh;
+  object-fit:contain;display:block;
+}
+.lb-nav{
+  position:absolute;top:50%;transform:translateY(-50%);
+  background:rgba(0,0,0,.55);border:1px solid rgba(200,146,42,.3);color:var(--crema);
+  width:44px;height:44px;border-radius:50%;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;font-size:1rem;
+  transition:var(--tr);-webkit-tap-highlight-color:transparent;z-index:5;
+}
+.lb-nav:hover{background:var(--th-acc);border-color:var(--th-acc);color:var(--noche);}
+.lb-prev{left:1rem;}.lb-next{right:1rem;}
+
+/* Info panel */
+.lb-info{
+  background:var(--glass);
+  border-left:1px solid var(--th-border);
+  display:flex;flex-direction:column;
+  overflow:hidden;
+}
+.lb-info-scroll{overflow-y:auto;flex:1;padding:2rem;-webkit-overflow-scrolling:touch;}
+.lb-info-scroll::-webkit-scrollbar{width:4px;}
+.lb-info-scroll::-webkit-scrollbar-thumb{background:rgba(200,146,42,.3);border-radius:2px;}
+
+.lb-close{
+  position:absolute;top:.8rem;right:.8rem;z-index:10;
+  background:rgba(0,0,0,.6);border:1px solid rgba(200,146,42,.3);color:var(--crema);
+  width:38px;height:38px;border-radius:50%;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;font-size:1rem;
+  transition:var(--tr);
+}
+.lb-close:hover{background:var(--rojo);transform:rotate(90deg);}
+
+/* Info fields */
+.lb-category{
+  font-family:var(--ffc);font-size:.65rem;letter-spacing:3px;text-transform:uppercase;
+  color:var(--th-acc);margin-bottom:.6rem;display:flex;align-items:center;gap:.5rem;
+}
+.lb-category::before{content:'';width:18px;height:1px;background:currentColor;}
+.lb-title{
+  font-family:var(--ffd);font-size:1.4rem;font-weight:700;
+  color:var(--crema);letter-spacing:.5px;margin-bottom:.4rem;line-height:1.1;
+}
+.lb-year{
+  font-family:var(--ffc);font-size:.75rem;letter-spacing:2px;
+  color:rgba(240,230,208,.35);text-transform:uppercase;margin-bottom:1.2rem;
+}
+.lb-divider{height:1px;background:var(--th-border);margin:1.2rem 0;}
+
+.lb-field-label{
+  font-family:var(--ffc);font-size:.62rem;letter-spacing:3px;text-transform:uppercase;
+  color:var(--th-acc);margin-bottom:.35rem;
+}
+.lb-field-value{
+  font-family:var(--ffb);font-size:.95rem;color:var(--cdim);
+  line-height:1.75;margin-bottom:1.2rem;font-weight:300;
+}
+.lb-field-value strong{color:var(--crema);font-weight:600;}
+
+.lb-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1rem;}
+.lb-tag{
+  font-family:var(--ffc);font-size:.62rem;letter-spacing:1.5px;text-transform:uppercase;
+  padding:.22rem .7rem;border-radius:20px;
+  background:rgba(200,146,42,.08);border:1px solid var(--th-border);color:var(--th-acc2);
+}
+
+.lb-wa{
+  margin-top:1.5rem;
+  display:flex;align-items:center;justify-content:center;gap:.55rem;
+  background:linear-gradient(135deg,#128C7E,#075E54);
+  color:#fff;text-decoration:none;
+  font-family:var(--ffc);font-size:.8rem;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;
+  padding:.7rem 1.2rem;border-radius:50px;
+  transition:var(--tr);
+}
+.lb-wa:hover{opacity:.9;transform:translateY(-2px);}
+
+/* ══ ANDEAN DIVIDER ══ */
+.andean-div{
+  height:2px;
+  background:linear-gradient(90deg,transparent,var(--rojo),var(--naranja),var(--amarillo),var(--verde),var(--azul),var(--violeta),transparent);
+  opacity:.25;margin:0;
+}
+
+/* ══ CORNER ORNAMENTS ══ */
+.corner-svg{
+  position:absolute;pointer-events:none;
+  color:var(--th-acc);opacity:.18;
+  transition:color .5s;
+}
+.c-tl{top:70px;left:0;transform:none;}
+.c-tr{top:70px;right:0;transform:scaleX(-1);}
+
+/* ══ FLOATING SVG DECO ══ */
+.float-deco{
+  position:fixed;pointer-events:none;z-index:2;
+  color:var(--th-acc);opacity:.45;transition:color .5s;
+}
+.float-deco.left{bottom:4rem;left:2rem;}
+.float-deco.right{bottom:4rem;right:2rem;}
+
+/* ══ SCROLL REVEAL ══ */
+.sr{opacity:0;transform:translateY(22px);transition:opacity .65s var(--ease),transform .65s var(--ease);}
+.sr.visible{opacity:1;transform:none;}
+.d1{transition-delay:.1s;}.d2{transition-delay:.2s;}.d3{transition-delay:.3s;}
+
+/* ══ FOOTER ══ */
+footer{
+  position:relative;z-index:1;
+  border-top:1px solid var(--th-border);
+  padding:2.5rem 2rem 1.8rem;text-align:center;
+  transition:border-color .5s;
+}
+.footer-logo{font-family:var(--ffd);font-size:1.2rem;color:var(--oro);letter-spacing:3px;margin-bottom:.4rem;}
+.footer-sub{font-family:var(--ffc);font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:rgba(240,230,208,.2);}
+.footer-links{margin-top:1rem;display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap;}
+.footer-links a{font-family:var(--ffc);font-size:.7rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(240,230,208,.3);text-decoration:none;transition:color .3s;}
+.footer-links a:hover{color:var(--oro);}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:1024px){
+  .walls{grid-template-columns:1fr;gap:.85rem;}
+  .wall{grid-template-columns:1fr 1fr;}
+  .wall-left,.wall-right{transform:none;}
+  .wall-divider{display:none;}
+  .lb-wrap{grid-template-columns:1fr;}
+  .lb-info{max-height:45vh;border-left:none;border-top:1px solid var(--th-border);}
+}
+@media(max-width:768px){
+  :root{--nav:58px;}
+  .nav-bar{padding:0 1.1rem;}
+  .lang-sel{display:none !important;}
+  .hamburger{display:flex !important;}
+  .walls{padding:1.5rem 1rem 4rem;}
+  .wall{grid-template-columns:1fr 1fr;gap:.6rem;}
+  .sec-header{grid-template-columns:1fr;padding:2.5rem 1.2rem 1.8rem;}
+  .sec-count{display:none;}
+  .tabs-inner{padding:.5rem 1rem;gap:.45rem;}
+  .tab-btn{padding:.38rem .85rem;font-size:.68rem;}
+  .tab-info{display:none;}
+  .lb-nav{width:36px;height:36px;font-size:.85rem;}
+  .lb-prev{left:.5rem;}.lb-next{right:.5rem;}
+}
+@media(max-width:480px){
+  .wall{grid-template-columns:1fr;}
+  .lb-wrap{max-height:95vh;}
+  .lb-info{max-height:50vh;}
+}
+@media(prefers-reduced-motion:reduce){
+  .sr{opacity:1;transform:none;}
+  *{animation-duration:.01ms !important;transition-duration:.01ms !important;}
+}
+</style>
 </head>
-<body>
-    <div class="museum-container">
-        <!-- ENTRADA -->
-        <div class="entrance-view" id="entranceView">
-            <div class="entrance-content">
-                <div class="entrance-title">Tierra Viva</div>
-                <div class="entrance-subtitle">Galería Virtual de Nali</div>
-                <button class="entrance-button" onclick="enterMuseum()">✨ Entrar al Museo ✨</button>
-            </div>
-        </div>
+<body class="t-mural">
 
-        <!-- INTERIOR DEL MUSEO -->
-        <div class="museum-interior theme-victorian" id="museumInterior">
-            <button class="back-button" id="backBtn" onclick="goBack()">← Atrás</button>
+<!-- STARS + BG -->
+<div id="stars"></div>
+<div class="andean-bg"></div>
 
-            <div class="gallery-selector" id="gallerySelector">
-                <button class="gallery-btn active" data-gallery="ceramica" onclick="switchGallery('ceramica', event)">Alhua Cerámica</button>
-                <button class="gallery-btn" data-gallery="tattoo" onclick="switchGallery('tattoo', event)">Tattoo Design</button>
-                <button class="gallery-btn" data-gallery="nalia" onclick="switchGallery('nalia', event)">Nalia Art</button>
-                <button class="gallery-btn" data-gallery="digital" onclick="switchGallery('digital', event)">Arte Digital</button>
-                <button class="gallery-menu-btn" onclick="openArtistMenu()">🎨 Galeria Pacha</button>
-            </div>
+<!-- ══ ENTRANCE ══ -->
+<div id="entrance">
+  <canvas id="entCanvas"></canvas>
+  <div class="ent-inner">
+    <p class="ent-eyebrow">Galería Virtual · Nali</p>
+    <h1 class="ent-title">Tierra<br>Viva</h1>
+    <p class="ent-sub">Arte Visual · Salta, Argentina</p>
+    <div class="ent-bar"></div>
+    <button class="ent-btn" id="entBtn">
+      <i class="fas fa-door-open"></i>
+      <span data-i18n="ent_enter">Entrar a la Galería</span>
+    </button>
+  </div>
+</div>
 
-            <!-- DECORACIONES SVG VICTORIANAS -->
-            <svg class="svg-decoration corner-ornament corner-ornament-tl" id="svg-tl" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <g stroke="currentColor" stroke-width="1.5" fill="none">
-                    <path d="M 10 10 L 50 50 L 10 90" opacity="0.6"/>
-                    <circle cx="30" cy="30" r="8" opacity="0.4"/>
-                    <circle cx="30" cy="70" r="8" opacity="0.4"/>
-                    <path d="M 60 20 Q 80 40 60 80" opacity="0.5"/>
-                </g>
-            </svg>
-
-            <svg class="svg-decoration corner-ornament corner-ornament-tr" id="svg-tr" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <g stroke="currentColor" stroke-width="1.5" fill="none">
-                    <path d="M 10 10 L 50 50 L 10 90" opacity="0.6"/>
-                    <circle cx="30" cy="30" r="8" opacity="0.4"/>
-                    <circle cx="30" cy="70" r="8" opacity="0.4"/>
-                    <path d="M 60 20 Q 80 40 60 80" opacity="0.5"/>
-                </g>
-            </svg>
-
-            <svg class="svg-decoration corner-ornament corner-ornament-bl" id="svg-bl" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <g stroke="currentColor" stroke-width="1.5" fill="none">
-                    <path d="M 10 10 L 50 50 L 10 90" opacity="0.6"/>
-                    <circle cx="30" cy="30" r="8" opacity="0.4"/>
-                    <circle cx="30" cy="70" r="8" opacity="0.4"/>
-                    <path d="M 60 20 Q 80 40 60 80" opacity="0.5"/>
-                </g>
-            </svg>
-
-            <svg class="svg-decoration corner-ornament corner-ornament-br" id="svg-br" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <g stroke="currentColor" stroke-width="1.5" fill="none">
-                    <path d="M 10 10 L 50 50 L 10 90" opacity="0.6"/>
-                    <circle cx="30" cy="30" r="8" opacity="0.4"/>
-                    <circle cx="30" cy="70" r="8" opacity="0.4"/>
-                    <path d="M 60 20 Q 80 40 60 80" opacity="0.5"/>
-                </g>
-            </svg>
-
-            <!-- SVG ANIMADO - CERÁMICA -->
-            <svg class="svg-animation ceramic-svg" id="ceramic-animation" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="position: absolute; bottom: 60px; left: 5%; width: 150px; height: 150px;">
-                <defs>
-                    <style>
-                        @keyframes ceramicSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-                        @keyframes ceramicFloat { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
-                    </style>
-                </defs>
-                <g transform-origin="100 100" style="animation: ceramicSpin 8s linear infinite; transform-origin: 100px 100px;">
-                    <circle cx="100" cy="100" r="60" fill="none" stroke="currentColor" stroke-width="2" opacity="0.4"/>
-                    <circle cx="100" cy="50" r="15" fill="currentColor" opacity="0.6"/>
-                    <circle cx="150" cy="100" r="12" fill="currentColor" opacity="0.5"/>
-                    <circle cx="100" cy="150" r="14" fill="currentColor" opacity="0.5"/>
-                    <circle cx="50" cy="100" r="13" fill="currentColor" opacity="0.6"/>
-                </g>
-            </svg>
-
-            <!-- SVG ANIMADO - TATUAJE -->
-            <svg class="svg-animation tattoo-svg" id="tattoo-animation" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="position: absolute; bottom: 60px; right: 5%; width: 150px; height: 150px; display: none;">
-                <defs>
-                    <style>
-                        @keyframes tattooFlash { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.8; } }
-                    </style>
-                </defs>
-                <g style="animation: tattooFlash 2s ease-in-out infinite;">
-                    <path d="M 100 40 L 130 80 L 100 120 L 70 80 Z" fill="none" stroke="currentColor" stroke-width="2"/>
-                    <circle cx="100" cy="80" r="8" fill="currentColor" opacity="0.7"/>
-                    <path d="M 60 140 Q 100 160 140 140" fill="none" stroke="currentColor" stroke-width="2" opacity="0.6"/>
-                    <line x1="50" y1="50" x2="150" y2="150" stroke="currentColor" stroke-width="1" opacity="0.4"/>
-                    <line x1="150" y1="50" x2="50" y2="150" stroke="currentColor" stroke-width="1" opacity="0.4"/>
-                </g>
-            </svg>
-
-            <!-- SVG ANIMADO - POP ART -->
-            <svg class="svg-animation nalia-svg" id="nalia-animation" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="position: absolute; bottom: 60px; left: 5%; width: 150px; height: 150px; display: none;">
-                <defs>
-                    <style>
-                        @keyframes popart-pulse { 0%, 100% { r: 20px; opacity: 0.4; } 50% { r: 40px; opacity: 0.1; } }
-                        @keyframes popart-bounce { 0%, 100% { transform: translateY(0px); } 25% { transform: translateY(-15px); } }
-                    </style>
-                </defs>
-                <g>
-                    <circle cx="100" cy="100" r="20" fill="none" stroke="currentColor" stroke-width="3" style="animation: popart-pulse 2s ease-out infinite; transform-origin: 100px 100px;"/>
-                    <circle cx="100" cy="100" r="20" fill="none" stroke="currentColor" stroke-width="3" style="animation: popart-pulse 2s ease-out 0.4s infinite; transform-origin: 100px 100px;" opacity="0.6"/>
-                    <polygon points="100,50 130,80 100,110 70,80" fill="currentColor" opacity="0.7" style="animation: popart-bounce 1.5s ease-in-out infinite;"/>
-                    <text x="100" y="160" text-anchor="middle" font-size="24" font-weight="bold" fill="currentColor" opacity="0.6">✨</text>
-                </g>
-            </svg>
-
-            <!-- SVG ANIMADO - DIGITAL -->
-            <svg class="svg-animation digital-svg" id="digital-animation" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="position: absolute; bottom: 60px; right: 5%; width: 150px; height: 150px; display: none;">
-                <defs>
-                    <style>
-                        @keyframes digitalGlow { 0%, 100% { stroke-opacity: 0.3; } 50% { stroke-opacity: 1; } }
-                        @keyframes digitalScan { 0% { y: 30; } 100% { y: 150; } }
-                    </style>
-                </defs>
-                <g>
-                    <rect x="40" y="40" width="120" height="120" fill="none" stroke="currentColor" stroke-width="2" style="animation: digitalGlow 2s ease-in-out infinite;"/>
-                    <line x1="50" y1="80" x2="150" y2="80" stroke="currentColor" stroke-width="1" opacity="0.5"/>
-                    <line x1="50" y1="120" x2="150" y2="120" stroke="currentColor" stroke-width="1" opacity="0.5"/>
-                    <circle cx="100" cy="100" r="30" fill="none" stroke="currentColor" stroke-width="2" style="animation: digitalGlow 1.5s ease-in-out infinite 0.3s;"/>
-                    <path d="M 60 60 L 140 140 M 140 60 L 60 140" stroke="currentColor" stroke-width="1" opacity="0.4"/>
-                </g>
-            </svg>
-
-            <div class="gallery-perspective">
-                <!-- CERÁMICA -->
-                <div class="gallery-wall wall-left active ceramic-wall" id="gallery-ceramica" data-gallery="ceramica">
-                    <div class="art-frame" onclick="openModal(this.querySelector('img').src)">
-                        <img src="https://i.pinimg.com/736x/de/c9/55/dec95579bba28914a0b2f5776b180df8.jpg" alt="Cerámica 1">
-                        <div class="art-label">Alhua 01</div>
-                    </div>
-                    <div class="art-frame" onclick="openModal(this.querySelector('img').src)">
-                        <img src="https://i.pinimg.com/736x/d0/28/30/d02830989cc5293ab60227a1baab8c8c.jpg" alt="Cerámica 2">
-                        <div class="art-label">Alhua 02</div>
-                    </div>
-                    <div class="art-frame" onclick="openModal(this.querySelector('img').src)">
-                        <img src="https://i.pinimg.com/736x/82/d4/17/82d417f70fdee714a6def77ba0003c23.jpg" alt="Cerámica 3">
-                        <div class="art-label">Alhua 03</div>
-                    </div>
-                    <div class="art-frame" onclick="openModal(this.querySelector('img').src)">
-                        <img src="https://i.pinimg.com/736x/49/c1/b1/49c1b15ad80c5fc29d963071b99b863c.jpg" alt="Cerámica 4">
-                        <div class="art-label">Alhua 04</div>
-                    </div>
-                    <div class="art-frame" onclick="openModal(this.querySelector('img').src)">
-                        <img src="https://i.pinimg.com/736x/48/0c/f5/480cf55a2618038aee58822c1476fd8a.jpg" alt="Cerámica 5">
-                        <div class="art-label">Alhua 05</div>
-                    </div>
-                </div>
-
-                <!-- TATTOO -->
-                <div class="gallery-wall wall-right tattoo-wall" id="gallery-tattoo" data-gallery="tattoo" style="display: none;">
-                    <div class="art-frame tattoo-frame" onclick="openModal(this.querySelector('img').src)">
-                        <img src="https://i.pinimg.com/736x/2b/94/20/2b9420d196b00c88f23a745d00293341.jpg" alt="Tattoo 1">
-                        <div class="art-label">Tattoo 01</div>
-                    </div>
-                    <div class="art-frame tattoo-frame" onclick="openModal(this.querySelector('img').src)">
-                        <img src="https://i.pinimg.com/736x/07/d6/0e/07d60e7a45917f79623c0826d441d757.jpg" alt="Tattoo 2">
-                        <div class="art-label">Tattoo 02</div>
-                    </div>
-                    <div class="art-frame tattoo-frame" onclick="openModal(this.querySelector('img').src)">
-                        <img src="https://i.pinimg.com/736x/15/37/d4/1537d485e56376a1c5fc342acc8d8026.jpg" alt="Tattoo 3">
-                        <div class="art-label">Tattoo 03</div>
-                    </div>
-                    <div class="art-frame tattoo-frame" onclick="openModal(this.querySelector('img').src)">
-                        <img src="https://i.pinimg.com/736x/40/6d/8d/406d8d97e6493c6c403e03908c7d0961.jpg" alt="Tattoo 4">
-                        <div class="art-label">Tattoo 04</div>
-                    </div>
-                    <div class="art-frame tattoo-frame" onclick="openModal(this.querySelector('img').src)">
-                        <img src="https://i.pinimg.com/736x/44/0d/63/440d6349847962c13dd3cb61794b45f9.jpg" alt="Tattoo 5">
-                        <div class="art-label">Tattoo 05</div>
-                    </div>
-                    <div class="art-frame tattoo-frame" onclick="openModal(this.querySelector('img').src)">
-                        <img src="https://i.pinimg.com/736x/45/8b/30/458b305c694393c734636890f4c67c79.jpg" alt="Tattoo 6">
-                        <div class="art-label">Tattoo 06</div>
-                    </div>
-                    <div class="art-frame tattoo-frame" onclick="openModal(this.querySelector('img').src)">
-                        <img src="https://i.pinimg.com/736x/d7/d5/63/d7d5633b3c9b910d235a053c15ebd2c8.jpg" alt="Tattoo 7">
-                        <div class="art-label">Tattoo 07</div>
-                    </div>
-                    <div class="art-frame tattoo-frame" onclick="openModal(this.querySelector('img').src)">
-                        <img src="https://i.pinimg.com/736x/77/39/63/773963a0b5a7ce1e6953f0d77a4f6830.jpg" alt="Tattoo 8">
-                        <div class="art-label">Tattoo 08</div>
-                    </div>
-                </div>
-
-                <!-- NALIA ART -->
-                <div class="gallery-wall wall-left nalia-wall" id="gallery-nalia" data-gallery="nalia" style="display: none;">
-                    <div class="art-frame nalia-frame" onclick="openModal(this.querySelector('img').src)">
-                        <img src="https://i.pinimg.com/736x/21/bd/24/21bd2402217441d33fa72e3ea44acc6b.jpg" alt="Nalia 1">
-                        <div class="art-label">Nalia 01</div>
-                    </div>
-                    <div class="art-frame nalia-frame" onclick="openModal(this.querySelector('img').src)">
-                        <img src="https://i.pinimg.com/736x/50/f4/fd/50f4fd15c41c698cf337449a04a98db8.jpg" alt="Nalia 2">
-                        <div class="art-label">Nalia 02</div>
-                    </div>
-                    <div class="art-frame nalia-frame" onclick="openModal(this.querySelector('img').src)">
-                        <img src="https://i.pinimg.com/736x/bf/42/a3/bf42a3ebb0fe45d99ff21a2f8693025d.jpg" alt="Nalia 3">
-                        <div class="art-label">Nalia 03</div>
-                    </div>
-                    <div class="art-frame nalia-frame" onclick="openModal(this.querySelector('img').src)">
-                        <img src="https://i.pinimg.com/736x/ae/be/d9/aebed92462028324a8f347200ddd4795.jpg" alt="Nalia 4">
-                        <div class="art-label">Nalia 04</div>
-                    </div>
-                    <div class="art-frame nalia-frame" onclick="openModal(this.querySelector('img').src)">
-                        <img src="https://i.pinimg.com/736x/ce/63/38/ce63383bcaadc7ca876f20817a5ab3e9.jpg" alt="Nalia 5">
-                        <div class="art-label">Nalia 05</div>
-                    </div>
-                    <div class="art-frame nalia-frame" onclick="openModal(this.querySelector('img').src)">
-                        <img src="https://i.pinimg.com/736x/23/a5/59/23a5599a304566cf953afa3cb19acd19.jpg" alt="Nalia 6">
-                        <div class="art-label">Nalia 06</div>
-                    </div>
-                    <div class="art-frame nalia-frame" onclick="openModal(this.querySelector('img').src)">
-                        <img src="https://i.pinimg.com/736x/bf/05/13/bf0513c65e4fbbfaafcad89ddf774ff6.jpg" alt="Nalia 7">
-                        <div class="art-label">Nalia 07</div>
-                    </div>
-                </div>
-
-                <!-- ARTE DIGITAL -->
-                <div class="gallery-wall wall-right digital-wall" id="gallery-digital" data-gallery="digital" style="display: none;">
-                    <div class="art-frame digital-frame" onclick="openModal(this.querySelector('img').src)">
-                        <img src="https://i.pinimg.com/736x/78/a8/0d/78a80dc393b779f3bdf52d2669bfb1e9.jpg" alt="Digital 1">
-                        <div class="art-label">Tarot 01</div>
-                    </div>
-                    <div class="art-frame digital-frame" onclick="openModal(this.querySelector('img').src)">
-                        <img src="https://i.pinimg.com/736x/91/dd/d9/91ddd9ccfe2420cdd9b467e7872161d7.jpg" alt="Digital 2">
-                        <div class="art-label">Tarot 02</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!-- ══ NAV ══ -->
+<nav id="nav">
+  <div class="wiphala"></div>
+  <div class="nav-bar">
+    <a href="index.html" class="nav-back"><i class="fas fa-arrow-left"></i> <span data-i18n="nav_back">Nali</span></a>
+    <a href="index.html" class="nav-logo">NAL<span>I</span></a>
+    <div class="nav-right">
+      <div class="lang-sel">
+        <button class="lang-btn active" data-lang="es">ES</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="pl">PL</button>
+        <button class="lang-btn" data-lang="fr">FR</button>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
+  </div>
+</nav>
 
-    <!-- ARTIST MENU MODAL -->
-    <div class="modal artist-menu-modal" id="artistMenu" onclick="closeArtistMenu(event)">
-        <div class="artist-menu-content" onclick="event.stopPropagation()">
-            <span class="modal-close" onclick="closeArtistMenu()">&times;</span>
-            <h1 class="menu-title">🎨 Galería Pacha</h1>
-            <p class="menu-subtitle">Elige un artista para explorar su obra</p>
-            
-            <div class="artists-grid">
-                <div class="artist-card" onclick="selectArtist('ceramica')">
-                    <div class="artist-icon">🏺</div>
-                    <h3>Alhua Cerámica</h3>
-                    <p>Creativa</p>
-                    <span class="artist-count">5 obras</span>
-                </div>
-
-                <div class="artist-card" onclick="selectArtist('tattoo')">
-                    <div class="artist-icon">🎯</div>
-                    <h3>Diseño Tattoo</h3>
-                    <p>Tinta & Arte</p>
-                    <span class="artist-count">8 obras</span>
-                </div>
-
-                <div class="artist-card" onclick="selectArtist('nalia')">
-                    <div class="artist-icon">🌈</div>
-                    <h3>Nalia Art</h3>
-                    <p>Pop Art Fusion</p>
-                    <span class="artist-count">7 obras</span>
-                </div>
-
-                <div class="artist-card" onclick="selectArtist('digital')">
-                    <div class="artist-icon">💫</div>
-                    <h3>Arte Digital</h3>
-                    <p>Ciberpunk</p>
-                    <span class="artist-count">2 obras</span>
-                </div>
-            </div>
-        </div>
+<!-- MOBILE DRAWER -->
+<div class="drawer-overlay" id="dOverlay"></div>
+<div class="mobile-drawer" id="drawer" role="dialog" aria-modal="true">
+  <div class="drawer-head">
+    <span class="nav-logo" style="font-size:1.1rem;">NAL<span>I</span></span>
+    <button class="drawer-close" id="drawerClose"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="drawer-body">
+    <a href="index.html"          class="drawer-link"><span class="di"><i class="fas fa-home"></i></span><span data-i18n="nav_home">Inicio</span></a>
+    <a href="#sec-mural"          class="drawer-link js-sec" data-sec="mural"><span class="di"><i class="fas fa-paint-roller"></i></span><span data-i18n="tab_mural">Murales</span></a>
+    <a href="#sec-pintura"        class="drawer-link js-sec" data-sec="pintura"><span class="di"><i class="fas fa-palette"></i></span><span data-i18n="tab_paint">Pintura</span></a>
+    <a href="#sec-dibujo"         class="drawer-link js-sec" data-sec="dibujo"><span class="di"><i class="fas fa-pencil-alt"></i></span><span data-i18n="tab_draw">Dibujo</span></a>
+    <a href="#sec-artesania"      class="drawer-link js-sec" data-sec="artesania"><span class="di"><i class="fas fa-hands"></i></span><span data-i18n="tab_craft">Artesanías</span></a>
+    <a href="nali-tattoo.html"    class="drawer-link"><span class="di"><i class="fas fa-pen-nib"></i></span><span data-i18n="nav_tattoo">Tatuajes</span></a>
+    <a href="nali-musica.html"    class="drawer-link"><span class="di"><i class="fas fa-music"></i></span><span data-i18n="nav_music">Música</span></a>
+  </div>
+  <div class="drawer-foot">
+    <a href="https://wa.me/48692971895" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:.5rem;background:linear-gradient(135deg,#128C7E,#075E54);color:#fff;text-decoration:none;font-family:var(--ffc);font-size:.8rem;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;padding:.75rem 1.1rem;border-radius:50px;justify-content:center;">
+      <i class="fab fa-whatsapp"></i> WhatsApp
+    </a>
+    <div class="drawer-lang">
+      <button class="lang-btn active" data-lang="es">ES</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="pl">PL</button>
+      <button class="lang-btn" data-lang="fr">FR</button>
     </div>
+  </div>
+</div>
 
-    <!-- MODAL PARA AMPLIACIÓN DE IMÁGENES -->
-    <div class="modal" id="imageModal" onclick="closeModal(event)">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <span class="modal-close" onclick="closeModal()">&times;</span>
-            <img id="modalImage" src="" alt="Ampliado">
-        </div>
+<!-- ══ TABS BAR ══ -->
+<div class="tabs-bar" id="tabsBar">
+  <div class="tabs-inner">
+    <button class="tab-btn active" data-sec="mural"     data-i18n="tab_mural">🖌 Murales</button>
+    <button class="tab-btn"        data-sec="pintura"   data-i18n="tab_paint">🎨 Pintura</button>
+    <button class="tab-btn"        data-sec="dibujo"    data-i18n="tab_draw">✏️ Dibujo</button>
+    <button class="tab-btn"        data-sec="artesania" data-i18n="tab_craft">🏺 Artesanías</button>
+    <div class="tab-sep"></div>
+    <span class="tab-info" data-i18n="tab_info">Haz click en una obra para ver detalles</span>
+  </div>
+</div>
+
+<!-- corner SVGs -->
+<svg class="corner-svg c-tl" width="110" height="110" viewBox="0 0 100 100">
+  <g stroke="currentColor" stroke-width="1.2" fill="none" opacity=".8">
+    <path d="M8 8 L50 50 L8 92"/><circle cx="28" cy="28" r="7" opacity=".5"/>
+    <circle cx="28" cy="72" r="7" opacity=".5"/><path d="M58 18 Q80 40 58 82" opacity=".6"/>
+  </g>
+</svg>
+<svg class="corner-svg c-tr" width="110" height="110" viewBox="0 0 100 100">
+  <g stroke="currentColor" stroke-width="1.2" fill="none" opacity=".8">
+    <path d="M8 8 L50 50 L8 92"/><circle cx="28" cy="28" r="7" opacity=".5"/>
+    <circle cx="28" cy="72" r="7" opacity=".5"/><path d="M58 18 Q80 40 58 82" opacity=".6"/>
+  </g>
+</svg>
+
+<!-- ══ MUSEUM INTERIOR ══ -->
+<div id="museum">
+
+  <!-- ── MURALES ── -->
+  <section class="gallery-section active" id="sec-mural">
+    <div class="sec-header sr">
+      <div>
+        <p class="sec-eyebrow" data-i18n="sec_mural_ey">Arte Urbano · Salta, Argentina</p>
+        <h2 class="sec-title" data-i18n="sec_mural_t">Murales que <em>hablan</em></h2>
+        <p class="sec-desc" data-i18n="sec_mural_d">Arte urbano que conecta culturas. Transformo espacios con la identidad ancestral del norte argentino, llevando colores y símbolos andinos a los muros de Europa.</p>
+      </div>
+      <div class="sec-count">01</div>
     </div>
+    <div class="walls">
+      <div class="wall wall-left">
 
-    <script>
-        const galleries = {
-            ceramica: { number: '01', theme: 'victorian', svg: 'ceramic-animation' },
-            tattoo: { number: '02', theme: 'tattoo', svg: 'tattoo-animation' },
-            nalia: { number: '03', theme: 'nalia', svg: 'nalia-animation' },
-            digital: { number: '04', theme: 'digital', svg: 'digital-animation' }
-        };
+        <div class="art-frame sr" data-title="Libertad" data-year="2026" data-tech="Acrílico sobre muro" data-size="10m × 6m" data-loc="Salta, Argentina" data-cat="Mural" data-tags="mural,andino,acrílico,salta" data-desc="Obra monumental que explora la libertad como concepto andino profundo. La figura central emerge del muro con energía wiphala — los siete colores del arcoíris sagrado fluyen desde su cuerpo hacia el espacio urbano, transformando una pared ordinaria en un portal hacia la cosmovisión del norte argentino." data-story="Pintado durante el verano salteño de 2026, este mural nació de una conversación con la comunidad del barrio. La figura es una síntesis de tres mujeres del barrio que compartieron sus historias de resiliencia. El proceso tomó 12 días de trabajo continuo." data-img="https://i.ibb.co/DD37KnBN/IMG-20260527-WA0150-1.jpg">
+          <img src="https://i.ibb.co/DD37KnBN/IMG-20260527-WA0150-1.jpg" alt="Libertad" loading="lazy">
+          <div class="frame-label"><div class="label-title">Libertad</div><div class="label-tech">Acrílico · 10×6m</div></div>
+          <button class="frame-expand"><i class="fas fa-expand-alt"></i></button>
+        </div>
 
-        let currentGallery = 'ceramica';
+        <div class="art-frame sr d1" data-title="Libertad — Detalle" data-year="2026" data-tech="Acrílico sobre muro" data-size="Detalle" data-loc="Salta, Argentina" data-cat="Mural" data-tags="mural,detalle,rostro" data-desc="Detalle del rostro central del mural Libertad. Los ojos miran hacia el horizonte andino, expresando una mirada que trasciende el tiempo — conectando pasado indígena con presente latinoamericano." data-story="Este ángulo revela la técnica de capa sobre capa que caracteriza el estilo de Nali: primero el trazo estructural con grafito diluido, luego capas de color que se superponen en transparencias para lograr la profundidad característica." data-img="https://i.ibb.co/ksphrxCQ/IMG-20260527-WA0049-1.jpg">
+          <img src="https://i.ibb.co/ksphrxCQ/IMG-20260527-WA0049-1.jpg" alt="Libertad — Detalle" loading="lazy">
+          <div class="frame-label"><div class="label-title">Libertad — Detalle</div><div class="label-tech">Detalle · Rostro central</div></div>
+          <button class="frame-expand"><i class="fas fa-expand-alt"></i></button>
+        </div>
 
-        function enterMuseum() {
-            document.getElementById('entranceView').style.display = 'none';
-            document.getElementById('museumInterior').classList.add('active');
-            document.getElementById('backBtn').classList.add('show');
-            
-            // Asegurarse de que la primera galería está activa
-            setTimeout(() => {
-                const firstBtn = document.querySelector('[data-gallery="ceramica"]');
-                if (firstBtn) {
-                    switchGallery('ceramica', { target: firstBtn });
-                }
-            }, 100);
-        }
+        <div class="art-frame sr d2" data-title="Libertad — Proceso" data-year="2026" data-tech="Acrílico sobre muro" data-size="En progreso" data-loc="Salta, Argentina" data-cat="Mural" data-tags="proceso,mural,boceto" data-desc="Registro del proceso de creación del mural Libertad. La fase de estructuración revela la geometría subyacente — la chakana (cruz andina) como esqueleto invisible que ordena la composición." data-story="Día 4 del proceso. En este momento la figura comienza a tomar vida pero aún conserva la transparencia del boceto. Nali trabaja siempre desde los bordes hacia el centro, dejando el rostro para el final cuando ya conoce bien el muro y la luz." data-img="https://i.ibb.co/t0rP3Wj/IMG-20260520-WA0030.jpg">
+          <img src="https://i.ibb.co/t0rP3Wj/IMG-20260520-WA0030.jpg" alt="Proceso" loading="lazy">
+          <div class="frame-label"><div class="label-title">Libertad — Proceso</div><div class="label-tech">Día 4 · Estructuración</div></div>
+          <button class="frame-expand"><i class="fas fa-expand-alt"></i></button>
+        </div>
 
-        function openArtistMenu() {
-            document.getElementById('artistMenu').classList.add('active');
-        }
+        <div class="art-frame sr d1" data-title="Libertad — Vista General" data-year="2026" data-tech="Acrílico sobre muro" data-size="Vista completa" data-loc="Salta, Argentina" data-cat="Mural" data-tags="mural,vista,urbano" data-desc="Vista general del mural en su contexto urbano. La escala del edificio dimensiona el trabajo: la figura femenina alcanza cuatro pisos de altura, convirtiéndose en un hito visual del barrio." data-story="Esta fotografía fue tomada el día de la inauguración comunitaria. El barrio organizó una celebración con música folclórica y comida típica salteña. Ver la obra terminada en contexto siempre es el momento más emocionante del proceso." data-img="https://i.ibb.co/ksZj57wq/IMG-20260527-WA0104.jpg">
+          <img src="https://i.ibb.co/ksZj57wq/IMG-20260527-WA0104.jpg" alt="Libertad vista" loading="lazy">
+          <div class="frame-label"><div class="label-title">Libertad — Vista</div><div class="label-tech">Vista completa en contexto</div></div>
+          <button class="frame-expand"><i class="fas fa-expand-alt"></i></button>
+        </div>
 
-        function closeArtistMenu(event) {
-            if (event && event.target !== document.getElementById('artistMenu')) {
-                return;
-            }
-            document.getElementById('artistMenu').classList.remove('active');
-        }
+      </div>
 
-        function selectArtist(galleryName) {
-            closeArtistMenu();
-            switchGallery(galleryName, { target: document.querySelector(`[data-gallery="${galleryName}"]`) });
-        }
+      <div class="wall-divider"></div>
 
-        function switchGallery(galleryName, event) {
-            if (event && event.preventDefault) event.preventDefault();
+      <div class="wall wall-right">
 
-            // Ocultar todas las galerías
-            document.querySelectorAll('[data-gallery]').forEach(gallery => {
-                gallery.style.opacity = '0';
-                gallery.style.display = 'none';
-                gallery.classList.remove('active');
-            });
+        <div class="art-frame sr" data-title="Coya" data-year="2026" data-tech="Acrílico sobre muro" data-size="8m × 5m" data-loc="Salta, Argentina" data-cat="Mural" data-tags="mural,coya,identidad,andino" data-desc="Retrato identitario de la cultura Coya del noroeste argentino. La figura porta los elementos simbólicos de la vestimenta tradicional — los colores de la wiphala se integran en el aguayo y la paleta general. Una celebración visual de la identidad que resiste y persiste en el corazón andino." data-story="Este mural fue comisionado para un espacio cultural comunitario. La investigación previa incluyó visitas a comunidades Coya de la Puna para entender los elementos simbólicos con respeto y profundidad. Cada detalle del vestuario fue consultado con referentes de la comunidad." data-img="https://i.ibb.co/C3GzKzFN/In-Shot-20260529-180617479.jpg">
+          <img src="https://i.ibb.co/C3GzKzFN/In-Shot-20260529-180617479.jpg" alt="Coya" loading="lazy">
+          <div class="frame-label"><div class="label-title">Coya</div><div class="label-tech">Acrílico · 8×5m</div></div>
+          <button class="frame-expand"><i class="fas fa-expand-alt"></i></button>
+        </div>
 
-            // Mostrar la galería seleccionada
-            const selectedGallery = document.getElementById(`gallery-${galleryName}`);
-            selectedGallery.style.display = 'grid';
-            
-            // Forzar reflow para que la animación funcione
-            selectedGallery.offsetHeight;
-            
-            selectedGallery.style.opacity = '1';
-            selectedGallery.classList.add('active');
+        <div class="art-frame sr d1" data-title="Coya — Frontal" data-year="2026" data-tech="Acrílico sobre muro" data-size="Vista frontal" data-loc="Salta, Argentina" data-cat="Mural" data-tags="mural,rostro,coya,frontal" data-desc="Vista frontal del mural Coya. El rostro combina técnicas del realismo contemporáneo con la síntesis gráfica del arte prehispánico andino — los rasgos son reconocibles pero trascienden el retrato individual para convertirse en símbolo colectivo." data-story="La luz en Salta es especial — el cielo azul profundo y el sol de altura generan sombras muy marcadas. Nali estudió la orientación del muro y la luz en distintos momentos del día antes de definir la composición y los valores de luz del rostro." data-img="https://i.ibb.co/MKGq6K7/IMG-20260527-WA0050-1.jpg">
+          <img src="https://i.ibb.co/MKGq6K7/IMG-20260527-WA0050-1.jpg" alt="Coya Frontal" loading="lazy">
+          <div class="frame-label"><div class="label-title">Coya — Frontal</div><div class="label-tech">Vista frontal · Rostro</div></div>
+          <button class="frame-expand"><i class="fas fa-expand-alt"></i></button>
+        </div>
 
-            // Actualizar botones activos
-            document.querySelectorAll('.gallery-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            
-            // Marcar el botón actual como activo
-            document.querySelector(`[data-gallery="${galleryName}"]`).classList.add('active');
+        <div class="art-frame sr d2" data-title="Harta La Gasta" data-year="2026" data-tech="Acrílico sobre muro" data-size="12m × 7m" data-loc="Salta, Argentina" data-cat="Mural" data-tags="mural,político,expresivo,salta" data-desc="Obra de arte urbano con carga política y emotiva. El título en lunfardo salteño expresa hartazgo, cansancio y a la vez una determinación feroz de seguir adelante. La paleta combina la tierra colorada del norte con los violetas del atardecer salteño." data-story="Este fue el mural más desafiante en términos logísticos: una pared en pendiente, con irregularidades y a plena exposición solar. El proceso implicó trabajar de madrugada para evitar el calor extremo y lograr que la pintura secara bien en las capas de veladura." data-img="https://i.ibb.co/d0P0Knz4/IMG-20260521-WA0023.jpg">
+          <img src="https://i.ibb.co/d0P0Knz4/IMG-20260521-WA0023.jpg" alt="Harta La Gasta" loading="lazy">
+          <div class="frame-label"><div class="label-title">Harta La Gasta</div><div class="label-tech">Acrílico · 12×7m</div></div>
+          <button class="frame-expand"><i class="fas fa-expand-alt"></i></button>
+        </div>
 
-            // Cambiar tema del museo
-            const museum = document.getElementById('museumInterior');
-            Object.keys(galleries).forEach(key => {
-                museum.classList.remove(`theme-${galleries[key].theme}`);
-            });
+        <div class="art-frame sr d1" data-title="Arta La Pacha — Detalle" data-year="2026" data-tech="Acrílico sobre muro" data-size="Detalle" data-loc="Salta, Argentina" data-cat="Mural" data-tags="mural,pacha,detalle,simbología" data-desc="Detalle simbólico del mural Arta La Pacha. Las manos sostienen elementos de la tierra — semillas, agua, piedras del río — en un gesto que conecta cuerpo humano con Pachamama. La textura del muro original se integra como elemento pictórico." data-story="Nali trabajó este fragmento con pinceles de máximo detalle, algunos de solo 2mm de grosor, para lograr la textura de las semillas y la translucidez del agua. Es el área que más tiempo llevó en proporción a su tamaño." data-img="https://i.ibb.co/SgxjNr1/IMG-20260527-WA0187.jpg">
+          <img src="https://i.ibb.co/SgxjNr1/IMG-20260527-WA0187.jpg" alt="Arta La Pacha detalle" loading="lazy">
+          <div class="frame-label"><div class="label-title">Arta La Pacha — Detalle</div><div class="label-tech">Detalle · Simbología</div></div>
+          <button class="frame-expand"><i class="fas fa-expand-alt"></i></button>
+        </div>
 
-            const theme = galleries[galleryName].theme;
-            museum.classList.add(`theme-${theme}`);
+      </div>
+    </div>
+  </section>
 
-            // Aplicar clases temáticas a paredes y marcos
-            applyThemeClasses(galleryName, theme);
+  <div class="andean-div"></div>
 
-            // Cambiar SVG animado
-            switchSVGAnimation(galleryName);
+  <!-- ── PINTURA ── -->
+  <section class="gallery-section" id="sec-pintura">
+    <div class="sec-header sr">
+      <div>
+        <p class="sec-eyebrow" data-i18n="sec_paint_ey">Acrílico · Óleo · Técnica Mixta</p>
+        <h2 class="sec-title" data-i18n="sec_paint_t">Pintura de <em>Tierra</em></h2>
+        <p class="sec-desc" data-i18n="sec_paint_d">Del óleo sobre lienzo al barro ancestral. Cada obra es un diálogo entre la tierra andina, sus colores y las manos que la dan forma.</p>
+      </div>
+      <div class="sec-count">02</div>
+    </div>
+    <div class="walls">
+      <div class="wall wall-left">
 
-            // Scroll al inicio
-            const wall = document.getElementById(`gallery-${galleryName}`);
-            if (wall) {
-                wall.scrollTop = 0;
-            }
+        <div class="art-frame sr" data-title="YACHAY" data-year="2025" data-tech="Acrílico y pigmentos naturales sobre tela" data-size="80cm × 100cm" data-loc="Salta, Argentina" data-cat="Pintura" data-tags="pintura,acrílico,quechua,saber" data-desc="YACHAY significa conocimiento en quechua. La obra representa la transmisión generacional del saber — una figura mayor sostiene entre sus manos el hilo de la memoria mientras una figura joven aprende a tejerlo. Los pigmentos naturales de la Quebrada de Humahuaca se mezclan con acrílico contemporáneo." data-story="Esta pintura surgió después de una semana de trabajo en una comunidad artesana de Tilcara. Ver a las abuelas enseñando a las niñas a tejer mientras cantaban en quechua fue la chispa que detonó esta imagen. La tela fue preparada con tierra colorada mezclada con cola como imprimación." data-img="https://i.ibb.co/DDCCV2LY/In-Shot-20260530-092742591.jpg">
+          <img src="https://i.ibb.co/DDCCV2LY/In-Shot-20260530-092742591.jpg" alt="YACHAY" loading="lazy">
+          <div class="frame-label"><div class="label-title">YACHAY</div><div class="label-tech">Acrílico · 80×100cm</div></div>
+          <button class="frame-expand"><i class="fas fa-expand-alt"></i></button>
+        </div>
 
-            currentGallery = galleryName;
-        }
+        <div class="art-frame sr d1" data-title="Keny — Retrato" data-year="2025" data-tech="Acrílico sobre lienzo" data-size="60cm × 80cm" data-loc="Salta, Argentina" data-cat="Pintura" data-tags="pintura,retrato,perro,acrílico" data-desc="Retrato animal con la sensibilidad y profundidad que Nali aplica también a sus retratos humanos. Los ojos del perro capturan una mirada que trasciende la especie — hay algo universal en esa expresión de presencia pura y atención total al presente." data-story="Keny fue el perro de la familia de una clienta que había fallecido recientemente. El encargo fue un acto de amor y duelo. Nali trabajó a partir de más de 200 fotografías, eligiendo el ángulo que mejor capturaba la personalidad del animal." data-img="https://i.ibb.co/GfKdnKsc/TOMANDO-PEDIDOS-3872200803-Un-retrato-de-tu-mejor-amigo-WEBP-1.webp">
+          <img src="https://i.ibb.co/GfKdnKsc/TOMANDO-PEDIDOS-3872200803-Un-retrato-de-tu-mejor-amigo-WEBP-1.webp" alt="Keny" loading="lazy">
+          <div class="frame-label"><div class="label-title">Keny</div><div class="label-tech">Retrato · Acrílico</div></div>
+          <button class="frame-expand"><i class="fas fa-expand-alt"></i></button>
+        </div>
 
-        function switchSVGAnimation(galleryName) {
-            // Ocultar todos los SVGs animados
-            document.querySelectorAll('.svg-animation').forEach(svg => {
-                svg.style.display = 'none';
-            });
+        <div class="art-frame sr d2" data-title="Chango" data-year="2024" data-tech="Técnica mixta sobre cartón" data-size="50cm × 70cm" data-loc="Salta, Argentina" data-cat="Pintura" data-tags="pintura,mixta,retrato,urbano" data-desc="Chango — voz del noroeste argentino para nombrar a un muchacho — es un retrato urbano que dialoga con la tradición del expresionismo latinoamericano. El fondo abstracto de tierras y acrílicos contrasta con el realismo del rostro." data-story="Pintado en una sola sesión de 6 horas, durante una noche de lluvia en Salta. La urgencia y la emoción del momento se perciben en la pincelada más suelta y gestual que caracteriza esta obra comparada con otros trabajos de Nali. Técnica mixta sobre cartón reciclado." data-img="https://i.ibb.co/Mx9ZQkw3/IMG-20260527-WA0240.jpg">
+          <img src="https://i.ibb.co/Mx9ZQkw3/IMG-20260527-WA0240.jpg" alt="Chango" loading="lazy">
+          <div class="frame-label"><div class="label-title">Chango</div><div class="label-tech">Técnica mixta · Cartón</div></div>
+          <button class="frame-expand"><i class="fas fa-expand-alt"></i></button>
+        </div>
 
-            // Mostrar el SVG de la galería actual
-            const svgId = galleries[galleryName].svg;
-            const svgElement = document.getElementById(svgId);
-            if (svgElement) {
-                svgElement.style.display = 'block';
-            }
-        }
+        <div class="art-frame sr d1" data-title="Anu" data-year="2025" data-tech="Acrílico sobre madera" data-size="40cm × 55cm" data-loc="Salta, Argentina" data-cat="Pintura" data-tags="pintura,retrato,madera,acrílico" data-desc="Anu es un nombre quechua que evoca la luz. Este retrato femenino captura una presencia serena e intensa al mismo tiempo — la mirada está fija en un punto más allá del cuadro, en una contemplación que invita al espectador a preguntarse qué está viendo." data-story="Pintado sobre madera de quebracho preparada con tres capas de gesso, la superficie porosa absorbe el acrílico de forma diferente a una tela, creando esa textura particular visible especialmente en las sombras del rostro." data-img="https://i.ibb.co/8gCzB9ZS/In-Shot-20260530-145740384.jpg">
+          <img src="https://i.ibb.co/8gCzB9ZS/In-Shot-20260530-145740384.jpg" alt="Anu" loading="lazy">
+          <div class="frame-label"><div class="label-title">Anu</div><div class="label-tech">Retrato · Acrílico sobre madera</div></div>
+          <button class="frame-expand"><i class="fas fa-expand-alt"></i></button>
+        </div>
 
-        function applyThemeClasses(galleryName, theme) {
-            // Remover clases temáticas previas de todas las paredes
-            document.querySelectorAll('.gallery-wall').forEach(wall => {
-                wall.classList.remove('ceramic-wall', 'tattoo-wall', 'nalia-wall', 'digital-wall');
-            });
+      </div>
 
-            // Remover clases de frames
-            document.querySelectorAll('.art-frame').forEach(frame => {
-                frame.classList.remove('tattoo-frame', 'nalia-frame', 'digital-frame');
-            });
+      <div class="wall-divider"></div>
 
-            // Aplicar nuevas clases a la pared seleccionada
-            const wall = document.getElementById(`gallery-${galleryName}`);
-            if (wall) {
-                wall.classList.add(`${theme}-wall`);
+      <div class="wall wall-right">
 
-                // Aplicar clase a frames si no es tema victoriano
-                if (theme !== 'victorian') {
-                    const frames = wall.querySelectorAll('.art-frame');
-                    frames.forEach(frame => {
-                        frame.classList.add(`${theme}-frame`);
-                    });
-                }
-            }
-        }
+        <div class="art-frame sr" data-title="HAHO" data-year="2025" data-tech="Técnica mixta: óleo, acrílico, collage" data-size="70cm × 90cm" data-loc="Salta, Argentina" data-cat="Pintura" data-tags="pintura,mixta,óleo,collage,abstracto" data-desc="HAHO es la interjección andina de júbilo y celebración. La obra es la más experimental de la serie — capas de óleo y acrílico se superponen con recortes de aguayos y papeles de la Quebrada, creando una textura casi táctil que invita a acercarse." data-story="Esta es la obra más querida de Nali. Tardó tres meses porque la abandonaba y retomaba constantemente. Las capas más antiguas se pueden leer a través de las más recientes como una estratigrafía del proceso. El collage incluye papeles de embalaje de frutas del mercado de Salta." data-img="https://i.ibb.co/Z6bJNqJQ/In-Shot-20260530-093831076.jpg">
+          <img src="https://i.ibb.co/Z6bJNqJQ/In-Shot-20260530-093831076.jpg" alt="HAHO" loading="lazy">
+          <div class="frame-label"><div class="label-title">HAHO</div><div class="label-tech">Óleo · Acrílico · Collage</div></div>
+          <button class="frame-expand"><i class="fas fa-expand-alt"></i></button>
+        </div>
 
-        function goBack() {
-            document.getElementById('entranceView').style.display = 'flex';
-            document.getElementById('museumInterior').classList.remove('active');
-            document.getElementById('backBtn').classList.remove('show');
-        }
+        <div class="art-frame sr d1" data-title="Pilcha" data-year="2024" data-tech="Acrílico sobre tela" data-size="60cm × 80cm" data-loc="Salta, Argentina" data-cat="Pintura" data-tags="pintura,vestimenta,tradición,acrílico" data-desc="Pilcha — la vestimenta típica, el atuendo especial en el habla coloquial del norte argentino. La obra celebra el traje de gaucho salteño con la misma solemnidad que un retrato oficial, reconociendo su valor cultural y simbólico." data-story="El modelo es Ramón, gauchazo del Valle Calchaquí, amigo de la familia. Se vistió de pilcha completa una mañana de domingo y Nali realizó una sesión de fotos de referencia. Pintarle le llevó dos semanas, deteniéndose especialmente en los flecos del poncho." data-img="https://i.ibb.co/4gFXKW4P/In-Shot-20260530-144458310.jpg">
+          <img src="https://i.ibb.co/4gFXKW4P/In-Shot-20260530-144458310.jpg" alt="Pilcha" loading="lazy">
+          <div class="frame-label"><div class="label-title">Pilcha</div><div class="label-tech">Acrílico · 60×80cm</div></div>
+          <button class="frame-expand"><i class="fas fa-expand-alt"></i></button>
+        </div>
 
-        function openModal(src) {
-            document.getElementById('modalImage').src = src;
-            document.getElementById('imageModal').classList.add('active');
-        }
+        <div class="art-frame sr d2" data-title="Colores NOA" data-year="2024" data-tech="Acrílico · Intervención colectiva" data-size="120cm × 90cm" data-loc="Salta, Argentina" data-cat="Pintura" data-tags="pintura,colectiva,noa,colores,colaboración" data-desc="Obra de creación colectiva: Nali (Natalia Almagro), Melo (Melisa Ossore) y Fer (Fernanda Fontán). El NOA — Noroeste Argentino — desplegado en sus colores fundamentales: la tierra roja, el cielo azul, el sol amarillo, los cardones verdes. Tres miradas que se funden en una sola paleta." data-story="Las tres artistas trabajaron simultáneamente sobre el mismo lienzo sin planificación previa, solo con la consigna de 'los colores del NOA'. Lo que empezó como un ejercicio experimental de una tarde terminó siendo una de las obras más celebradas de las tres. Ninguna recuerda con exactitud quién pintó qué." data-img="https://i.ibb.co/pBp5PgNf/IMG-20260527-WA0059.jpg">
+          <img src="https://i.ibb.co/pBp5PgNf/IMG-20260527-WA0059.jpg" alt="Colores NOA" loading="lazy">
+          <div class="frame-label"><div class="label-title">Colores NOA</div><div class="label-tech">Acrílico · Intervención colectiva</div></div>
+          <button class="frame-expand"><i class="fas fa-expand-alt"></i></button>
+        </div>
 
-        function closeModal(event) {
-            if (event && event.target !== document.getElementById('imageModal')) {
-                return;
-            }
-            document.getElementById('imageModal').classList.remove('active');
-        }
+        <div class="art-frame sr d1" data-title="Tius Costa Huma" data-year="2025" data-tech="Acuarela sobre papel Fabriano" data-size="35cm × 50cm" data-loc="Salta, Argentina" data-cat="Pintura" data-tags="acuarela,papel,quechua,paisaje" data-desc="Tius Costa Huma — expresión quechua que evoca la orilla de la vida, el borde donde el ser y la tierra se encuentran. La acuarela permite transparencias que el acrílico no da: capas de luz que se superponen como el agua sobre las piedras del río." data-story="Nali trabaja muy poco con acuarela — 'me pone nerviosa porque no se puede corregir', dice. Esta obra fue pintada durante un retiro en las sierras y la espontaneidad del medio se siente en cada pincelada. El papel Fabriano 300gr aguantó las siete capas de lavados sucesivos." data-img="https://i.ibb.co/W4Y4JS4M/In-Shot-20260530-153625866.jpg">
+          <img src="https://i.ibb.co/W4Y4JS4M/In-Shot-20260530-153625866.jpg" alt="Tius costa huma" loading="lazy">
+          <div class="frame-label"><div class="label-title">Tius Costa Huma</div><div class="label-tech">Acuarela · 35×50cm</div></div>
+          <button class="frame-expand"><i class="fas fa-expand-alt"></i></button>
+        </div>
 
-        // Cerrar modales con tecla ESC
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closeModal();
-                closeArtistMenu();
-            }
-        });
+      </div>
+    </div>
+  </section>
 
-        // Inicializar cuando carga la página
-        window.addEventListener('load', () => {
-            applyThemeClasses('ceramica', 'victorian');
-            switchSVGAnimation('ceramica');
-        });
-    </script>
+  <div class="andean-div"></div>
+
+  <!-- ── DIBUJO ── -->
+  <section class="gallery-section" id="sec-dibujo">
+    <div class="sec-header sr">
+      <div>
+        <p class="sec-eyebrow" data-i18n="sec_draw_ey">Lápiz · Tinta · Grafito · Carbón</p>
+        <h2 class="sec-title" data-i18n="sec_draw_t">El trazo que <em>origina</em></h2>
+        <p class="sec-desc" data-i18n="sec_draw_d">El dibujo es el lenguaje primario. Antes de cada mural, antes de cada tatuaje, antes de cada pintura: el trazo sobre el papel que captura la visión en su estado más puro.</p>
+      </div>
+      <div class="sec-count">03</div>
+    </div>
+    <div class="walls">
+      <div class="wall wall-left">
+
+        <div class="art-frame sr" data-title="Dibujo Andino" data-year="2024" data-tech="Lápiz y tinta sobre papel" data-size="30cm × 42cm" data-loc="Salta, Argentina" data-cat="Dibujo" data-tags="dibujo,lápiz,tinta,andino,simbología" data-desc="Composición de simbología andina prehispánica reinterpretada en clave contemporánea. Los motivos de la cerámica Aguada, los tocapus incaicos y los petroglifos de la Puna conviven en una gramática visual nueva — un lenguaje andino del siglo XXI." data-story="Este dibujo es resultado de meses de investigación en libros de arqueología andina y visitas al Museo de Antropología de Salta. Nali fotografió las piezas cerámicas originales y las reinterpretó a mano alzada, sin calcar, reconstreyendo la lógica visual de esos sistemas de signos." data-img="https://i.ibb.co/dwG4vn92/ilustration-dibujosubrealista-artoftheday-artist-artgallery-WEBP-2.webp">
+          <img src="https://i.ibb.co/dwG4vn92/ilustration-dibujosubrealista-artoftheday-artist-artgallery-WEBP-2.webp" alt="Dibujo Andino" loading="lazy">
+          <div class="frame-label"><div class="label-title">Dibujo Andino</div><div class="label-tech">Lápiz · Tinta · 30×42cm</div></div>
+          <button class="frame-expand"><i class="fas fa-expand-alt"></i></button>
+        </div>
+
+        <div class="art-frame sr d1" data-title="Pueblos Ancestrales" data-year="2024" data-tech="Grafito sobre papel" data-size="40cm × 55cm" data-loc="Salta, Argentina" data-cat="Dibujo" data-tags="dibujo,grafito,retrato,ancestral,comunidad" data-desc="Serie de retratos en grafito de miembros de comunidades originarias del noroeste argentino. La técnica de grafito en escala de grises enfatiza la universalidad de los rasgos — estos rostros son todos y son nadie, son la humanidad antes de los límites." data-story="Cada retrato de esta serie fue dibujado con permiso y en compañía de las personas retratadas. El proceso de dibujar juntos — la persona mirando cómo su imagen emerge en el papel — fue a veces más importante que el resultado final." data-img="https://i.ibb.co/QvfXksQ7/artgallery-pueblosancestrales-WEBP.webp">
+          <img src="https://i.ibb.co/QvfXksQ7/artgallery-pueblosancestrales-WEBP.webp" alt="Pueblos Ancestrales" loading="lazy">
+          <div class="frame-label"><div class="label-title">Pueblos Ancestrales</div><div class="label-tech">Grafito · 40×55cm</div></div>
+          <button class="frame-expand"><i class="fas fa-expand-alt"></i></button>
+        </div>
+
+        <div class="art-frame sr d2" data-title="Esencia" data-year="2025" data-tech="Técnica mixta: lápiz, tinta y acuarela" data-size="28cm × 40cm" data-loc="Salta, Argentina" data-cat="Dibujo" data-tags="dibujo,mixta,esencia,abstracto" data-desc="Exploración de la esencia — lo que queda cuando se elimina todo lo accesorio. El trazo de lápiz define una forma vagamente humana que la tinta y la acuarela disuelven hacia los bordes, como si el ser se difuminara en el espacio que lo rodea." data-story="Hoja de un cuaderno de bocetos que Nali considera uno de sus trabajos más honestos precisamente porque nunca fue pensado como obra final. El 'error' de la mancha de acuarela que se derramó terminó siendo el elemento que lo completa." data-img="https://i.ibb.co/tf42VVt/In-Shot-20260530-150620557.jpg">
+          <img src="https://i.ibb.co/tf42VVt/In-Shot-20260530-150620557.jpg" alt="Esencia" loading="lazy">
+          <div class="frame-label"><div class="label-title">Esencia</div><div class="label-tech">Lápiz · Tinta · Acuarela</div></div>
+          <button class="frame-expand"><i class="fas fa-expand-alt"></i></button>
+        </div>
+
+      </div>
+
+      <div class="wall-divider"></div>
+
+      <div class="wall wall-right">
+
+        <div class="art-frame sr" data-title="Ilustración" data-year="2024" data-tech="Lápiz sobre papel" data-size="25cm × 35cm" data-loc="Salta, Argentina" data-cat="Dibujo" data-tags="dibujo,lápiz,ilustración,figura" data-desc="Estudio de figura a lápiz que explora la tensión entre rigidez y fluidez. El cuerpo está construido con líneas geométricas que contrastan con la suavidad de las zonas de sombra trabajadas con difumino." data-story="Parte de una serie de estudios de figura realizados durante clases de dibujo académico que Nali retomó en 2024. 'Volver a los básicos' fue la motivación — una reconexión con el dibujo como fin en sí mismo, no como herramienta para otra cosa." data-img="https://i.ibb.co/fVLRb7PB/ilustration-artoftheday-artgallery-dibujos-dibujosalapiz-WEBP.webp">
+          <img src="https://i.ibb.co/fVLRb7PB/ilustration-artoftheday-artgallery-dibujos-dibujosalapiz-WEBP.webp" alt="Ilustración" loading="lazy">
+          <div class="frame-label"><div class="label-title">Ilustración</div><div class="label-tech">Lápiz · 25×35cm</div></div>
+          <button class="frame-expand"><i class="fas fa-expand-alt"></i></button>
+        </div>
+
+        <div class="art-frame sr d1" data-title="Larga" data-year="2024" data-tech="Carbón sobre papel" data-size="50cm × 70cm" data-loc="Salta, Argentina" data-cat="Dibujo" data-tags="dibujo,carbón,figura,expresionismo" data-desc="'Larga' es la descripción informal de esta figura femenina estirada en el espacio de la hoja hasta los límites mismos del papel. El carbón permite esa gestualidad amplia que conecta con la expresión corporal — el trazo es movimiento detenido." data-story="Dibujada en una sola sesión de dos horas con carbón vegetal sobre papel kraft de 70×100cm. Nali trabajó de pie, con el papel en el piso, usando el brazo extendido para los trazos más largos. El resultado tiene esa energía física que solo da trabajar en grande." data-img="https://i.ibb.co/N2VVXhGS/ilustracion-personajes-artoftheday-arteargentino-artgallery-WEBP-4.webp">
+          <img src="https://i.ibb.co/N2VVXhGS/ilustracion-personajes-artoftheday-arteargentino-artgallery-WEBP-4.webp" alt="Larga" loading="lazy">
+          <div class="frame-label"><div class="label-title">Larga</div><div class="label-tech">Carbón · 50×70cm</div></div>
+          <button class="frame-expand"><i class="fas fa-expand-alt"></i></button>
+        </div>
+
+        <div class="art-frame sr d2" data-title="Mirada" data-year="2025" data-tech="Bolígrafo y edición digital" data-size="A4 · Digital" data-loc="Salta, Argentina" data-cat="Dibujo" data-tags="dibujo,bolígrafo,digital,retrato" data-desc="Hibridación entre dibujo analógico y edición digital. El dibujo a bolígrafo azul fue escaneado y trabajado digitalmente para explorar la tensión entre el trazo manual y la perfección de la edición. El resultado pertenece a los dos mundos." data-story="El texto visible en el fondo de la imagen son fragmentos de una crónica periodística sobre una marcha de comunidades indígenas en Salta. Nali usa el dibujo como comentario y como documento — el arte como forma de periodismo visual." data-img="https://i.ibb.co/HfsPmpsH/Salen-a-las-calles-con-banderas-Cortaron-la-ruta-con-sikus-y-quenas-Pancartas-de-colores-adornaron.webp">
+          <img src="https://i.ibb.co/HfsPmpsH/Salen-a-las-calles-con-banderas-Cortaron-la-ruta-con-sikus-y-quenas-Pancartas-de-colores-adornaron.webp" alt="Mirada" loading="lazy">
+          <div class="frame-label"><div class="label-title">Mirada</div><div class="label-tech">Bolígrafo · Edición digital</div></div>
+          <button class="frame-expand"><i class="fas fa-expand-alt"></i></button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="andean-div"></div>
+
+  <!-- ── ARTESANÍAS ── -->
+  <section class="gallery-section" id="sec-artesania">
+    <div class="sec-header sr">
+      <div>
+        <p class="sec-eyebrow" data-i18n="sec_craft_ey">Cerámica · Barro · Alfarería</p>
+        <h2 class="sec-title" data-i18n="sec_craft_t">Manos en la <em>tierra</em></h2>
+        <p class="sec-desc" data-i18n="sec_craft_d">La cerámica como vínculo ancestral. El barro moldeado a mano, cocido en horno de leña, conecta con miles de años de tradición alfarera andina en cada pieza.</p>
+      </div>
+      <div class="sec-count">04</div>
+    </div>
+    <div class="walls">
+      <div class="wall wall-left">
+
+        <div class="art-frame sr" data-title="Cerámica Creativa — Serie Taza" data-year="2025" data-tech="Arcilla blanca, esmaltes, horno a 1200°C" data-size="8cm × 9cm c/u" data-loc="Salta, Argentina" data-cat="Artesanía" data-tags="cerámica,arcilla,taza,esmalte,horno" data-desc="Serie de tazas de arcilla blanca con esmaltes de alta temperatura. Cada pieza es única — el proceso de esmalte y el horno producen variaciones imperceptibles en el color y la textura que convierten cada taza en un objeto singular, aunque pertenezca a una familia formal." data-story="Nali aprendió alfarería en un taller comunitario de Molinos, Salta, en 2023. Esta serie de tazas fue el primer trabajo en serie que realizó — una exploración de los límites entre artesanía, diseño y arte. Cada pieza tiene inscripta en su base una palabra en quechua." data-img="https://i.ibb.co/LDXCy0hH/tacitas-de-ceramicaartesanal-alfareriaydise-o-WEBP-2.webp">
+          <img src="https://i.ibb.co/LDXCy0hH/tacitas-de-ceramicaartesanal-alfareriaydise-o-WEBP-2.webp" alt="Cerámica Creativa" loading="lazy">
+          <div class="frame-label"><div class="label-title">Cerámica — Serie Taza</div><div class="label-tech">Arcilla blanca · Horno 1200°C</div></div>
+          <button class="frame-expand"><i class="fas fa-expand-alt"></i></button>
+        </div>
+
+        <div class="art-frame sr d1" data-title="Tasas Arcilla Blanca" data-year="2025" data-tech="Arcilla blanca, esmalte transparente" data-size="7cm × 8cm c/u" data-loc="Salta, Argentina" data-cat="Artesanía" data-tags="cerámica,arcilla,taza,blanca,minimalista" data-desc="Variante minimalista de la serie taza: arcilla blanca con esmalte transparente que respeta la textura natural del modelado a mano. La imperfección de la forma es el elemento estético central — la huella del dedo, el pequeño relieve, la irregularidad que distingue lo hecho a mano de lo industrial." data-story="Estas piezas fueron las que más tiempo llevaron paradójicamente siendo las más 'simples' — lograr que la imperfección sea elegante y no descuido requirió docenas de intentos fallidos. El esmalte transparente no perdona: muestra todo." data-img="https://i.ibb.co/WbvhSWb/tacitas-de-ceramicaartesanal-alfareriaydise-o-WEBP-1.webp">
+          <img src="https://i.ibb.co/WbvhSWb/tacitas-de-ceramicaartesanal-alfareriaydise-o-WEBP-1.webp" alt="Tasas arcilla blanca" loading="lazy">
+          <div class="frame-label"><div class="label-title">Tasas Arcilla Blanca</div><div class="label-tech">Arcilla · Esmalte transparente</div></div>
+          <button class="frame-expand"><i class="fas fa-expand-alt"></i></button>
+        </div>
+
+      </div>
+
+      <div class="wall-divider"></div>
+
+      <div class="wall wall-right">
+
+        <div class="art-frame sr" data-title="Porta Encendedor Hongo" data-year="2024" data-tech="Arcilla roja, sin esmaltar" data-size="6cm × 5cm" data-loc="Salta, Argentina" data-cat="Artesanía" data-tags="cerámica,arcilla,funcional,hongo,artesanía" data-desc="Objeto funcional con forma de hongo — el porta encendedor más pequeño y más deseado de la producción de Nali. La arcilla roja sin esmaltar conserva el color tierra de la Puna jujeña. El hongo, símbolo de resistencia y transformación, es el motivo recurrente de esta mini-serie." data-story="Empezó como un chiste: un amigo de Nali siempre perdía los encendedores. El porta encendedor con forma de hongo fue el regalo más exitoso que nunca hizo — ahora tiene lista de espera de seis meses. El molde lo diseñó a mano, sin referencias, en una tarde." data-img="https://i.ibb.co/Y7PyVHwq/Porta-encendedor-hongo-WEBP-2.webp">
+          <img src="https://i.ibb.co/Y7PyVHwq/Porta-encendedor-hongo-WEBP-2.webp" alt="Porta encendedor" loading="lazy">
+          <div class="frame-label"><div class="label-title">Porta Encendedor Hongo</div><div class="label-tech">Arcilla roja · Sin esmaltar</div></div>
+          <button class="frame-expand"><i class="fas fa-expand-alt"></i></button>
+        </div>
+
+        <div class="art-frame sr d1" data-title="Alfarería — Cenicero" data-year="2024" data-tech="Arcilla negra ahumada, técnica ancestral" data-size="12cm × 4cm" data-loc="Salta, Argentina" data-cat="Artesanía" data-tags="cerámica,negra,ahumada,ancestral,alfarería" data-desc="Cenicero en arcilla negra producida por la técnica del ahumado ancestral — sin esmaltes industriales, el negro es resultado de enterrar la pieza en aserrín durante la cocción. Técnica que se practica en el noroeste argentino desde antes de la colonización." data-story="Nali aprendió esta técnica específica de una alfarera de Tolombón que tiene 78 años y es la última de su comunidad en practicarla. El proceso de transmisión fue mutuo: Nali enseñó técnicas de dibujo a cambio de esta tradición milenaria. Un intercambio que ambas consideran el más valioso de sus vidas." data-img="https://i.ibb.co/zhSBLtkk/Cenicero-artesanal-WEBP.webp">
+          <img src="https://i.ibb.co/zhSBLtkk/Cenicero-artesanal-WEBP.webp" alt="Cenicero artesanal" loading="lazy">
+          <div class="frame-label"><div class="label-title">Alfarería — Cenicero</div><div class="label-tech">Arcilla negra · Técnica ancestral</div></div>
+          <button class="frame-expand"><i class="fas fa-expand-alt"></i></button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="andean-div" style="margin-top:2rem;"></div>
+</div>
+
+<!-- ══ FLOATING DECO SVGs ══ -->
+<svg class="float-deco left" id="floatL" width="120" height="120" viewBox="0 0 200 200">
+  <g transform-origin="100 100" style="animation:spinSlow 10s linear infinite;transform-origin:100px 100px">
+    <circle cx="100" cy="100" r="60" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".4"/>
+    <circle cx="100" cy="48" r="12" fill="currentColor" opacity=".6"/>
+    <circle cx="148" cy="100" r="10" fill="currentColor" opacity=".5"/>
+    <circle cx="100" cy="152" r="11" fill="currentColor" opacity=".5"/>
+    <circle cx="52" cy="100" r="10" fill="currentColor" opacity=".6"/>
+  </g>
+</svg>
+<svg class="float-deco right" id="floatR" width="110" height="110" viewBox="0 0 200 200">
+  <g style="animation:floatPulse 3s ease-in-out infinite">
+    <path d="M100 40 L140 80 L100 120 L60 80Z" fill="none" stroke="currentColor" stroke-width="2" opacity=".6"/>
+    <circle cx="100" cy="80" r="10" fill="currentColor" opacity=".7"/>
+    <path d="M55 145 Q100 165 145 145" fill="none" stroke="currentColor" stroke-width="2" opacity=".5"/>
+  </g>
+</svg>
+
+<style>
+@keyframes spinSlow{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+@keyframes floatPulse{0%,100%{opacity:.3;transform:translateY(0);}50%{opacity:.7;transform:translateY(-12px);}}
+</style>
+
+<!-- ══ LIGHTBOX ══ -->
+<div id="lightbox">
+  <div class="lb-wrap" id="lbWrap">
+    <div class="lb-img-area">
+      <button class="lb-nav lb-prev" id="lbPrev"><i class="fas fa-chevron-left"></i></button>
+      <img id="lbImg" src="" alt="">
+      <button class="lb-nav lb-next" id="lbNext"><i class="fas fa-chevron-right"></i></button>
+    </div>
+    <div class="lb-info">
+      <button class="lb-close" id="lbClose"><i class="fas fa-times"></i></button>
+      <div class="lb-info-scroll">
+        <p class="lb-category" id="lbCat">Mural</p>
+        <h2 class="lb-title" id="lbTitle"></h2>
+        <p class="lb-year" id="lbYear"></p>
+        <div class="lb-divider"></div>
+        <p class="lb-field-label" data-i18n="lb_tech">Técnica & Materiales</p>
+        <p class="lb-field-value" id="lbTech"></p>
+        <p class="lb-field-label" data-i18n="lb_size">Dimensiones</p>
+        <p class="lb-field-value" id="lbSize"></p>
+        <p class="lb-field-label" data-i18n="lb_loc">Ubicación</p>
+        <p class="lb-field-value" id="lbLoc"></p>
+        <div class="lb-divider"></div>
+        <p class="lb-field-label" data-i18n="lb_desc">Sobre la obra</p>
+        <p class="lb-field-value" id="lbDesc"></p>
+        <p class="lb-field-label" data-i18n="lb_story">Historia</p>
+        <p class="lb-field-value" id="lbStory"></p>
+        <div id="lbTagsWrap" class="lb-tags"></div>
+        <a href="https://wa.me/48692971895?text=Hola%20Nali%2C%20me%20interesa%20una%20obra%20de%20tu%20galer%C3%ADa" target="_blank" rel="noopener" class="lb-wa">
+          <i class="fab fa-whatsapp"></i> <span data-i18n="lb_wa">Consultar sobre esta obra</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wiphala" style="max-width:220px;margin:0 auto 1.4rem;border-radius:3px;"></div>
+  <div class="footer-logo">NALI</div>
+  <p class="footer-sub" data-i18n="foot">Arte Visual · Salta, Argentina · Disponible en Polonia 2026</p>
+  <div class="footer-links">
+    <a href="index.html" data-i18n="f_home">Inicio</a>
+    <a href="nali-tattoo.html" data-i18n="f_tat">Tatuajes</a>
+    <a href="nali-musica.html" data-i18n="f_mus">Música</a>
+    <a href="https://wa.me/48692971895" target="_blank">WhatsApp</a>
+    <a href="https://septimapacha.com" target="_blank">Séptima Pacha</a>
+  </div>
+  <p style="margin-top:.8rem;font-family:var(--ffc);font-size:.65rem;color:rgba(240,230,208,.15);">© 2026 Nali · Séptima Pacha Co.</p>
+</footer>
+
+<!-- ══ SCRIPTS ══ -->
+<script>
+/* ── TRANSLATIONS ── */
+const T={
+  es:{
+    nav_back:'Nali',nav_home:'Inicio',nav_tattoo:'Tatuajes',nav_music:'Música',
+    tab_mural:'🖌 Murales',tab_paint:'🎨 Pintura',tab_draw:'✏️ Dibujo',tab_craft:'🏺 Artesanías',
+    tab_info:'Haz click en una obra para ver detalles',
+    ent_enter:'Entrar a la Galería',
+    sec_mural_ey:'Arte Urbano · Salta, Argentina',sec_mural_t:'Murales que <em>hablan</em>',
+    sec_mural_d:'Arte urbano que conecta culturas. Transformo espacios con la identidad ancestral del norte argentino, llevando colores y símbolos andinos a los muros de Europa.',
+    sec_paint_ey:'Acrílico · Óleo · Técnica Mixta',sec_paint_t:'Pintura de <em>Tierra</em>',
+    sec_paint_d:'Del óleo sobre lienzo al barro ancestral. Cada obra es un diálogo entre la tierra andina, sus colores y las manos que la dan forma.',
+    sec_draw_ey:'Lápiz · Tinta · Grafito · Carbón',sec_draw_t:'El trazo que <em>origina</em>',
+    sec_draw_d:'El dibujo es el lenguaje primario. Antes de cada mural, antes de cada pintura: el trazo sobre el papel que captura la visión en su estado más puro.',
+    sec_craft_ey:'Cerámica · Barro · Alfarería',sec_craft_t:'Manos en la <em>tierra</em>',
+    sec_craft_d:'La cerámica como vínculo ancestral. El barro moldeado a mano conecta con miles de años de tradición alfarera andina.',
+    lb_tech:'Técnica & Materiales',lb_size:'Dimensiones',lb_loc:'Ubicación',
+    lb_desc:'Sobre la obra',lb_story:'Historia',lb_wa:'Consultar sobre esta obra',
+    foot:'Arte Visual · Salta, Argentina · Disponible en Polonia 2026',
+    f_home:'Inicio',f_tat:'Tatuajes',f_mus:'Música',
+  },
+  en:{
+    nav_back:'Nali',nav_home:'Home',nav_tattoo:'Tattoos',nav_music:'Music',
+    tab_mural:'🖌 Murals',tab_paint:'🎨 Painting',tab_draw:'✏️ Drawing',tab_craft:'🏺 Crafts',
+    tab_info:'Click on a piece to see details',
+    ent_enter:'Enter the Gallery',
+    sec_mural_ey:'Urban Art · Salta, Argentina',sec_mural_t:'Murals that <em>speak</em>',
+    sec_mural_d:'Urban art that connects cultures. I transform spaces with the ancestral identity of northern Argentina, bringing Andean colors and symbols to the walls of Europe.',
+    sec_paint_ey:'Acrylic · Oil · Mixed Media',sec_paint_t:'<em>Earth</em> Painting',
+    sec_paint_d:'From oil on canvas to ancestral clay. Each work is a dialogue between the Andean earth, its colors and the hands that shape it.',
+    sec_draw_ey:'Pencil · Ink · Graphite · Charcoal',sec_draw_t:'The stroke that <em>originates</em>',
+    sec_draw_d:'Drawing is the primary language. Before every mural, before every painting: the stroke on paper that captures the vision in its purest state.',
+    sec_craft_ey:'Ceramics · Clay · Pottery',sec_craft_t:'Hands in the <em>earth</em>',
+    sec_craft_d:'Ceramics as an ancestral bond. Hand-molded clay connects with thousands of years of Andean pottery tradition.',
+    lb_tech:'Technique & Materials',lb_size:'Dimensions',lb_loc:'Location',
+    lb_desc:'About the work',lb_story:'Story',lb_wa:'Inquire about this work',
+    foot:'Visual Art · Salta, Argentina · Available in Poland 2026',
+    f_home:'Home',f_tat:'Tattoos',f_mus:'Music',
+  },
+  pl:{
+    nav_back:'Nali',nav_home:'Start',nav_tattoo:'Tatuaże',nav_music:'Muzyka',
+    tab_mural:'🖌 Murale',tab_paint:'🎨 Malarstwo',tab_draw:'✏️ Rysunek',tab_craft:'🏺 Rzemiosło',
+    tab_info:'Kliknij na dzieło, aby zobaczyć szczegóły',
+    ent_enter:'Wejdź do Galerii',
+    sec_mural_ey:'Sztuka uliczna · Salta, Argentyna',sec_mural_t:'Murale, które <em>mówią</em>',
+    sec_mural_d:'Sztuka uliczna łącząca kultury. Przekształcam przestrzenie andyjską tożsamością z północnej Argentyny.',
+    sec_paint_ey:'Akryl · Olej · Technika Mieszana',sec_paint_t:'Malarstwo <em>ziemi</em>',
+    sec_paint_d:'Od oleju na płótnie po pradawną glinę. Każde dzieło to dialog między andyjską ziemią a rękami, które ją kształtują.',
+    sec_draw_ey:'Ołówek · Tusz · Grafit · Węgiel',sec_draw_t:'Kreska, która <em>tworzy</em>',
+    sec_draw_d:'Rysunek to język pierwotny. Przed każdym muralem, przed każdym obrazem: kreska na papierze.',
+    sec_craft_ey:'Ceramika · Glina · Garncarstwo',sec_craft_t:'Dłonie w <em>ziemi</em>',
+    sec_craft_d:'Ceramika jako więź z przodkami. Ręcznie formowana glina łączy z tysiącami lat andyjskiej tradycji garncarskiej.',
+    lb_tech:'Technika i materiały',lb_size:'Wymiary',lb_loc:'Lokalizacja',
+    lb_desc:'O dziele',lb_story:'Historia',lb_wa:'Zapytaj o to dzieło',
+    foot:'Sztuka Wizualna · Salta, Argentyna · Dostępna w Polsce 2026',
+    f_home:'Start',f_tat:'Tatuaże',f_mus:'Muzyka',
+  },
+  fr:{
+    nav_back:'Nali',nav_home:'Accueil',nav_tattoo:'Tatouages',nav_music:'Musique',
+    tab_mural:'🖌 Murales',tab_paint:'🎨 Peinture',tab_draw:'✏️ Dessin',tab_craft:'🏺 Artisanat',
+    tab_info:'Cliquez sur une œuvre pour voir les détails',
+    ent_enter:'Entrer dans la Galerie',
+    sec_mural_ey:'Art Urbain · Salta, Argentine',sec_mural_t:'Murales qui <em>parlent</em>',
+    sec_mural_d:"L'art urbain qui connecte les cultures. Je transforme les espaces avec l'identité ancestrale du nord de l'Argentine.",
+    sec_paint_ey:'Acrylique · Huile · Technique Mixte',sec_paint_t:'Peinture de la <em>terre</em>',
+    sec_paint_d:"De l'huile sur toile à l'argile ancestrale. Chaque œuvre est un dialogue entre la terre andine et les mains qui lui donnent forme.",
+    sec_draw_ey:'Crayon · Encre · Graphite · Fusain',sec_draw_t:'Le trait qui <em>origine</em>',
+    sec_draw_d:'Le dessin est le langage primaire. Avant chaque murale, avant chaque peinture: le trait sur le papier.',
+    sec_craft_ey:'Céramique · Argile · Poterie',sec_craft_t:'Mains dans la <em>terre</em>',
+    sec_craft_d:"La céramique comme lien ancestral. L'argile modelée à la main relie à des millénaires de tradition potière andine.",
+    lb_tech:'Technique & Matériaux',lb_size:'Dimensions',lb_loc:'Localisation',
+    lb_desc:"Sur l'œuvre",lb_story:'Histoire',lb_wa:"Renseigner sur cette œuvre",
+    foot:'Art Visuel · Salta, Argentine · Disponible en Pologne 2026',
+    f_home:'Accueil',f_tat:'Tatouages',f_mus:'Musique',
+  }
+};
+
+let lang='es';
+function applyLang(l){
+  lang=l;document.documentElement.lang=l;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k=el.getAttribute('data-i18n');
+    if(T[l]&&T[l][k]!=null) el.innerHTML=T[l][k];
+  });
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===l));
+}
+document.querySelectorAll('.lang-btn').forEach(b=>b.addEventListener('click',()=>applyLang(b.dataset.lang)));
+
+/* ── STARS ── */
+(function(){
+  const c=document.getElementById('stars');
+  for(let i=0;i<70;i++){
+    const s=document.createElement('div');s.className='star';
+    const sz=Math.random()*1.6+.3;
+    s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${sz}px;height:${sz}px;--d:${2+Math.random()*3}s;--dl:${Math.random()*4}s`;
+    c.appendChild(s);
+  }
+})();
+
+/* ── ENTRANCE CANVAS ── */
+(function(){
+  const canvas=document.getElementById('entCanvas');
+  const ctx=canvas.getContext('2d');
+  function resize(){canvas.width=innerWidth;canvas.height=innerHeight;}
+  resize();addEventListener('resize',resize,{passive:true});
+  const colors=['#CC0000','#E8720C','#F5C400','#F0EAD6','#00913A','#005BAA','#5C2D91'];
+  let prog=0,raf;
+  function draw(){
+    prog=Math.min(prog+.006,1);
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    const cx=canvas.width/2,cy=canvas.height/2;
+    const r=Math.min(canvas.width,canvas.height)*.4*prog;
+    for(let i=0;i<7;i++){
+      const a=(i/7)*Math.PI*2-Math.PI/2;
+      ctx.strokeStyle=colors[i]+'88';ctx.lineWidth=1.5;
+      ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+Math.cos(a)*r,cy+Math.sin(a)*r);ctx.stroke();
+      if(prog>.3){
+        const mid=r*.55,sub=r*.38,a2=a+.26,a3=a-.26;
+        ctx.strokeStyle=colors[i]+'44';ctx.lineWidth=1;
+        ctx.beginPath();ctx.moveTo(cx+Math.cos(a)*mid,cy+Math.sin(a)*mid);
+        ctx.lineTo(cx+Math.cos(a)*mid+Math.cos(a2)*sub,cy+Math.sin(a)*mid+Math.sin(a2)*sub);ctx.stroke();
+        ctx.beginPath();ctx.moveTo(cx+Math.cos(a)*mid,cy+Math.sin(a)*mid);
+        ctx.lineTo(cx+Math.cos(a)*mid+Math.cos(a3)*sub,cy+Math.sin(a)*mid+Math.sin(a3)*sub);ctx.stroke();
+      }
+    }
+    if(prog>.2){ctx.strokeStyle='rgba(200,146,42,.3)';ctx.lineWidth=1;ctx.beginPath();ctx.arc(cx,cy,(prog-.2)*r*1.4,0,Math.PI*2);ctx.stroke();}
+    if(prog<1) raf=requestAnimationFrame(draw);
+  }
+  draw();
+  window._stopEntCanvas=()=>cancelAnimationFrame(raf);
+})();
+
+/* ── ENTER MUSEUM ── */
+const themes={mural:'t-mural',pintura:'t-pintura',dibujo:'t-dibujo',artesania:'t-artesania'};
+let currentSec='mural';
+
+function enterMuseum(){
+  window._stopEntCanvas&&window._stopEntCanvas();
+  const ent=document.getElementById('entrance');
+  ent.style.opacity='0';ent.style.visibility='hidden';
+  setTimeout(()=>{ent.style.display='none';},800);
+  const museum=document.getElementById('museum');
+  const tabsBar=document.getElementById('tabsBar');
+  museum.classList.add('show');
+  tabsBar.classList.add('show');
+}
+document.getElementById('entBtn').addEventListener('click',enterMuseum);
+
+/* ── NAV SCROLL ── */
+addEventListener('scroll',()=>
+  document.getElementById('nav').classList.toggle('scrolled',scrollY>50)
+,{passive:true});
+
+/* ── DRAWER ── */
+const hbg=document.getElementById('hamburger');
+const drawer=document.getElementById('drawer');
+const overlay=document.getElementById('dOverlay');
+const dClose=document.getElementById('drawerClose');
+
+function openDrawer(){drawer.classList.add('open');overlay.classList.add('open');hbg.classList.add('open');hbg.setAttribute('aria-expanded','true');document.body.classList.add('locked');setTimeout(()=>{dClose.focus();},350);}
+function closeDrawer(){drawer.classList.remove('open');overlay.classList.remove('open');hbg.classList.remove('open');hbg.setAttribute('aria-expanded','false');document.body.classList.remove('locked');hbg.focus();}
+
+hbg.addEventListener('click',e=>{e.stopPropagation();drawer.classList.contains('open')?closeDrawer():openDrawer();});
+dClose.addEventListener('click',closeDrawer);
+overlay.addEventListener('click',closeDrawer);
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDrawer();closeLightbox();}});
+
+/* drawer section links */
+document.querySelectorAll('.js-sec').forEach(a=>{
+  a.addEventListener('click',e=>{
+    e.preventDefault();
+    const sec=a.dataset.sec;
+    closeDrawer();
+    setTimeout(()=>switchSection(sec),420);
+  });
+});
+
+/* ── SECTION SWITCH ── */
+function switchSection(name){
+  if(name===currentSec) return;
+  currentSec=name;
+
+  /* enter museum if not yet */
+  if(!document.getElementById('museum').classList.contains('show')) enterMuseum();
+
+  /* hide all sections */
+  document.querySelectorAll('.gallery-section').forEach(s=>{
+    s.classList.remove('active');
+    s.querySelectorAll('.sr').forEach(el=>el.classList.remove('visible'));
+  });
+
+  /* show target */
+  const sec=document.getElementById('sec-'+name);
+  if(sec){sec.classList.add('active');setTimeout(()=>revealObserver(),100);}
+
+  /* update tabs */
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.sec===name));
+
+  /* update body theme */
+  document.body.className=themes[name]||'t-mural';
+
+  /* scroll to top of section */
+  const navH=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav'))||64;
+  window.scrollTo({top:sec?sec.getBoundingClientRect().top+scrollY-navH-56-10:0,behavior:'smooth'});
+}
+
+document.querySelectorAll('.tab-btn').forEach(b=>{
+  b.addEventListener('click',()=>switchSection(b.dataset.sec));
+});
+
+/* ── LIGHTBOX ── */
+let frames=[],lbIdx=0;
+
+function buildFrames(){
+  frames=[...document.querySelectorAll('#sec-'+currentSec+' .art-frame')];
+}
+
+function openLightbox(el){
+  buildFrames();
+  lbIdx=frames.indexOf(el);
+  showLb();
+  document.getElementById('lightbox').classList.add('open');
+  document.body.classList.add('locked');
+}
+function closeLightbox(){
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.classList.remove('locked');
+}
+function showLb(){
+  const el=frames[lbIdx];
+  if(!el) return;
+  const d=el.dataset;
+  document.getElementById('lbImg').src=d.img||el.querySelector('img').src;
+  document.getElementById('lbCat').textContent=d.cat||'';
+  document.getElementById('lbTitle').textContent=d.title||'';
+  document.getElementById('lbYear').textContent=d.year||'';
+  document.getElementById('lbTech').textContent=d.tech||'';
+  document.getElementById('lbSize').textContent=d.size||'';
+  document.getElementById('lbLoc').textContent=d.loc||'';
+  document.getElementById('lbDesc').textContent=d.desc||'';
+  document.getElementById('lbStory').textContent=d.story||'';
+  const tw=document.getElementById('lbTagsWrap');
+  tw.innerHTML='';
+  (d.tags||'').split(',').filter(Boolean).forEach(t=>{
+    const s=document.createElement('span');s.className='lb-tag';s.textContent=t.trim();tw.appendChild(s);
+  });
+}
+
+document.querySelectorAll('.art-frame').forEach(f=>{
+  f.addEventListener('click',()=>openLightbox(f));
+});
+document.querySelector('.frame-expand') && document.querySelectorAll('.frame-expand').forEach(b=>{
+  b.addEventListener('click',e=>{e.stopPropagation();openLightbox(b.closest('.art-frame'));});
+});
+document.getElementById('lbClose').addEventListener('click',closeLightbox);
+document.getElementById('lightbox').addEventListener('click',e=>{if(e.target.id==='lightbox')closeLightbox();});
+document.getElementById('lbPrev').addEventListener('click',()=>{lbIdx=(lbIdx-1+frames.length)%frames.length;showLb();});
+document.getElementById('lbNext').addEventListener('click',()=>{lbIdx=(lbIdx+1)%frames.length;showLb();});
+document.addEventListener('keydown',e=>{
+  if(!document.getElementById('lightbox').classList.contains('open'))return;
+  if(e.key==='ArrowLeft'){lbIdx=(lbIdx-1+frames.length)%frames.length;showLb();}
+  if(e.key==='ArrowRight'){lbIdx=(lbIdx+1)%frames.length;showLb();}
+});
+
+/* ── SCROLL REVEAL ── */
+function revealObserver(){
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(en=>{if(en.isIntersecting){en.target.classList.add('visible');obs.unobserve(en.target);}});
+  },{threshold:.1,rootMargin:'0px 0px -20px 0px'});
+  document.querySelectorAll('#sec-'+currentSec+' .sr').forEach(el=>obs.observe(el));
+}
+revealObserver();
+
+/* ── FRAME ANIMATION DELAYS ── */
+document.querySelectorAll('.art-frame').forEach((f,i)=>{
+  f.style.animationDelay=`${(i%4)*.12}s`;
+});
+
+/* ── TOUCH SWIPE in lightbox ── */
+let tsX=0;
+document.getElementById('lightbox').addEventListener('touchstart',e=>{tsX=e.touches[0].clientX;},{passive:true});
+document.getElementById('lightbox').addEventListener('touchend',e=>{
+  const dx=e.changedTouches[0].clientX-tsX;
+  if(Math.abs(dx)>50){
+    if(dx<0){lbIdx=(lbIdx+1)%frames.length;}else{lbIdx=(lbIdx-1+frames.length)%frames.length;}
+    showLb();
+  }
+},{passive:true});
+</script>
 </body>
 </html>
