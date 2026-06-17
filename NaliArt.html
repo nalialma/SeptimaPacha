@@ -2,499 +2,493 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="description" content="Nali — Artista Andina de Salta, Argentina. Murales, tatuajes y música. Disponible en Polonia 2026.">
 <meta property="og:title" content="Nali | Arte Andino · Murales · Tatuajes · Música">
-<meta property="og:description" content="Artista multidisciplinaria de Salta, Argentina. Disponible en Polonia 2026.">
 <meta property="og:image" content="https://i.ibb.co/DD37KnBN/IMG-20260527-WA0150-1.jpg">
 <title>Nali | Arte Andino · Murales · Tatuajes · Música</title>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Barlow:wght@300;400;600&family=Barlow+Condensed:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
 <style>
-/* ─── TOKENS ─── */
-:root {
-  --rojo:    #CC0000;
-  --naranja: #E8720C;
-  --amarillo:#F5C400;
-  --verde:   #00913A;
-  --azul:    #005BAA;
-  --violeta: #5C2D91;
-  --blanco:  #F0EAD6;
-
-  --noche:      #07050A;
-  --tierra-d:   #130A04;
-  --oro:        #C8922A;
-  --oro-l:      #E8B84B;
-  --crema:      #F0E6D0;
-  --crema-dim:  rgba(240,230,208,.65);
-
-  --glass:      rgba(10,4,2,.55);
-  --glass-b:    rgba(200,146,42,.22);
-
-  --ff-disp: 'Cinzel', serif;
-  --ff-body: 'Barlow', sans-serif;
-  --ff-cond: 'Barlow Condensed', sans-serif;
-
-  --ease: cubic-bezier(.4,0,.2,1);
-  --tr: .4s var(--ease);
+/* ══ TOKENS ══ */
+:root{
+  --rojo:#CC0000;--naranja:#E8720C;--amarillo:#F5C400;
+  --verde:#00913A;--azul:#005BAA;--violeta:#5C2D91;--wipblanco:#F0EAD6;
+  --noche:#07050A;--oro:#C8922A;--oro-l:#E8B84B;
+  --crema:#F0E6D0;--cdim:rgba(240,230,208,.65);
+  --glass:rgba(10,4,2,.58);--gb:rgba(200,146,42,.22);
+  --ffd:'Cinzel',serif;--ffb:'Barlow',sans-serif;--ffc:'Barlow Condensed',sans-serif;
+  --ease:cubic-bezier(.4,0,.2,1);--tr:.38s var(--ease);
+  --nav:68px;
 }
 
-/* ─── RESET ─── */
+/* ══ RESET ══ */
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{
-  font-family:var(--ff-body);
+body{font-family:var(--ffb);background:var(--noche);color:var(--crema);overflow-x:hidden;}
+body.locked{overflow:hidden;touch-action:none;}
+
+/* ══ SPLASH ══ */
+#splash{
+  position:fixed;inset:0;z-index:9000;
   background:var(--noche);
-  color:var(--crema);
-  overflow-x:hidden;
-  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  transition:opacity .85s var(--ease),visibility .85s;
 }
-
-/* ─── WIPHALA BAR ─── */
-.wiphala{
-  width:100%;height:5px;flex-shrink:0;
-  background:linear-gradient(90deg,
-    var(--rojo) 0% 14.28%,
-    var(--naranja) 14.28% 28.56%,
-    var(--amarillo) 28.56% 42.84%,
-    var(--blanco) 42.84% 57.12%,
-    var(--verde) 57.12% 71.40%,
-    var(--azul) 71.40% 85.68%,
-    var(--violeta) 85.68% 100%
-  );
+#splash.out{opacity:0;visibility:hidden;pointer-events:none;}
+#splash canvas{position:absolute;inset:0;width:100%;height:100%;}
+.spl-inner{position:relative;z-index:2;text-align:center;display:flex;flex-direction:column;align-items:center;gap:.9rem;}
+.spl-logo{
+  font-family:var(--ffd);font-weight:900;
+  font-size:clamp(3.5rem,15vw,7rem);letter-spacing:8px;
+  background:linear-gradient(135deg,var(--rojo),var(--naranja),var(--amarillo),var(--oro));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  opacity:0;animation:fadeUp .9s var(--ease) .4s forwards;
 }
+.spl-sub{
+  font-family:var(--ffc);font-size:clamp(.8rem,3.5vw,1.1rem);
+  letter-spacing:6px;text-transform:uppercase;color:var(--oro-l);
+  opacity:0;animation:fadeUp .9s var(--ease) .9s forwards;
+}
+.spl-bar{
+  width:min(240px,68vw);height:5px;border-radius:3px;
+  background:linear-gradient(90deg,var(--rojo),var(--naranja),var(--amarillo),var(--wipblanco),var(--verde),var(--azul),var(--violeta));
+  opacity:0;animation:fadeUp .9s var(--ease) 1.3s forwards;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:none;}}
 
-/* ─── AMBIENT BG ─── */
+/* ══ AMBIENT ══ */
 body::before{
-  content:'';
-  position:fixed;inset:0;
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   background:
-    radial-gradient(ellipse 60% 70% at 20% 60%, rgba(204,0,0,.08) 0%, transparent 100%),
-    radial-gradient(ellipse 50% 60% at 80% 20%, rgba(92,45,145,.09) 0%, transparent 100%),
-    radial-gradient(ellipse 80% 50% at 50% 100%, rgba(74,32,0,.5) 0%, transparent 100%);
-  pointer-events:none;z-index:0;
+    radial-gradient(ellipse 60% 70% at 15% 60%,rgba(204,0,0,.08) 0%,transparent 100%),
+    radial-gradient(ellipse 50% 60% at 85% 20%,rgba(92,45,145,.09) 0%,transparent 100%),
+    radial-gradient(ellipse 80% 50% at 50% 100%,rgba(74,32,0,.48) 0%,transparent 100%);
 }
-
-/* ─── STARS ─── */
 #stars{position:fixed;inset:0;pointer-events:none;z-index:0;}
 .star{position:absolute;background:#fff;border-radius:50%;animation:twinkle var(--d,3s) infinite var(--dl,0s);}
-@keyframes twinkle{0%,100%{opacity:.1;}50%{opacity:.7;}}
+@keyframes twinkle{0%,100%{opacity:.07;}50%{opacity:.6;}}
 
-/* ─── NAV ─── */
-nav{
-  position:fixed;top:0;left:0;width:100%;z-index:100;
-  display:flex;flex-direction:column;
+/* ══ WIPHALA ══ */
+.wiphala{
+  width:100%;height:5px;
+  background:linear-gradient(90deg,
+    var(--rojo) 0% 14.28%,var(--naranja) 14.28% 28.56%,
+    var(--amarillo) 28.56% 42.84%,var(--wipblanco) 42.84% 57.12%,
+    var(--verde) 57.12% 71.40%,var(--azul) 71.40% 85.68%,
+    var(--violeta) 85.68% 100%);
 }
-.nav-inner{
+
+/* ══ NAV ══ */
+nav{position:fixed;top:0;left:0;width:100%;z-index:500;display:flex;flex-direction:column;}
+.nav-bar{
   display:flex;align-items:center;justify-content:space-between;
-  padding:0 2.5rem;height:68px;
-  background:rgba(7,5,10,.7);
-  backdrop-filter:blur(18px);
-  border-bottom:1px solid var(--glass-b);
+  padding:0 2.5rem;height:var(--nav);
+  background:rgba(7,5,10,.78);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--gb);
   transition:background var(--tr);
+  position:relative;z-index:501;
 }
-nav.scrolled .nav-inner{background:rgba(7,5,10,.93);}
+nav.scrolled .nav-bar{background:rgba(7,5,10,.97);}
+
 .nav-logo{
-  font-family:var(--ff-disp);font-size:1.5rem;font-weight:700;
-  letter-spacing:4px;color:var(--crema);text-decoration:none;
+  font-family:var(--ffd);font-size:1.45rem;font-weight:700;
+  letter-spacing:4px;color:var(--crema);text-decoration:none;flex-shrink:0;
 }
 .nav-logo span{color:var(--oro);}
-.nav-links{
-  display:flex;list-style:none;gap:.2rem;
-}
+
+/* desktop links */
+.nav-links{display:flex;list-style:none;gap:.1rem;align-items:center;}
 .nav-links a{
-  font-family:var(--ff-cond);font-size:.82rem;letter-spacing:1.8px;
+  font-family:var(--ffc);font-size:.82rem;letter-spacing:1.8px;
   text-transform:uppercase;font-weight:600;
-  color:var(--crema-dim);text-decoration:none;
-  padding:.45rem .9rem;border-radius:6px;
-  transition:color var(--tr);
-  position:relative;
+  color:var(--cdim);text-decoration:none;
+  padding:.45rem .85rem;border-radius:6px;
+  position:relative;transition:color var(--tr);
 }
 .nav-links a::after{
-  content:'';position:absolute;bottom:0;left:50%;
+  content:'';position:absolute;bottom:2px;left:50%;
   transform:translateX(-50%);width:0;height:1.5px;
-  background:var(--oro);border-radius:2px;
-  transition:width .3s var(--ease);
+  background:var(--oro);border-radius:2px;transition:width .3s;
 }
 .nav-links a:hover{color:var(--oro-l);}
 .nav-links a:hover::after{width:60%;}
 
-/* lang */
+.nav-right{display:flex;align-items:center;gap:.7rem;}
+
+/* lang selector */
 .lang-sel{
-  display:flex;gap:.2rem;align-items:center;
-  background:rgba(200,146,42,.08);border:1px solid var(--glass-b);
-  border-radius:30px;padding:.2rem .5rem;
+  display:flex;gap:.12rem;align-items:center;
+  background:rgba(200,146,42,.07);border:1px solid var(--gb);
+  border-radius:30px;padding:.18rem .4rem;
 }
 .lang-btn{
   background:none;border:none;cursor:pointer;
-  font-family:var(--ff-cond);font-size:.72rem;font-weight:700;letter-spacing:1px;
-  color:rgba(240,230,208,.45);padding:.18rem .45rem;border-radius:14px;
-  transition:var(--tr);text-transform:uppercase;
+  font-family:var(--ffc);font-size:.72rem;font-weight:700;letter-spacing:1px;
+  color:rgba(240,230,208,.4);padding:.18rem .42rem;border-radius:14px;
+  transition:var(--tr);text-transform:uppercase;min-width:28px;
 }
 .lang-btn.active{background:var(--oro);color:var(--noche);}
 .lang-btn:hover:not(.active){color:var(--oro-l);}
 
 /* hamburger */
 .hamburger{
-  display:none;flex-direction:column;gap:5px;
-  cursor:pointer;background:none;border:none;padding:.4rem;z-index:110;
+  display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;
+  cursor:pointer;background:none;border:none;
+  width:44px;height:44px;flex-shrink:0;
+  -webkit-tap-highlight-color:transparent;
 }
 .hamburger span{
-  display:block;width:24px;height:2px;
-  background:var(--oro);border-radius:2px;transition:var(--tr);
+  display:block;width:26px;height:2.5px;
+  background:var(--oro);border-radius:3px;
+  transition:transform .35s var(--ease),opacity .35s;
+  transform-origin:center;
 }
-.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5.5px,5.5px);}
 .hamburger.open span:nth-child(2){opacity:0;}
-.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
+.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5.5px,-5.5px);}
 
-/* mobile nav */
-.mobile-nav{
-  display:none;position:fixed;
-  top:73px;left:0;width:100%;
-  background:rgba(7,5,10,.97);backdrop-filter:blur(20px);
-  padding:1.5rem 2rem 2.5rem;
-  border-bottom:2px solid var(--oro);
-  transform:translateY(-110%);
-  transition:transform .35s var(--ease);
-  z-index:99;
+/* ══ MOBILE DRAWER (slide from right) ══ */
+.drawer-overlay{
+  position:fixed;inset:0;z-index:510;
+  background:rgba(0,0,0,.6);
+  opacity:0;visibility:hidden;
+  transition:opacity .35s,visibility .35s;
+  -webkit-tap-highlight-color:transparent;
 }
-.mobile-nav.open{transform:translateY(0);}
-.mobile-nav a{
-  display:flex;align-items:center;
-  font-family:var(--ff-cond);font-size:1.3rem;
-  letter-spacing:2px;text-transform:uppercase;
-  color:var(--crema);text-decoration:none;
-  padding:1rem 0;border-bottom:1px solid rgba(200,146,42,.12);
-  transition:color .3s;min-height:48px;
-}
-.mobile-nav a:hover{color:var(--oro);}
-.mobile-lang{display:flex;gap:.7rem;margin-top:1.8rem;flex-wrap:wrap;}
-.mobile-lang .lang-btn{
-  background:rgba(200,146,42,.1);border:1px solid var(--glass-b);
-  border-radius:22px;padding:.5rem 1rem;font-size:.85rem;
-  color:var(--crema);min-height:38px;
-}
-.mobile-lang .lang-btn.active{background:var(--oro);color:var(--noche);}
-body.menu-open{overflow:hidden;}
+.drawer-overlay.open{opacity:1;visibility:visible;}
 
-/* ─── HERO ─── */
+.mobile-drawer{
+  position:fixed;
+  top:0;right:0;bottom:0;
+  width:min(310px,88vw);
+  z-index:520;
+  background:rgba(7,5,10,.99);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-left:1px solid rgba(200,146,42,.2);
+  display:flex;flex-direction:column;
+  overflow-y:auto;-webkit-overflow-scrolling:touch;
+  transform:translateX(100%);
+  transition:transform .38s var(--ease);
+  padding:0;
+}
+.mobile-drawer.open{transform:translateX(0);}
+
+/* drawer header */
+.drawer-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 1.5rem;height:var(--nav);
+  border-bottom:1px solid rgba(200,146,42,.12);
+  flex-shrink:0;
+}
+.drawer-head .nav-logo{font-size:1.2rem;}
+.drawer-close{
+  background:none;border:none;cursor:pointer;
+  color:var(--oro);font-size:1.3rem;
+  width:40px;height:40px;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:50%;
+  border:1px solid rgba(200,146,42,.25);
+  transition:var(--tr);-webkit-tap-highlight-color:transparent;
+}
+.drawer-close:hover{background:rgba(200,146,42,.15);}
+
+/* drawer body */
+.drawer-body{
+  flex:1;padding:1.5rem 1.5rem 1rem;
+  display:flex;flex-direction:column;gap:0;
+}
+
+.drawer-link{
+  display:flex;align-items:center;gap:.9rem;
+  font-family:var(--ffc);font-size:1.25rem;letter-spacing:2px;
+  text-transform:uppercase;color:var(--crema);text-decoration:none;
+  padding:1rem 0;border-bottom:1px solid rgba(200,146,42,.1);
+  transition:color .25s,padding-left .25s;
+  min-height:54px;-webkit-tap-highlight-color:transparent;
+}
+.drawer-link:last-of-type{border-bottom:none;}
+.drawer-link:hover,.drawer-link:active{color:var(--oro);padding-left:.4rem;}
+.drawer-link .di{
+  width:30px;height:30px;border-radius:8px;
+  background:rgba(200,146,42,.1);border:1px solid rgba(200,146,42,.2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.85rem;color:var(--oro);flex-shrink:0;
+}
+
+/* drawer footer */
+.drawer-foot{
+  padding:1.2rem 1.5rem 1.5rem;
+  border-top:1px solid rgba(200,146,42,.1);
+  display:flex;flex-direction:column;gap:1rem;
+  flex-shrink:0;
+}
+.drawer-wa{
+  display:flex;align-items:center;justify-content:center;gap:.6rem;
+  background:linear-gradient(135deg,#128C7E,#075E54);
+  color:#fff;text-decoration:none;
+  font-family:var(--ffc);font-size:.88rem;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;
+  padding:.85rem 1.4rem;border-radius:50px;
+  transition:var(--tr);-webkit-tap-highlight-color:transparent;
+}
+.drawer-wa:hover{opacity:.88;}
+.drawer-lang{display:flex;gap:.5rem;flex-wrap:wrap;}
+.drawer-lang .lang-btn{
+  background:rgba(200,146,42,.1);border:1px solid var(--gb);
+  border-radius:22px;padding:.55rem 1rem;
+  font-size:.82rem;color:var(--crema);
+  min-height:40px;min-width:46px;
+}
+.drawer-lang .lang-btn.active{background:var(--oro);color:var(--noche);font-weight:900;}
+
+/* ══ HERO ══ */
 .hero{
   position:relative;z-index:1;
-  min-height:100vh;
+  min-height:100dvh;
   display:grid;
   grid-template-columns:1fr 1fr;
   align-items:center;
-  padding:100px 2.5rem 4rem;
+  padding:calc(var(--nav) + 40px) 2.5rem 4rem;
   max-width:1340px;margin:0 auto;
   gap:4rem;
 }
 
-/* photo side */
-.hero-photo-wrap{position:relative;}
+/* photo */
+.hero-photo-wrap{display:flex;justify-content:center;align-items:center;position:relative;}
 .hero-photo-frame{
   position:relative;
-  width:100%;max-width:480px;
+  width:100%;max-width:460px;
   aspect-ratio:3/4;
   border-radius:20px;overflow:hidden;
   border:1.5px solid rgba(200,146,42,.28);
-  box-shadow:0 30px 80px rgba(0,0,0,.65), 0 0 60px rgba(200,146,42,.08);
+  box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 60px rgba(200,146,42,.08);
   transition:transform .6s var(--ease);
 }
-.hero-photo-frame:hover{transform:scale(1.015);}
+.hero-photo-frame:hover{transform:scale(1.018);}
 .hero-photo-frame img{
-  width:100%;height:100%;object-fit:cover;
+  width:100%;height:100%;object-fit:cover;display:block;
   transition:transform 1.4s var(--ease);
-  display:block;
 }
-.hero-photo-frame:hover img{transform:scale(1.05);}
+.hero-photo-frame:hover img{transform:scale(1.06);}
 .photo-wiphala{
   position:absolute;top:0;left:0;right:0;height:4px;
-  background:linear-gradient(90deg,var(--rojo),var(--naranja),var(--amarillo),var(--blanco),var(--verde),var(--azul),var(--violeta));
+  background:linear-gradient(90deg,var(--rojo),var(--naranja),var(--amarillo),var(--wipblanco),var(--verde),var(--azul),var(--violeta));
 }
 .photo-badge{
   position:absolute;bottom:1.2rem;left:1.2rem;right:1.2rem;
-  background:rgba(7,5,10,.78);backdrop-filter:blur(10px);
+  background:rgba(7,5,10,.82);backdrop-filter:blur(12px);
   border:1px solid rgba(200,146,42,.25);border-radius:12px;
-  padding:.9rem 1.1rem;
+  padding:.85rem 1.1rem;
 }
-.badge-name{font-family:var(--ff-cond);font-size:1rem;font-weight:700;color:var(--oro-l);letter-spacing:1px;}
-.badge-sub{font-size:.78rem;color:var(--crema-dim);margin-top:.2rem;}
-
-/* chakana watermark */
+.badge-name{font-family:var(--ffc);font-size:.95rem;font-weight:700;color:var(--oro-l);letter-spacing:1px;}
+.badge-sub{font-size:.74rem;color:var(--cdim);margin-top:.2rem;}
 .chakana-bg{
-  position:absolute;right:-30px;bottom:-30px;
-  width:160px;height:160px;opacity:.06;pointer-events:none;
+  position:absolute;right:-18px;bottom:-18px;
+  width:140px;height:140px;opacity:.05;pointer-events:none;
 }
 
-/* text side */
+/* text */
 .hero-text{max-width:560px;}
-.available-pill{
+.avail-pill{
   display:inline-flex;align-items:center;gap:.5rem;
   background:rgba(0,145,58,.1);border:1px solid rgba(0,145,58,.28);
-  border-radius:30px;padding:.38rem 1rem;
-  font-family:var(--ff-cond);font-size:.76rem;letter-spacing:2px;text-transform:uppercase;
+  border-radius:30px;padding:.36rem 1rem;
+  font-family:var(--ffc);font-size:.74rem;letter-spacing:2px;text-transform:uppercase;
   color:#3dd87d;margin-bottom:1.8rem;
 }
-.pill-dot{
-  width:7px;height:7px;border-radius:50%;background:#00913A;
-  animation:pulse 2s ease infinite;flex-shrink:0;
-}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(0,145,58,.5);}50%{box-shadow:0 0 0 7px rgba(0,145,58,0);}}
+.pill-dot{width:7px;height:7px;border-radius:50%;background:#00913A;flex-shrink:0;animation:pdot 2s ease infinite;}
+@keyframes pdot{0%,100%{box-shadow:0 0 0 0 rgba(0,145,58,.5);}50%{box-shadow:0 0 0 7px rgba(0,145,58,0);}}
 
-.hero-eyebrow{
-  font-family:var(--ff-cond);font-size:.8rem;
-  letter-spacing:4px;text-transform:uppercase;
-  color:var(--oro);margin-bottom:.8rem;
-}
+.hero-eyebrow{font-family:var(--ffc);font-size:.78rem;letter-spacing:4px;text-transform:uppercase;color:var(--oro);margin-bottom:.8rem;}
 .hero-name{
-  font-family:var(--ff-disp);
-  font-size:clamp(4rem,9vw,7.5rem);
-  font-weight:900;line-height:.88;
-  letter-spacing:2px;
-  color:var(--crema);
-  margin-bottom:1.2rem;
+  font-family:var(--ffd);
+  font-size:clamp(3.5rem,8vw,7.5rem);
+  font-weight:900;line-height:.87;letter-spacing:2px;
+  color:var(--crema);margin-bottom:1.2rem;
 }
-.hero-name .gradient{
+.hero-name .grad{
   display:block;
   background:linear-gradient(125deg,var(--rojo),var(--naranja) 45%,var(--amarillo));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
 }
 .hero-role{
-  font-family:var(--ff-cond);font-size:clamp(.95rem,2vw,1.25rem);
+  font-family:var(--ffc);font-size:clamp(.9rem,2vw,1.2rem);
   font-weight:300;letter-spacing:3px;text-transform:uppercase;
-  color:var(--crema-dim);margin-bottom:1.4rem;
+  color:var(--cdim);margin-bottom:1.4rem;
   border-left:2px solid var(--naranja);padding-left:1rem;
 }
-.hero-desc{
-  font-size:1rem;color:var(--crema-dim);line-height:1.85;
-  max-width:480px;margin-bottom:3rem;
-}
+.hero-desc{font-size:.97rem;color:var(--cdim);line-height:1.88;max-width:480px;margin-bottom:2.5rem;}
 
-/* ─── WORLD CARDS (the 3 portals) ─── */
-.worlds{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;
-  margin-bottom:2.5rem;
-}
+/* ══ PORTALS ══ */
+.worlds{display:grid;grid-template-columns:repeat(3,1fr);gap:.85rem;margin-bottom:2.2rem;}
 .world-card{
   position:relative;overflow:hidden;
   border-radius:16px;
-  border:1.5px solid rgba(200,146,42,.18);
-  background:var(--glass);
-  backdrop-filter:blur(10px);
+  border:1.5px solid rgba(200,146,42,.16);
+  background:var(--glass);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
   text-decoration:none;
   display:flex;flex-direction:column;
-  padding:1.4rem 1.2rem 1.2rem;
-  gap:.5rem;
-  transition:var(--tr);
-  cursor:pointer;
-  group:hover;
+  padding:1.3rem 1.1rem 1.1rem;gap:.4rem;
+  transition:var(--tr);-webkit-tap-highlight-color:transparent;
 }
-.world-card::before{
-  content:'';position:absolute;inset:0;
-  background:var(--c, rgba(200,146,42,.06));
-  opacity:0;transition:opacity .4s;
-}
-.world-card:hover::before{opacity:1;}
-.world-card:hover{
-  border-color:var(--c-border, rgba(200,146,42,.5));
+.world-card::before{content:'';position:absolute;inset:0;background:var(--hov,rgba(200,146,42,.06));opacity:0;transition:opacity .4s;}
+.world-card:hover::before,.world-card:active::before{opacity:1;}
+.world-card:hover,.world-card:active{
+  border-color:var(--hov-b,rgba(200,146,42,.5));
   transform:translateY(-5px);
-  box-shadow:0 20px 50px rgba(0,0,0,.5);
+  box-shadow:0 18px 44px rgba(0,0,0,.45);
 }
-
-/* color per card */
-.world-card.art{--c:rgba(232,114,12,.1);--c-border:rgba(232,114,12,.55);}
-.world-card.tattoo{--c:rgba(200,146,42,.1);--c-border:rgba(200,146,42,.55);}
-.world-card.music{--c:rgba(92,45,145,.15);--c-border:rgba(92,45,145,.6);}
-
-.world-icon{
-  font-size:1.6rem;margin-bottom:.4rem;
-  transition:transform .4s var(--ease);
-}
-.world-card:hover .world-icon{transform:scale(1.18);}
-
-.world-title{
-  font-family:var(--ff-disp);font-size:1rem;font-weight:700;
-  letter-spacing:1px;color:var(--crema);
-}
-.world-sub{
-  font-family:var(--ff-cond);font-size:.72rem;
-  letter-spacing:1.5px;text-transform:uppercase;
-  color:var(--crema-dim);
-}
-.world-arrow{
-  position:absolute;bottom:1rem;right:1rem;
-  font-size:.75rem;color:var(--oro);
-  opacity:0;transform:translateX(-6px);
-  transition:var(--tr);
-}
+.world-card.art{--hov:rgba(232,114,12,.1);--hov-b:rgba(232,114,12,.55);}
+.world-card.tattoo{--hov:rgba(200,146,42,.1);--hov-b:rgba(200,146,42,.55);}
+.world-card.music{--hov:rgba(92,45,145,.15);--hov-b:rgba(92,45,145,.6);}
+.world-icon{font-size:1.55rem;margin-bottom:.3rem;transition:transform .4s var(--ease);}
+.world-card:hover .world-icon{transform:scale(1.2);}
+.world-title{font-family:var(--ffd);font-size:.9rem;font-weight:700;letter-spacing:.5px;color:var(--crema);}
+.world-sub{font-family:var(--ffc);font-size:.66rem;letter-spacing:1.2px;text-transform:uppercase;color:var(--cdim);line-height:1.4;}
+.world-arrow{position:absolute;bottom:.9rem;right:.9rem;font-size:.7rem;color:var(--oro);opacity:0;transform:translateX(-5px);transition:var(--tr);}
 .world-card:hover .world-arrow{opacity:1;transform:translateX(0);}
 
-/* ─── CONTACT ROW ─── */
-.hero-contacts{
-  display:flex;gap:.8rem;align-items:center;flex-wrap:wrap;
-}
+/* ══ CONTACTS ══ */
+.hero-contacts{display:flex;gap:.8rem;align-items:center;flex-wrap:wrap;}
 .btn-wa{
-  display:inline-flex;align-items:center;gap:.6rem;
+  display:inline-flex;align-items:center;gap:.55rem;
   background:linear-gradient(135deg,#128C7E,#075E54);
   color:#fff;text-decoration:none;
-  font-family:var(--ff-cond);font-size:.88rem;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;
-  padding:.75rem 1.8rem;border-radius:50px;
+  font-family:var(--ffc);font-size:.86rem;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;
+  padding:.72rem 1.7rem;border-radius:50px;
   box-shadow:0 8px 24px rgba(18,140,126,.3);
-  transition:var(--tr);
+  transition:var(--tr);white-space:nowrap;-webkit-tap-highlight-color:transparent;
 }
 .btn-wa:hover{transform:translateY(-3px);box-shadow:0 14px 32px rgba(18,140,126,.45);}
-.social-row{display:flex;gap:.5rem;align-items:center;}
+.soc-row{display:flex;gap:.45rem;}
 .soc-btn{
-  width:38px;height:38px;border-radius:50%;
-  border:1px solid rgba(200,146,42,.25);
-  background:rgba(200,146,42,.07);
-  color:var(--crema-dim);text-decoration:none;
+  width:40px;height:40px;border-radius:50%;
+  border:1px solid rgba(200,146,42,.22);background:rgba(200,146,42,.06);
+  color:var(--cdim);text-decoration:none;
   display:inline-flex;align-items:center;justify-content:center;
-  font-size:.9rem;transition:var(--tr);
+  font-size:.88rem;transition:var(--tr);-webkit-tap-highlight-color:transparent;
 }
-.soc-btn:hover{border-color:var(--oro);color:var(--oro-l);background:rgba(200,146,42,.15);transform:translateY(-2px);}
+.soc-btn:hover{border-color:var(--oro);color:var(--oro-l);background:rgba(200,146,42,.14);transform:translateY(-2px);}
 
-/* ─── STATS STRIP ─── */
+/* ══ STATS ══ */
 .stats{
   position:relative;z-index:1;
-  border-top:1px solid rgba(200,146,42,.12);
-  border-bottom:1px solid rgba(200,146,42,.12);
+  border-top:1px solid rgba(200,146,42,.1);border-bottom:1px solid rgba(200,146,42,.1);
   background:rgba(200,146,42,.04);
 }
-.stats-inner{
-  max-width:1340px;margin:0 auto;
-  padding:1.4rem 2.5rem;
-  display:flex;justify-content:center;flex-wrap:wrap;
-}
-.stat{
-  display:flex;align-items:center;gap:.8rem;
-  padding:.5rem 2.5rem;
-  border-right:1px solid rgba(200,146,42,.15);
-}
+.stats-inner{max-width:1340px;margin:0 auto;padding:1.4rem 2.5rem;display:flex;justify-content:center;flex-wrap:wrap;}
+.stat{display:flex;align-items:center;gap:.8rem;padding:.5rem 2.5rem;border-right:1px solid rgba(200,146,42,.12);}
 .stat:last-child{border-right:none;}
-.stat-num{
-  font-family:var(--ff-disp);font-size:1.7rem;
-  font-weight:700;color:var(--oro);line-height:1;
-}
-.stat-label{
-  font-family:var(--ff-cond);font-size:.75rem;
-  letter-spacing:1.5px;text-transform:uppercase;
-  color:var(--crema-dim);line-height:1.3;
-}
+.stat-num{font-family:var(--ffd);font-size:1.7rem;font-weight:700;color:var(--oro);line-height:1;}
+.stat-label{font-family:var(--ffc);font-size:.73rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--cdim);line-height:1.3;}
 
-/* ─── ANDEAN DIVIDER ─── */
+/* ══ DIVIDER ══ */
 .andean-div{
-  height:2px;width:100%;
+  height:2px;
   background:linear-gradient(90deg,transparent,var(--rojo),var(--naranja),var(--amarillo),var(--verde),var(--azul),var(--violeta),transparent);
-  opacity:.35;
+  opacity:.3;
 }
 
-/* ─── BIO SECTION ─── */
+/* ══ BIO ══ */
 .bio{
   position:relative;z-index:1;
   max-width:1340px;margin:0 auto;
   padding:6rem 2.5rem;
-  display:grid;grid-template-columns:1.1fr 1fr;
-  gap:6rem;align-items:center;
+  display:grid;grid-template-columns:1.1fr 1fr;gap:6rem;align-items:center;
 }
-.bio-text .sec-label{
-  font-family:var(--ff-cond);font-size:.72rem;
-  letter-spacing:4px;text-transform:uppercase;color:var(--oro);
-  margin-bottom:.8rem;display:flex;align-items:center;gap:.7rem;
-}
-.bio-text .sec-label::before{content:'';width:26px;height:1px;background:var(--oro);}
-.bio-text h2{
-  font-family:var(--ff-disp);
-  font-size:clamp(2rem,5vw,3.2rem);
-  font-weight:700;color:var(--crema);
-  line-height:1.05;margin-bottom:1.2rem;letter-spacing:.5px;
-}
-.bio-text h2 em{
-  font-style:normal;
-  background:linear-gradient(125deg,var(--naranja),var(--amarillo));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
-.bio-quote{
-  font-family:var(--ff-disp);font-size:clamp(.95rem,2vw,1.2rem);
-  font-style:italic;color:var(--oro-l);line-height:1.55;
-  padding-left:1.2rem;border-left:2.5px solid var(--naranja);
-  margin-bottom:1.5rem;
-}
-.bio-p{font-size:.97rem;color:var(--crema-dim);line-height:1.9;margin-bottom:.9rem;}
-.skills{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.5rem;}
-.skill{
-  font-family:var(--ff-cond);font-size:.75rem;
-  letter-spacing:1px;text-transform:uppercase;
-  padding:.28rem .85rem;border-radius:20px;
-  background:rgba(200,146,42,.09);border:1px solid rgba(200,146,42,.22);
-  color:var(--oro-l);
-}
+.sec-label{font-family:var(--ffc);font-size:.72rem;letter-spacing:4px;text-transform:uppercase;color:var(--oro);margin-bottom:.8rem;display:flex;align-items:center;gap:.7rem;}
+.sec-label::before{content:'';width:26px;height:1px;background:var(--oro);}
+.bio-text h2{font-family:var(--ffd);font-size:clamp(1.9rem,4.5vw,3.2rem);font-weight:700;color:var(--crema);line-height:1.05;margin-bottom:1.2rem;}
+.bio-text h2 em{font-style:normal;background:linear-gradient(125deg,var(--naranja),var(--amarillo));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.bio-quote{font-family:var(--ffd);font-size:clamp(.9rem,1.8vw,1.15rem);font-style:italic;color:var(--oro-l);line-height:1.55;padding-left:1.2rem;border-left:2.5px solid var(--naranja);margin-bottom:1.5rem;}
+.bio-p{font-size:.95rem;color:var(--cdim);line-height:1.9;margin-bottom:.9rem;}
+.skills{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1.5rem;}
+.skill{font-family:var(--ffc);font-size:.72rem;letter-spacing:1px;text-transform:uppercase;padding:.26rem .82rem;border-radius:20px;background:rgba(200,146,42,.08);border:1px solid rgba(200,146,42,.2);color:var(--oro-l);}
+.bio-visual{display:grid;grid-template-rows:1fr 1fr;gap:1rem;height:520px;}
+.bio-img{border-radius:16px;overflow:hidden;border:1.5px solid rgba(200,146,42,.18);}
+.bio-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.2s var(--ease);}
+.bio-img:hover img{transform:scale(1.05);}
+.bio-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.bio-row .bio-img{border-radius:14px;}
 
-.bio-visual{
-  display:grid;grid-template-rows:1fr 1fr;gap:1rem;
-  height:520px;
-}
-.bio-img-main{
-  border-radius:16px;overflow:hidden;
-  border:1.5px solid rgba(200,146,42,.2);
-  position:relative;
-}
-.bio-img-main img,.bio-img-sm img{
-  width:100%;height:100%;object-fit:cover;display:block;
-  transition:transform 1.2s var(--ease);
-}
-.bio-img-main:hover img,.bio-img-sm:hover img{transform:scale(1.05);}
-.bio-imgs-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
-.bio-img-sm{border-radius:14px;overflow:hidden;border:1.5px solid rgba(200,146,42,.15);}
+/* ══ FOOTER ══ */
+footer{position:relative;z-index:1;border-top:1px solid rgba(200,146,42,.1);padding:2.5rem 2rem 1.8rem;text-align:center;}
+.footer-logo{font-family:var(--ffd);font-size:1.3rem;color:var(--oro);letter-spacing:3px;margin-bottom:.4rem;}
+.footer-sub{font-family:var(--ffc);font-size:.68rem;letter-spacing:2px;text-transform:uppercase;color:rgba(240,230,208,.22);}
+.footer-credit{margin-top:.8rem;font-family:var(--ffc);font-size:.68rem;color:rgba(240,230,208,.18);}
+.footer-credit a{color:inherit;text-decoration:none;}
 
-/* ─── FOOTER ─── */
-footer{
-  position:relative;z-index:1;
-  border-top:1px solid rgba(200,146,42,.1);
-  padding:2.5rem 2.5rem 1.5rem;
-  text-align:center;
-}
-.footer-logo{font-family:var(--ff-disp);font-size:1.3rem;color:var(--oro);letter-spacing:3px;margin-bottom:.4rem;}
-.footer-sub{font-family:var(--ff-cond);font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:rgba(240,230,208,.25);}
-.footer-agency{margin-top:.8rem;font-family:var(--ff-cond);font-size:.7rem;letter-spacing:1px;color:rgba(240,230,208,.2);}
-.footer-agency a{color:inherit;}
-
-/* ─── SCROLL REVEAL ─── */
-.sr{opacity:0;transform:translateY(28px);transition:opacity .7s var(--ease),transform .7s var(--ease);}
+/* ══ SCROLL REVEAL ══ */
+.sr{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease),transform .7s var(--ease);}
 .sr.visible{opacity:1;transform:none;}
-.sr-d1{transition-delay:.1s;}.sr-d2{transition-delay:.2s;}.sr-d3{transition-delay:.3s;}
+.d1{transition-delay:.1s;}.d2{transition-delay:.2s;}.d3{transition-delay:.3s;}
 
-/* ─── RESPONSIVE ─── */
+/* ══ RESPONSIVE ══ */
+
+/* Tablet */
 @media(max-width:1024px){
-  .hero{grid-template-columns:1fr;padding:100px 2rem 4rem;text-align:center;gap:3rem;}
-  .hero-photo-wrap{order:-1;display:flex;justify-content:center;}
-  .hero-photo-frame{max-width:360px;}
-  .hero-desc{margin-left:auto;margin-right:auto;}
+  .hero{grid-template-columns:1fr;padding:calc(var(--nav)+36px) 2rem 4rem;text-align:center;gap:2.5rem;}
+  .hero-photo-wrap{order:-1;}
+  .hero-photo-frame{max-width:340px;}
+  .hero-text{max-width:100%;}
+  .hero-desc{margin:0 auto 2.5rem;}
   .worlds{max-width:480px;margin-left:auto;margin-right:auto;}
   .hero-contacts{justify-content:center;}
   .bio{grid-template-columns:1fr;gap:3rem;padding:4rem 2rem;}
-  .bio-visual{height:380px;grid-template-rows:1fr;}
-  .bio-imgs-row{display:none;}
-  .bio-img-main{height:380px;}
+  .bio-visual{height:380px;}
+  .bio-row{display:none;}
 }
+
+/* Mobile */
 @media(max-width:768px){
+  :root{--nav:60px;}
+
+  /* nav */
+  .nav-bar{padding:0 1.2rem;}
   .nav-links,.lang-sel{display:none !important;}
-  .hamburger{display:flex;}
-  .nav-inner{padding:0 1.5rem;}
-  .worlds{grid-template-columns:1fr;max-width:320px;}
+  .hamburger{display:flex !important;}
+
+  /* hero */
+  .hero{padding:calc(var(--nav)+28px) 1.2rem 3.5rem;gap:2rem;}
+  .hero-photo-frame{max-width:260px;}
+  .hero-name{font-size:clamp(3rem,12vw,4.5rem);}
+  .photo-badge{padding:.65rem .85rem;}
+  .badge-name{font-size:.82rem;}
+
+  /* portals — stacked rows */
+  .worlds{grid-template-columns:1fr;max-width:100%;}
+  .world-card{flex-direction:row;align-items:center;padding:1rem 1.2rem;gap:1rem;}
+  .world-icon{font-size:1.3rem;margin-bottom:0;flex-shrink:0;}
+  .world-title{font-size:.9rem;}
+  .world-arrow{position:static;opacity:1;transform:none;margin-left:auto;color:var(--oro);}
+
+  /* stats */
   .stats-inner{flex-direction:column;align-items:center;padding:1rem;}
-  .stat{padding:.5rem 1rem;border-right:none;border-bottom:1px solid rgba(200,146,42,.12);width:100%;justify-content:center;}
+  .stat{padding:.55rem 1rem;width:100%;max-width:280px;border-right:none;border-bottom:1px solid rgba(200,146,42,.1);justify-content:center;}
   .stat:last-child{border-bottom:none;}
+
+  /* bio */
+  .bio{padding:3.5rem 1.2rem;}
+  .bio-visual{height:250px;}
 }
-@media(max-width:480px){
-  .hero{padding:90px 1.2rem 3rem;}
-  .hero-name{font-size:3.2rem;}
-  .bio{padding:3rem 1.2rem;}
+
+/* Small */
+@media(max-width:420px){
+  .hero-photo-frame{max-width:220px;}
+  .hero-contacts{flex-direction:column;align-items:stretch;}
+  .btn-wa{justify-content:center;}
+  .soc-row{justify-content:center;}
 }
+
+/* Safe area — iPhone */
+@supports(padding:max(0px)){
+  .mobile-drawer{padding-bottom:env(safe-area-inset-bottom);}
+}
+
+/* Reduced motion */
 @media(prefers-reduced-motion:reduce){
   .sr{opacity:1;transform:none;}
   *{animation-duration:.01ms !important;transition-duration:.01ms !important;}
@@ -503,132 +497,148 @@ footer{
 </head>
 <body>
 
+<!-- ══ SPLASH ══ -->
+<div id="splash">
+  <canvas id="splashCanvas"></canvas>
+  <div class="spl-inner">
+    <div class="spl-logo">NALI</div>
+    <div class="spl-sub">Arte Andino · Murales · Tatuajes · Música</div>
+    <div class="spl-bar"></div>
+  </div>
+</div>
+
 <!-- STARS -->
 <div id="stars"></div>
 
-<!-- NAV -->
+<!-- ══ NAV ══ -->
 <nav id="nav">
   <div class="wiphala"></div>
-  <div class="nav-inner">
+  <div class="nav-bar">
     <a href="#" class="nav-logo">NAL<span>I</span></a>
     <ul class="nav-links">
-      <li><a href="#sobre" data-i18n="nav_about">Sobre mí</a></li>
-      <li><a href="nali-arte.html" data-i18n="nav_art">Arte Visual</a></li>
-      <li><a href="nali-tattoo.html" data-i18n="nav_tattoo">Tatuajes</a></li>
-      <li><a href="nali-musica.html" data-i18n="nav_music">Música</a></li>
-      <li><a href="#contacto" data-i18n="nav_contact">Contacto</a></li>
+      <li><a href="#sobre"          data-i18n="n_about">Sobre mí</a></li>
+      <li><a href="nali-arte.html"  data-i18n="n_art">Arte Visual</a></li>
+      <li><a href="nali-tattoo.html"data-i18n="n_tat">Tatuajes</a></li>
+      <li><a href="nali-musica.html"data-i18n="n_mus">Música</a></li>
+      <li><a href="#contacto"       data-i18n="n_con">Contacto</a></li>
     </ul>
-    <div style="display:flex;gap:.7rem;align-items:center;">
+    <div class="nav-right">
       <div class="lang-sel">
         <button class="lang-btn active" data-lang="es">ES</button>
         <button class="lang-btn" data-lang="en">EN</button>
         <button class="lang-btn" data-lang="pl">PL</button>
         <button class="lang-btn" data-lang="fr">FR</button>
       </div>
-      <button class="hamburger" id="hamburger" aria-label="Menú">
+      <button class="hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </div>
   </div>
 </nav>
 
-<!-- MOBILE NAV -->
-<div class="mobile-nav" id="mobileNav">
-  <a href="#sobre" onclick="closeMobile()" data-i18n="nav_about">Sobre mí</a>
-  <a href="nali-arte.html" onclick="closeMobile()" data-i18n="nav_art">Arte Visual</a>
-  <a href="nali-tattoo.html" onclick="closeMobile()" data-i18n="nav_tattoo">Tatuajes</a>
-  <a href="nali-musica.html" onclick="closeMobile()" data-i18n="nav_music">Música</a>
-  <a href="#contacto" onclick="closeMobile()" data-i18n="nav_contact">Contacto</a>
-  <div class="mobile-lang">
-    <button class="lang-btn" data-lang="es">ES</button>
-    <button class="lang-btn" data-lang="en">EN</button>
-    <button class="lang-btn" data-lang="pl">PL</button>
-    <button class="lang-btn" data-lang="fr">FR</button>
+<!-- ══ MOBILE DRAWER ══ -->
+<div class="drawer-overlay" id="dOverlay"></div>
+<div class="mobile-drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Navegación">
+
+  <div class="drawer-head">
+    <span class="nav-logo">NAL<span>I</span></span>
+    <button class="drawer-close" id="drawerClose" aria-label="Cerrar menú">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+
+  <div class="drawer-body">
+    <a href="#sobre"          class="drawer-link" data-i18n="n_about"><span class="di"><i class="fas fa-user"></i></span>Sobre mí</a>
+    <a href="nali-arte.html"  class="drawer-link" data-i18n="n_art"  ><span class="di"><i class="fas fa-palette"></i></span>Arte Visual</a>
+    <a href="nali-tattoo.html"class="drawer-link" data-i18n="n_tat"  ><span class="di"><i class="fas fa-pen-nib"></i></span>Tatuajes</a>
+    <a href="nali-musica.html"class="drawer-link" data-i18n="n_mus"  ><span class="di"><i class="fas fa-music"></i></span>Música</a>
+    <a href="#contacto"       class="drawer-link" data-i18n="n_con"  ><span class="di"><i class="fas fa-envelope"></i></span>Contacto</a>
+  </div>
+
+  <div class="drawer-foot">
+    <a href="https://wa.me/48692971895?text=Hola%20Nali" target="_blank" rel="noopener" class="drawer-wa">
+      <i class="fab fa-whatsapp"></i>
+      <span data-i18n="cta_wa">WhatsApp</span>
+    </a>
+    <div class="drawer-lang">
+      <button class="lang-btn active" data-lang="es">ES</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="pl">PL</button>
+      <button class="lang-btn" data-lang="fr">FR</button>
+    </div>
   </div>
 </div>
 
-<!-- ══════ HERO ══════ -->
+<!-- ══ HERO ══ -->
 <section class="hero" id="hero">
-
-  <!-- PHOTO -->
   <div class="hero-photo-wrap">
     <div class="hero-photo-frame">
       <div class="photo-wiphala"></div>
-      <img src="https://i.ibb.co/MDTvFcMc/IMG-20260421-WA0079-1.jpg" alt="Nali — Artista Andina">
+      <img src="https://i.ibb.co/MDTvFcMc/IMG-20260421-WA0079-1.jpg" alt="Nali — Artista Andina" loading="eager">
       <div class="photo-badge">
-        <div class="badge-name" data-i18n="badge_name">Nali — Artista Andina</div>
-        <div class="badge-sub" data-i18n="badge_sub">Salta, Argentina · Polonia 2026</div>
+        <div class="badge-name" data-i18n="badge_n">Nali — Artista Andina</div>
+        <div class="badge-sub"  data-i18n="badge_s">Salta, Argentina · Polonia 2026</div>
       </div>
     </div>
-    <!-- chakana watermark -->
     <svg class="chakana-bg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
       <path d="M35 0H65V35H100V65H65V100H35V65H0V35H35Z" fill="none" stroke="#C8922A" stroke-width="1.5"/>
       <rect x="37" y="37" width="26" height="26" fill="none" stroke="#C8922A" stroke-width="1"/>
     </svg>
   </div>
 
-  <!-- TEXT -->
   <div class="hero-text">
-    <div class="available-pill">
+    <div class="avail-pill">
       <span class="pill-dot"></span>
-      <span data-i18n="pill_avail">Disponible · Polonia 2026</span>
+      <span data-i18n="pill">Disponible · Polonia 2026</span>
     </div>
-
-    <p class="hero-eyebrow" data-i18n="hero_eyebrow">Arte Andino · Salta, Argentina</p>
-
+    <p class="hero-eyebrow" data-i18n="eyebrow">Arte Andino · Salta, Argentina</p>
     <h1 class="hero-name">
       NALI
-      <span class="gradient" data-i18n="hero_role_gradient">Artista</span>
+      <span class="grad" data-i18n="hgrad">Artista</span>
     </h1>
-
-    <p class="hero-role" data-i18n="hero_role">Muralista · Tatuadora · Música</p>
-
-    <p class="hero-desc" data-i18n="hero_desc">
+    <p class="hero-role" data-i18n="hrole">Muralista · Tatuadora · Música</p>
+    <p class="hero-desc" data-i18n="hdesc">
       Artista multidisciplinaria del norte argentino. Llevo los colores de la Quebrada, los símbolos de los pueblos andinos y la energía de la Pachamama a muros, piel y sonido — ahora en Europa.
     </p>
 
-    <!-- 3 WORLD PORTALS -->
     <div class="worlds">
       <a href="nali-arte.html" class="world-card art">
         <div class="world-icon">🎨</div>
-        <div class="world-title" data-i18n="world_art_title">Arte Visual</div>
-        <div class="world-sub" data-i18n="world_art_sub">Murales · Pintura · Ilustración</div>
+        <div>
+          <div class="world-title" data-i18n="wa_t">Arte Visual</div>
+          <div class="world-sub"   data-i18n="wa_s">Murales · Pintura · Ilustración</div>
+        </div>
         <i class="fas fa-arrow-right world-arrow"></i>
       </a>
       <a href="nali-tattoo.html" class="world-card tattoo">
         <div class="world-icon">🪡</div>
-        <div class="world-title" data-i18n="world_tat_title">Tatuajes</div>
-        <div class="world-sub" data-i18n="world_tat_sub">7 años · Salta · Polonia 2026</div>
+        <div>
+          <div class="world-title" data-i18n="wt_t">Tatuajes</div>
+          <div class="world-sub"   data-i18n="wt_s">7 años · Salta · Polonia 2026</div>
+        </div>
         <i class="fas fa-arrow-right world-arrow"></i>
       </a>
       <a href="nali-musica.html" class="world-card music">
         <div class="world-icon">🎵</div>
-        <div class="world-title" data-i18n="world_mus_title">Música</div>
-        <div class="world-sub" data-i18n="world_mus_sub">Composición · Voz · Sonido</div>
+        <div>
+          <div class="world-title" data-i18n="wm_t">Música</div>
+          <div class="world-sub"   data-i18n="wm_s">Composición · Voz · Sonido</div>
+        </div>
         <i class="fas fa-arrow-right world-arrow"></i>
       </a>
     </div>
 
-    <!-- CONTACTS -->
     <div class="hero-contacts" id="contacto">
       <a href="https://wa.me/48692971895?text=Hola%20Nali%2C%20me%20interesa%20tu%20trabajo"
          target="_blank" rel="noopener" class="btn-wa">
         <i class="fab fa-whatsapp"></i>
-        <span data-i18n="cta_wa">Escribir por WhatsApp</span>
+        <span data-i18n="cta_wa_l">Escribir por WhatsApp</span>
       </a>
-      <div class="social-row">
-        <a href="https://www.instagram.com/naliart.ok" target="_blank" rel="noopener" class="soc-btn" title="Instagram Arte" aria-label="Instagram Arte">
-          <i class="fab fa-instagram"></i>
-        </a>
-        <a href="https://www.instagram.com/nali.ttoo" target="_blank" rel="noopener" class="soc-btn" title="Instagram Tattoo" aria-label="Instagram Tattoo">
-          <i class="fas fa-pen-nib"></i>
-        </a>
-        <a href="https://www.instagram.com/nali.alma" target="_blank" rel="noopener" class="soc-btn" title="Instagram Música" aria-label="Instagram Música">
-          <i class="fas fa-music"></i>
-        </a>
-        <a href="mailto:nali@septimapacha.com" class="soc-btn" title="Email" aria-label="Email">
-          <i class="fas fa-envelope"></i>
-        </a>
+      <div class="soc-row">
+        <a href="https://www.instagram.com/naliart.ok"  target="_blank" rel="noopener" class="soc-btn" title="Instagram Arte"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.instagram.com/nali.ttoo"   target="_blank" rel="noopener" class="soc-btn" title="Instagram Tattoo"><i class="fas fa-pen-nib"></i></a>
+        <a href="https://www.instagram.com/nali.alma"   target="_blank" rel="noopener" class="soc-btn" title="Instagram Música"><i class="fas fa-music"></i></a>
+        <a href="mailto:nali@septimapacha.com" class="soc-btn" title="Email"><i class="fas fa-envelope"></i></a>
       </div>
     </div>
   </div>
@@ -638,41 +648,28 @@ footer{
 <div class="stats">
   <div class="stats-inner">
     <div class="stat sr">
-      <div>
-        <div class="stat-num">7+</div>
-        <div class="stat-label" data-i18n="stat_years">Años tatuando</div>
-      </div>
+      <div><div class="stat-num">7+</div><div class="stat-label" data-i18n="sy">Años tatuando</div></div>
     </div>
-    <div class="stat sr sr-d1">
-      <div>
-        <div class="stat-num">2</div>
-        <div class="stat-label" data-i18n="stat_cont">Continentes</div>
-      </div>
+    <div class="stat sr d1">
+      <div><div class="stat-num">2</div><div class="stat-label" data-i18n="sc">Continentes</div></div>
     </div>
-    <div class="stat sr sr-d2">
-      <div>
-        <div class="stat-num">3</div>
-        <div class="stat-label" data-i18n="stat_worlds">Mundos creativos</div>
-      </div>
+    <div class="stat sr d2">
+      <div><div class="stat-num">3</div><div class="stat-label" data-i18n="sw">Mundos creativos</div></div>
     </div>
-    <div class="stat sr sr-d3">
-      <div>
-        <div class="stat-num">PL</div>
-        <div class="stat-label" data-i18n="stat_avail">Disponible 2026</div>
-      </div>
+    <div class="stat sr d3">
+      <div><div class="stat-num">PL</div><div class="stat-label" data-i18n="sp">Disponible 2026</div></div>
     </div>
   </div>
 </div>
 
 <div class="andean-div"></div>
 
-<!-- ══════ BIO ══════ -->
+<!-- BIO -->
 <section class="bio" id="sobre">
-
   <div class="bio-text sr">
-    <div class="sec-label" data-i18n="bio_label">Sobre mí</div>
-    <h2 data-i18n="bio_title">Soy <em>Nali</em></h2>
-    <blockquote class="bio-quote" data-i18n="bio_quote">
+    <div class="sec-label" data-i18n="bio_l">Sobre mí</div>
+    <h2 data-i18n="bio_h">Soy <em>Nali</em></h2>
+    <blockquote class="bio-quote" data-i18n="bio_q">
       "Llevo el alma andina en cada trazo, cada línea, cada muro que pinto."
     </blockquote>
     <p class="bio-p" data-i18n="bio_p1">
@@ -682,204 +679,246 @@ footer{
       Con 7 años de experiencia tatuando, una trayectoria en arte mural, pintura, cerámica e ilustración, y una voz que canta desde la tierra, llevo mi identidad andina a Europa. Disponible en Polonia durante 2026. Fundadora de Séptima Pacha Co.
     </p>
     <div class="skills">
-      <span class="skill" data-i18n="sk_mural">Arte Mural</span>
-      <span class="skill" data-i18n="sk_tat">Tatuaje</span>
-      <span class="skill" data-i18n="sk_paint">Pintura</span>
-      <span class="skill" data-i18n="sk_cer">Cerámica</span>
-      <span class="skill" data-i18n="sk_draw">Ilustración</span>
-      <span class="skill" data-i18n="sk_music">Música</span>
-      <span class="skill" data-i18n="sk_andean">Arte Andino</span>
+      <span class="skill" data-i18n="sk1">Arte Mural</span>
+      <span class="skill" data-i18n="sk2">Tatuaje</span>
+      <span class="skill" data-i18n="sk3">Pintura</span>
+      <span class="skill" data-i18n="sk4">Cerámica</span>
+      <span class="skill" data-i18n="sk5">Ilustración</span>
+      <span class="skill" data-i18n="sk6">Música</span>
+      <span class="skill" data-i18n="sk7">Arte Andino</span>
     </div>
   </div>
-
-  <div class="bio-visual sr sr-d2">
-    <div class="bio-img-main">
-      <img src="https://i.ibb.co/DD37KnBN/IMG-20260527-WA0150-1.jpg" alt="Mural Libertad — Salta">
+  <div class="bio-visual sr d2">
+    <div class="bio-img">
+      <img src="https://i.ibb.co/DD37KnBN/IMG-20260527-WA0150-1.jpg" alt="Mural Libertad — Salta" loading="lazy">
     </div>
-    <div class="bio-imgs-row">
-      <div class="bio-img-sm">
-        <img src="https://i.ibb.co/MKGq6K7/IMG-20260527-WA0050-1.jpg" alt="Mural Coya — Salta">
+    <div class="bio-row">
+      <div class="bio-img">
+        <img src="https://i.ibb.co/MKGq6K7/IMG-20260527-WA0050-1.jpg" alt="Mural Coya — Salta" loading="lazy">
       </div>
-      <div class="bio-img-sm">
-        <img src="https://i.ibb.co/d0P0Knz4/IMG-20260521-WA0023.jpg" alt="Mural Harta La Gasta — Salta">
+      <div class="bio-img">
+        <img src="https://i.ibb.co/d0P0Knz4/IMG-20260521-WA0023.jpg" alt="Harta La Gasta — Salta" loading="lazy">
       </div>
     </div>
   </div>
-
 </section>
 
 <div class="andean-div"></div>
 
 <!-- FOOTER -->
 <footer>
-  <div class="wiphala" style="max-width:300px;margin:0 auto 1.5rem;border-radius:3px;"></div>
+  <div class="wiphala" style="max-width:260px;margin:0 auto 1.5rem;border-radius:3px;"></div>
   <div class="footer-logo">NALI</div>
-  <p class="footer-sub" data-i18n="footer_sub">Arte Andino · Murales · Tatuajes · Música · Polonia 2026</p>
-  <p class="footer-agency">© 2026 Nali · <a href="https://septimapacha.com">Séptima Pacha Co.</a></p>
+  <p class="footer-sub" data-i18n="foot">Arte Andino · Murales · Tatuajes · Música · Polonia 2026</p>
+  <p class="footer-credit">© 2026 Nali · <a href="https://septimapacha.com" target="_blank" rel="noopener">Séptima Pacha Co.</a></p>
 </footer>
 
-<!-- ══════ SCRIPTS ══════ -->
+<!-- ══ SCRIPTS ══ -->
 <script>
-/* ── TRANSLATIONS ── */
-const T = {
+/* ─── TRANSLATIONS ─── */
+const T={
   es:{
-    nav_about:'Sobre mí',nav_art:'Arte Visual',nav_tattoo:'Tatuajes',nav_music:'Música',nav_contact:'Contacto',
-    badge_name:'Nali — Artista Andina',badge_sub:'Salta, Argentina · Polonia 2026',
-    pill_avail:'Disponible · Polonia 2026',
-    hero_eyebrow:'Arte Andino · Salta, Argentina',
-    hero_role_gradient:'Artista',
-    hero_role:'Muralista · Tatuadora · Música',
-    hero_desc:'Artista multidisciplinaria del norte argentino. Llevo los colores de la Quebrada, los símbolos de los pueblos andinos y la energía de la Pachamama a muros, piel y sonido — ahora en Europa.',
-    world_art_title:'Arte Visual',world_art_sub:'Murales · Pintura · Ilustración',
-    world_tat_title:'Tatuajes',world_tat_sub:'7 años · Salta · Polonia 2026',
-    world_mus_title:'Música',world_mus_sub:'Composición · Voz · Sonido',
-    cta_wa:'Escribir por WhatsApp',
-    stat_years:'Años tatuando',stat_cont:'Continentes',stat_worlds:'Mundos creativos',stat_avail:'Disponible 2026',
-    bio_label:'Sobre mí',bio_title:'Soy <em>Nali</em>',
-    bio_quote:'"Llevo el alma andina en cada trazo, cada línea, cada muro que pinto."',
+    n_about:'Sobre mí',n_art:'Arte Visual',n_tat:'Tatuajes',n_mus:'Música',n_con:'Contacto',
+    badge_n:'Nali — Artista Andina',badge_s:'Salta, Argentina · Polonia 2026',
+    pill:'Disponible · Polonia 2026',eyebrow:'Arte Andino · Salta, Argentina',
+    hgrad:'Artista',hrole:'Muralista · Tatuadora · Música',
+    hdesc:'Artista multidisciplinaria del norte argentino. Llevo los colores de la Quebrada, los símbolos de los pueblos andinos y la energía de la Pachamama a muros, piel y sonido — ahora en Europa.',
+    wa_t:'Arte Visual',wa_s:'Murales · Pintura · Ilustración',
+    wt_t:'Tatuajes',wt_s:'7 años · Salta · Polonia 2026',
+    wm_t:'Música',wm_s:'Composición · Voz · Sonido',
+    cta_wa:'WhatsApp',cta_wa_l:'Escribir por WhatsApp',
+    sy:'Años tatuando',sc:'Continentes',sw:'Mundos creativos',sp:'Disponible 2026',
+    bio_l:'Sobre mí',bio_h:'Soy <em>Nali</em>',
+    bio_q:'"Llevo el alma andina en cada trazo, cada línea, cada muro que pinto."',
     bio_p1:'Soy artista multidisciplinaria nacida en Salta, Argentina. Mi trabajo nace de la riqueza cultural del norte argentino — los colores de la Quebrada, los símbolos de los pueblos originarios, la energía de la Pachamama.',
     bio_p2:'Con 7 años de experiencia tatuando, una trayectoria en arte mural, pintura, cerámica e ilustración, y una voz que canta desde la tierra, llevo mi identidad andina a Europa. Disponible en Polonia durante 2026. Fundadora de Séptima Pacha Co.',
-    sk_mural:'Arte Mural',sk_tat:'Tatuaje',sk_paint:'Pintura',sk_cer:'Cerámica',sk_draw:'Ilustración',sk_music:'Música',sk_andean:'Arte Andino',
-    footer_sub:'Arte Andino · Murales · Tatuajes · Música · Polonia 2026',
+    sk1:'Arte Mural',sk2:'Tatuaje',sk3:'Pintura',sk4:'Cerámica',sk5:'Ilustración',sk6:'Música',sk7:'Arte Andino',
+    foot:'Arte Andino · Murales · Tatuajes · Música · Polonia 2026',
   },
   en:{
-    nav_about:'About',nav_art:'Visual Art',nav_tattoo:'Tattoos',nav_music:'Music',nav_contact:'Contact',
-    badge_name:'Nali — Andean Artist',badge_sub:'Salta, Argentina · Poland 2026',
-    pill_avail:'Available · Poland 2026',
-    hero_eyebrow:'Andean Art · Salta, Argentina',
-    hero_role_gradient:'Artist',
-    hero_role:'Muralist · Tattooist · Music',
-    hero_desc:"Multidisciplinary artist from northern Argentina. I bring the colors of the Quebrada, the symbols of the Andean peoples, and the energy of Pachamama to walls, skin, and sound — now in Europe.",
-    world_art_title:'Visual Art',world_art_sub:'Murals · Painting · Illustration',
-    world_tat_title:'Tattoos',world_tat_sub:'7 years · Salta · Poland 2026',
-    world_mus_title:'Music',world_mus_sub:'Composition · Voice · Sound',
-    cta_wa:'Write on WhatsApp',
-    stat_years:'Years tattooing',stat_cont:'Continents',stat_worlds:'Creative worlds',stat_avail:'Available 2026',
-    bio_label:'About me',bio_title:'I am <em>Nali</em>',
-    bio_quote:'"I carry the Andean soul in every stroke, every line, every wall I paint."',
+    n_about:'About',n_art:'Visual Art',n_tat:'Tattoos',n_mus:'Music',n_con:'Contact',
+    badge_n:'Nali — Andean Artist',badge_s:'Salta, Argentina · Poland 2026',
+    pill:'Available · Poland 2026',eyebrow:'Andean Art · Salta, Argentina',
+    hgrad:'Artist',hrole:'Muralist · Tattooist · Music',
+    hdesc:"Multidisciplinary artist from northern Argentina. I bring the colors of the Quebrada, the symbols of the Andean peoples, and the energy of Pachamama to walls, skin, and sound — now in Europe.",
+    wa_t:'Visual Art',wa_s:'Murals · Painting · Illustration',
+    wt_t:'Tattoos',wt_s:'7 years · Salta · Poland 2026',
+    wm_t:'Music',wm_s:'Composition · Voice · Sound',
+    cta_wa:'WhatsApp',cta_wa_l:'Write on WhatsApp',
+    sy:'Years tattooing',sc:'Continents',sw:'Creative worlds',sp:'Available 2026',
+    bio_l:'About me',bio_h:'I am <em>Nali</em>',
+    bio_q:'"I carry the Andean soul in every stroke, every line, every wall I paint."',
     bio_p1:"I'm a multidisciplinary artist born in Salta, Argentina. My work springs from the cultural richness of northern Argentina — the colors of the Quebrada, the symbols of indigenous peoples, the energy of Pachamama.",
     bio_p2:"With 7 years of tattooing experience, a career in mural art, painting, ceramics, illustration, and a voice that sings from the earth, I bring my Andean identity to Europe. Available in Poland during 2026. Founder of Séptima Pacha Co.",
-    sk_mural:'Mural Art',sk_tat:'Tattoo',sk_paint:'Painting',sk_cer:'Ceramics',sk_draw:'Illustration',sk_music:'Music',sk_andean:'Andean Art',
-    footer_sub:'Andean Art · Murals · Tattoos · Music · Poland 2026',
+    sk1:'Mural Art',sk2:'Tattoo',sk3:'Painting',sk4:'Ceramics',sk5:'Illustration',sk6:'Music',sk7:'Andean Art',
+    foot:'Andean Art · Murals · Tattoos · Music · Poland 2026',
   },
   pl:{
-    nav_about:'O mnie',nav_art:'Sztuka',nav_tattoo:'Tatuaże',nav_music:'Muzyka',nav_contact:'Kontakt',
-    badge_name:'Nali — Artystka Andyjska',badge_sub:'Salta, Argentyna · Polska 2026',
-    pill_avail:'Dostępna · Polska 2026',
-    hero_eyebrow:'Sztuka Andyjska · Salta, Argentyna',
-    hero_role_gradient:'Artystka',
-    hero_role:'Muralistka · Tatuażystka · Muzyka',
-    hero_desc:'Interdyscyplinarna artystka z północnej Argentyny. Przenoszę kolory Quebrada, symbole ludów andyjskich i energię Pachamamy na ściany, skórę i dźwięk — teraz w Europie.',
-    world_art_title:'Sztuka Wizualna',world_art_sub:'Murale · Malarstwo · Ilustracja',
-    world_tat_title:'Tatuaże',world_tat_sub:'7 lat · Salta · Polska 2026',
-    world_mus_title:'Muzyka',world_mus_sub:'Kompozycja · Głos · Dźwięk',
-    cta_wa:'Napisz przez WhatsApp',
-    stat_years:'Lat tatuowania',stat_cont:'Kontynenty',stat_worlds:'Światy twórcze',stat_avail:'Dostępna 2026',
-    bio_label:'O mnie',bio_title:'Jestem <em>Nali</em>',
-    bio_quote:'"Noszę andyjską duszę w każdym pociągnięciu, każdej linii, każdej ścianie, którą maluję."',
+    n_about:'O mnie',n_art:'Sztuka',n_tat:'Tatuaże',n_mus:'Muzyka',n_con:'Kontakt',
+    badge_n:'Nali — Artystka Andyjska',badge_s:'Salta, Argentyna · Polska 2026',
+    pill:'Dostępna · Polska 2026',eyebrow:'Sztuka Andyjska · Salta, Argentyna',
+    hgrad:'Artystka',hrole:'Muralistka · Tatuażystka · Muzyka',
+    hdesc:'Interdyscyplinarna artystka z północnej Argentyny. Przenoszę kolory Quebrada, symbole ludów andyjskich i energię Pachamamy na ściany, skórę i dźwięk — teraz w Europie.',
+    wa_t:'Sztuka Wizualna',wa_s:'Murale · Malarstwo · Ilustracja',
+    wt_t:'Tatuaże',wt_s:'7 lat · Salta · Polska 2026',
+    wm_t:'Muzyka',wm_s:'Kompozycja · Głos · Dźwięk',
+    cta_wa:'WhatsApp',cta_wa_l:'Napisz przez WhatsApp',
+    sy:'Lat tatuowania',sc:'Kontynenty',sw:'Światy twórcze',sp:'Dostępna 2026',
+    bio_l:'O mnie',bio_h:'Jestem <em>Nali</em>',
+    bio_q:'"Noszę andyjską duszę w każdym pociągnięciu, każdej linii, każdej ścianie, którą maluję."',
     bio_p1:'Jestem interdyscyplinarną artystką urodzoną w Salta w Argentynie. Moja praca wyrasta z kulturowego bogactwa północnej Argentyny — kolorów Quebrada, symboli ludów rdzennych, energii Pachamamy.',
     bio_p2:'Z siedmioletnim doświadczeniem w tatuowaniu, dorobkiem w malarstwie muralowym, ceramice, ilustracji i głosem śpiewającym z ziemi, przenoszę swoją andyjską tożsamość do Europy. Dostępna w Polsce w 2026. Założycielka Séptima Pacha Co.',
-    sk_mural:'Mural',sk_tat:'Tatuaż',sk_paint:'Malarstwo',sk_cer:'Ceramika',sk_draw:'Ilustracja',sk_music:'Muzyka',sk_andean:'Sztuka Andyjska',
-    footer_sub:'Sztuka Andyjska · Murale · Tatuaże · Muzyka · Polska 2026',
+    sk1:'Mural',sk2:'Tatuaż',sk3:'Malarstwo',sk4:'Ceramika',sk5:'Ilustracja',sk6:'Muzyka',sk7:'Sztuka Andyjska',
+    foot:'Sztuka Andyjska · Murale · Tatuaże · Muzyka · Polska 2026',
   },
   fr:{
-    nav_about:'À propos',nav_art:'Art visuel',nav_tattoo:'Tatouages',nav_music:'Musique',nav_contact:'Contact',
-    badge_name:'Nali — Artiste Andine',badge_sub:'Salta, Argentine · Pologne 2026',
-    pill_avail:'Disponible · Pologne 2026',
-    hero_eyebrow:'Art Andin · Salta, Argentine',
-    hero_role_gradient:'Artiste',
-    hero_role:'Muraliste · Tatoueuse · Musique',
-    hero_desc:"Artiste multidisciplinaire du nord de l'Argentine. Je porte les couleurs de la Quebrada, les symboles des peuples andins et l'énergie de la Pachamama sur les murs, la peau et le son — maintenant en Europe.",
-    world_art_title:'Art Visuel',world_art_sub:'Murales · Peinture · Illustration',
-    world_tat_title:'Tatouages',world_tat_sub:'7 ans · Salta · Pologne 2026',
-    world_mus_title:'Musique',world_mus_sub:'Composition · Voix · Son',
-    cta_wa:'Écrire sur WhatsApp',
-    stat_years:'Ans de tatouage',stat_cont:'Continents',stat_worlds:'Univers créatifs',stat_avail:'Disponible 2026',
-    bio_label:'À propos',bio_title:'Je suis <em>Nali</em>',
-    bio_quote:'"Je porte l\'âme andine dans chaque trait, chaque ligne, chaque mur que je peins."',
+    n_about:'À propos',n_art:'Art visuel',n_tat:'Tatouages',n_mus:'Musique',n_con:'Contact',
+    badge_n:'Nali — Artiste Andine',badge_s:'Salta, Argentine · Pologne 2026',
+    pill:'Disponible · Pologne 2026',eyebrow:'Art Andin · Salta, Argentine',
+    hgrad:'Artiste',hrole:'Muraliste · Tatoueuse · Musique',
+    hdesc:"Artiste multidisciplinaire du nord de l'Argentine. Je porte les couleurs de la Quebrada, les symboles des peuples andins et l'énergie de la Pachamama sur les murs, la peau et le son — maintenant en Europe.",
+    wa_t:'Art Visuel',wa_s:'Murales · Peinture · Illustration',
+    wt_t:'Tatouages',wt_s:'7 ans · Salta · Pologne 2026',
+    wm_t:'Musique',wm_s:'Composition · Voix · Son',
+    cta_wa:'WhatsApp',cta_wa_l:'Écrire sur WhatsApp',
+    sy:'Ans de tatouage',sc:'Continents',sw:'Univers créatifs',sp:'Disponible 2026',
+    bio_l:'À propos',bio_h:'Je suis <em>Nali</em>',
+    bio_q:'"Je porte l\'âme andine dans chaque trait, chaque ligne, chaque mur que je peins."',
     bio_p1:"Je suis une artiste multidisciplinaire née à Salta, en Argentine. Mon travail naît de la richesse culturelle du nord de l'Argentine — les couleurs de la Quebrada, les symboles des peuples originaires, l'énergie de la Pachamama.",
     bio_p2:"Forte de 7 ans d'expérience en tatouage, d'une carrière en art mural, peinture, céramique, illustration et d'une voix qui chante depuis la terre, je porte mon identité andine en Europe. Disponible en Pologne en 2026. Fondatrice de Séptima Pacha Co.",
-    sk_mural:'Art Mural',sk_tat:'Tatouage',sk_paint:'Peinture',sk_cer:'Céramique',sk_draw:'Illustration',sk_music:'Musique',sk_andean:'Art Andin',
-    footer_sub:'Art Andin · Murales · Tatouages · Musique · Pologne 2026',
+    sk1:'Art Mural',sk2:'Tatouage',sk3:'Peinture',sk4:'Céramique',sk5:'Illustration',sk6:'Musique',sk7:'Art Andin',
+    foot:'Art Andin · Murales · Tatouages · Musique · Pologne 2026',
   }
 };
 
-let lang = 'es';
-
-function applyLang(l) {
-  lang = l;
-  document.documentElement.lang = l;
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const k = el.getAttribute('data-i18n');
-    if (T[l] && T[l][k] !== undefined) {
-      // allow inner HTML for em tags
-      el.innerHTML = T[l][k];
-    }
+let lang='es';
+function applyLang(l){
+  lang=l;
+  document.documentElement.lang=l;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k=el.getAttribute('data-i18n');
+    if(T[l]&&T[l][k]!=null) el.innerHTML=T[l][k];
   });
-  document.querySelectorAll('.lang-btn').forEach(b =>
-    b.classList.toggle('active', b.dataset.lang === l)
-  );
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===l));
 }
+document.querySelectorAll('.lang-btn').forEach(b=>b.addEventListener('click',()=>applyLang(b.dataset.lang)));
 
-document.querySelectorAll('.lang-btn').forEach(btn =>
-  btn.addEventListener('click', () => applyLang(btn.dataset.lang))
-);
-
-/* ── STARS ── */
+/* ─── STARS ─── */
 (function(){
-  const c = document.getElementById('stars');
-  for (let i = 0; i < 80; i++) {
-    const s = document.createElement('div');
-    s.className = 'star';
-    const sz = Math.random() * 1.8 + .4;
-    s.style.cssText = `
-      left:${Math.random()*100}%;top:${Math.random()*100}%;
-      width:${sz}px;height:${sz}px;
-      --d:${2+Math.random()*3}s;--dl:${Math.random()*4}s;
-    `;
+  const c=document.getElementById('stars');
+  for(let i=0;i<80;i++){
+    const s=document.createElement('div');s.className='star';
+    const sz=Math.random()*1.8+.4;
+    s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${sz}px;height:${sz}px;--d:${2+Math.random()*3}s;--dl:${Math.random()*4}s`;
     c.appendChild(s);
   }
 })();
 
-/* ── NAV SCROLL ── */
-window.addEventListener('scroll', () =>
-  document.getElementById('nav').classList.toggle('scrolled', scrollY > 60)
-, {passive:true});
+/* ─── SPLASH ─── */
+(function(){
+  const canvas=document.getElementById('splashCanvas');
+  const ctx=canvas.getContext('2d');
+  function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
+  resize();
+  window.addEventListener('resize',resize,{passive:true});
 
-/* ── HAMBURGER ── */
-const hbg  = document.getElementById('hamburger');
-const mNav = document.getElementById('mobileNav');
+  const colors=['#CC0000','#E8720C','#F5C400','#F0EAD6','#00913A','#005BAA','#5C2D91'];
+  let prog=0,raf;
 
-function closeMobile() {
-  hbg.classList.remove('open');
-  mNav.classList.remove('open');
-  document.body.classList.remove('menu-open');
+  function draw(){
+    prog=Math.min(prog+.007,1);
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    const cx=canvas.width/2, cy=canvas.height/2;
+    const r=Math.min(canvas.width,canvas.height)*.42*prog;
+
+    for(let i=0;i<7;i++){
+      const a=(i/7)*Math.PI*2-Math.PI/2;
+      ctx.strokeStyle=colors[i]+'88';ctx.lineWidth=1.5;
+      ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+Math.cos(a)*r,cy+Math.sin(a)*r);ctx.stroke();
+      if(prog>.35){
+        const mid=r*.55,sub=r*.4,a2=a+.28,a3=a-.28;
+        ctx.strokeStyle=colors[i]+'44';ctx.lineWidth=1;
+        ctx.beginPath();ctx.moveTo(cx+Math.cos(a)*mid,cy+Math.sin(a)*mid);
+        ctx.lineTo(cx+Math.cos(a)*mid+Math.cos(a2)*sub,cy+Math.sin(a)*mid+Math.sin(a2)*sub);ctx.stroke();
+        ctx.beginPath();ctx.moveTo(cx+Math.cos(a)*mid,cy+Math.sin(a)*mid);
+        ctx.lineTo(cx+Math.cos(a)*mid+Math.cos(a3)*sub,cy+Math.sin(a)*mid+Math.sin(a3)*sub);ctx.stroke();
+      }
+    }
+    if(prog>.25){
+      ctx.strokeStyle='rgba(200,146,42,.35)';ctx.lineWidth=1;
+      ctx.beginPath();ctx.arc(cx,cy,(prog-.25)*r*1.3,0,Math.PI*2);ctx.stroke();
+    }
+    if(prog<1) raf=requestAnimationFrame(draw);
+  }
+  draw();
+
+  function hideSplash(){
+    cancelAnimationFrame(raf);
+    document.getElementById('splash').classList.add('out');
+  }
+  // hide after 3s OR when page is fully loaded (whichever is later, max 4.5s)
+  let loaded=false, timerDone=false;
+  function tryHide(){ if(loaded && timerDone) hideSplash(); }
+  window.addEventListener('load',()=>{ loaded=true; tryHide(); });
+  setTimeout(()=>{ timerDone=true; tryHide(); }, 3000);
+  setTimeout(hideSplash, 4500); // hard cap
+})();
+
+/* ─── NAV SCROLL ─── */
+window.addEventListener('scroll',()=>
+  document.getElementById('nav').classList.toggle('scrolled',scrollY>60)
+,{passive:true});
+
+/* ─── DRAWER ─── */
+const hbg     = document.getElementById('hamburger');
+const drawer  = document.getElementById('drawer');
+const overlay = document.getElementById('dOverlay');
+const dClose  = document.getElementById('drawerClose');
+
+function openDrawer(){
+  drawer.classList.add('open');
+  overlay.classList.add('open');
+  hbg.classList.add('open');
+  hbg.setAttribute('aria-expanded','true');
+  document.body.classList.add('locked');
+  setTimeout(()=>{ dClose.focus(); }, 350);
 }
+function closeDrawer(){
+  drawer.classList.remove('open');
+  overlay.classList.remove('open');
+  hbg.classList.remove('open');
+  hbg.setAttribute('aria-expanded','false');
+  document.body.classList.remove('locked');
+  hbg.focus();
+}
+function toggleDrawer(){ drawer.classList.contains('open') ? closeDrawer() : openDrawer(); }
 
-hbg.addEventListener('click', e => {
-  e.stopPropagation();
-  const open = mNav.classList.toggle('open');
-  hbg.classList.toggle('open', open);
-  document.body.classList.toggle('menu-open', open);
-});
+hbg.addEventListener('click', e=>{ e.stopPropagation(); toggleDrawer(); });
+dClose.addEventListener('click', closeDrawer);
+overlay.addEventListener('click', closeDrawer);
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeDrawer(); });
 
-document.addEventListener('click', e => {
-  if (mNav.classList.contains('open') && !mNav.contains(e.target) && !hbg.contains(e.target))
-    closeMobile();
-});
-
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeMobile();
-});
-
-/* ── SCROLL REVEAL ── */
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(en => {
-    if (en.isIntersecting) { en.target.classList.add('visible'); obs.unobserve(en.target); }
+// anchor links in drawer → smooth scroll after close
+drawer.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click', e=>{
+    e.preventDefault();
+    const id = a.getAttribute('href');
+    closeDrawer();
+    setTimeout(()=>{
+      const el = document.querySelector(id);
+      if(el){
+        const navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav')) || 68;
+        window.scrollTo({ top: el.getBoundingClientRect().top + scrollY - navH - 8, behavior:'smooth' });
+      }
+    }, 420);
   });
-}, {threshold:.12, rootMargin:'0px 0px -30px 0px'});
+});
 
-document.querySelectorAll('.sr').forEach(el => obs.observe(el));
+/* ─── SCROLL REVEAL ─── */
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
+},{threshold:.1,rootMargin:'0px 0px -28px 0px'});
+document.querySelectorAll('.sr').forEach(el=>obs.observe(el));
 </script>
 </body>
 </html>
