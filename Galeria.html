@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="Nali — Galería de Arte Visual. Murales, Pintura, Ilustración y Artesanías. Arte andino contemporáneo de Salta, Argentina.">
+<title>Nali | Galería Tierra Viva</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Barlow+Condensed:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+/* ══ TOKENS ══ */
+:root{
+  --rojo:#CC0000;--naranja:#E8720C;--amarillo:#F5C400;
+  --verde:#00913A;--azul:#005BAA;--violeta:#5C2D91;--wipblanco:#F0EAD6;
+  --noche:#07050A;--oro:#C8922A;--oro-l:#E8B84B;
+  --crema:#F0E6D0;--cdim:rgba(240,230,208,.6);
+  --glass:rgba(7,5,10,.75);--gb:rgba(200,146,42,.2);
+  --ffd:'Cinzel',serif;--ffc:'Barlow Condensed',sans-serif;--ffb:'Cormorant Garamond',serif;
+  --ease:cubic-bezier(.4,0,.2,1);--tr:.35s var(--ease);
+  --nav:64px;--tab:50px;
+  --acc:#C8922A;--acc2:#E8B84B;--acc-glow:rgba(200,146,42,.35);
+  --acc-border:rgba(200,146,42,.22);--acc-frame:rgba(200,146,42,.12);
+}
+.t-mural  {--acc:#E8720C;--acc2:#F5C400;--acc-glow:rgba(232,114,12,.4);--acc-border:rgba(232,114,12,.28);--acc-frame:rgba(232,114,12,.12);}
+.t-pintura{--acc:#5C2D91;--acc2:#9B5EDE;--acc-glow:rgba(92,45,145,.5);--acc-border:rgba(92,45,145,.3);--acc-frame:rgba(92,45,145,.12);}
+.t-dibujo {--acc:#00913A;--acc2:#3dd87d;--acc-glow:rgba(0,145,58,.45);--acc-border:rgba(0,145,58,.28);--acc-frame:rgba(0,145,58,.1);}
+.t-craft  {--acc:#C8922A;--acc2:#E8B84B;--acc-glow:rgba(200,146,42,.4);--acc-border:rgba(200,146,42,.28);--acc-frame:rgba(200,146,42,.12);}
+
+/* ══ RESET ══ */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--ffb);background:var(--noche);color:var(--crema);overflow-x:hidden;transition:background .6s var(--ease);}
+body.locked{overflow:hidden;}
+img{display:block;max-width:100%;}
+a{text-decoration:none;}
+button{cursor:pointer;border:none;background:none;font:inherit;}
+
+/* ══ AMBIENT ══ */
+#bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.45;}
+.andean-pattern{
+  position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.025;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M30 0L60 30L30 60L0 30Z' fill='none' stroke='%23C8922A' stroke-width='0.8'/%3E%3Crect x='20' y='20' width='20' height='20' fill='none' stroke='%23C8922A' stroke-width='0.5'/%3E%3C/svg%3E");
+  background-size:60px 60px;}
+
+/* ══ WIPHALA ══ */
+.wiphala{width:100%;height:5px;flex-shrink:0;
+  background:linear-gradient(90deg,var(--rojo) 0% 14.28%,var(--naranja) 14.28% 28.56%,
+    var(--amarillo) 28.56% 42.84%,var(--wipblanco) 42.84% 57.12%,
+    var(--verde) 57.12% 71.40%,var(--azul) 71.40% 85.68%,var(--violeta) 85.68% 100%);}
+
+/* ══ NAV ══ */
+nav{position:fixed;top:0;left:0;width:100%;z-index:600;display:flex;flex-direction:column;}
+.nav-bar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 2rem;height:var(--nav);
+  background:rgba(7,5,10,.82);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--gb);position:relative;z-index:601;transition:background var(--tr);}
+nav.scrolled .nav-bar{background:rgba(7,5,10,.97);}
+.nav-logo{font-family:var(--ffd);font-size:1.25rem;font-weight:700;letter-spacing:4px;color:var(--crema);}
+.nav-logo span{color:var(--oro);}
+.nav-center{position:absolute;left:50%;transform:translateX(-50%);display:flex;gap:.4rem;align-items:center;}
+.nav-right{display:flex;align-items:center;gap:.6rem;}
+.lang-sel{display:flex;gap:.1rem;align-items:center;background:rgba(200,146,42,.07);border:1px solid var(--gb);border-radius:30px;padding:.16rem .38rem;}
+.lang-btn{background:none;font-family:var(--ffc);font-size:.68rem;font-weight:700;letter-spacing:1px;color:rgba(240,230,208,.4);padding:.18rem .42rem;border-radius:14px;transition:var(--tr);text-transform:uppercase;}
+.lang-btn.active{background:var(--oro);color:var(--noche);}
+.lang-btn:hover:not(.active){color:var(--oro-l);}
+.hamburger{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:42px;height:42px;-webkit-tap-highlight-color:transparent;}
+.hamburger span{display:block;width:24px;height:2.5px;background:var(--oro);border-radius:3px;transition:transform .33s var(--ease),opacity .33s;transform-origin:center;}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5.5px,5.5px);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5.5px,-5.5px);}
+
+/* ══ DRAWER ══ */
+.drawer-overlay{position:fixed;inset:0;z-index:700;background:rgba(0,0,0,.55);opacity:0;visibility:hidden;transition:opacity .33s,visibility .33s;}
+.drawer-overlay.open{opacity:1;visibility:visible;}
+.mobile-drawer{position:fixed;top:0;right:0;bottom:0;width:min(300px,86vw);z-index:710;background:rgba(7,5,10,.99);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-left:1px solid rgba(200,146,42,.18);display:flex;flex-direction:column;overflow-y:auto;transform:translateX(100%);transition:transform .36s var(--ease);}
+.mobile-drawer.open{transform:translateX(0);}
+.drawer-head{display:flex;align-items:center;justify-content:space-between;padding:0 1.4rem;height:var(--nav);border-bottom:1px solid rgba(200,146,42,.1);flex-shrink:0;}
+.drawer-close{background:none;border:1px solid rgba(200,146,42,.25);color:var(--oro);width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;transition:var(--tr);-webkit-tap-highlight-color:transparent;}
+.drawer-close:hover{background:rgba(200,146,42,.15);}
+.drawer-body{flex:1;padding:1.2rem 1.4rem;}
+.drawer-link{display:flex;align-items:center;gap:.8rem;font-family:var(--ffc);font-size:1.05rem;letter-spacing:2px;text-transform:uppercase;color:var(--crema);padding:.9rem 0;border-bottom:1px solid rgba(200,146,42,.1);transition:color .22s,padding-left .22s;min-height:50px;-webkit-tap-highlight-color:transparent;}
+.drawer-link:hover,.drawer-link:active{color:var(--oro);padding-left:.4rem;}
+.drawer-link .di{width:28px;height:28px;border-radius:7px;background:rgba(200,146,42,.1);border:1px solid rgba(200,146,42,.2);display:flex;align-items:center;justify-content:center;font-size:.8rem;color:var(--oro);flex-shrink:0;}
+.drawer-foot{padding:1.2rem 1.4rem 1.6rem;border-top:1px solid rgba(200,146,42,.1);flex-shrink:0;}
+.drawer-lang{display:flex;gap:.45rem;flex-wrap:wrap;margin-top:1rem;}
+.drawer-lang .lang-btn{background:rgba(200,146,42,.1);border:1px solid var(--gb);border-radius:22px;padding:.5rem 1rem;font-size:.8rem;color:var(--crema);min-height:38px;min-width:44px;}
+.drawer-lang .lang-btn.active{background:var(--oro);color:var(--noche);font-weight:900;}
+
+/* ══ ENTRANCE ══ */
+#entrance{position:fixed;inset:0;z-index:500;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#07050A 0%,#0c0818 50%,#080510 100%);transition:opacity .8s var(--ease),visibility .8s;}
+#entrance.out{opacity:0;visibility:hidden;pointer-events:none;}
+#ent-canvas{position:absolute;inset:0;width:100%;height:100%;}
+.ent-inner{position:relative;z-index:2;text-align:center;display:flex;flex-direction:column;align-items:center;gap:1.2rem;padding:2rem;}
+.ent-eyebrow{font-family:var(--ffc);font-size:.75rem;letter-spacing:5px;text-transform:uppercase;color:var(--oro);animation:fadeUp .8s var(--ease) .3s both;}
+.ent-title{font-family:var(--ffd);font-weight:900;font-size:clamp(3.5rem,14vw,7rem);letter-spacing:6px;line-height:.9;background:linear-gradient(135deg,var(--rojo),var(--naranja),var(--amarillo),var(--oro));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:fadeUp .9s var(--ease) .5s both;}
+.ent-sub{font-family:var(--ffc);font-size:clamp(.8rem,3.5vw,1rem);letter-spacing:5px;text-transform:uppercase;color:var(--cdim);animation:fadeUp .9s var(--ease) .8s both;}
+.ent-bar{width:min(220px,65vw);height:4px;border-radius:3px;background:linear-gradient(90deg,var(--rojo),var(--naranja),var(--amarillo),var(--wipblanco),var(--verde),var(--azul),var(--violeta));animation:fadeUp .9s var(--ease) 1s both;}
+.ent-actions{display:flex;flex-direction:column;align-items:center;gap:.8rem;animation:fadeUp .9s var(--ease) 1.2s both;}
+.ent-btn{display:inline-flex;align-items:center;gap:.7rem;font-family:var(--ffd);font-size:.85rem;letter-spacing:3px;text-transform:uppercase;font-weight:700;background:linear-gradient(135deg,var(--oro),#daa520);color:var(--noche);padding:1rem 2.5rem;border-radius:2px;box-shadow:0 10px 30px rgba(200,146,42,.35);transition:var(--tr);}
+.ent-btn:hover{transform:scale(1.05);box-shadow:0 16px 40px rgba(200,146,42,.55);}
+.ent-dict-btn{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--ffc);font-size:.72rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--cdim);padding:.5rem 1.2rem;border-radius:30px;border:1px solid var(--gb);transition:var(--tr);}
+.ent-dict-btn:hover{color:var(--oro-l);border-color:var(--oro);}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:none;}}
+
+/* ══ TABS BAR ══ */
+.tabs-bar{position:fixed;top:calc(var(--nav)+5px);left:0;width:100%;z-index:590;background:rgba(7,5,10,.9);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--acc-border);transition:border-color .4s;display:none;}
+.tabs-bar.show{display:block;}
+.tabs-inner{max-width:1300px;margin:0 auto;padding:.55rem 2rem;display:flex;align-items:center;gap:.5rem;overflow-x:auto;scrollbar-width:none;}
+.tabs-inner::-webkit-scrollbar{display:none;}
+.tab-btn{font-family:var(--ffc);font-size:.72rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;padding:.42rem 1.1rem;border-radius:30px;white-space:nowrap;border:1.5px solid rgba(200,146,42,.2);background:transparent;color:var(--cdim);transition:var(--tr);-webkit-tap-highlight-color:transparent;flex-shrink:0;}
+.tab-btn:hover{color:var(--oro-l);border-color:rgba(200,146,42,.45);}
+.tab-btn.active{background:var(--acc);border-color:var(--acc);color:var(--noche);}
+.tab-sep{width:1px;height:18px;background:rgba(200,146,42,.15);flex-shrink:0;}
+.dict-tab-btn{margin-left:auto;flex-shrink:0;display:inline-flex;align-items:center;gap:.4rem;font-family:var(--ffc);font-size:.68rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;padding:.38rem .9rem;border-radius:30px;border:1.5px solid rgba(200,146,42,.35);color:var(--oro);background:rgba(200,146,42,.06);transition:var(--tr);-webkit-tap-highlight-color:transparent;}
+.dict-tab-btn:hover{background:rgba(200,146,42,.18);border-color:var(--oro);}
+
+/* ══ MUSEUM ══ */
+#museum{display:none;position:relative;z-index:1;min-height:100vh;padding-top:calc(var(--nav)+5px+var(--tab)+4px);}
+#museum.show{display:block;}
+.gallery-section{display:none;}
+.gallery-section.active{display:block;}
+
+/* ══ SECTION HEADER ══ */
+.sec-header{max-width:1300px;margin:0 auto;padding:3rem 2rem 2rem;display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:end;border-bottom:1px solid var(--acc-border);transition:border-color .4s;opacity:0;transform:translateY(16px);transition:opacity .6s var(--ease),transform .6s var(--ease),border-color .4s;}
+.sec-header.visible{opacity:1;transform:none;}
+.sec-eyebrow{font-family:var(--ffc);font-size:.7rem;letter-spacing:4px;text-transform:uppercase;color:var(--acc);margin-bottom:.6rem;display:flex;align-items:center;gap:.7rem;transition:color .4s;}
+.sec-eyebrow::before{content:'';width:22px;height:1px;background:currentColor;}
+.sec-title{font-family:var(--ffd);font-size:clamp(1.9rem,5vw,3.2rem);font-weight:700;color:var(--crema);letter-spacing:1px;line-height:1;margin-bottom:.5rem;}
+.sec-title em{font-style:normal;background:linear-gradient(125deg,var(--acc),var(--acc2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.sec-desc{font-size:.98rem;color:var(--cdim);line-height:1.8;max-width:560px;}
+.sec-count{font-family:var(--ffd);font-size:2.8rem;font-weight:900;color:var(--acc);opacity:.16;white-space:nowrap;transition:color .4s;}
+.andean-div{height:2px;max-width:1300px;margin:0 auto;background:linear-gradient(90deg,transparent,var(--rojo),var(--naranja),var(--amarillo),var(--verde),var(--azul),var(--violeta),transparent);opacity:.2;}
+
+/* ══ ARTWORK CARDS ══ */
+.artworks-grid{max-width:1300px;margin:0 auto;padding:2.5rem 2rem 4rem;display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:2rem;}
+.artwork-card{background:rgba(255,255,255,.03);border:1px solid var(--acc-border);border-radius:6px;overflow:hidden;opacity:0;transform:translateY(24px);transition:opacity .55s var(--ease),transform .55s var(--ease),border-color .4s,box-shadow .3s;}
+.artwork-card.visible{opacity:1;transform:none;}
+.artwork-card:hover{border-color:var(--acc);box-shadow:0 12px 40px rgba(0,0,0,.6),0 0 20px var(--acc-glow);transform:translateY(-4px);}
+
+/* Card images */
+.card-images{display:grid;grid-template-columns:2fr 1fr;gap:2px;background:rgba(200,146,42,.08);height:240px;position:relative;overflow:hidden;}
+.card-img-main,.card-img-secondary{overflow:hidden;position:relative;}
+.card-img-main{height:100%;}
+.card-img-secondary{height:100%;display:flex;flex-direction:column;gap:2px;}
+.card-img-secondary .sec-img{flex:1;overflow:hidden;}
+.card-images img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s var(--ease);}
+.artwork-card:hover .card-images img{transform:scale(1.06);}
+
+/* Zoom button on image */
+.img-zoom-btn{
+  position:absolute;bottom:.6rem;left:.6rem;z-index:4;
+  width:30px;height:30px;border-radius:50%;
+  background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.2);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:.7rem;
+  opacity:0;transform:scale(.8);transition:var(--tr);
+  cursor:pointer;
+}
+.artwork-card:hover .img-zoom-btn{opacity:1;transform:scale(1);}
+.img-zoom-btn:hover{background:var(--acc);border-color:var(--acc);color:var(--noche);}
+
+.card-cat-badge{position:absolute;top:.7rem;left:.7rem;z-index:2;font-family:var(--ffc);font-size:.6rem;letter-spacing:2px;text-transform:uppercase;background:var(--acc);color:var(--noche);padding:.22rem .65rem;border-radius:20px;font-weight:700;transition:background .4s;}
+.card-body{padding:1.3rem 1.4rem 1.4rem;}
+.card-title{font-family:var(--ffd);font-size:1.15rem;font-weight:700;color:var(--crema);letter-spacing:.5px;margin-bottom:.3rem;line-height:1.1;}
+.card-series{font-family:var(--ffc);font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:var(--acc);margin-bottom:.5rem;transition:color .4s;}
+.card-desc{font-family:var(--ffb);font-size:.9rem;color:var(--cdim);line-height:1.7;margin-bottom:1rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.card-meta{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.1rem;}
+.card-meta-item{display:flex;align-items:center;gap:.35rem;font-family:var(--ffc);font-size:.65rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(240,230,208,.35);}
+.card-meta-item i{color:var(--acc);font-size:.6rem;transition:color .4s;}
+
+/* Card action buttons */
+.card-actions{display:flex;gap:.5rem;}
+.card-discover-btn{
+  display:inline-flex;align-items:center;gap:.5rem;flex:1;justify-content:center;
+  font-family:var(--ffc);font-size:.72rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;
+  background:var(--acc-frame);border:1.5px solid var(--acc-border);color:var(--acc);
+  padding:.6rem .8rem;border-radius:4px;transition:var(--tr);-webkit-tap-highlight-color:transparent;
+}
+.card-discover-btn:hover{background:var(--acc);color:var(--noche);box-shadow:0 4px 20px var(--acc-glow);}
+.card-page-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:40px;flex-shrink:0;
+  background:rgba(255,255,255,.04);border:1.5px solid var(--acc-border);color:var(--cdim);
+  border-radius:4px;transition:var(--tr);-webkit-tap-highlight-color:transparent;
+  font-size:.75rem;
+}
+.card-page-btn:hover{background:var(--acc-frame);border-color:var(--acc);color:var(--acc);}
+.card-page-btn[disabled]{opacity:.3;pointer-events:none;}
+.card-page-soon{
+  font-family:var(--ffc);font-size:.55rem;letter-spacing:1px;text-transform:uppercase;
+  color:rgba(240,230,208,.2);text-align:center;margin-top:.4rem;
+}
+
+/* ══ IMAGE LIGHTBOX ══ */
+#img-lb{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.97);
+  align-items:center;justify-content:center;backdrop-filter:blur(14px);}
+#img-lb.open{display:flex;}
+.lb-img-wrap{position:relative;max-width:94vw;max-height:92vh;animation:lbIn .32s var(--ease) both;}
+@keyframes lbIn{from{opacity:0;transform:scale(.92);}to{opacity:1;transform:none;}}
+#lb-main-img{max-width:94vw;max-height:92vh;object-fit:contain;border-radius:3px;display:block;}
+#lb-close-btn{position:absolute;top:-48px;right:0;width:40px;height:40px;border-radius:50%;background:rgba(0,0,0,.6);border:1px solid rgba(200,146,42,.3);color:var(--crema);display:flex;align-items:center;justify-content:center;font-size:1rem;transition:var(--tr);}
+#lb-close-btn:hover{background:var(--rojo);}
+.lb-caption{position:absolute;bottom:-36px;left:0;right:0;text-align:center;font-family:var(--ffc);font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:rgba(240,230,208,.4);}
+#img-lb-overlay{position:fixed;inset:0;z-index:999;cursor:zoom-out;}
+
+/* ══ FOOTER ══ */
+footer{position:relative;z-index:1;border-top:1px solid var(--acc-border);padding:2.5rem 2rem 2rem;text-align:center;transition:border-color .4s;}
+.footer-logo{font-family:var(--ffd);font-size:1.2rem;color:var(--oro);letter-spacing:3px;margin-bottom:.4rem;}
+.footer-sub{font-family:var(--ffc);font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:rgba(240,230,208,.2);}
+.footer-links{margin-top:1rem;display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap;}
+.footer-links a{font-family:var(--ffc);font-size:.68rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(240,230,208,.3);transition:color .3s;}
+.footer-links a:hover{color:var(--oro);}
+.footer-dict-link{display:inline-flex;align-items:center;gap:.4rem;margin-top:1rem;font-family:var(--ffc);font-size:.68rem;letter-spacing:2px;text-transform:uppercase;color:var(--oro);border-bottom:1px solid rgba(200,146,42,.3);padding-bottom:1px;transition:var(--tr);}
+.footer-dict-link:hover{color:var(--oro-l);border-color:var(--oro);}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:900px){.artworks-grid{grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.4rem;}.card-images{height:200px;}}
+@media(max-width:768px){
+  :root{--nav:56px;--tab:46px;}
+  .nav-center{display:none;}
+  .lang-sel{display:none!important;}
+  .hamburger{display:flex!important;}
+  .artworks-grid{grid-template-columns:1fr;padding:1.5rem 1rem 3rem;gap:1.2rem;}
+  .sec-header{grid-template-columns:1fr;padding:2rem 1rem 1.5rem;}
+  .sec-count{display:none;}
+  .tabs-inner{padding:.45rem 1rem;gap:.4rem;}
+  .tab-btn{padding:.35rem .8rem;font-size:.67rem;}
+  .dict-tab-btn{padding:.35rem .7rem;font-size:.65rem;}
+  .card-images{height:220px;}
+}
+@media(max-width:480px){
+  .card-images{grid-template-columns:1fr;}
+  .card-img-secondary{display:none;}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;}}
+</style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+<div class="andean-pattern"></div>
+
+<!-- ══ ENTRANCE ══ -->
+<div id="entrance">
+  <canvas id="ent-canvas"></canvas>
+  <div class="ent-inner">
+    <p class="ent-eyebrow">Galería Virtual · Nali</p>
+    <h1 class="ent-title">Tierra<br>Viva</h1>
+    <p class="ent-sub" data-i18n="ent_sub">Arte Visual · Salta, Argentina</p>
+    <div class="ent-bar"></div>
+    <div class="ent-actions">
+      <button class="ent-btn" id="entBtn">
+        <i class="fas fa-door-open"></i>
+        <span data-i18n="ent_enter">Entrar a la Galería</span>
+      </button>
+      <a href="diccionario.html" class="ent-dict-btn">
+        <i class="fas fa-book-open"></i>
+        <span data-i18n="ent_dict">Diccionario Andino</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ══ NAV ══ -->
+<nav id="nav">
+  <div class="wiphala"></div>
+  <div class="nav-bar">
+    <a href="index.html" class="nav-logo">NAL<span>I</span></a>
+    <div class="nav-center">
+      <div class="lang-sel">
+        <button class="lang-btn active" data-lang="es">ES</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="pl">PL</button>
+        <button class="lang-btn" data-lang="fr">FR</button>
+      </div>
+    </div>
+    <div class="nav-right">
+      <button class="hamburger" id="hamburger" aria-label="Menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ DRAWER ══ -->
+<div class="drawer-overlay" id="dOverlay"></div>
+<div class="mobile-drawer" id="drawer" role="dialog" aria-modal="true">
+  <div class="drawer-head">
+    <span class="nav-logo" style="font-size:1.1rem;">NAL<span>I</span></span>
+    <button class="drawer-close" id="drawerClose"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="drawer-body">
+    <a href="index.html" class="drawer-link"><span class="di"><i class="fas fa-home"></i></span><span data-i18n="nav_home">Inicio</span></a>
+    <a href="#" class="drawer-link js-sec" data-sec="mural"><span class="di"><i class="fas fa-paint-roller"></i></span><span data-i18n="tab_mural">Murales</span></a>
+    <a href="#" class="drawer-link js-sec" data-sec="pintura"><span class="di"><i class="fas fa-palette"></i></span><span data-i18n="tab_paint">Pintura</span></a>
+    <a href="#" class="drawer-link js-sec" data-sec="dibujo"><span class="di"><i class="fas fa-pencil-alt"></i></span><span data-i18n="tab_draw">Dibujo</span></a>
+    <a href="#" class="drawer-link js-sec" data-sec="craft"><span class="di"><i class="fas fa-hands"></i></span><span data-i18n="tab_craft">Artesanías</span></a>
+    <a href="nali-tattoo.html" class="drawer-link"><span class="di"><i class="fas fa-pen-nib"></i></span><span data-i18n="nav_tattoo">Tatuajes</span></a>
+    <a href="nali-musica.html" class="drawer-link"><span class="di"><i class="fas fa-music"></i></span><span data-i18n="nav_music">Música</span></a>
+    <a href="diccionario.html" class="drawer-link"><span class="di"><i class="fas fa-book-open"></i></span><span data-i18n="nav_dict">Diccionario</span></a>
+  </div>
+  <div class="drawer-foot">
+    <a href="https://wa.me/48692971895" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:.5rem;background:linear-gradient(135deg,#128C7E,#075E54);color:#fff;font-family:var(--ffc);font-size:.8rem;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;padding:.75rem 1.1rem;border-radius:50px;justify-content:center;">
+      <i class="fab fa-whatsapp"></i> WhatsApp
+    </a>
+    <div class="drawer-lang">
+      <button class="lang-btn active" data-lang="es">ES</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="pl">PL</button>
+      <button class="lang-btn" data-lang="fr">FR</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TABS BAR ══ -->
+<div class="tabs-bar" id="tabsBar">
+  <div class="tabs-inner">
+    <button class="tab-btn active" data-sec="mural"   data-i18n="tab_mural">🖌 Murales</button>
+    <button class="tab-btn"        data-sec="pintura" data-i18n="tab_paint">🎨 Pintura</button>
+    <button class="tab-btn"        data-sec="dibujo"  data-i18n="tab_draw">✏️ Dibujo</button>
+    <button class="tab-btn"        data-sec="craft"   data-i18n="tab_craft">🏺 Artesanías</button>
+    <div class="tab-sep"></div>
+    <a href="diccionario.html" class="dict-tab-btn">
+      <i class="fas fa-book-open"></i>
+      <span data-i18n="tab_dict">Diccionario Andino</span>
+    </a>
+  </div>
+</div>
+
+<!-- ══ MUSEUM ══ -->
+<div id="museum">
+
+  <!-- ════ MURALES ════ -->
+  <section class="gallery-section active t-mural" id="sec-mural">
+    <div class="sec-header">
+      <div>
+        <p class="sec-eyebrow" data-i18n="sec_mural_ey">Arte Urbano · Salta, Argentina</p>
+        <h2 class="sec-title" data-i18n="sec_mural_t">Murales que <em>hablan</em></h2>
+        <p class="sec-desc" data-i18n="sec_mural_d">Arte urbano que conecta culturas. Transformo espacios con la identidad ancestral del norte argentino, llevando colores y símbolos andinos a los muros de Europa.</p>
+      </div>
+      <div class="sec-count">01</div>
+    </div>
+    <div class="artworks-grid">
+
+      <!-- ABYA YALA -->
+      <div class="artwork-card"
+           data-direct="abya-yala.html"
+           data-slug="abya-yala"
+           data-title="Abya Yala"
+           data-subtitle="La persistencia de la memoria fracturada"
+           data-series="Serie Ojos Rasgados"
+           data-year="2026"
+           data-tech="Técnica mixta: pintura acrílica, pintura para pared y muralismo con reciclado de cerámicos rotos"
+           data-size="3m alto × 4m largo"
+           data-loc="Salta, Argentina"
+           data-cat="Mural"
+           data-tags="mural,andino,ojos rasgados,cerámica reciclada,técnica mixta,abya yala"
+           data-desc="Abya Yala — nombre kuna para el continente americano, 'tierra en plena madurez'. La persistencia de la memoria fracturada emerge en fragmentos de cerámica reciclada que componen el cuerpo de la figura, haciendo de cada rotura una cicatriz con historia propia."
+           data-story="La decisión de incorporar cerámicos rotos recuperados de demoliciones del barrio convierte cada fragmento en una cita material de la ciudad que muta. El muro se vuelve estratigrafía: lo que persiste y lo que se rompe, la memoria que no puede ser borrada aunque el soporte sea destruido."
+           data-img1="https://i.ibb.co/DD37KnBN/IMG-20260527-WA0150-1.jpg"
+           data-img2="https://i.ibb.co/ksphrxCQ/IMG-20260527-WA0049-1.jpg">
+        <div class="card-images">
+          <div class="card-img-main">
+            <img src="https://i.ibb.co/DD37KnBN/IMG-20260527-WA0150-1.jpg" alt="Abya Yala" loading="lazy">
+          </div>
+          <div class="card-img-secondary">
+            <div class="sec-img"><img src="https://i.ibb.co/ksphrxCQ/IMG-20260527-WA0049-1.jpg" alt="Abya Yala detalle" loading="lazy"></div>
+            <div class="sec-img"><img src="https://i.ibb.co/t0rP3Wj/IMG-20260520-WA0030.jpg" alt="Abya Yala proceso" loading="lazy"></div>
+          </div>
+          <span class="card-cat-badge">Mural</span>
+          <button class="img-zoom-btn js-img-zoom" data-img="https://i.ibb.co/DD37KnBN/IMG-20260527-WA0150-1.jpg" data-caption="Abya Yala — Mural completo"><i class="fas fa-search-plus"></i></button>
+        </div>
+        <div class="card-body">
+          <p class="card-series">Serie Ojos Rasgados</p>
+          <h3 class="card-title">Abya Yala</h3>
+          <p class="card-desc">La persistencia de la memoria fracturada. Técnica mixta con acrílico y cerámicos rotos reciclados sobre muro, 3m×4m.</p>
+          <div class="card-meta">
+            <span class="card-meta-item"><i class="fas fa-ruler-combined"></i> 3m × 4m</span>
+            <span class="card-meta-item"><i class="fas fa-calendar"></i> 2026</span>
+            <span class="card-meta-item"><i class="fas fa-map-marker-alt"></i> Salta, ARG</span>
+          </div>
+          <div class="card-actions">
+            <button class="card-discover-btn js-discover" data-i18n="btn_discover">
+              <i class="fas fa-expand-arrows-alt"></i><span>Descubrir</span>
+            </button>
+            <a href="abya-yala.html" class="card-page-btn" title="Página de la obra"><i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- COYA -->
+      <div class="artwork-card"
+           data-direct="coya.html"
+           data-slug="coya"
+           data-title="Coya"
+           data-series="Serie Ojos Rasgados"
+           data-year="2026"
+           data-tech="Pintura acrílica sobre muro"
+           data-size="1m × 3m"
+           data-loc="Salta, Argentina"
+           data-cat="Mural"
+           data-tags="mural,coya,identidad,andino,ojos rasgados"
+           data-desc="Retrato identitario de la cultura Coya del noroeste argentino. La figura porta los elementos simbólicos de la vestimenta tradicional. Los colores de la wiphala se integran en el aguayo y en la paleta general: una celebración visual de la identidad que resiste."
+           data-story="Comisionado para un espacio cultural comunitario. La investigación previa incluyó visitas a comunidades Coya de la Puna para trabajar cada detalle simbólico con respeto y profundidad. Cada elemento del vestuario fue consultado con referentes de la comunidad."
+           data-img1="https://i.ibb.co/C3GzKzFN/In-Shot-20260529-180617479.jpg"
+           data-img2="https://i.ibb.co/MKGq6K7/IMG-20260527-WA0050-1.jpg">
+        <div class="card-images">
+          <div class="card-img-main">
+            <img src="https://i.ibb.co/C3GzKzFN/In-Shot-20260529-180617479.jpg" alt="Coya" loading="lazy">
+          </div>
+          <div class="card-img-secondary">
+            <div class="sec-img"><img src="https://i.ibb.co/MKGq6K7/IMG-20260527-WA0050-1.jpg" alt="Coya frontal" loading="lazy"></div>
+          </div>
+          <span class="card-cat-badge">Mural</span>
+          <button class="img-zoom-btn js-img-zoom" data-img="https://i.ibb.co/C3GzKzFN/In-Shot-20260529-180617479.jpg" data-caption="Coya — Serie Ojos Rasgados"><i class="fas fa-search-plus"></i></button>
+        </div>
+        <div class="card-body">
+          <p class="card-series">Serie Ojos Rasgados</p>
+          <h3 class="card-title">Coya</h3>
+          <p class="card-desc">Acrílico sobre muro, 1m×3m. Retrato identitario de la cultura Coya con simbología wiphala integrada en cada plano cromático.</p>
+          <div class="card-meta">
+            <span class="card-meta-item"><i class="fas fa-ruler-combined"></i> 1m × 3m</span>
+            <span class="card-meta-item"><i class="fas fa-calendar"></i> 2026</span>
+            <span class="card-meta-item"><i class="fas fa-map-marker-alt"></i> Salta, ARG</span>
+          </div>
+          <div class="card-actions">
+            <button class="card-discover-btn js-discover" data-i18n="btn_discover">
+              <i class="fas fa-expand-arrows-alt"></i><span>Descubrir</span>
+            </button>
+            <a href="coya.html" class="card-page-btn" title="Página de la obra"><i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- HARTA LA GASTA -->
+      <div class="artwork-card"
+           data-direct="harta-la-gasta.html"
+           data-slug="harta-la-gasta"
+           data-title="Harta la Gasta"
+           data-series=""
+           data-year="2026"
+           data-tech="Acrílico sobre muro"
+           data-size="12m²"
+           data-loc="Salta, Argentina"
+           data-cat="Mural"
+           data-tags="mural,arquetipos,inconsciente colectivo,salta,urbano"
+           data-desc="Representación de la sociedad a través de arquetipos y simbolismos arraigados al inconsciente colectivo. El título en lunfardo salteño expresa hartazgo y a la vez una determinación feroz de seguir. Cada figura es un arquetipo que el espectador proyecta desde su propio imaginario."
+           data-story="El mural más desafiante logísticamente: pared en pendiente con irregularidades a plena exposición solar. El proceso implicó trabajo de madrugada para controlar el secado en las capas de veladura."
+           data-img1="https://i.ibb.co/d0P0Knz4/IMG-20260521-WA0023.jpg"
+           data-img2="https://i.ibb.co/SgxjNr1/IMG-20260527-WA0187.jpg">
+        <div class="card-images">
+          <div class="card-img-main">
+            <img src="https://i.ibb.co/d0P0Knz4/IMG-20260521-WA0023.jpg" alt="Harta la Gasta" loading="lazy">
+          </div>
+          <div class="card-img-secondary">
+            <div class="sec-img"><img src="https://i.ibb.co/SgxjNr1/IMG-20260527-WA0187.jpg" alt="Harta la Gasta detalle" loading="lazy"></div>
+          </div>
+          <span class="card-cat-badge">Mural</span>
+          <button class="img-zoom-btn js-img-zoom" data-img="https://i.ibb.co/d0P0Knz4/IMG-20260521-WA0023.jpg" data-caption="Harta la Gasta — 12m²"><i class="fas fa-search-plus"></i></button>
+        </div>
+        <div class="card-body">
+          <p class="card-series">Arte Urbano · Acrílico</p>
+          <h3 class="card-title">Harta la Gasta</h3>
+          <p class="card-desc">12m² de arquetipos del inconsciente colectivo. Una sociedad retratada desde el hartazgo y la resistencia simbólica.</p>
+          <div class="card-meta">
+            <span class="card-meta-item"><i class="fas fa-ruler-combined"></i> 12m²</span>
+            <span class="card-meta-item"><i class="fas fa-calendar"></i> 2026</span>
+            <span class="card-meta-item"><i class="fas fa-map-marker-alt"></i> Salta, ARG</span>
+          </div>
+          <div class="card-actions">
+            <button class="card-discover-btn js-discover" data-i18n="btn_discover">
+              <i class="fas fa-expand-arrows-alt"></i><span>Descubrir</span>
+            </button>
+            <a href="harta-la-gasta.html" class="card-page-btn" title="Página de la obra"><i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="andean-div"></div>
+
+  <!-- ════ PINTURA ════ -->
+  <section class="gallery-section t-pintura" id="sec-pintura">
+    <div class="sec-header">
+      <div>
+        <p class="sec-eyebrow" data-i18n="sec_paint_ey">Acrílico · Técnica Mixta · Madera · Palma</p>
+        <h2 class="sec-title" data-i18n="sec_paint_t">Pintura de <em>Tierra</em></h2>
+        <p class="sec-desc" data-i18n="sec_paint_d">Del acrílico sobre palma al látex sobre madera. Cada obra es un diálogo entre el soporte, la materia y la mirada que los transforma.</p>
+      </div>
+      <div class="sec-count">02</div>
+    </div>
+    <div class="artworks-grid">
+
+      <!-- YACHAY — elefante en palma -->
+      <div class="artwork-card"
+           data-direct="yachay.html"
+           data-slug="yachay"
+           data-title="Yachay"
+           data-series=""
+           data-year="2020"
+           data-tech="Acrílico sobre palma de árbol"
+           data-size="1m de largo"
+           data-loc="Salta, Argentina"
+           data-cat="Pintura"
+           data-tags="pintura,acrílico,elefante,palma,naturaleza,quechua"
+           data-desc="Yachay — conocimiento en quechua. Un elefante pintado con acrílico sobre palma de árbol: el soporte natural dicta su propia geografía, sus venas, su textura, su aroma. El animal más sabio del reino terrestre sobre el material más sabio del reino vegetal."
+           data-story="La palma fue encontrada caída durante una tormenta en el jardín de una casa del barrio Tres Cerritos. Nali la reconoció como soporte antes de que terminara de caer. El elefante emergió de la forma misma de la palma — no fue impuesto sino revelado."
+           data-img1="https://i.ibb.co/DDCCV2LY/In-Shot-20260530-092742591.jpg"
+           data-img2="https://i.ibb.co/Z6bJNqJQ/In-Shot-20260530-093831076.jpg">
+        <div class="card-images">
+          <div class="card-img-main">
+            <img src="https://i.ibb.co/DDCCV2LY/In-Shot-20260530-092742591.jpg" alt="Yachay" loading="lazy">
+          </div>
+          <div class="card-img-secondary">
+            <div class="sec-img"><img src="https://i.ibb.co/Z6bJNqJQ/In-Shot-20260530-093831076.jpg" alt="Yachay detalle" loading="lazy"></div>
+          </div>
+          <span class="card-cat-badge">Pintura</span>
+          <button class="img-zoom-btn js-img-zoom" data-img="https://i.ibb.co/DDCCV2LY/In-Shot-20260530-092742591.jpg" data-caption="Yachay — Acrílico sobre palma de árbol"><i class="fas fa-search-plus"></i></button>
+        </div>
+        <div class="card-body">
+          <p class="card-series">Acrílico sobre Palma de Árbol</p>
+          <h3 class="card-title">Yachay</h3>
+          <p class="card-desc">Elefante pintado con acrílico sobre palma de árbol natural. El soporte vivo como primer lenguaje de la obra.</p>
+          <div class="card-meta">
+            <span class="card-meta-item"><i class="fas fa-ruler-combined"></i> 1m de largo</span>
+            <span class="card-meta-item"><i class="fas fa-calendar"></i> 2020</span>
+            <span class="card-meta-item"><i class="fas fa-map-marker-alt"></i> Salta, ARG</span>
+          </div>
+          <div class="card-actions">
+            <button class="card-discover-btn js-discover" data-i18n="btn_discover">
+              <i class="fas fa-expand-arrows-alt"></i><span>Descubrir</span>
+            </button>
+            <a href="yachay.html" class="card-page-btn" title="Página de la obra"><i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- KENT — retrato de perro rescatado -->
+      <div class="artwork-card"
+           data-direct="kent.html"
+           data-slug="kent"
+           data-title="Kent"
+           data-series=""
+           data-year="2025"
+           data-tech="Acrílico sobre lienzo"
+           data-size="60cm × 80cm"
+           data-loc="Salta, Argentina"
+           data-cat="Pintura"
+           data-tags="pintura,retrato,animal,acrílico,rescate,perro"
+           data-desc="Retrato de Kent, un perro rescatado. La mirada del animal rescatado porta una historia que el acrílico restituye con dignidad: hay en sus ojos la memoria del abandono y la apertura renovada a la confianza. El rescate como acto de amor hecho imagen."
+           data-story="Kent llegó a la vida de Nali en un momento de mudanza y cambio. Pintarlo fue también un modo de honrar el vínculo que se construye entre quienes eligen cuidarse mutuamente, independientemente de la especie."
+           data-img1="https://i.ibb.co/GfKdnKsc/TOMANDO-PEDIDOS-3872200803-Un-retrato-de-tu-mejor-amigo-WEBP-1.webp"
+           data-img2="https://i.ibb.co/8gCzB9ZS/In-Shot-20260530-145740384.jpg">
+        <div class="card-images">
+          <div class="card-img-main">
+            <img src="https://i.ibb.co/GfKdnKsc/TOMANDO-PEDIDOS-3872200803-Un-retrato-de-tu-mejor-amigo-WEBP-1.webp" alt="Kent" loading="lazy">
+          </div>
+          <div class="card-img-secondary">
+            <div class="sec-img"><img src="https://i.ibb.co/8gCzB9ZS/In-Shot-20260530-145740384.jpg" alt="Kent detalle" loading="lazy"></div>
+          </div>
+          <span class="card-cat-badge">Pintura</span>
+          <button class="img-zoom-btn js-img-zoom" data-img="https://i.ibb.co/GfKdnKsc/TOMANDO-PEDIDOS-3872200803-Un-retrato-de-tu-mejor-amigo-WEBP-1.webp" data-caption="Kent — Retrato en acrílico"><i class="fas fa-search-plus"></i></button>
+        </div>
+        <div class="card-body">
+          <p class="card-series">Retrato · Acrílico sobre lienzo</p>
+          <h3 class="card-title">Kent</h3>
+          <p class="card-desc">Retrato del perro rescatado. La mirada que porta la historia del abandono y la apertura renovada a la confianza.</p>
+          <div class="card-meta">
+            <span class="card-meta-item"><i class="fas fa-ruler-combined"></i> 60×80cm</span>
+            <span class="card-meta-item"><i class="fas fa-calendar"></i> 2025</span>
+          </div>
+          <div class="card-actions">
+            <button class="card-discover-btn js-discover" data-i18n="btn_discover">
+              <i class="fas fa-expand-arrows-alt"></i><span>Descubrir</span>
+            </button>
+            <a href="kent.html" class="card-page-btn" title="Página de la obra"><i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- HAHO — látex y acrílico en madera -->
+      <div class="artwork-card"
+           data-direct="haho.html"
+           data-slug="haho"
+           data-title="HAHO"
+           data-series="Serie Ojos Rasgados"
+           data-year="2020"
+           data-tech="Técnica mixta: látex y acrílico sobre madera"
+           data-size="30cm × 20cm"
+           data-loc="Salta, Argentina"
+           data-cat="Pintura"
+           data-tags="pintura,mixta,látex,acrílico,madera,ojos rasgados"
+           data-desc="HAHO — la interjección andina de júbilo. Serie Ojos Rasgados. Técnica mixta de látex y acrílico sobre madera: el látex aporta elasticidad a la superficie y genera una tensión visual entre la rigidez del soporte y la fluidez del gesto pictórico."
+           data-story="Pintado en 2020 como parte de la exploración de soportes no convencionales. La madera fue intervenida primero con látex base antes de recibir las capas de acrílico, creando una superficie de absorción diferencial que el pincel percibe y responde."
+           data-img1="https://i.ibb.co/Z6bJNqJQ/In-Shot-20260530-093831076.jpg"
+           data-img2="https://i.ibb.co/4gFXKW4P/In-Shot-20260530-144458310.jpg">
+        <div class="card-images">
+          <div class="card-img-main">
+            <img src="https://i.ibb.co/Z6bJNqJQ/In-Shot-20260530-093831076.jpg" alt="HAHO" loading="lazy">
+          </div>
+          <div class="card-img-secondary">
+            <div class="sec-img"><img src="https://i.ibb.co/4gFXKW4P/In-Shot-20260530-144458310.jpg" alt="HAHO detalle" loading="lazy"></div>
+          </div>
+          <span class="card-cat-badge">Pintura</span>
+          <button class="img-zoom-btn js-img-zoom" data-img="https://i.ibb.co/Z6bJNqJQ/In-Shot-20260530-093831076.jpg" data-caption="HAHO — Látex y acrílico sobre madera"><i class="fas fa-search-plus"></i></button>
+        </div>
+        <div class="card-body">
+          <p class="card-series">Serie Ojos Rasgados · Látex &amp; Acrílico</p>
+          <h3 class="card-title">HAHO</h3>
+          <p class="card-desc">Técnica mixta con látex y acrílico sobre madera. 30×20cm. El júbilo andino contenido en el gesto y la materia.</p>
+          <div class="card-meta">
+            <span class="card-meta-item"><i class="fas fa-ruler-combined"></i> 30×20cm</span>
+            <span class="card-meta-item"><i class="fas fa-calendar"></i> 2020</span>
+          </div>
+          <div class="card-actions">
+            <button class="card-discover-btn js-discover" data-i18n="btn_discover">
+              <i class="fas fa-expand-arrows-alt"></i><span>Descubrir</span>
+            </button>
+            <a href="haho.html" class="card-page-btn" title="Página de la obra"><i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- PILCHA — mujer contemporánea en madera -->
+      <div class="artwork-card"
+           data-direct="pilcha.html"
+           data-slug="pilcha"
+           data-title="Pilcha"
+           data-series=""
+           data-year="2021"
+           data-tech="Acrílico sobre madera"
+           data-size="30cm × 10cm"
+           data-loc="Salta, Argentina"
+           data-cat="Pintura"
+           data-tags="pintura,mujer,contemporáneo,colores irreales,madera,acrílico"
+           data-desc="Una mujer contemporánea fuma. Los colores que la habitan son imposibles para un humano — paletas que no existen en ninguna piel real, en ningún cabello natural. La madera como soporte arcaico para una imagen que rompe el realismo desde adentro."
+           data-story="Pintado sobre una tabla de madera recuperada de 30×10cm en 2021. La verticalidad extrema del formato impone su propia disciplina a la figura: la mujer existe en un espacio estrecho y sin embargo su presencia lo desborda."
+           data-img1="https://i.ibb.co/4gFXKW4P/In-Shot-20260530-144458310.jpg"
+           data-img2="https://i.ibb.co/pBp5PgNf/IMG-20260527-WA0059.jpg">
+        <div class="card-images">
+          <div class="card-img-main">
+            <img src="https://i.ibb.co/4gFXKW4P/In-Shot-20260530-144458310.jpg" alt="Pilcha" loading="lazy">
+          </div>
+          <div class="card-img-secondary">
+            <div class="sec-img"><img src="https://i.ibb.co/pBp5PgNf/IMG-20260527-WA0059.jpg" alt="Pilcha detalle" loading="lazy"></div>
+          </div>
+          <span class="card-cat-badge">Pintura</span>
+          <button class="img-zoom-btn js-img-zoom" data-img="https://i.ibb.co/4gFXKW4P/In-Shot-20260530-144458310.jpg" data-caption="Pilcha — Acrílico sobre madera, 2021"><i class="fas fa-search-plus"></i></button>
+        </div>
+        <div class="card-body">
+          <p class="card-series">Acrílico sobre Madera</p>
+          <h3 class="card-title">Pilcha</h3>
+          <p class="card-desc">Mujer contemporánea fumando en colores imposibles para un humano. Acrílico sobre madera, 30×10cm.</p>
+          <div class="card-meta">
+            <span class="card-meta-item"><i class="fas fa-ruler-combined"></i> 30×10cm</span>
+            <span class="card-meta-item"><i class="fas fa-calendar"></i> 2021</span>
+          </div>
+          <div class="card-actions">
+            <button class="card-discover-btn js-discover" data-i18n="btn_discover">
+              <i class="fas fa-expand-arrows-alt"></i><span>Descubrir</span>
+            </button>
+            <a href="pilcha.html" class="card-page-btn" title="Página de la obra"><i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="andean-div"></div>
+
+  <!-- ════ DIBUJO ════ -->
+  <section class="gallery-section t-dibujo" id="sec-dibujo">
+    <div class="sec-header">
+      <div>
+        <p class="sec-eyebrow" data-i18n="sec_draw_ey">Lápiz · Lapicera · Lápices de color · Fibrón · Diseño gráfico</p>
+        <h2 class="sec-title" data-i18n="sec_draw_t">El trazo que <em>origina</em></h2>
+        <p class="sec-desc" data-i18n="sec_draw_d">El dibujo es el lenguaje primario. Antes de cada mural, antes de cada pintura — el trazo sobre el papel que captura la visión en su estado más puro e inmediato.</p>
+      </div>
+      <div class="sec-count">03</div>
+    </div>
+    <div class="artworks-grid">
+
+      <!-- YURUMA -->
+      <div class="artwork-card"
+           data-direct="yuruma.html"
+           data-slug="yuruma"
+           data-title="Yuruma"
+           data-series=""
+           data-year="2024"
+           data-tech="Lápiz negro y lapicera. Intervención con elementos de diseño gráfico (Canva)"
+           data-size="Variable · Digital + Analógico"
+           data-loc="Salta, Argentina"
+           data-cat="Dibujo"
+           data-tags="dibujo,lápiz,lapicera,diseño gráfico,canva,hibridación,andino"
+           data-desc="Yuruma. Dibujo a lápiz negro y lapicera intervenido con elementos de edición de diseño gráfico en Canva. La hibridación entre el trazo analógico y la intervención digital traza una frontera difusa entre lo artesanal y lo tecnológico, entre la mano y el algoritmo."
+           data-story="El dibujo original fue realizado a mano sobre papel, escaneado y luego intervenido digitalmente. Nali explora la tensión entre la huella personal del trazo a mano y la precisión aséptica de las herramientas digitales, sin que ninguna cancele a la otra."
+           data-img1="https://i.ibb.co/dwG4vn92/ilustration-dibujosubrealista-artoftheday-artist-artgallery-WEBP-2.webp"
+           data-img2="https://i.ibb.co/QvfXksQ7/artgallery-pueblosancestrales-WEBP.webp">
+        <div class="card-images">
+          <div class="card-img-main">
+            <img src="https://i.ibb.co/dwG4vn92/ilustration-dibujosubrealista-artoftheday-artist-artgallery-WEBP-2.webp" alt="Yuruma" loading="lazy">
+          </div>
+          <div class="card-img-secondary">
+            <div class="sec-img"><img src="https://i.ibb.co/QvfXksQ7/artgallery-pueblosancestrales-WEBP.webp" alt="Yuruma detalle" loading="lazy"></div>
+          </div>
+          <span class="card-cat-badge">Dibujo</span>
+          <button class="img-zoom-btn js-img-zoom" data-img="https://i.ibb.co/dwG4vn92/ilustration-dibujosubrealista-artoftheday-artist-artgallery-WEBP-2.webp" data-caption="Yuruma — Lápiz, lapicera e intervención digital"><i class="fas fa-search-plus"></i></button>
+        </div>
+        <div class="card-body">
+          <p class="card-series">Lápiz · Lapicera · Diseño digital</p>
+          <h3 class="card-title">Yuruma</h3>
+          <p class="card-desc">Lápiz negro y lapicera intervenidos con diseño gráfico (Canva). La mano y el algoritmo en un mismo plano.</p>
+          <div class="card-meta">
+            <span class="card-meta-item"><i class="fas fa-calendar"></i> 2024</span>
+            <span class="card-meta-item"><i class="fas fa-map-marker-alt"></i> Salta, ARG</span>
+          </div>
+          <div class="card-actions">
+            <button class="card-discover-btn js-discover" data-i18n="btn_discover">
+              <i class="fas fa-expand-arrows-alt"></i><span>Descubrir</span>
+            </button>
+            <a href="yuruma.html" class="card-page-btn" title="Página de la obra"><i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ANQAS -->
+      <div class="artwork-card"
+           data-direct="anqas.html"
+           data-slug="anqas"
+           data-title="Anqas"
+           data-series=""
+           data-year="2025"
+           data-tech="Lápices de color sobre papel"
+           data-size="8cm × 5cm"
+           data-loc="Salta, Argentina"
+           data-cat="Dibujo"
+           data-tags="dibujo,lápices de color,azul,quechua,anqas,pequeño formato"
+           data-desc="Anqas — azul en quechua. Dibujo a lápices de color de pequeño formato, 8×5cm. El azul como lengua: una palabra que en quechua nombra el color y en el papel lo convoca. La miniatura como intensidad concentrada, el gesto mínimo que contiene el máximo."
+           data-story="El pequeño formato fue una elección consciente: concentrar en 8×5cm toda la densidad del azul andino, ese azul del cielo de la puna a 4000 metros que no tiene equivalente en ninguna tabla de pantones."
+           data-img1="https://i.ibb.co/tf42VVt/In-Shot-20260530-150620557.jpg"
+           data-img2="https://i.ibb.co/fVLRb7PB/ilustration-artoftheday-artgallery-dibujos-dibujosalapiz-WEBP.webp">
+        <div class="card-images">
+          <div class="card-img-main">
+            <img src="https://i.ibb.co/tf42VVt/In-Shot-20260530-150620557.jpg" alt="Anqas" loading="lazy">
+          </div>
+          <div class="card-img-secondary">
+            <div class="sec-img"><img src="https://i.ibb.co/fVLRb7PB/ilustration-artoftheday-artgallery-dibujos-dibujosalapiz-WEBP.webp" alt="Anqas detalle" loading="lazy"></div>
+          </div>
+          <span class="card-cat-badge">Dibujo</span>
+          <button class="img-zoom-btn js-img-zoom" data-img="https://i.ibb.co/tf42VVt/In-Shot-20260530-150620557.jpg" data-caption="Anqas — azul en quechua, 8×5cm"><i class="fas fa-search-plus"></i></button>
+        </div>
+        <div class="card-body">
+          <p class="card-series">Lápices de color · Pequeño formato</p>
+          <h3 class="card-title">Anqas</h3>
+          <p class="card-desc">Azul en quechua. Lápices de color, 8×5cm. El azul de la Puna a 4000m, concentrado en el mínimo gesto posible.</p>
+          <div class="card-meta">
+            <span class="card-meta-item"><i class="fas fa-ruler-combined"></i> 8×5cm</span>
+            <span class="card-meta-item"><i class="fas fa-calendar"></i> 2025</span>
+          </div>
+          <div class="card-actions">
+            <button class="card-discover-btn js-discover" data-i18n="btn_discover">
+              <i class="fas fa-expand-arrows-alt"></i><span>Descubrir</span>
+            </button>
+            <a href="anqas.html" class="card-page-btn" title="Página de la obra"><i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- UYA -->
+      <div class="artwork-card"
+           data-direct="uya.html"
+           data-slug="uya"
+           data-title="Uya"
+           data-series=""
+           data-year="2024"
+           data-tech="Lápiz sobre papel y fibrones"
+           data-size="10cm × 7cm"
+           data-loc="Salta, Argentina"
+           data-cat="Dibujo"
+           data-tags="dibujo,lápiz,fibrón,rostro,cara,quechua,uya"
+           data-desc="Uya — cara, rostro en quechua. Dibujo a lápiz sobre papel con intervención de fibrones, 10×7cm. El rostro como territorio fundamental: el mapa más antiguo del mundo, el primer paisaje que aprendemos a leer."
+           data-story="La decisión de nombrar la obra en quechua no es decorativa: es la elección de que el idioma que nombra el rostro modifique la forma en que ese rostro es visto. Uya antes que face, antes que cara — un orden que cambia la percepción."
+           data-img1="https://i.ibb.co/N2VVXhGS/ilustracion-personajes-artoftheday-arteargentino-artgallery-WEBP-4.webp"
+           data-img2="https://i.ibb.co/HfsPmpsH/Salen-a-las-calles-con-banderas-Cortaron-la-ruta-con-sikus-y-quenas-Pancartas-de-colores-adornaron.webp">
+        <div class="card-images">
+          <div class="card-img-main">
+            <img src="https://i.ibb.co/N2VVXhGS/ilustracion-personajes-artoftheday-arteargentino-artgallery-WEBP-4.webp" alt="Uya" loading="lazy">
+          </div>
+          <div class="card-img-secondary">
+            <div class="sec-img"><img src="https://i.ibb.co/HfsPmpsH/Salen-a-las-calles-con-banderas-Cortaron-la-ruta-con-sikus-y-quenas-Pancartas-de-colores-adornaron.webp" alt="Uya detalle" loading="lazy"></div>
+          </div>
+          <span class="card-cat-badge">Dibujo</span>
+          <button class="img-zoom-btn js-img-zoom" data-img="https://i.ibb.co/N2VVXhGS/ilustracion-personajes-artoftheday-arteargentino-artgallery-WEBP-4.webp" data-caption="Uya — cara, rostro en quechua. 10×7cm"><i class="fas fa-search-plus"></i></button>
+        </div>
+        <div class="card-body">
+          <p class="card-series">Lápiz &amp; Fibrones sobre papel</p>
+          <h3 class="card-title">Uya</h3>
+          <p class="card-desc">Cara, rostro en quechua. Lápiz y fibrones, 10×7cm. El primer paisaje que aprendemos a leer.</p>
+          <div class="card-meta">
+            <span class="card-meta-item"><i class="fas fa-ruler-combined"></i> 10×7cm</span>
+            <span class="card-meta-item"><i class="fas fa-calendar"></i> 2024</span>
+          </div>
+          <div class="card-actions">
+            <button class="card-discover-btn js-discover" data-i18n="btn_discover">
+              <i class="fas fa-expand-arrows-alt"></i><span>Descubrir</span>
+            </button>
+            <a href="uya.html" class="card-page-btn" title="Página de la obra"><i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="andean-div"></div>
+
+  <!-- ════ ARTESANÍAS ════ -->
+  <section class="gallery-section t-craft" id="sec-craft">
+    <div class="sec-header">
+      <div>
+        <p class="sec-eyebrow" data-i18n="sec_craft_ey">Cerámica · Masilla Epoxi · Arcilla · Acrílico</p>
+        <h2 class="sec-title" data-i18n="sec_craft_t">Manos en la <em>tierra</em></h2>
+        <p class="sec-desc" data-i18n="sec_craft_d">Artesanías utilitarias con alma artística. El barro y la masilla epoxi como materia que se dobla a la voluntad de la mano y emerge como objeto con presencia propia.</p>
+      </div>
+      <div class="sec-count">04</div>
+    </div>
+    <div class="artworks-grid">
+
+      <!-- SERIE TAZA -->
+      <div class="artwork-card"
+           data-direct="serie-taza.html"
+           data-slug="serie-taza"
+           data-title="Serie Taza"
+           data-series="Cerámica Utilitaria"
+           data-year="2025"
+           data-tech="Arcilla roja y engobes"
+           data-size="Taza utilitaria"
+           data-loc="Salta, Argentina"
+           data-cat="Artesanía"
+           data-tags="cerámica,arcilla roja,engobes,taza,utilitaria"
+           data-desc="Taza de rosa utilitaria en arcilla roja y engobes. El engobe — mezcla de arcilla líquida y pigmentos — aplicado antes de la cocción convierte cada pieza en una pequeña pintura que se usa, que se lava, que acompaña el ritual diario del mate o el café."
+           data-story="Nali aprendió a trabajar con arcilla roja y engobes en un taller comunitario de Molinos. La elección de arcilla roja sobre blanca es también una elección cromática: el color de la Puna en el objeto cotidiano, la tierra en la mano todos los días."
+           data-img1="https://i.ibb.co/LDXCy0hH/tacitas-de-ceramicaartesanal-alfareriaydise-o-WEBP-2.webp"
+           data-img2="https://i.ibb.co/WbvhSWb/tacitas-de-ceramicaartesanal-alfareriaydise-o-WEBP-1.webp">
+        <div class="card-images">
+          <div class="card-img-main">
+            <img src="https://i.ibb.co/LDXCy0hH/tacitas-de-ceramicaartesanal-alfareriaydise-o-WEBP-2.webp" alt="Serie Taza" loading="lazy">
+          </div>
+          <div class="card-img-secondary">
+            <div class="sec-img"><img src="https://i.ibb.co/WbvhSWb/tacitas-de-ceramicaartesanal-alfareriaydise-o-WEBP-1.webp" alt="Serie Taza variante" loading="lazy"></div>
+          </div>
+          <span class="card-cat-badge">Artesanía</span>
+          <button class="img-zoom-btn js-img-zoom" data-img="https://i.ibb.co/LDXCy0hH/tacitas-de-ceramicaartesanal-alfareriaydise-o-WEBP-2.webp" data-caption="Serie Taza — Arcilla roja y engobes"><i class="fas fa-search-plus"></i></button>
+        </div>
+        <div class="card-body">
+          <p class="card-series">Cerámica Utilitaria · Arcilla Roja</p>
+          <h3 class="card-title">Serie Taza</h3>
+          <p class="card-desc">Taza de rosa utilitaria en arcilla roja y engobes. La tierra de la Puna en el ritual diario de la mano.</p>
+          <div class="card-meta">
+            <span class="card-meta-item"><i class="fas fa-palette"></i> Arcilla roja · Engobes</span>
+            <span class="card-meta-item"><i class="fas fa-calendar"></i> 2025</span>
+          </div>
+          <div class="card-actions">
+            <button class="card-discover-btn js-discover" data-i18n="btn_discover">
+              <i class="fas fa-expand-arrows-alt"></i><span>Descubrir</span>
+            </button>
+            <a href="serie-taza.html" class="card-page-btn" title="Página de la obra"><i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- PORTA ENCENDEDOR HONGO -->
+      <div class="artwork-card"
+           data-direct="porta-hongo.html"
+           data-slug="porta-hongo"
+           data-title="Porta Encendedor Hongo"
+           data-series=""
+           data-year="2024"
+           data-tech="Masilla epoxi, acrílicos y pintura reciclada"
+           data-size="6cm × 5cm"
+           data-loc="Salta, Argentina"
+           data-cat="Artesanía"
+           data-tags="artesanía,masilla epoxi,acrílico,pintura reciclada,hongo,utilitario,funcional"
+           data-desc="Porta encendedor con forma de hongo, modelado en masilla epoxi y pintado con acrílicos y pigmentos de pintura reciclada. Artesanía utilitaria donde el objeto funcional adquiere carácter escultórico: el hongo como símbolo de resistencia, de lo que crece donde otros no ven posibilidad."
+           data-story="Empezó como un gesto de afecto: un amigo perdía siempre el encendedor. La masilla epoxi permite un modelado minucioso que la arcilla no siempre admite en formatos tan pequeños. Los pigmentos de pintura reciclada incorporan una historia anónima al objeto."
+           data-img1="https://i.ibb.co/Y7PyVHwq/Porta-encendedor-hongo-WEBP-2.webp"
+           data-img2="https://i.ibb.co/zhSBLtkk/Cenicero-artesanal-WEBP.webp">
+        <div class="card-images">
+          <div class="card-img-main">
+            <img src="https://i.ibb.co/Y7PyVHwq/Porta-encendedor-hongo-WEBP-2.webp" alt="Porta Encendedor Hongo" loading="lazy">
+          </div>
+          <div class="card-img-secondary">
+            <div class="sec-img"><img src="https://i.ibb.co/zhSBLtkk/Cenicero-artesanal-WEBP.webp" alt="Cenicero" loading="lazy"></div>
+          </div>
+          <span class="card-cat-badge">Artesanía</span>
+          <button class="img-zoom-btn js-img-zoom" data-img="https://i.ibb.co/Y7PyVHwq/Porta-encendedor-hongo-WEBP-2.webp" data-caption="Porta Encendedor Hongo — Masilla epoxi y acrílicos"><i class="fas fa-search-plus"></i></button>
+        </div>
+        <div class="card-body">
+          <p class="card-series">Artesanía Utilitaria · Masilla Epoxi</p>
+          <h3 class="card-title">Porta Encendedor Hongo</h3>
+          <p class="card-desc">Masilla epoxi, acrílicos y pintura reciclada. El objeto funcional como pequeña escultura con historia propia.</p>
+          <div class="card-meta">
+            <span class="card-meta-item"><i class="fas fa-ruler-combined"></i> 6×5cm</span>
+            <span class="card-meta-item"><i class="fas fa-calendar"></i> 2024</span>
+          </div>
+          <div class="card-actions">
+            <button class="card-discover-btn js-discover" data-i18n="btn_discover">
+              <i class="fas fa-expand-arrows-alt"></i><span>Descubrir</span>
+            </button>
+            <a href="porta-hongo.html" class="card-page-btn" title="Página de la obra"><i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- CENICERO -->
+      <div class="artwork-card"
+           data-direct="cenicero.html"
+           data-slug="cenicero"
+           data-title="Cenicero"
+           data-series=""
+           data-year="2024"
+           data-tech="Cerámica con masilla epoxi y acrílicos"
+           data-size="12cm × 4cm"
+           data-loc="Salta, Argentina"
+           data-cat="Artesanía"
+           data-tags="artesanía,cerámica,masilla epoxi,acrílico,cenicero,utilitario"
+           data-desc="Cenicero de cerámica intervenido con masilla epoxi y acrílicos. La cerámica base como estructura primaria; la masilla epoxi como materia de reparación y adición que transforma la grieta en ornamento. Los acrílicos como lenguaje de superficie que unifica materiales de distintas naturalezas."
+           data-story="La combinación de cerámica con masilla epoxi y acrílicos surge de la práctica del kintsugi conceptual: no ocultar la intervención sino hacerla visible, celebrar la heterogeneidad de los materiales como parte del carácter del objeto."
+           data-img1="https://i.ibb.co/zhSBLtkk/Cenicero-artesanal-WEBP.webp"
+           data-img2="https://i.ibb.co/LDXCy0hH/tacitas-de-ceramicaartesanal-alfareriaydise-o-WEBP-2.webp">
+        <div class="card-images">
+          <div class="card-img-main">
+            <img src="https://i.ibb.co/zhSBLtkk/Cenicero-artesanal-WEBP.webp" alt="Cenicero" loading="lazy">
+          </div>
+          <div class="card-img-secondary">
+            <div class="sec-img"><img src="https://i.ibb.co/LDXCy0hH/tacitas-de-ceramicaartesanal-alfareriaydise-o-WEBP-2.webp" alt="Cerámica" loading="lazy"></div>
+          </div>
+          <span class="card-cat-badge">Artesanía</span>
+          <button class="img-zoom-btn js-img-zoom" data-img="https://i.ibb.co/zhSBLtkk/Cenicero-artesanal-WEBP.webp" data-caption="Cenicero — Cerámica, masilla epoxi y acrílicos"><i class="fas fa-search-plus"></i></button>
+        </div>
+        <div class="card-body">
+          <p class="card-series">Cerámica · Masilla Epoxi · Acrílicos</p>
+          <h3 class="card-title">Cenicero</h3>
+          <p class="card-desc">Cerámica con masilla epoxi y acrílicos. La grieta como ornamento — kintsugi conceptual en materiales heterogéneos.</p>
+          <div class="card-meta">
+            <span class="card-meta-item"><i class="fas fa-ruler-combined"></i> 12×4cm</span>
+            <span class="card-meta-item"><i class="fas fa-calendar"></i> 2024</span>
+          </div>
+          <div class="card-actions">
+            <button class="card-discover-btn js-discover" data-i18n="btn_discover">
+              <i class="fas fa-expand-arrows-alt"></i><span>Descubrir</span>
+            </button>
+            <a href="cenicero.html" class="card-page-btn" title="Página de la obra"><i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="andean-div" style="margin-top:2rem;"></div>
+</div><!-- /museum -->
+
+<!-- ══ IMAGE LIGHTBOX ══ -->
+<div id="img-lb-overlay"></div>
+<div id="img-lb">
+  <div class="lb-img-wrap">
+    <button id="lb-close-btn"><i class="fas fa-times"></i></button>
+    <img id="lb-main-img" src="" alt="">
+    <p class="lb-caption" id="lb-caption"></p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wiphala" style="max-width:200px;margin:0 auto 1.3rem;border-radius:3px;"></div>
+  <div class="footer-logo">NALI</div>
+  <p class="footer-sub" data-i18n="foot">Arte Visual · Salta, Argentina · Disponible en Polonia 2026</p>
+  <a href="diccionario.html" class="footer-dict-link">
+    <i class="fas fa-book-open"></i>
+    <span data-i18n="foot_dict">Diccionario Kakan · Quechua · Guaraní</span>
+  </a>
+  <div class="footer-links">
+    <a href="index.html" data-i18n="f_home">Inicio</a>
+    <a href="nali-tattoo.html" data-i18n="f_tat">Tatuajes</a>
+    <a href="nali-musica.html" data-i18n="f_mus">Música</a>
+    <a href="https://wa.me/48692971895" target="_blank">WhatsApp</a>
+    <a href="https://septimapacha.com" target="_blank">Séptima Pacha</a>
+  </div>
+  <p style="margin-top:.8rem;font-family:var(--ffc);font-size:.62rem;color:rgba(240,230,208,.12);">© 2026 Nali · Séptima Pacha Co.</p>
+</footer>
+
+<script>
+/* ── TRANSLATIONS ── */
+const T = {
+  es:{
+    ent_sub:'Arte Visual · Salta, Argentina',
+    ent_enter:'Entrar a la Galería', ent_dict:'Diccionario Andino',
+    nav_home:'Inicio', nav_tattoo:'Tatuajes', nav_music:'Música', nav_dict:'Diccionario',
+    tab_mural:'🖌 Murales', tab_paint:'🎨 Pintura', tab_draw:'✏️ Dibujo', tab_craft:'🏺 Artesanías',
+    tab_dict:'Diccionario Andino',
+    sec_mural_ey:'Arte Urbano · Salta, Argentina', sec_mural_t:'Murales que <em>hablan</em>',
+    sec_mural_d:'Arte urbano que conecta culturas. Transformo espacios con la identidad ancestral del norte argentino, llevando colores y símbolos andinos a los muros de Europa.',
+    sec_paint_ey:'Acrílico · Técnica Mixta · Madera · Palma', sec_paint_t:'Pintura de <em>Tierra</em>',
+    sec_paint_d:'Del acrílico sobre palma al látex sobre madera. Cada obra es un diálogo entre el soporte, la materia y la mirada que los transforma.',
+    sec_draw_ey:'Lápiz · Lapicera · Lápices de color · Fibrón · Diseño gráfico', sec_draw_t:'El trazo que <em>origina</em>',
+    sec_draw_d:'El dibujo es el lenguaje primario. Antes de cada mural, antes de cada pintura — el trazo que captura la visión en su estado más puro.',
+    sec_craft_ey:'Cerámica · Masilla Epoxi · Arcilla · Acrílico', sec_craft_t:'Manos en la <em>tierra</em>',
+    sec_craft_d:'Artesanías utilitarias con alma artística. La materia que se dobla a la voluntad de la mano y emerge como objeto con presencia propia.',
+    btn_discover:'Descubrir',
+    foot:'Arte Visual · Salta, Argentina · Disponible en Polonia 2026',
+    foot_dict:'Diccionario Kakan · Quechua · Guaraní',
+    f_home:'Inicio', f_tat:'Tatuajes', f_mus:'Música',
+  },
+  en:{
+    ent_sub:'Visual Art · Salta, Argentina',
+    ent_enter:'Enter the Gallery', ent_dict:'Andean Dictionary',
+    nav_home:'Home', nav_tattoo:'Tattoos', nav_music:'Music', nav_dict:'Dictionary',
+    tab_mural:'🖌 Murals', tab_paint:'🎨 Painting', tab_draw:'✏️ Drawing', tab_craft:'🏺 Crafts',
+    tab_dict:'Andean Dictionary',
+    sec_mural_ey:'Urban Art · Salta, Argentina', sec_mural_t:'Murals that <em>speak</em>',
+    sec_mural_d:'Urban art that connects cultures. I transform spaces with the ancestral identity of northern Argentina, bringing Andean colors and symbols to the walls of Europe.',
+    sec_paint_ey:'Acrylic · Mixed Media · Wood · Palm', sec_paint_t:'<em>Earth</em> Painting',
+    sec_paint_d:'From acrylic on palm to latex on wood. Each work is a dialogue between the support, the matter and the gaze that transforms them.',
+    sec_draw_ey:'Pencil · Pen · Color Pencils · Marker · Graphic Design', sec_draw_t:'The stroke that <em>originates</em>',
+    sec_draw_d:'Drawing is the primary language. Before every mural, before every painting — the stroke that captures the vision in its purest state.',
+    sec_craft_ey:'Ceramics · Epoxy Putty · Clay · Acrylic', sec_craft_t:'Hands in the <em>earth</em>',
+    sec_craft_d:'Utilitarian crafts with an artistic soul. Matter that bends to the will of the hand and emerges as an object with its own presence.',
+    btn_discover:'Discover',
+    foot:'Visual Art · Salta, Argentina · Available in Poland 2026',
+    foot_dict:'Kakan · Quechua · Guaraní Dictionary',
+    f_home:'Home', f_tat:'Tattoos', f_mus:'Music',
+  },
+  pl:{
+    ent_sub:'Sztuka Wizualna · Salta, Argentyna',
+    ent_enter:'Wejdź do Galerii', ent_dict:'Słownik Andyjski',
+    nav_home:'Start', nav_tattoo:'Tatuaże', nav_music:'Muzyka', nav_dict:'Słownik',
+    tab_mural:'🖌 Murale', tab_paint:'🎨 Malarstwo', tab_draw:'✏️ Rysunek', tab_craft:'🏺 Rzemiosło',
+    tab_dict:'Słownik Andyjski',
+    sec_mural_ey:'Sztuka uliczna · Salta, Argentyna', sec_mural_t:'Murale, które <em>mówią</em>',
+    sec_mural_d:'Sztuka uliczna łącząca kultury. Przekształcam przestrzenie andyjską tożsamością z północnej Argentyny.',
+    sec_paint_ey:'Akryl · Technika Mieszana · Drewno · Palma', sec_paint_t:'Malarstwo <em>ziemi</em>',
+    sec_paint_d:'Od akrylu na palmie do lateksu na drewnie. Każde dzieło to dialog między podłożem, materią i spojrzeniem, które je przekształca.',
+    sec_draw_ey:'Ołówek · Długopis · Kredki · Flamaster · Projekt graficzny', sec_draw_t:'Kreska, która <em>tworzy</em>',
+    sec_draw_d:'Rysunek to język pierwotny. Przed każdym muralem, przed każdym obrazem — kreska uchwytująca wizję w jej najczystszej postaci.',
+    sec_craft_ey:'Ceramika · Masa Epoksydowa · Glina · Akryl', sec_craft_t:'Dłonie w <em>ziemi</em>',
+    sec_craft_d:'Rzemiosło użytkowe z duszą artystyczną. Materia, która ugina się pod wolą dłoni i wyłania się jako przedmiot z własną obecnością.',
+    btn_discover:'Odkryj',
+    foot:'Sztuka Wizualna · Salta, Argentyna · Dostępna w Polsce 2026',
+    foot_dict:'Słownik Kakan · Quechua · Guaraní',
+    f_home:'Start', f_tat:'Tatuaże', f_mus:'Muzyka',
+  },
+  fr:{
+    ent_sub:'Art Visuel · Salta, Argentine',
+    ent_enter:'Entrer dans la Galerie', ent_dict:'Dictionnaire Andin',
+    nav_home:'Accueil', nav_tattoo:'Tatouages', nav_music:'Musique', nav_dict:'Dictionnaire',
+    tab_mural:'🖌 Murales', tab_paint:'🎨 Peinture', tab_draw:'✏️ Dessin', tab_craft:'🏺 Artisanat',
+    tab_dict:'Dictionnaire Andin',
+    sec_mural_ey:'Art Urbain · Salta, Argentine', sec_mural_t:'Murales qui <em>parlent</em>',
+    sec_mural_d:"L'art urbain qui connecte les cultures. Je transforme les espaces avec l'identité ancestrale du nord de l'Argentine.",
+    sec_paint_ey:'Acrylique · Technique Mixte · Bois · Palme', sec_paint_t:'Peinture de la <em>terre</em>',
+    sec_paint_d:"De l'acrylique sur palme au latex sur bois. Chaque œuvre est un dialogue entre le support, la matière et le regard qui les transforme.",
+    sec_draw_ey:'Crayon · Stylo · Crayons de couleur · Feutre · Design graphique', sec_draw_t:'Le trait qui <em>origine</em>',
+    sec_draw_d:'Le dessin est le langage primaire. Avant chaque murale, avant chaque peinture — le trait qui capture la vision dans son état le plus pur.',
+    sec_craft_ey:'Céramique · Mastic Époxy · Argile · Acrylique', sec_craft_t:'Mains dans la <em>terre</em>',
+    sec_craft_d:"Artisanat utilitaire avec une âme artistique. La matière qui se plie à la volonté de la main et émerge comme objet avec sa propre présence.",
+    btn_discover:'Découvrir',
+    foot:'Art Visuel · Salta, Argentine · Disponible en Pologne 2026',
+    foot_dict:'Dictionnaire Kakan · Quechua · Guaraní',
+    f_home:'Accueil', f_tat:'Tatouages', f_mus:'Musique',
+  }
+};
+
+let lang = 'es';
+function applyLang(l) {
+  lang = l;
+  document.documentElement.lang = l;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.getAttribute('data-i18n');
+    if (T[l] && T[l][k] != null) el.innerHTML = T[l][k];
+  });
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === l));
+  try { sessionStorage.setItem('nali_lang', l); } catch(e){}
+}
+document.querySelectorAll('.lang-btn').forEach(b => b.addEventListener('click', () => applyLang(b.dataset.lang)));
+try { const sl = sessionStorage.getItem('nali_lang'); if (sl && T[sl]) applyLang(sl); else applyLang('es'); } catch(e){ applyLang('es'); }
+
+/* ── AMBIENT CANVAS ── */
+(function(){
+  const c = document.getElementById('bg-canvas');
+  const ctx = c.getContext('2d');
+  let W, H, pts = [];
+  function resize(){ W = c.width = innerWidth; H = c.height = innerHeight; }
+  resize(); addEventListener('resize', resize, {passive:true});
+  const cols = ['#CC0000','#E8720C','#F5C400','#00913A','#005BAA','#5C2D91','#C8922A'];
+  for(let i=0;i<45;i++) pts.push({x:Math.random()*2000,y:Math.random()*2000,vx:(Math.random()-.5)*.18,vy:(Math.random()-.5)*.18,r:Math.random()*1.2+.3,c:cols[Math.floor(Math.random()*cols.length)],o:Math.random()*.5+.1});
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    pts.forEach(p=>{ p.x=(p.x+p.vx+W)%W; p.y=(p.y+p.vy+H)%H;
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=p.c+Math.round(p.o*255).toString(16).padStart(2,'0'); ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ── ENTRANCE CANVAS ── */
+(function(){
+  const canvas = document.getElementById('ent-canvas');
+  const ctx = canvas.getContext('2d');
+  function resize(){ canvas.width=innerWidth; canvas.height=innerHeight; }
+  resize(); addEventListener('resize',resize,{passive:true});
+  const cols=['#CC0000','#E8720C','#F5C400','#F0EAD6','#00913A','#005BAA','#5C2D91'];
+  let prog=0,raf;
+  function draw(){
+    prog=Math.min(prog+.005,1); ctx.clearRect(0,0,canvas.width,canvas.height);
+    const cx=canvas.width/2,cy=canvas.height/2,r=Math.min(canvas.width,canvas.height)*.38*prog;
+    for(let i=0;i<7;i++){
+      const a=(i/7)*Math.PI*2-Math.PI/2;
+      ctx.strokeStyle=cols[i]+'88'; ctx.lineWidth=1.5;
+      ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(cx+Math.cos(a)*r,cy+Math.sin(a)*r); ctx.stroke();
+      if(prog>.3){
+        const mid=r*.6,sub=r*.35,a2=a+.28,a3=a-.28;
+        ctx.strokeStyle=cols[i]+'44'; ctx.lineWidth=1;
+        ctx.beginPath(); ctx.moveTo(cx+Math.cos(a)*mid,cy+Math.sin(a)*mid); ctx.lineTo(cx+Math.cos(a)*mid+Math.cos(a2)*sub,cy+Math.sin(a)*mid+Math.sin(a2)*sub); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(cx+Math.cos(a)*mid,cy+Math.sin(a)*mid); ctx.lineTo(cx+Math.cos(a)*mid+Math.cos(a3)*sub,cy+Math.sin(a)*mid+Math.sin(a3)*sub); ctx.stroke();
+      }
+    }
+    if(prog>.25){ ctx.strokeStyle='rgba(200,146,42,.25)'; ctx.lineWidth=1; ctx.beginPath(); ctx.arc(cx,cy,(prog-.25)*r*1.6,0,Math.PI*2); ctx.stroke(); }
+    if(prog<1) raf=requestAnimationFrame(draw);
+  }
+  draw();
+  window._stopEntCanvas=()=>cancelAnimationFrame(raf);
+})();
+
+/* ── ENTER MUSEUM ── */
+const themeMap={mural:'t-mural',pintura:'t-pintura',dibujo:'t-dibujo',craft:'t-craft'};
+let currentSec='mural';
+function enterMuseum(){
+  window._stopEntCanvas&&window._stopEntCanvas();
+  const ent=document.getElementById('entrance');
+  ent.classList.add('out');
+  setTimeout(()=>{ ent.style.display='none'; },820);
+  document.getElementById('museum').classList.add('show');
+  document.getElementById('tabsBar').classList.add('show');
+  setTimeout(revealVisible,200);
+}
+document.getElementById('entBtn').addEventListener('click',enterMuseum);
+
+/* ── SCROLL NAV ── */
+addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>50),{passive:true});
+
+/* ── DRAWER ── */
+const hbg=document.getElementById('hamburger'),drawer=document.getElementById('drawer'),overlay=document.getElementById('dOverlay'),dClose=document.getElementById('drawerClose');
+function openDrawer(){drawer.classList.add('open');overlay.classList.add('open');hbg.classList.add('open');hbg.setAttribute('aria-expanded','true');document.body.classList.add('locked');}
+function closeDrawer(){drawer.classList.remove('open');overlay.classList.remove('open');hbg.classList.remove('open');hbg.setAttribute('aria-expanded','false');document.body.classList.remove('locked');}
+hbg.addEventListener('click',e=>{e.stopPropagation();drawer.classList.contains('open')?closeDrawer():openDrawer();});
+dClose.addEventListener('click',closeDrawer);
+overlay.addEventListener('click',closeDrawer);
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDrawer();closeLightbox();}});
+document.querySelectorAll('.js-sec').forEach(a=>{
+  a.addEventListener('click',e=>{e.preventDefault();const sec=a.dataset.sec;closeDrawer();setTimeout(()=>switchSection(sec),380);});
+});
+
+/* ── SECTION SWITCH ── */
+function switchSection(name){
+  if(!document.getElementById('museum').classList.contains('show')) enterMuseum();
+  currentSec=name;
+  document.querySelectorAll('.gallery-section').forEach(s=>{
+    s.classList.remove('active');
+    s.querySelectorAll('.artwork-card,.sec-header').forEach(el=>el.classList.remove('visible'));
+  });
+  const sec=document.getElementById('sec-'+name);
+  if(sec){
+    sec.classList.add('active');
+    document.body.className=themeMap[name]||'';
+    setTimeout(revealVisible,80);
+  }
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.sec===name));
+  const navH=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav'))||64;
+  if(sec) window.scrollTo({top:sec.getBoundingClientRect().top+scrollY-navH-56,behavior:'smooth'});
+}
+document.querySelectorAll('.tab-btn').forEach(b=>b.addEventListener('click',()=>switchSection(b.dataset.sec)));
+
+/* ── SCROLL REVEAL ── */
+let revObs;
+function revealVisible(){
+  if(revObs) revObs.disconnect();
+  revObs=new IntersectionObserver(entries=>{
+    entries.forEach(en=>{if(en.isIntersecting){en.target.classList.add('visible');revObs.unobserve(en.target);}});
+  },{threshold:.08,rootMargin:'0px 0px -20px 0px'});
+  const sec=document.getElementById('sec-'+currentSec);
+  if(sec) sec.querySelectorAll('.artwork-card,.sec-header').forEach(el=>revObs.observe(el));
+}
+document.querySelectorAll('.artwork-card').forEach((c,i)=>{c.style.transitionDelay=`${(i%4)*.1}s`;});
+
+/* ── IMAGE LIGHTBOX ── */
+const imgLb=document.getElementById('img-lb');
+const lbMainImg=document.getElementById('lb-main-img');
+const lbCaption=document.getElementById('lb-caption');
+const lbCloseBtn=document.getElementById('lb-close-btn');
+const lbOverlay=document.getElementById('img-lb-overlay');
+
+function openLightbox(src,caption){
+  lbMainImg.src=src;
+  lbCaption.textContent=caption||'';
+  imgLb.classList.add('open');
+  lbOverlay.style.display='block';
+  document.body.classList.add('locked');
+}
+function closeLightbox(){
+  imgLb.classList.remove('open');
+  lbOverlay.style.display='none';
+  document.body.classList.remove('locked');
+  setTimeout(()=>{lbMainImg.src='';},300);
+}
+lbCloseBtn.addEventListener('click',closeLightbox);
+lbOverlay.addEventListener('click',closeLightbox);
+document.querySelectorAll('.js-img-zoom').forEach(btn=>{
+  btn.addEventListener('click',e=>{
+    e.stopPropagation();
+    openLightbox(btn.dataset.img,btn.dataset.caption);
+  });
+});
+
+/* ── DISCOVER BUTTON ── */
+document.querySelectorAll('.js-discover').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const card=btn.closest('.artwork-card');
+    const d=card.dataset;
+    if(d.direct){ window.location.href=d.direct; return; }
+    const p=new URLSearchParams({
+      slug:d.slug,title:d.title,series:d.series||'',
+      year:d.year,tech:d.tech,size:d.size,loc:d.loc,
+      cat:d.cat,tags:d.tags,desc:d.desc,story:d.story,
+      img1:d.img1,img2:d.img2||'',lang:lang
+    });
+    window.location.href='obra.html?'+p.toString();
+  });
+});
+</script>
+</body>
+</html>
