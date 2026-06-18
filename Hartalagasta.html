@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="Harta la Gasta — Mural de Nali. Arquetipos e inconsciente colectivo. Arte urbano, Salta 2026.">
+<title>Nali | Harta la Gasta</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Barlow+Condensed:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+/* ════════════════════════════════════════
+   DESIGN TOKENS
+════════════════════════════════════════ */
+:root {
+  --rojo:#CC0000; --naranja:#E8720C; --amarillo:#F5C400;
+  --verde:#00913A; --azul:#005BAA; --violeta:#5C2D91; --wipblanco:#F0EAD6;
+  --noche:#07050A;
+  --tierra:#1A0D02;
+  --acc:#E8720C;      /* mural orange */
+  --acc2:#F5C400;     /* gold-yellow */
+  --acc-dim:rgba(232,114,12,.18);
+  --acc-glow:rgba(232,114,12,.35);
+  --acc-border:rgba(232,114,12,.22);
+  --crema:#F0E6D0; --cdim:rgba(240,230,208,.62);
+  --glass:rgba(10,4,2,.72);
+  --ffd:'Cinzel',serif;
+  --ffc:'Barlow Condensed',sans-serif;
+  --ffb:'Cormorant Garamond',serif;
+  --ease:cubic-bezier(.4,0,.2,1);
+  --tr:.38s var(--ease);
+  --nav:64px;
+}
+
+/* ════════════════════════════════════════
+   RESET
+════════════════════════════════════════ */
+*,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:var(--ffb);
+  background:var(--noche);
+  color:var(--crema);
+  overflow-x:hidden;
+}
+body.locked { overflow:hidden; }
+img { display:block; }
+a { text-decoration:none; }
+button { cursor:pointer; border:none; background:none; font:inherit; }
+
+/* ════════════════════════════════════════
+   AMBIENT LAYERS
+════════════════════════════════════════ */
+.andean-bg {
+  position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.025;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M30 0L60 30L30 60L0 30Z' fill='none' stroke='%23E8720C' stroke-width='0.8'/%3E%3Crect x='20' y='20' width='20' height='20' fill='none' stroke='%23E8720C' stroke-width='0.5'/%3E%3C/svg%3E");
+  background-size:60px 60px;
+}
+.ambient-glow {
+  position:fixed; inset:0; pointer-events:none; z-index:0;
+  background:
+    radial-gradient(ellipse 60% 40% at 20% 30%, rgba(232,114,12,.06) 0%, transparent 100%),
+    radial-gradient(ellipse 50% 60% at 80% 70%, rgba(245,196,0,.04) 0%, transparent 100%),
+    radial-gradient(ellipse 80% 30% at 50% 100%, rgba(74,20,0,.5) 0%, transparent 100%);
+}
+canvas#particles { position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.4; }
+
+/* ════════════════════════════════════════
+   WIPHALA
+════════════════════════════════════════ */
+.wiphala {
+  width:100%; height:5px; flex-shrink:0;
+  background:linear-gradient(90deg,
+    var(--rojo) 0% 14.28%, var(--naranja) 14.28% 28.56%,
+    var(--amarillo) 28.56% 42.84%, var(--wipblanco) 42.84% 57.12%,
+    var(--verde) 57.12% 71.40%, var(--azul) 71.40% 85.68%,
+    var(--violeta) 85.68% 100%);
+}
+
+/* ════════════════════════════════════════
+   NAV
+════════════════════════════════════════ */
+nav {
+  position:fixed; top:0; left:0; width:100%; z-index:700;
+  display:flex; flex-direction:column;
+}
+.nav-bar {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 1.8rem; height:var(--nav);
+  background:rgba(7,5,10,.82);
+  backdrop-filter:blur(22px); -webkit-backdrop-filter:blur(22px);
+  border-bottom:1px solid var(--acc-border);
+  transition:background var(--tr);
+}
+nav.scrolled .nav-bar { background:rgba(7,5,10,.97); }
+
+.nav-left { display:flex; align-items:center; gap:.7rem; }
+.nav-back {
+  display:inline-flex; align-items:center; gap:.45rem;
+  font-family:var(--ffc); font-size:.7rem; letter-spacing:2px; text-transform:uppercase;
+  color:rgba(240,230,208,.5); padding:.38rem .85rem; border-radius:30px;
+  border:1px solid rgba(232,114,12,.2); transition:var(--tr);
+}
+.nav-back:hover { color:var(--acc); border-color:var(--acc); }
+.nav-logo {
+  font-family:var(--ffd); font-size:1.2rem; font-weight:700;
+  letter-spacing:4px; color:var(--crema);
+}
+.nav-logo span { color:var(--acc); }
+
+.nav-right { display:flex; align-items:center; gap:.6rem; }
+.lang-sel {
+  display:flex; gap:.08rem; align-items:center;
+  background:rgba(232,114,12,.07); border:1px solid rgba(232,114,12,.2);
+  border-radius:30px; padding:.15rem .35rem;
+}
+.lang-btn {
+  background:none; font-family:var(--ffc); font-size:.67rem;
+  font-weight:700; letter-spacing:1px; color:rgba(240,230,208,.38);
+  padding:.16rem .4rem; border-radius:14px;
+  transition:var(--tr); text-transform:uppercase;
+}
+.lang-btn.active { background:var(--acc); color:var(--noche); }
+.lang-btn:hover:not(.active) { color:var(--acc); }
+
+/* Hamburger */
+.hamburger {
+  display:none; flex-direction:column; justify-content:center;
+  align-items:center; gap:5px; width:40px; height:40px;
+  -webkit-tap-highlight-color:transparent;
+}
+.hamburger span {
+  display:block; width:22px; height:2px; background:var(--acc);
+  border-radius:2px; transition:transform .32s var(--ease), opacity .32s;
+  transform-origin:center;
+}
+.hamburger.open span:nth-child(1) { transform:rotate(45deg) translate(5px,5px); }
+.hamburger.open span:nth-child(2) { opacity:0; }
+.hamburger.open span:nth-child(3) { transform:rotate(-45deg) translate(5px,-5px); }
+
+/* Drawer */
+.drawer-overlay {
+  position:fixed; inset:0; z-index:800; background:rgba(0,0,0,.6);
+  opacity:0; visibility:hidden; transition:opacity .3s, visibility .3s;
+}
+.drawer-overlay.open { opacity:1; visibility:visible; }
+.mobile-drawer {
+  position:fixed; top:0; right:0; bottom:0; width:min(290px,86vw); z-index:810;
+  background:rgba(7,5,10,.99); backdrop-filter:blur(24px);
+  border-left:1px solid rgba(232,114,12,.18);
+  display:flex; flex-direction:column;
+  transform:translateX(100%); transition:transform .35s var(--ease);
+}
+.mobile-drawer.open { transform:translateX(0); }
+.drawer-head {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 1.3rem; height:var(--nav); border-bottom:1px solid rgba(232,114,12,.1);
+}
+.drawer-close {
+  background:none; border:1px solid rgba(232,114,12,.25); color:var(--acc);
+  width:36px; height:36px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  transition:var(--tr);
+}
+.drawer-close:hover { background:rgba(232,114,12,.15); }
+.drawer-body { flex:1; padding:1.1rem 1.3rem; overflow-y:auto; }
+.drawer-link {
+  display:flex; align-items:center; gap:.75rem;
+  font-family:var(--ffc); font-size:1rem; letter-spacing:2px; text-transform:uppercase;
+  color:var(--crema); padding:.85rem 0; border-bottom:1px solid rgba(232,114,12,.1);
+  transition:color .22s, padding-left .22s; min-height:48px;
+}
+.drawer-link:hover { color:var(--acc); padding-left:.4rem; }
+.drawer-link .di {
+  width:26px; height:26px; border-radius:6px;
+  background:rgba(232,114,12,.1); border:1px solid rgba(232,114,12,.2);
+  display:flex; align-items:center; justify-content:center; font-size:.75rem;
+  color:var(--acc); flex-shrink:0;
+}
+.drawer-foot { padding:1rem 1.3rem 1.5rem; border-top:1px solid rgba(232,114,12,.1); }
+.drawer-lang { display:flex; gap:.4rem; flex-wrap:wrap; margin-top:.8rem; }
+.drawer-lang .lang-btn {
+  background:rgba(232,114,12,.1); border:1px solid rgba(232,114,12,.2);
+  border-radius:20px; padding:.45rem .9rem; font-size:.75rem; color:var(--crema);
+  min-height:36px;
+}
+.drawer-lang .lang-btn.active { background:var(--acc); color:var(--noche); font-weight:900; }
+
+/* ════════════════════════════════════════
+   PROGRESS BAR
+════════════════════════════════════════ */
+.progress-bar {
+  position:fixed; top:calc(var(--nav)+5px); left:0; z-index:699;
+  height:2px; width:0%; background:linear-gradient(90deg,var(--rojo),var(--acc),var(--acc2));
+  transition:width .1s linear;
+}
+
+/* ════════════════════════════════════════
+   MAIN
+════════════════════════════════════════ */
+main {
+  position:relative; z-index:1;
+  padding-top:calc(var(--nav)+5px);
+}
+
+/* ════════════════════════════════════════
+   HERO — full bleed
+════════════════════════════════════════ */
+.hero {
+  position:relative;
+  height:min(92vh,900px);
+  overflow:hidden;
+}
+.hero-img {
+  width:100%; height:100%; object-fit:cover; object-position:center top;
+  filter:brightness(.75);
+  transform:scale(1.06);
+  animation:heroZoom 14s ease-in-out infinite alternate;
+}
+@keyframes heroZoom {
+  from { transform:scale(1.06) translateY(0); }
+  to   { transform:scale(1.12) translateY(-1%); }
+}
+.hero-gradient {
+  position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(
+    to bottom,
+    rgba(7,5,10,.1) 0%,
+    rgba(7,5,10,.05) 30%,
+    rgba(7,5,10,.55) 70%,
+    rgba(7,5,10,1) 100%
+  );
+}
+.hero-content {
+  position:absolute; bottom:0; left:0; right:0;
+  padding:0 2.5rem 3.5rem;
+  max-width:1100px; margin:0 auto;
+}
+.hero-cat {
+  font-family:var(--ffc); font-size:.68rem; letter-spacing:4px; text-transform:uppercase;
+  color:var(--acc); margin-bottom:.7rem;
+  display:inline-flex; align-items:center; gap:.55rem;
+  opacity:0; animation:fadeUp .7s var(--ease) .4s both;
+}
+.hero-cat::before { content:''; width:18px; height:1px; background:currentColor; }
+.hero-title {
+  font-family:var(--ffd); font-weight:900;
+  font-size:clamp(3rem,9vw,7rem);
+  letter-spacing:2px; line-height:.92; margin-bottom:.8rem;
+  background:linear-gradient(135deg, #fff 0%, var(--crema) 40%, var(--acc) 80%, var(--acc2) 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  opacity:0; animation:fadeUp .9s var(--ease) .6s both;
+}
+.hero-meta {
+  display:flex; flex-wrap:wrap; gap:1rem; align-items:center;
+  opacity:0; animation:fadeUp .8s var(--ease) .9s both;
+}
+.hero-meta-item {
+  display:flex; align-items:center; gap:.4rem;
+  font-family:var(--ffc); font-size:.7rem; letter-spacing:1.5px; text-transform:uppercase;
+  color:rgba(240,230,208,.5);
+}
+.hero-meta-item i { color:var(--acc); font-size:.62rem; }
+.hero-scroll-hint {
+  position:absolute; bottom:1.5rem; right:2.5rem;
+  display:flex; flex-direction:column; align-items:center; gap:.35rem;
+  font-family:var(--ffc); font-size:.6rem; letter-spacing:2px; text-transform:uppercase;
+  color:rgba(240,230,208,.3);
+  animation:floatHint 2.4s ease-in-out infinite, fadeUp .8s var(--ease) 1.3s both;
+}
+.hero-scroll-hint i { font-size:1rem; color:var(--acc); opacity:.5; }
+@keyframes floatHint { 0%,100%{transform:translateY(0);}50%{transform:translateY(6px);} }
+
+/* ════════════════════════════════════════
+   FICHA TÉCNICA — sticky strip
+════════════════════════════════════════ */
+.ficha-strip {
+  background:rgba(7,5,10,.9);
+  backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
+  border-top:1px solid var(--acc-border);
+  border-bottom:1px solid var(--acc-border);
+  position:sticky; top:calc(var(--nav)+5px+2px); z-index:600;
+}
+.ficha-inner {
+  max-width:1100px; margin:0 auto;
+  padding:.65rem 2rem;
+  display:flex; gap:2rem; flex-wrap:wrap; align-items:center;
+  overflow-x:auto; scrollbar-width:none;
+}
+.ficha-inner::-webkit-scrollbar { display:none; }
+.ficha-item {
+  display:flex; align-items:center; gap:.5rem;
+  flex-shrink:0;
+}
+.ficha-label {
+  font-family:var(--ffc); font-size:.6rem; letter-spacing:2px; text-transform:uppercase;
+  color:var(--acc); opacity:.8;
+}
+.ficha-val {
+  font-family:var(--ffc); font-size:.75rem; letter-spacing:1px; text-transform:uppercase;
+  color:var(--crema); font-weight:600;
+}
+.ficha-sep { width:1px; height:18px; background:rgba(232,114,12,.2); flex-shrink:0; }
+.wa-ficha {
+  margin-left:auto; flex-shrink:0;
+  display:inline-flex; align-items:center; gap:.4rem;
+  font-family:var(--ffc); font-size:.68rem; letter-spacing:1.5px; text-transform:uppercase; font-weight:700;
+  background:linear-gradient(135deg,#128C7E,#075E54);
+  color:#fff; padding:.4rem .9rem; border-radius:30px;
+  transition:var(--tr);
+}
+.wa-ficha:hover { opacity:.88; transform:translateY(-1px); }
+
+/* ════════════════════════════════════════
+   CONTENT WRAPPER
+════════════════════════════════════════ */
+.content-wrap {
+  max-width:1100px; margin:0 auto;
+  padding:0 2rem;
+}
+
+/* ════════════════════════════════════════
+   SECTION DIVIDER
+════════════════════════════════════════ */
+.sec-div {
+  height:1px; margin:3rem 0;
+  background:linear-gradient(90deg,transparent,var(--acc-border),transparent);
+}
+.wiphala-div {
+  height:2px; margin:4rem 0 3rem;
+  background:linear-gradient(90deg,transparent,var(--rojo),var(--naranja),var(--amarillo),var(--verde),var(--azul),var(--violeta),transparent);
+  opacity:.22;
+}
+
+/* ════════════════════════════════════════
+   INTRO BLOCK
+════════════════════════════════════════ */
+.intro-block {
+  padding:4rem 0 2rem;
+  display:grid; grid-template-columns:1fr 380px; gap:4rem; align-items:start;
+}
+.intro-eyebrow {
+  font-family:var(--ffc); font-size:.68rem; letter-spacing:4px; text-transform:uppercase;
+  color:var(--acc); margin-bottom:.8rem;
+  display:flex; align-items:center; gap:.6rem;
+}
+.intro-eyebrow::before { content:''; width:20px; height:1px; background:currentColor; }
+.intro-heading {
+  font-family:var(--ffd); font-size:clamp(1.7rem,4vw,2.8rem);
+  font-weight:700; color:var(--crema); letter-spacing:.5px; margin-bottom:1.2rem; line-height:1.05;
+}
+.intro-heading em {
+  font-style:normal;
+  background:linear-gradient(125deg,var(--acc),var(--acc2));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+.intro-text {
+  font-size:1.1rem; color:var(--cdim); line-height:1.95; font-weight:300;
+}
+.intro-text + .intro-text { margin-top:1rem; }
+
+/* Side stat card */
+.stat-card {
+  background:rgba(232,114,12,.04);
+  border:1px solid var(--acc-border);
+  border-radius:6px; padding:1.8rem;
+  position:sticky; top:calc(var(--nav)+5px+60px);
+}
+.stat-row { margin-bottom:1.2rem; padding-bottom:1.2rem; border-bottom:1px solid rgba(232,114,12,.1); }
+.stat-row:last-child { margin-bottom:0; padding-bottom:0; border-bottom:none; }
+.stat-label {
+  font-family:var(--ffc); font-size:.6rem; letter-spacing:3px; text-transform:uppercase;
+  color:var(--acc); margin-bottom:.3rem;
+}
+.stat-val {
+  font-family:var(--ffb); font-size:1rem; color:var(--crema); line-height:1.5; font-weight:400;
+}
+
+/* ════════════════════════════════════════
+   ARCHETYPE SECTIONS — text + image alternating
+════════════════════════════════════════ */
+.archetypes { padding:2rem 0 3rem; }
+.arch-section-title {
+  font-family:var(--ffd); font-size:clamp(1.3rem,3vw,2rem);
+  font-weight:700; color:var(--crema); letter-spacing:1px;
+  margin-bottom:2.5rem;
+  display:flex; align-items:center; gap:1rem;
+}
+.arch-section-title::after { content:''; flex:1; height:1px; background:var(--acc-border); }
+
+/* Individual archetype block */
+.arch-block {
+  display:grid; grid-template-columns:1fr 1fr; gap:2.5rem;
+  align-items:start; margin-bottom:3.5rem;
+}
+.arch-block.reverse { direction:rtl; }
+.arch-block.reverse > * { direction:ltr; }
+
+.arch-img-wrap {
+  position:relative; overflow:hidden; border-radius:4px;
+  border:1px solid var(--acc-border);
+  background:rgba(232,114,12,.05);
+}
+.arch-img-wrap img {
+  width:100%; display:block; object-fit:cover;
+  transition:transform .7s var(--ease);
+  aspect-ratio:4/3;
+}
+.arch-img-wrap:hover img { transform:scale(1.05); }
+.arch-img-caption {
+  position:absolute; bottom:0; left:0; right:0;
+  background:linear-gradient(to top, rgba(7,5,10,.85) 0%, transparent 100%);
+  padding:1.2rem .9rem .6rem;
+  font-family:var(--ffc); font-size:.62rem; letter-spacing:1.5px; text-transform:uppercase;
+  color:rgba(240,230,208,.55);
+}
+.arch-img-badge {
+  position:absolute; top:.65rem; left:.65rem;
+  font-family:var(--ffc); font-size:.58rem; letter-spacing:2px; text-transform:uppercase;
+  background:var(--acc); color:var(--noche);
+  padding:.18rem .55rem; border-radius:20px; font-weight:700;
+}
+
+.arch-text {}
+.arch-label {
+  font-family:var(--ffc); font-size:.65rem; letter-spacing:3.5px; text-transform:uppercase;
+  color:var(--acc); margin-bottom:.6rem;
+  display:flex; align-items:center; gap:.5rem;
+}
+.arch-label::before { content:''; width:14px; height:1px; background:currentColor; }
+.arch-title {
+  font-family:var(--ffd); font-size:clamp(1.1rem,2.5vw,1.6rem);
+  font-weight:700; color:var(--crema); margin-bottom:1rem; line-height:1.1;
+}
+.arch-body {
+  font-family:var(--ffb); font-size:1.02rem; color:var(--cdim);
+  line-height:1.95; font-weight:300;
+}
+.arch-quote {
+  margin-top:1.2rem; padding:.9rem 1.1rem;
+  border-left:3px solid var(--acc);
+  background:rgba(232,114,12,.05);
+  border-radius:0 4px 4px 0;
+  font-family:var(--ffb); font-size:.98rem; font-style:italic;
+  color:rgba(240,230,208,.5); line-height:1.7;
+}
+
+/* ════════════════════════════════════════
+   MULTI-IMAGE GRID (fileteado section)
+════════════════════════════════════════ */
+.img-grid-4 {
+  display:grid; grid-template-columns:repeat(2,1fr); gap:6px;
+  margin:2rem 0;
+  border-radius:6px; overflow:hidden;
+  border:1px solid var(--acc-border);
+}
+.img-grid-4 .gi {
+  overflow:hidden; position:relative; aspect-ratio:4/3;
+  cursor:pointer;
+}
+.img-grid-4 .gi img {
+  width:100%; height:100%; object-fit:cover;
+  transition:transform .6s var(--ease);
+}
+.img-grid-4 .gi:hover img { transform:scale(1.08); }
+.img-grid-4 .gi-overlay {
+  position:absolute; inset:0;
+  background:rgba(232,114,12,.0);
+  transition:background .3s;
+  display:flex; align-items:center; justify-content:center;
+}
+.img-grid-4 .gi:hover .gi-overlay {
+  background:rgba(232,114,12,.12);
+}
+.img-grid-4 .gi-overlay i { color:#fff; font-size:1.4rem; opacity:0; transition:opacity .3s; }
+.img-grid-4 .gi:hover .gi-overlay i { opacity:.8; }
+
+/* ════════════════════════════════════════
+   PROCESS SECTION
+════════════════════════════════════════ */
+.process-section { padding:2rem 0 4rem; }
+.process-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:.5rem;
+  margin-top:2rem;
+}
+.process-item {
+  position:relative; overflow:hidden; border-radius:4px;
+  cursor:pointer;
+  border:1px solid rgba(232,114,12,.12);
+  aspect-ratio:4/3;
+}
+.process-item img {
+  width:100%; height:100%; object-fit:cover;
+  transition:transform .65s var(--ease), filter .4s;
+  filter:brightness(.85) saturate(.9);
+}
+.process-item:hover img { transform:scale(1.08); filter:brightness(1) saturate(1.1); }
+.process-step {
+  position:absolute; top:.6rem; left:.6rem;
+  font-family:var(--ffd); font-size:.6rem; font-weight:700; letter-spacing:1px;
+  background:rgba(232,114,12,.85); color:var(--noche);
+  padding:.16rem .5rem; border-radius:3px;
+}
+.process-caption {
+  position:absolute; bottom:0; left:0; right:0;
+  background:linear-gradient(to top, rgba(7,5,10,.9), transparent);
+  padding:1.2rem .75rem .55rem;
+  font-family:var(--ffc); font-size:.6rem; letter-spacing:1.5px; text-transform:uppercase;
+  color:rgba(240,230,208,.6);
+  opacity:0; transition:opacity .3s;
+}
+.process-item:hover .process-caption { opacity:1; }
+
+/* ════════════════════════════════════════
+   LIGHTBOX
+════════════════════════════════════════ */
+#lb {
+  display:none; position:fixed; inset:0; z-index:1000;
+  background:rgba(0,0,0,.97); align-items:center; justify-content:center;
+  backdrop-filter:blur(12px);
+}
+#lb.open { display:flex; }
+#lb-img {
+  max-width:94vw; max-height:92vh; object-fit:contain;
+  border-radius:3px;
+  animation:lbIn .3s var(--ease) both;
+}
+@keyframes lbIn { from{opacity:0;transform:scale(.93);}to{opacity:1;transform:none;} }
+#lb-close {
+  position:absolute; top:1rem; right:1rem;
+  width:42px; height:42px; border-radius:50%;
+  background:rgba(0,0,0,.6); border:1px solid rgba(232,114,12,.3); color:var(--crema);
+  display:flex; align-items:center; justify-content:center; font-size:1.1rem;
+  transition:var(--tr); z-index:2;
+}
+#lb-close:hover { background:var(--rojo); }
+#lb-prev, #lb-next {
+  position:absolute; top:50%; transform:translateY(-50%);
+  background:rgba(0,0,0,.5); border:1px solid rgba(232,114,12,.3); color:var(--crema);
+  width:44px; height:44px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center; font-size:1rem;
+  transition:var(--tr);
+}
+#lb-prev { left:1rem; } #lb-next { right:1rem; }
+#lb-prev:hover, #lb-next:hover { background:var(--acc); color:var(--noche); }
+
+/* ════════════════════════════════════════
+   BOTTOM CTA
+════════════════════════════════════════ */
+.bottom-cta {
+  text-align:center; padding:4rem 2rem 5rem;
+  background:linear-gradient(to bottom,transparent,rgba(232,114,12,.04));
+}
+.cta-title {
+  font-family:var(--ffd); font-size:clamp(1.5rem,4vw,2.5rem);
+  font-weight:700; color:var(--crema); margin-bottom:1.2rem; letter-spacing:1px;
+}
+.cta-sub { font-family:var(--ffb); font-size:1rem; color:var(--cdim); margin-bottom:2rem; }
+.cta-btns { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
+.cta-btn-primary {
+  display:inline-flex; align-items:center; gap:.6rem;
+  font-family:var(--ffd); font-size:.82rem; letter-spacing:2.5px; text-transform:uppercase; font-weight:700;
+  background:linear-gradient(135deg,var(--acc),var(--acc2));
+  color:var(--noche); padding:.9rem 2rem; border-radius:3px;
+  box-shadow:0 8px 28px var(--acc-glow); transition:var(--tr);
+}
+.cta-btn-primary:hover { transform:translateY(-3px); box-shadow:0 14px 40px var(--acc-glow); }
+.cta-btn-secondary {
+  display:inline-flex; align-items:center; gap:.6rem;
+  font-family:var(--ffc); font-size:.78rem; letter-spacing:2px; text-transform:uppercase;
+  border:1.5px solid var(--acc-border); color:var(--cdim);
+  padding:.85rem 1.8rem; border-radius:3px; transition:var(--tr);
+}
+.cta-btn-secondary:hover { border-color:var(--acc); color:var(--acc); }
+
+/* ════════════════════════════════════════
+   FOOTER
+════════════════════════════════════════ */
+footer {
+  position:relative; z-index:1;
+  border-top:1px solid var(--acc-border);
+  padding:2rem 2rem 1.8rem; text-align:center;
+}
+.footer-logo { font-family:var(--ffd); font-size:1.1rem; color:var(--acc); letter-spacing:3px; margin-bottom:.35rem; }
+.footer-sub { font-family:var(--ffc); font-size:.62rem; letter-spacing:2px; text-transform:uppercase; color:rgba(240,230,208,.18); }
+
+/* ════════════════════════════════════════
+   SCROLL REVEAL
+════════════════════════════════════════ */
+.sr { opacity:0; transform:translateY(22px); transition:opacity .65s var(--ease), transform .65s var(--ease); }
+.sr.visible { opacity:1; transform:none; }
+.d1{transition-delay:.08s;}.d2{transition-delay:.16s;}.d3{transition-delay:.24s;}
+.d4{transition-delay:.32s;}.d5{transition-delay:.4s;}
+.sr-left { opacity:0; transform:translateX(-22px); transition:opacity .65s var(--ease),transform .65s var(--ease); }
+.sr-right { opacity:0; transform:translateX(22px); transition:opacity .65s var(--ease),transform .65s var(--ease); }
+.sr-left.visible, .sr-right.visible { opacity:1; transform:none; }
+
+/* ════════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════════ */
+@media(max-width:900px) {
+  .intro-block { grid-template-columns:1fr; gap:2rem; }
+  .stat-card { position:static; }
+  .arch-block { grid-template-columns:1fr; }
+  .arch-block.reverse { direction:ltr; }
+  .process-grid { grid-template-columns:repeat(2,1fr); }
+}
+@media(max-width:768px) {
+  :root { --nav:56px; }
+  .lang-sel { display:none !important; }
+  .hamburger { display:flex !important; }
+  .hero { height:min(75vw,520px); }
+  .hero-content { padding:0 1.2rem 2.5rem; }
+  .hero-title { font-size:clamp(2.4rem,9vw,4.5rem); }
+  .content-wrap { padding:0 1rem; }
+  .ficha-inner { padding:.55rem 1rem; gap:1rem; }
+  .intro-block { padding:2.5rem 0 1rem; }
+  .cta-btns { flex-direction:column; align-items:center; }
+  .img-grid-4 { grid-template-columns:1fr 1fr; }
+  .process-grid { grid-template-columns:repeat(2,1fr); }
+  footer { padding:1.5rem 1rem; }
+  .wa-ficha { display:none; }
+}
+@media(max-width:480px) {
+  .img-grid-4 { grid-template-columns:1fr; }
+  .process-grid { grid-template-columns:1fr; }
+  .ficha-inner { gap:.7rem; }
+}
+@media(prefers-reduced-motion:reduce) {
+  *, *::before, *::after { animation-duration:.01ms !important; transition-duration:.01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- Ambient -->
+<canvas id="particles"></canvas>
+<div class="andean-bg"></div>
+<div class="ambient-glow"></div>
+
+<!-- Progress bar -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- ══ NAV ══ -->
+<nav id="nav">
+  <div class="wiphala"></div>
+  <div class="nav-bar">
+    <div class="nav-left">
+      <a href="galeria.html" class="nav-back"><i class="fas fa-arrow-left"></i> <span data-i18n="back">Galería</span></a>
+      <a href="galeria.html" class="nav-logo" style="margin-left:.4rem;">NAL<span>I</span></a>
+    </div>
+    <div class="nav-right">
+      <div class="lang-sel">
+        <button class="lang-btn active" data-lang="es">ES</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="pl">PL</button>
+        <button class="lang-btn" data-lang="fr">FR</button>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- DRAWER -->
+<div class="drawer-overlay" id="dOverlay"></div>
+<div class="mobile-drawer" id="drawer" role="dialog" aria-modal="true">
+  <div class="drawer-head">
+    <span class="nav-logo" style="font-size:1rem;">NAL<span>I</span></span>
+    <button class="drawer-close" id="drawerClose"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="drawer-body">
+    <a href="galeria.html" class="drawer-link"><span class="di"><i class="fas fa-arrow-left"></i></span><span data-i18n="back">Galería</span></a>
+    <a href="galeria.html" class="drawer-link"><span class="di"><i class="fas fa-paint-roller"></i></span><span data-i18n="nav_murales">Murales</span></a>
+    <a href="diccionario.html" class="drawer-link"><span class="di"><i class="fas fa-book-open"></i></span><span data-i18n="nav_dict">Diccionario</span></a>
+    <a href="https://wa.me/48692971895" target="_blank" rel="noopener" class="drawer-link"><span class="di"><i class="fab fa-whatsapp"></i></span>WhatsApp</a>
+  </div>
+  <div class="drawer-foot">
+    <div class="drawer-lang">
+      <button class="lang-btn active" data-lang="es">ES</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="pl">PL</button>
+      <button class="lang-btn" data-lang="fr">FR</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <img class="hero-img" src="https://i.ibb.co/d0P0Knz4/IMG-20260521-WA0023.jpg" alt="Harta la Gasta — Mural completo">
+  <div class="hero-gradient"></div>
+  <div class="hero-content content-wrap" style="left:0;right:0;position:absolute;bottom:0;">
+    <p class="hero-cat" data-i18n="hero_cat">Mural · Serie Arquetipos</p>
+    <h1 class="hero-title">Harta<br>la Gasta</h1>
+    <div class="hero-meta">
+      <span class="hero-meta-item"><i class="fas fa-ruler-combined"></i> 12m²</span>
+      <span class="hero-meta-item"><i class="fas fa-palette"></i> <span data-i18n="hero_tech">Acrílico sobre muro</span></span>
+      <span class="hero-meta-item"><i class="fas fa-calendar"></i> 2026</span>
+      <span class="hero-meta-item"><i class="fas fa-map-marker-alt"></i> Salta, Argentina</span>
+    </div>
+  </div>
+  <div class="hero-scroll-hint">
+    <i class="fas fa-chevron-down"></i>
+    <span data-i18n="scroll_hint">Explorar</span>
+  </div>
+</section>
+
+<!-- ══ FICHA STRIP ══ -->
+<div class="ficha-strip">
+  <div class="ficha-inner">
+    <div class="ficha-item"><span class="ficha-label" data-i18n="f_tech">Técnica</span><span class="ficha-val" data-i18n="f_tech_v">Acrílico sobre muro</span></div>
+    <div class="ficha-sep"></div>
+    <div class="ficha-item"><span class="ficha-label" data-i18n="f_dim">Dimensiones</span><span class="ficha-val">12m²</span></div>
+    <div class="ficha-sep"></div>
+    <div class="ficha-item"><span class="ficha-label" data-i18n="f_año">Año</span><span class="ficha-val">2026</span></div>
+    <div class="ficha-sep"></div>
+    <div class="ficha-item"><span class="ficha-label" data-i18n="f_loc">Ubicación</span><span class="ficha-val">Salta, Argentina</span></div>
+    <a href="https://wa.me/48692971895?text=Hola%20Nali%2C%20me%20interesa%20la%20obra%20%22Harta%20la%20Gasta%22" target="_blank" rel="noopener" class="wa-ficha">
+      <i class="fab fa-whatsapp"></i> <span data-i18n="f_wa">Consultar</span>
+    </a>
+  </div>
+</div>
+
+<!-- ══ MAIN CONTENT ══ -->
+<main>
+  <div class="content-wrap">
+
+    <!-- INTRO -->
+    <div class="intro-block">
+      <div>
+        <p class="intro-eyebrow sr" data-i18n="intro_ey">Análisis de la Obra</p>
+        <h2 class="intro-heading sr d1" data-i18n="intro_h">Arquetipos e<br><em>Inconsciente Colectivo</em></h2>
+        <p class="intro-text sr d2" data-i18n="intro_p1">Una obra de arte urbano que representa la sociedad a través de arquetipos y simbolismos arraigados al inconsciente colectivo. El título en lunfardo salteño expresa hartazgo, cansancio y a la vez una determinación feroz de seguir adelante.</p>
+        <p class="intro-text sr d3" data-i18n="intro_p2">Cada figura del mural es un arquetipo reconocible que el espectador proyecta desde su propio imaginario cultural. La paleta combina la tierra colorada del norte con los violetas del atardecer salteño, anclandando la obra en el territorio que la vio nacer.</p>
+      </div>
+      <div class="stat-card sr d2">
+        <div class="stat-row">
+          <p class="stat-label" data-i18n="s_cat">Categoría</p>
+          <p class="stat-val" data-i18n="s_cat_v">Mural · Arte Urbano</p>
+        </div>
+        <div class="stat-row">
+          <p class="stat-label" data-i18n="s_serie">Serie</p>
+          <p class="stat-val" data-i18n="s_serie_v">Arquetipos & Inconsciente Colectivo</p>
+        </div>
+        <div class="stat-row">
+          <p class="stat-label" data-i18n="s_tech">Técnica</p>
+          <p class="stat-val" data-i18n="s_tech_v">Acrílico sobre muro. Capas de veladura con trabajo nocturno para controlar el secado.</p>
+        </div>
+        <div class="stat-row">
+          <p class="stat-label" data-i18n="s_dim">Dimensiones</p>
+          <p class="stat-val">12m²</p>
+        </div>
+        <div class="stat-row">
+          <p class="stat-label" data-i18n="s_proc">Proceso</p>
+          <p class="stat-val" data-i18n="s_proc_v">15 días · Trabajo nocturno</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="wiphala-div sr"></div>
+
+    <!-- ARCHETYPES -->
+    <div class="archetypes">
+      <h3 class="arch-section-title sr" data-i18n="arch_title">Arquetipos Visuales</h3>
+
+      <!-- QUIRQUINCHO / FÚTBOL -->
+      <div class="arch-block sr">
+        <div class="arch-img-wrap sr-left">
+          <span class="arch-img-badge" data-i18n="badge_arch">Arquetipo</span>
+          <img src="https://i.ibb.co/23WpsNRQ/IMG-20260521-WA0031.jpg" alt="El Quirquincho y el fútbol" loading="lazy">
+          <p class="arch-img-caption" data-i18n="img_cap1">El Quirquincho · Pasión popular</p>
+        </div>
+        <div class="arch-text sr-right">
+          <p class="arch-label" data-i18n="arch_label1">Resistencia Popular</p>
+          <h4 class="arch-title" data-i18n="arch_h1">El Quirquincho y el Fútbol</h4>
+          <p class="arch-body" data-i18n="arch_b1">El quirquincho asociado al fútbol materializa el arraigo de las pasiones populares en el Cono Sur. La coraza impenetrable del animal funciona como una metáfora visual de la resiliencia y la inquebrantable armadura emocional que genera el deporte como aglutinador social en contextos de crisis.</p>
+          <div class="arch-quote" data-i18n="arch_q1">La coraza del quirquincho: lo que no nos rompe, nos sostiene. El fútbol como ritual colectivo de pertenencia.</div>
+        </div>
+      </div>
+
+      <div class="sec-div sr"></div>
+
+      <!-- TIERRA / AGUA / FUEGO -->
+      <div class="arch-block reverse sr">
+        <div class="arch-img-wrap sr-right">
+          <span class="arch-img-badge" data-i18n="badge_elem">Elemento</span>
+          <img src="https://i.ibb.co/23WpsNRQ/IMG-20260521-WA0031.jpg" alt="La tierra, el agua y el fuego" loading="lazy">
+          <p class="arch-img-caption" data-i18n="img_cap2">El Cactus · Flora vernácula</p>
+        </div>
+        <div class="arch-text sr-left">
+          <p class="arch-label" data-i18n="arch_label2">Ciclos Vitales</p>
+          <h4 class="arch-title" data-i18n="arch_h2">La Tierra, el Agua y el Fuego — El Cactus</h4>
+          <p class="arch-body" data-i18n="arch_b2">La flora vernácula actúa como un recordatorio de los ciclos vitales esenciales que persisten debajo de las superestructuras sociales. El cactus es el anclaje físico con el territorio árido andino: sobrevive sin concesiones, almacena lo que necesita, y florece en el momento exacto.</p>
+          <div class="arch-quote" data-i18n="arch_q2">El cactus no pide permiso para existir. Florece donde otros no pueden. Ese es el mandato.</div>
+        </div>
+      </div>
+
+      <div class="sec-div sr"></div>
+
+      <!-- FILETEADO / HUMO -->
+      <div class="arch-block sr">
+        <div class="arch-text sr-left">
+          <p class="arch-label" data-i18n="arch_label3">Hibridación Cultural</p>
+          <h4 class="arch-title" data-i18n="arch_h3">El Humo en Fileteado Porteño</h4>
+          <p class="arch-body" data-i18n="arch_b3">Las emanaciones gaseosas que brotan de la Pacha adoptan la grafía curva y dinámica del fileteado porteño — estilo pictórico histórico de los barrios de inmigrantes en La Boca, Buenos Aires. Esta decisión formal descentraliza la mirada estrictamente andina al introducir un código visual de la periferia rioplatense.</p>
+          <p class="arch-body" style="margin-top:.9rem;" data-i18n="arch_b3b">Se establece así un diálogo transregional sobre los flujos migratorios y las identidades superpuestas que componen la Argentina contemporánea. El humo no tiene fronteras: sube, se expande, se mezcla.</p>
+          <div class="arch-quote" data-i18n="arch_q3">La curva del fileteado porteño en el mural salteño: Argentina entera en una sola línea.</div>
+        </div>
+        <!-- 4-image grid for fileteado -->
+        <div class="sr-right">
+          <div class="img-grid-4">
+            <div class="gi" data-img="https://i.ibb.co/PZHrFqJW/IMG-20260527-WA0226.jpg">
+              <img src="https://i.ibb.co/PZHrFqJW/IMG-20260527-WA0226.jpg" alt="Fileteado detalle 1" loading="lazy">
+              <div class="gi-overlay"><i class="fas fa-expand-alt"></i></div>
+            </div>
+            <div class="gi" data-img="https://i.ibb.co/9kGwG99J/IMG-20260527-WA0216.jpg">
+              <img src="https://i.ibb.co/9kGwG99J/IMG-20260527-WA0216.jpg" alt="Fileteado detalle 2" loading="lazy">
+              <div class="gi-overlay"><i class="fas fa-expand-alt"></i></div>
+            </div>
+            <div class="gi" data-img="https://i.ibb.co/5gXZhzvT/IMG-20260527-WA0201.jpg">
+              <img src="https://i.ibb.co/5gXZhzvT/IMG-20260527-WA0201.jpg" alt="Fileteado detalle 3" loading="lazy">
+              <div class="gi-overlay"><i class="fas fa-expand-alt"></i></div>
+            </div>
+            <div class="gi" data-img="https://i.ibb.co/SX7gV0QN/IMG-20260527-WA0189.jpg">
+              <img src="https://i.ibb.co/SX7gV0QN/IMG-20260527-WA0189.jpg" alt="Fileteado detalle 4" loading="lazy">
+              <div class="gi-overlay"><i class="fas fa-expand-alt"></i></div>
+            </div>
+          </div>
+          <p style="font-family:var(--ffc);font-size:.6rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(240,230,208,.3);margin-top:.5rem;text-align:center;" data-i18n="grid_hint">Clic para ampliar · Desliza para explorar</p>
+        </div>
+      </div>
+
+    </div><!-- /archetypes -->
+
+    <div class="wiphala-div sr"></div>
+
+    <!-- PROCESO CREATIVO -->
+    <div class="process-section">
+      <h3 class="arch-section-title sr" data-i18n="proc_title">Proceso Creativo</h3>
+      <p class="sr d1" style="font-family:var(--ffb);font-size:1.02rem;color:var(--cdim);line-height:1.9;margin-bottom:2rem;max-width:720px;" data-i18n="proc_intro">15 días de trabajo, mayoritariamente nocturno, para evitar el calor extremo salteño y controlar el secado en las capas de veladura. Desde el boceto en papel hasta la última pincelada: el mural como proceso vivo.</p>
+
+      <div class="process-grid">
+        <div class="process-item sr d1" data-img="https://i.ibb.co/svYc7Kgb/IMG-20260504-WA0001.jpg">
+          <img src="https://i.ibb.co/svYc7Kgb/IMG-20260504-WA0001.jpg" alt="Proceso día 1" loading="lazy">
+          <span class="process-step" data-i18n="step1">Día 01</span>
+          <p class="process-caption" data-i18n="cap1">Primer boceto conceptual</p>
+        </div>
+        <div class="process-item sr d2" data-img="https://i.ibb.co/LX4DVphX/IMG-20260506-WA0045.jpg">
+          <img src="https://i.ibb.co/LX4DVphX/IMG-20260506-WA0045.jpg" alt="Proceso día 3" loading="lazy">
+          <span class="process-step" data-i18n="step2">Día 03</span>
+          <p class="process-caption" data-i18n="cap2">Transferencia al muro</p>
+        </div>
+        <div class="process-item sr d3" data-img="https://i.ibb.co/cc9LTjrQ/20260509-114320.jpg">
+          <img src="https://i.ibb.co/cc9LTjrQ/20260509-114320.jpg" alt="Proceso día 6" loading="lazy">
+          <span class="process-step" data-i18n="step3">Día 06</span>
+          <p class="process-caption" data-i18n="cap3">Primeras capas de color</p>
+        </div>
+        <div class="process-item sr d2" data-img="https://i.ibb.co/ccXMP5CF/20260517-230340.jpg">
+          <img src="https://i.ibb.co/ccXMP5CF/20260517-230340.jpg" alt="Proceso día 14" loading="lazy">
+          <span class="process-step" data-i18n="step4">Día 14</span>
+          <p class="process-caption" data-i18n="cap4">Trabajo nocturno · Veladuras</p>
+        </div>
+        <div class="process-item sr d3" data-img="https://i.ibb.co/B2LYKWJ8/20260520-111008.jpg">
+          <img src="https://i.ibb.co/B2LYKWJ8/20260520-111008.jpg" alt="Proceso día 17" loading="lazy">
+          <span class="process-step" data-i18n="step5">Día 17</span>
+          <p class="process-caption" data-i18n="cap5">Detalles y fileteado</p>
+        </div>
+        <div class="process-item sr d4" data-img="https://i.ibb.co/GwQ1z2C/IMG-20260520-WA0029.jpg">
+          <img src="https://i.ibb.co/GwQ1z2C/IMG-20260520-WA0029.jpg" alt="Proceso final" loading="lazy">
+          <span class="process-step" data-i18n="step6" style="background:var(--verde);">Final</span>
+          <p class="process-caption" data-i18n="cap6">Vista final · Inauguración comunitaria</p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content-wrap -->
+
+  <!-- BOTTOM CTA -->
+  <div class="bottom-cta sr">
+    <p style="font-family:var(--ffc);font-size:.68rem;letter-spacing:4px;text-transform:uppercase;color:var(--acc);margin-bottom:.7rem;" data-i18n="cta_ey">Nali · Arte Visual</p>
+    <h2 class="cta-title" data-i18n="cta_title">¿Te interesa esta obra<br>o un trabajo similar?</h2>
+    <p class="cta-sub" data-i18n="cta_sub">Murales, pinturas y artesanías disponibles. Consultá por encargos y comisiones.</p>
+    <div class="cta-btns">
+      <a href="https://wa.me/48692971895?text=Hola%20Nali%2C%20me%20interesa%20la%20obra%20%22Harta%20la%20Gasta%22" target="_blank" rel="noopener" class="cta-btn-primary">
+        <i class="fab fa-whatsapp"></i> <span data-i18n="cta_wa">Escribir por WhatsApp</span>
+      </a>
+      <a href="galeria.html" class="cta-btn-secondary">
+        <i class="fas fa-arrow-left"></i> <span data-i18n="cta_gallery">Ver más obras</span>
+      </a>
+      <a href="diccionario.html" class="cta-btn-secondary">
+        <i class="fas fa-book-open"></i> <span data-i18n="cta_dict">Diccionario Andino</span>
+      </a>
+    </div>
+  </div>
+
+</main>
+
+<!-- LIGHTBOX -->
+<div id="lb">
+  <button id="lb-close"><i class="fas fa-times"></i></button>
+  <button id="lb-prev"><i class="fas fa-chevron-left"></i></button>
+  <img id="lb-img" src="" alt="">
+  <button id="lb-next"><i class="fas fa-chevron-right"></i></button>
+</div>
+
+<footer>
+  <div class="wiphala" style="max-width:180px;margin:0 auto 1.1rem;border-radius:3px;"></div>
+  <div class="footer-logo">NALI</div>
+  <p class="footer-sub" data-i18n="foot">Arte Visual · Salta, Argentina · 2026</p>
+</footer>
+
+<!-- ══ SCRIPTS ══ -->
+<script>
+/* ── TRANSLATIONS ── */
+const T = {
+  es:{
+    back:'Galería', nav_murales:'Murales', nav_dict:'Diccionario',
+    hero_cat:'Mural · Serie Arquetipos', hero_tech:'Acrílico sobre muro', scroll_hint:'Explorar',
+    f_tech:'Técnica', f_tech_v:'Acrílico sobre muro', f_dim:'Dimensiones', f_año:'Año', f_loc:'Ubicación', f_wa:'Consultar',
+    intro_ey:'Análisis de la Obra',
+    intro_h:'Arquetipos e<br><em>Inconsciente Colectivo</em>',
+    intro_p1:'Una obra de arte urbano que representa la sociedad a través de arquetipos y simbolismos arraigados al inconsciente colectivo. El título en lunfardo salteño expresa hartazgo, cansancio y a la vez una determinación feroz de seguir adelante.',
+    intro_p2:'Cada figura del mural es un arquetipo reconocible que el espectador proyecta desde su propio imaginario cultural. La paleta combina la tierra colorada del norte con los violetas del atardecer salteño.',
+    s_cat:'Categoría', s_cat_v:'Mural · Arte Urbano', s_serie:'Serie', s_serie_v:'Arquetipos & Inconsciente Colectivo',
+    s_tech:'Técnica', s_tech_v:'Acrílico sobre muro. Capas de veladura con trabajo nocturno.',
+    s_dim:'Dimensiones', s_proc:'Proceso', s_proc_v:'15 días · Trabajo nocturno',
+    arch_title:'Arquetipos Visuales',
+    badge_arch:'Arquetipo', badge_elem:'Elemento',
+    img_cap1:'El Quirquincho · Pasión popular', img_cap2:'El Cactus · Flora vernácula',
+    arch_label1:'Resistencia Popular', arch_h1:'El Quirquincho y el Fútbol',
+    arch_b1:'El quirquincho asociado al fútbol materializa el arraigo de las pasiones populares en el Cono Sur. La coraza impenetrable del animal funciona como una metáfora visual de la resiliencia y la inquebrantable armadura emocional que genera el deporte como aglutinador social en contextos de crisis.',
+    arch_q1:'La coraza del quirquincho: lo que no nos rompe, nos sostiene. El fútbol como ritual colectivo de pertenencia.',
+    arch_label2:'Ciclos Vitales', arch_h2:'La Tierra, el Agua y el Fuego — El Cactus',
+    arch_b2:'La flora vernácula actúa como un recordatorio de los ciclos vitales esenciales que persisten debajo de las superestructuras sociales. El cactus es el anclaje físico con el territorio árido andino.',
+    arch_q2:'El cactus no pide permiso para existir. Florece donde otros no pueden. Ese es el mandato.',
+    arch_label3:'Hibridación Cultural', arch_h3:'El Humo en Fileteado Porteño',
+    arch_b3:'Las emanaciones gaseosas que brotan de la Pacha adoptan la grafía curva y dinámica del fileteado porteño — estilo pictórico histórico de los barrios de inmigrantes en La Boca, Buenos Aires. Esta decisión formal descentraliza la mirada estrictamente andina al introducir un código visual de la periferia rioplatense.',
+    arch_b3b:'Se establece así un diálogo transregional sobre los flujos migratorios y las identidades superpuestas que componen la Argentina contemporánea. El humo no tiene fronteras.',
+    arch_q3:'La curva del fileteado porteño en el mural salteño: Argentina entera en una sola línea.',
+    grid_hint:'Clic para ampliar · Desliza para explorar',
+    proc_title:'Proceso Creativo',
+    proc_intro:'15 días de trabajo, mayoritariamente nocturno, para evitar el calor extremo salteño y controlar el secado en las capas de veladura. Desde el boceto en papel hasta la última pincelada.',
+    step1:'Día 01', step2:'Día 03', step3:'Día 06', step4:'Día 14', step5:'Día 17', step6:'Final',
+    cap1:'Primer boceto conceptual', cap2:'Transferencia al muro', cap3:'Primeras capas de color',
+    cap4:'Trabajo nocturno · Veladuras', cap5:'Detalles y fileteado', cap6:'Vista final · Inauguración',
+    cta_ey:'Nali · Arte Visual', cta_title:'¿Te interesa esta obra<br>o un trabajo similar?',
+    cta_sub:'Murales, pinturas y artesanías disponibles. Consultá por encargos y comisiones.',
+    cta_wa:'Escribir por WhatsApp', cta_gallery:'Ver más obras', cta_dict:'Diccionario Andino',
+    foot:'Arte Visual · Salta, Argentina · 2026'
+  },
+  en:{
+    back:'Gallery', nav_murales:'Murals', nav_dict:'Dictionary',
+    hero_cat:'Mural · Archetypes Series', hero_tech:'Acrylic on wall', scroll_hint:'Explore',
+    f_tech:'Technique', f_tech_v:'Acrylic on wall', f_dim:'Dimensions', f_año:'Year', f_loc:'Location', f_wa:'Inquire',
+    intro_ey:'Artwork Analysis',
+    intro_h:'Archetypes &<br><em>The Collective Unconscious</em>',
+    intro_p1:'An urban artwork representing society through archetypes and symbols rooted in the collective unconscious. The title in Salteño slang expresses weariness, exhaustion and at the same time a fierce determination to carry on.',
+    intro_p2:'Each figure in the mural is a recognizable archetype that the viewer projects from their own cultural imagination. The palette combines the red earth of the north with the violets of the Salteño sunset.',
+    s_cat:'Category', s_cat_v:'Mural · Urban Art', s_serie:'Series', s_serie_v:'Archetypes & Collective Unconscious',
+    s_tech:'Technique', s_tech_v:'Acrylic on wall. Glaze layers with nocturnal work to control drying.',
+    s_dim:'Dimensions', s_proc:'Process', s_proc_v:'15 days · Night work',
+    arch_title:'Visual Archetypes',
+    badge_arch:'Archetype', badge_elem:'Element',
+    img_cap1:'The Quirquincho · Popular passion', img_cap2:'The Cactus · Vernacular flora',
+    arch_label1:'Popular Resilience', arch_h1:'The Quirquincho and Football',
+    arch_b1:'The quirquincho associated with football materializes the deep roots of popular passions in the Southern Cone. The animal\'s impenetrable shell works as a visual metaphor for resilience and the unbreakable emotional armor that sport generates as a social glue in times of crisis.',
+    arch_q1:'The quirquincho\'s shell: what doesn\'t break us, holds us together. Football as a collective ritual of belonging.',
+    arch_label2:'Vital Cycles', arch_h2:'Earth, Water and Fire — The Cactus',
+    arch_b2:'The vernacular flora acts as a reminder of the essential vital cycles that persist beneath social superstructures. The cactus is the physical anchor to the arid Andean territory: it survives without concessions, stores what it needs, and blooms at exactly the right moment.',
+    arch_q2:'The cactus asks no permission to exist. It blooms where others cannot. That is the mandate.',
+    arch_label3:'Cultural Hybridization', arch_h3:'The Smoke in Fileteado Style',
+    arch_b3:'The gaseous emanations rising from the Pacha adopt the curved, dynamic script of fileteado porteño — the historic pictorial style of immigrant neighbourhoods in La Boca, Buenos Aires. This formal decision decentralizes the strictly Andean gaze by introducing a visual code from the Río de la Plata periphery.',
+    arch_b3b:'A transregional dialogue is established about migratory flows and the overlapping identities that make up contemporary Argentina. Smoke has no borders: it rises, expands, mixes.',
+    arch_q3:'The curve of porteño fileteado in the Salteño mural: all of Argentina in a single line.',
+    grid_hint:'Click to enlarge · Swipe to explore',
+    proc_title:'Creative Process',
+    proc_intro:'15 days of work, mostly at night, to avoid the extreme Salteño heat and control drying in the glaze layers. From the first sketch on paper to the final brushstroke.',
+    step1:'Day 01', step2:'Day 03', step3:'Day 06', step4:'Day 14', step5:'Day 17', step6:'Final',
+    cap1:'First conceptual sketch', cap2:'Transfer to wall', cap3:'First colour layers',
+    cap4:'Night work · Glazes', cap5:'Details and fileteado', cap6:'Final view · Community opening',
+    cta_ey:'Nali · Visual Art', cta_title:'Interested in this work<br>or something similar?',
+    cta_sub:'Murals, paintings and crafts available. Inquire about commissions.',
+    cta_wa:'Message on WhatsApp', cta_gallery:'See more works', cta_dict:'Andean Dictionary',
+    foot:'Visual Art · Salta, Argentina · 2026'
+  },
+  pl:{
+    back:'Galeria', nav_murales:'Murale', nav_dict:'Słownik',
+    hero_cat:'Mural · Seria Archetypy', hero_tech:'Akryl na ścianie', scroll_hint:'Eksploruj',
+    f_tech:'Technika', f_tech_v:'Akryl na ścianie', f_dim:'Wymiary', f_año:'Rok', f_loc:'Lokalizacja', f_wa:'Zapytaj',
+    intro_ey:'Analiza Dzieła',
+    intro_h:'Archetypy i<br><em>Nieświadomość Zbiorowa</em>',
+    intro_p1:'Mural miejski przedstawiający społeczeństwo poprzez archetypy i symbole zakorzenione w nieświadomości zbiorowej. Tytuł w slangu z Salty wyraża znużenie, zmęczenie i jednocześnie zaciętą determinację, by iść dalej.',
+    intro_p2:'Każda postać muralu to rozpoznawalny archetyp, który widz projektuje ze swojej własnej kulturowej wyobraźni. Paleta łączy czerwoną ziemię północy z fioletem salteńskiego zachodu słońca.',
+    s_cat:'Kategoria', s_cat_v:'Mural · Sztuka Uliczna', s_serie:'Seria', s_serie_v:'Archetypy & Nieświadomość Zbiorowa',
+    s_tech:'Technika', s_tech_v:'Akryl na ścianie. Warstwy lawowania, praca nocna.',
+    s_dim:'Wymiary', s_proc:'Proces', s_proc_v:'15 dni · Praca nocna',
+    arch_title:'Archetypy Wizualne',
+    badge_arch:'Archetyp', badge_elem:'Element',
+    img_cap1:'Quirquincho · Popularna pasja', img_cap2:'Kaktus · Flora lokalna',
+    arch_label1:'Popularna Odporność', arch_h1:'Quirquincho i Piłka Nożna',
+    arch_b1:'Quirquincho powiązany z piłką nożną materializuje zakorzenienie popularnych namiętności w Stożku Południowym. Nieprzenikalna zbroja zwierzęcia działa jako wizualna metafora odporności i niezłomnego emocjonalnego pancerza, jaki sport wytwarza jako spoiwo społeczne w czasach kryzysu.',
+    arch_q1:'Pancerz quirquincho: to, co nas nie łamie, podtrzymuje. Piłka nożna jako zbiorowy rytuał przynależności.',
+    arch_label2:'Cykle Życiowe', arch_h2:'Ziemia, Woda i Ogień — Kaktus',
+    arch_b2:'Lokalna flora działa jako przypomnienie podstawowych cykli życiowych, które trwają pod społecznymi nadbudowkami. Kaktus jest fizyczną kotwicą z suchym terytorium andyjskim.',
+    arch_q2:'Kaktus nie prosi o pozwolenie, by istnieć. Kwitnie tam, gdzie inni nie mogą. To jest nakaz.',
+    arch_label3:'Hybrydyzacja Kulturowa', arch_h3:'Dym w Stylu Fileteado',
+    arch_b3:'Gazowe emanacje wydobywające się z Pachy przyjmują krzywoliniowe, dynamiczne pismo fileteado porteño — historyczny styl malarski z dzielnic imigranckich La Boca (Buenos Aires). Ta formalna decyzja decentralizuje ściśle andyjskie spojrzenie.',
+    arch_b3b:'Ustanawia się dialog transregionalny o przepływach migracyjnych i nakładających się tożsamościach współczesnej Argentyny. Dym nie ma granic.',
+    arch_q3:'Krzywa porteńskiego fileteado w mural z Salty: cała Argentyna w jednej linii.',
+    grid_hint:'Kliknij, aby powiększyć',
+    proc_title:'Proces Twórczy',
+    proc_intro:'15 dni pracy, głównie nocnej, by uniknąć ekstremalnego upału w Salcie i kontrolować schnięcie warstw lawowania.',
+    step1:'Dzień 01', step2:'Dzień 03', step3:'Dzień 06', step4:'Dzień 14', step5:'Dzień 17', step6:'Koniec',
+    cap1:'Pierwszy szkic koncepcyjny', cap2:'Przeniesienie na ścianę', cap3:'Pierwsze warstwy koloru',
+    cap4:'Praca nocna · Lawowanie', cap5:'Detale i fileteado', cap6:'Widok końcowy · Otwarcie',
+    cta_ey:'Nali · Sztuka Wizualna', cta_title:'Interesuje Cię to dzieło<br>lub podobna praca?',
+    cta_sub:'Murale, obrazy i rzemiosło dostępne. Zapytaj o zamówienia.',
+    cta_wa:'Napisz na WhatsApp', cta_gallery:'Zobacz więcej dzieł', cta_dict:'Słownik Andyjski',
+    foot:'Sztuka Wizualna · Salta, Argentyna · 2026'
+  },
+  fr:{
+    back:'Galerie', nav_murales:'Murales', nav_dict:'Dictionnaire',
+    hero_cat:'Murale · Série Archétypes', hero_tech:'Acrylique sur mur', scroll_hint:'Explorer',
+    f_tech:'Technique', f_tech_v:'Acrylique sur mur', f_dim:'Dimensions', f_año:'Année', f_loc:'Localisation', f_wa:'Renseigner',
+    intro_ey:"Analyse de l'Œuvre",
+    intro_h:'Archétypes et<br><em>Inconscient Collectif</em>',
+    intro_p1:"Une œuvre d'art urbain représentant la société à travers des archétypes et symboles ancrés dans l'inconscient collectif. Le titre en argot salteño exprime la lassitude, la fatigue et en même temps une farouche détermination à continuer.",
+    intro_p2:"Chaque figure du mural est un archétype reconnaissable que le spectateur projette depuis son propre imaginaire culturel. La palette combine la terre rouge du nord avec les violets du coucher de soleil salteño.",
+    s_cat:'Catégorie', s_cat_v:'Murale · Art Urbain', s_serie:'Série', s_serie_v:'Archétypes & Inconscient Collectif',
+    s_tech:'Technique', s_tech_v:'Acrylique sur mur. Couches de glacis, travail nocturne.',
+    s_dim:'Dimensions', s_proc:'Processus', s_proc_v:'15 jours · Travail nocturne',
+    arch_title:'Archétypes Visuels',
+    badge_arch:'Archétype', badge_elem:'Élément',
+    img_cap1:'Le Quirquincho · Passion populaire', img_cap2:'Le Cactus · Flore vernaculaire',
+    arch_label1:'Résilience Populaire', arch_h1:'Le Quirquincho et le Football',
+    arch_b1:"Le quirquincho associé au football matérialise l'enracinement des passions populaires dans le Cône Sud. La carapace impénétrable de l'animal fonctionne comme une métaphore visuelle de la résilience et de l'armure émotionnelle que le sport génère comme liant social en temps de crise.",
+    arch_q1:"La carapace du quirquincho: ce qui ne nous brise pas, nous soutient. Le football comme rituel collectif d'appartenance.",
+    arch_label2:'Cycles Vitaux', arch_h2:'La Terre, l\'Eau et le Feu — Le Cactus',
+    arch_b2:"La flore vernaculaire agit comme un rappel des cycles vitaux essentiels qui persistent sous les superstructures sociales. Le cactus est l'ancrage physique avec le territoire aride andin.",
+    arch_q2:"Le cactus ne demande pas permission d'exister. Il fleurit là où d'autres ne peuvent pas. Tel est le mandat.",
+    arch_label3:'Hybridation Culturelle', arch_h3:'La Fumée en Fileteado Porteño',
+    arch_b3:"Les émanations gazeuses qui s'élèvent de la Pacha adoptent la graphie courbe et dynamique du fileteado porteño — style pictural historique des quartiers d'immigrants de La Boca (Buenos Aires).",
+    arch_b3b:"Un dialogue transrégional s'établit sur les flux migratoires et les identités superposées qui composent l'Argentine contemporaine. La fumée n'a pas de frontières.",
+    arch_q3:"La courbe du fileteado porteño dans le mural salteño: toute l'Argentine en une seule ligne.",
+    grid_hint:'Cliquer pour agrandir',
+    proc_title:'Processus Créatif',
+    proc_intro:"15 jours de travail, principalement nocturne, pour éviter la chaleur extrême de Salta et contrôler le séchage des couches de glacis.",
+    step1:'Jour 01', step2:'Jour 03', step3:'Jour 06', step4:'Jour 14', step5:'Jour 17', step6:'Final',
+    cap1:'Premier esquisse conceptuel', cap2:'Transfert sur le mur', cap3:'Premières couches de couleur',
+    cap4:'Travail nocturne · Glacis', cap5:'Détails et fileteado', cap6:'Vue finale · Inauguration',
+    cta_ey:'Nali · Art Visuel', cta_title:'Intéressé par cette œuvre<br>ou un travail similaire?',
+    cta_sub:'Murales, peintures et artisanat disponibles. Renseignez-vous pour les commissions.',
+    cta_wa:'Écrire sur WhatsApp', cta_gallery:'Voir plus d\'œuvres', cta_dict:'Dictionnaire Andin',
+    foot:'Art Visuel · Salta, Argentine · 2026'
+  }
+};
+
+let lang = 'es';
+function applyLang(l) {
+  lang = l;
+  document.documentElement.lang = l;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.getAttribute('data-i18n');
+    if (T[l] && T[l][k] != null) el.innerHTML = T[l][k];
+  });
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === l));
+  try { sessionStorage.setItem('nali_lang', l); } catch(e){}
+}
+document.querySelectorAll('.lang-btn').forEach(b => b.addEventListener('click', () => applyLang(b.dataset.lang)));
+try { const sl = sessionStorage.getItem('nali_lang'); if (sl && T[sl]) lang = sl; } catch(e){}
+applyLang(lang);
+
+/* ── PARTICLES ── */
+(function(){
+  const c = document.getElementById('particles');
+  const ctx = c.getContext('2d');
+  let W, H, pts = [];
+  function resize(){ W = c.width = innerWidth; H = c.height = innerHeight; }
+  resize(); addEventListener('resize', resize, {passive:true});
+  const cols = ['#E8720C','#F5C400','#CC0000','#C8922A'];
+  for(let i=0;i<40;i++) pts.push({
+    x:Math.random()*2000, y:Math.random()*2000,
+    vx:(Math.random()-.5)*.15, vy:(Math.random()-.5)*.15,
+    r:Math.random()*1.3+.2, c:cols[i%4], o:Math.random()*.45+.08
+  });
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    pts.forEach(p=>{ p.x=(p.x+p.vx+W)%W; p.y=(p.y+p.vy+H)%H;
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=p.c+Math.round(p.o*255).toString(16).padStart(2,'0');
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ── PROGRESS BAR ── */
+const pb = document.getElementById('progressBar');
+addEventListener('scroll', () => {
+  const d = document.documentElement;
+  const pct = scrollY / (d.scrollHeight - d.clientHeight) * 100;
+  pb.style.width = pct + '%';
+}, {passive:true});
+
+/* ── NAV SCROLL ── */
+addEventListener('scroll', () =>
+  document.getElementById('nav').classList.toggle('scrolled', scrollY > 60)
+, {passive:true});
+
+/* ── DRAWER ── */
+const hbg = document.getElementById('hamburger');
+const drawer = document.getElementById('drawer');
+const overlay = document.getElementById('dOverlay');
+const dClose = document.getElementById('drawerClose');
+function openDrawer(){ drawer.classList.add('open'); overlay.classList.add('open'); hbg.classList.add('open'); hbg.setAttribute('aria-expanded','true'); document.body.classList.add('locked'); }
+function closeDrawer(){ drawer.classList.remove('open'); overlay.classList.remove('open'); hbg.classList.remove('open'); hbg.setAttribute('aria-expanded','false'); document.body.classList.remove('locked'); }
+hbg.addEventListener('click', e => { e.stopPropagation(); drawer.classList.contains('open') ? closeDrawer() : openDrawer(); });
+dClose.addEventListener('click', closeDrawer);
+overlay.addEventListener('click', closeDrawer);
+document.addEventListener('keydown', e => { if(e.key==='Escape'){ closeDrawer(); closeLB(); } });
+
+/* ── LIGHTBOX ── */
+const lb = document.getElementById('lb');
+const lbImg = document.getElementById('lb-img');
+let lbImages = [], lbIdx = 0;
+
+function buildLbImages(){
+  lbImages = [
+    ...document.querySelectorAll('.gi[data-img]'),
+    ...document.querySelectorAll('.process-item[data-img]')
+  ].map(el => el.dataset.img);
+}
+function openLB(src){
+  buildLbImages();
+  lbIdx = lbImages.indexOf(src);
+  if(lbIdx < 0){ lbIdx = 0; }
+  lbImg.src = lbImages[lbIdx] || src;
+  lb.classList.add('open');
+  document.body.classList.add('locked');
+}
+function closeLB(){ lb.classList.remove('open'); document.body.classList.remove('locked'); }
+function prevLB(){ lbIdx = (lbIdx - 1 + lbImages.length) % lbImages.length; lbImg.src = lbImages[lbIdx]; }
+function nextLB(){ lbIdx = (lbIdx + 1) % lbImages.length; lbImg.src = lbImages[lbIdx]; }
+
+document.getElementById('lb-close').addEventListener('click', closeLB);
+document.getElementById('lb-prev').addEventListener('click', prevLB);
+document.getElementById('lb-next').addEventListener('click', nextLB);
+lb.addEventListener('click', e => { if(e.target===lb) closeLB(); });
+document.addEventListener('keydown', e => {
+  if(!lb.classList.contains('open')) return;
+  if(e.key==='ArrowLeft') prevLB();
+  if(e.key==='ArrowRight') nextLB();
+});
+
+// Swipe
+let ts = 0;
+lb.addEventListener('touchstart', e=>{ ts=e.touches[0].clientX; },{passive:true});
+lb.addEventListener('touchend', e=>{
+  const dx = e.changedTouches[0].clientX - ts;
+  if(Math.abs(dx)>45){ dx<0?nextLB():prevLB(); }
+},{passive:true});
+
+// Click triggers
+document.querySelectorAll('.gi').forEach(gi=>{
+  gi.addEventListener('click', ()=> openLB(gi.dataset.img));
+});
+document.querySelectorAll('.process-item').forEach(pi=>{
+  pi.addEventListener('click', ()=> openLB(pi.dataset.img));
+});
+
+/* ── SCROLL REVEAL ── */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(en => {
+    if(en.isIntersecting){ en.target.classList.add('visible'); obs.unobserve(en.target); }
+  });
+}, { threshold:.07, rootMargin:'0px 0px -20px 0px' });
+document.querySelectorAll('.sr, .sr-left, .sr-right').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
