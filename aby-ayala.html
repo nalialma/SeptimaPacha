@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="Abya Yala: La Persistencia de la Memoria Fracturada — Nali Alma. Técnica mixta, mosaico de azulejos recuperados. Arte mural, Salta 2026.">
+<meta property="og:title" content="Nali | Abya Yala — La Persistencia de la Memoria Fracturada">
+<meta property="og:image" content="https://i.ibb.co/VcDkNpfZ/IMG-20260527-WA0105.jpg">
+<title>Nali | Abya Yala — La Persistencia de la Memoria Fracturada</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Barlow+Condensed:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+/* ════════════════════════════════════════
+   TOKENS — Abya Yala palette: tierra roja + azul andino
+════════════════════════════════════════ */
+:root {
+  --rojo:#CC0000; --naranja:#E8720C; --amarillo:#F5C400;
+  --verde:#00913A; --azul:#005BAA; --violeta:#5C2D91; --wipblanco:#F0EAD6;
+  --noche:#060408;
+  --acc:#C8922A;        /* oro andino */
+  --acc2:#E8B84B;
+  --acc-dim:rgba(200,146,42,.18);
+  --acc-glow:rgba(200,146,42,.38);
+  --acc-border:rgba(200,146,42,.24);
+  --acc-frame:rgba(200,146,42,.10);
+  --crema:#F0E6D0; --cdim:rgba(240,230,208,.62);
+  --glass:rgba(6,4,8,.72);
+  --ffd:'Cinzel',serif;
+  --ffc:'Barlow Condensed',sans-serif;
+  --ffb:'Cormorant Garamond',serif;
+  --ease:cubic-bezier(.4,0,.2,1);
+  --tr:.38s var(--ease);
+  --nav:64px;
+}
+
+/* ════════════════════════════════════════
+   RESET
+════════════════════════════════════════ */
+*,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:var(--ffb); background:var(--noche); color:var(--crema); overflow-x:hidden; }
+body.locked { overflow:hidden; }
+img { display:block; }
+a { text-decoration:none; }
+button { cursor:pointer; border:none; background:none; font:inherit; }
+
+/* ════════════════════════════════════════
+   AMBIENT
+════════════════════════════════════════ */
+.andean-bg {
+  position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.025;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M30 0L60 30L30 60L0 30Z' fill='none' stroke='%23C8922A' stroke-width='0.8'/%3E%3Crect x='20' y='20' width='20' height='20' fill='none' stroke='%23C8922A' stroke-width='0.5'/%3E%3C/svg%3E");
+  background-size:60px 60px;
+}
+.ambient-glow {
+  position:fixed; inset:0; pointer-events:none; z-index:0;
+  background:
+    radial-gradient(ellipse 55% 45% at 15% 25%, rgba(200,146,42,.07) 0%, transparent 100%),
+    radial-gradient(ellipse 50% 55% at 85% 75%, rgba(0,91,170,.06) 0%, transparent 100%),
+    radial-gradient(ellipse 80% 35% at 50% 100%, rgba(60,20,0,.5) 0%, transparent 100%);
+}
+canvas#particles { position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.38; }
+
+/* ════════════════════════════════════════
+   WIPHALA
+════════════════════════════════════════ */
+.wiphala {
+  width:100%; height:5px; flex-shrink:0;
+  background:linear-gradient(90deg,
+    var(--rojo) 0% 14.28%, var(--naranja) 14.28% 28.56%,
+    var(--amarillo) 28.56% 42.84%, var(--wipblanco) 42.84% 57.12%,
+    var(--verde) 57.12% 71.40%, var(--azul) 71.40% 85.68%,
+    var(--violeta) 85.68% 100%);
+}
+
+/* ════════════════════════════════════════
+   NAV
+════════════════════════════════════════ */
+nav { position:fixed; top:0; left:0; width:100%; z-index:700; display:flex; flex-direction:column; }
+.nav-bar {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 1.8rem; height:var(--nav);
+  background:rgba(6,4,8,.82);
+  backdrop-filter:blur(22px); -webkit-backdrop-filter:blur(22px);
+  border-bottom:1px solid var(--acc-border);
+  transition:background var(--tr);
+}
+nav.scrolled .nav-bar { background:rgba(6,4,8,.97); }
+.nav-left { display:flex; align-items:center; gap:.7rem; }
+.nav-back {
+  display:inline-flex; align-items:center; gap:.45rem;
+  font-family:var(--ffc); font-size:.7rem; letter-spacing:2px; text-transform:uppercase;
+  color:rgba(240,230,208,.5); padding:.38rem .85rem; border-radius:30px;
+  border:1px solid rgba(200,146,42,.2); transition:var(--tr);
+}
+.nav-back:hover { color:var(--acc); border-color:var(--acc); }
+.nav-logo { font-family:var(--ffd); font-size:1.2rem; font-weight:700; letter-spacing:4px; color:var(--crema); }
+.nav-logo span { color:var(--acc); }
+.nav-right { display:flex; align-items:center; gap:.6rem; }
+.lang-sel {
+  display:flex; gap:.08rem; align-items:center;
+  background:rgba(200,146,42,.07); border:1px solid rgba(200,146,42,.2);
+  border-radius:30px; padding:.15rem .35rem;
+}
+.lang-btn {
+  background:none; font-family:var(--ffc); font-size:.67rem; font-weight:700;
+  letter-spacing:1px; color:rgba(240,230,208,.38); padding:.16rem .4rem; border-radius:14px;
+  transition:var(--tr); text-transform:uppercase;
+}
+.lang-btn.active { background:var(--acc); color:var(--noche); }
+.lang-btn:hover:not(.active) { color:var(--acc); }
+.hamburger {
+  display:none; flex-direction:column; justify-content:center;
+  align-items:center; gap:5px; width:40px; height:40px;
+  -webkit-tap-highlight-color:transparent;
+}
+.hamburger span {
+  display:block; width:22px; height:2px; background:var(--acc);
+  border-radius:2px; transition:transform .32s var(--ease), opacity .32s;
+  transform-origin:center;
+}
+.hamburger.open span:nth-child(1) { transform:rotate(45deg) translate(5px,5px); }
+.hamburger.open span:nth-child(2) { opacity:0; }
+.hamburger.open span:nth-child(3) { transform:rotate(-45deg) translate(5px,-5px); }
+
+/* ════════════════════════════════════════
+   DRAWER
+════════════════════════════════════════ */
+.drawer-overlay { position:fixed; inset:0; z-index:800; background:rgba(0,0,0,.6); opacity:0; visibility:hidden; transition:opacity .3s,visibility .3s; }
+.drawer-overlay.open { opacity:1; visibility:visible; }
+.mobile-drawer {
+  position:fixed; top:0; right:0; bottom:0; width:min(290px,86vw); z-index:810;
+  background:rgba(6,4,8,.99); backdrop-filter:blur(24px);
+  border-left:1px solid rgba(200,146,42,.18);
+  display:flex; flex-direction:column;
+  transform:translateX(100%); transition:transform .35s var(--ease);
+}
+.mobile-drawer.open { transform:translateX(0); }
+.drawer-head { display:flex; align-items:center; justify-content:space-between; padding:0 1.3rem; height:var(--nav); border-bottom:1px solid rgba(200,146,42,.1); }
+.drawer-close {
+  background:none; border:1px solid rgba(200,146,42,.25); color:var(--acc);
+  width:36px; height:36px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center; transition:var(--tr);
+}
+.drawer-close:hover { background:rgba(200,146,42,.15); }
+.drawer-body { flex:1; padding:1.1rem 1.3rem; overflow-y:auto; }
+.drawer-link {
+  display:flex; align-items:center; gap:.75rem;
+  font-family:var(--ffc); font-size:1rem; letter-spacing:2px; text-transform:uppercase;
+  color:var(--crema); padding:.85rem 0; border-bottom:1px solid rgba(200,146,42,.1);
+  transition:color .22s,padding-left .22s; min-height:48px; -webkit-tap-highlight-color:transparent;
+}
+.drawer-link:hover { color:var(--acc); padding-left:.4rem; }
+.drawer-link .di {
+  width:26px; height:26px; border-radius:6px;
+  background:rgba(200,146,42,.1); border:1px solid rgba(200,146,42,.2);
+  display:flex; align-items:center; justify-content:center; font-size:.75rem;
+  color:var(--acc); flex-shrink:0;
+}
+.drawer-foot { padding:1rem 1.3rem 1.5rem; border-top:1px solid rgba(200,146,42,.1); }
+.drawer-lang { display:flex; gap:.4rem; flex-wrap:wrap; margin-top:.8rem; }
+.drawer-lang .lang-btn {
+  background:rgba(200,146,42,.1); border:1px solid rgba(200,146,42,.2);
+  border-radius:20px; padding:.45rem .9rem; font-size:.75rem; color:var(--crema); min-height:36px;
+}
+.drawer-lang .lang-btn.active { background:var(--acc); color:var(--noche); font-weight:900; }
+
+/* ════════════════════════════════════════
+   PROGRESS BAR
+════════════════════════════════════════ */
+.progress-bar { position:fixed; top:calc(var(--nav)+5px); left:0; z-index:699; height:2px; width:0%; background:linear-gradient(90deg,var(--rojo),var(--acc),var(--acc2)); transition:width .1s linear; }
+
+/* ════════════════════════════════════════
+   HERO
+════════════════════════════════════════ */
+.hero { position:relative; height:min(92vh,900px); overflow:hidden; }
+.hero-img {
+  width:100%; height:100%; object-fit:cover; object-position:center;
+  filter:brightness(.72);
+  transform:scale(1.06);
+  animation:heroZoom 14s ease-in-out infinite alternate;
+}
+@keyframes heroZoom { from{transform:scale(1.06)translateY(0);}to{transform:scale(1.12)translateY(-1%);} }
+.hero-gradient {
+  position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(to bottom, rgba(6,4,8,.1) 0%, rgba(6,4,8,.05) 30%, rgba(6,4,8,.58) 70%, rgba(6,4,8,1) 100%);
+}
+.hero-content {
+  position:absolute; bottom:0; left:0; right:0;
+  padding:0 2.5rem 3.5rem; max-width:1100px; margin:0 auto;
+}
+.hero-cat {
+  font-family:var(--ffc); font-size:.68rem; letter-spacing:4px; text-transform:uppercase;
+  color:var(--acc); margin-bottom:.7rem;
+  display:inline-flex; align-items:center; gap:.55rem;
+  opacity:0; animation:fadeUp .7s var(--ease) .4s both;
+}
+.hero-cat::before { content:''; width:18px; height:1px; background:currentColor; }
+.hero-title {
+  font-family:var(--ffd); font-weight:900;
+  font-size:clamp(2.8rem,8vw,6.5rem);
+  letter-spacing:1px; line-height:.92; margin-bottom:.5rem;
+  background:linear-gradient(135deg, #fff 0%, var(--crema) 40%, var(--acc) 80%, var(--acc2) 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  opacity:0; animation:fadeUp .9s var(--ease) .6s both;
+}
+.hero-subtitle {
+  font-family:var(--ffb); font-size:clamp(.9rem,2.5vw,1.3rem);
+  font-style:italic; color:rgba(240,230,208,.65); margin-bottom:1rem;
+  opacity:0; animation:fadeUp .8s var(--ease) .85s both;
+}
+.hero-meta {
+  display:flex; flex-wrap:wrap; gap:1rem; align-items:center;
+  opacity:0; animation:fadeUp .8s var(--ease) 1.05s both;
+}
+.hero-meta-item {
+  display:flex; align-items:center; gap:.4rem;
+  font-family:var(--ffc); font-size:.7rem; letter-spacing:1.5px; text-transform:uppercase;
+  color:rgba(240,230,208,.5);
+}
+.hero-meta-item i { color:var(--acc); font-size:.62rem; }
+.hero-scroll-hint {
+  position:absolute; bottom:1.5rem; right:2.5rem;
+  display:flex; flex-direction:column; align-items:center; gap:.35rem;
+  font-family:var(--ffc); font-size:.6rem; letter-spacing:2px; text-transform:uppercase;
+  color:rgba(240,230,208,.3);
+  animation:floatHint 2.4s ease-in-out infinite, fadeUp .8s var(--ease) 1.3s both;
+}
+.hero-scroll-hint i { font-size:1rem; color:var(--acc); opacity:.5; }
+@keyframes floatHint{0%,100%{transform:translateY(0);}50%{transform:translateY(6px);}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:none;}}
+
+/* ════════════════════════════════════════
+   FICHA STRIP
+════════════════════════════════════════ */
+.ficha-strip {
+  background:rgba(6,4,8,.9); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
+  border-top:1px solid var(--acc-border); border-bottom:1px solid var(--acc-border);
+  position:sticky; top:calc(var(--nav)+5px+2px); z-index:600;
+}
+.ficha-inner {
+  max-width:1100px; margin:0 auto; padding:.65rem 2rem;
+  display:flex; gap:2rem; flex-wrap:wrap; align-items:center;
+  overflow-x:auto; scrollbar-width:none;
+}
+.ficha-inner::-webkit-scrollbar { display:none; }
+.ficha-item { display:flex; align-items:center; gap:.5rem; flex-shrink:0; }
+.ficha-label { font-family:var(--ffc); font-size:.6rem; letter-spacing:2px; text-transform:uppercase; color:var(--acc); opacity:.8; }
+.ficha-val { font-family:var(--ffc); font-size:.75rem; letter-spacing:1px; text-transform:uppercase; color:var(--crema); font-weight:600; }
+.ficha-sep { width:1px; height:18px; background:rgba(200,146,42,.2); flex-shrink:0; }
+.wa-ficha {
+  margin-left:auto; flex-shrink:0;
+  display:inline-flex; align-items:center; gap:.4rem;
+  font-family:var(--ffc); font-size:.68rem; letter-spacing:1.5px; text-transform:uppercase; font-weight:700;
+  background:linear-gradient(135deg,#128C7E,#075E54);
+  color:#fff; padding:.4rem .9rem; border-radius:30px; transition:var(--tr);
+}
+.wa-ficha:hover { opacity:.88; transform:translateY(-1px); }
+
+/* ════════════════════════════════════════
+   MAIN CONTENT
+════════════════════════════════════════ */
+main { position:relative; z-index:1; min-height:100vh; padding-top:calc(var(--nav)+5px); }
+.content-wrap { max-width:1100px; margin:0 auto; padding:0 2rem; }
+
+/* ════════════════════════════════════════
+   INTRO BLOCK
+════════════════════════════════════════ */
+.intro-block {
+  padding:4rem 0 2rem;
+  display:grid; grid-template-columns:1fr 360px; gap:4rem; align-items:start;
+}
+.intro-eyebrow {
+  font-family:var(--ffc); font-size:.68rem; letter-spacing:4px; text-transform:uppercase;
+  color:var(--acc); margin-bottom:.8rem; display:flex; align-items:center; gap:.6rem;
+}
+.intro-eyebrow::before { content:''; width:20px; height:1px; background:currentColor; }
+.intro-heading {
+  font-family:var(--ffd); font-size:clamp(1.7rem,4vw,2.8rem);
+  font-weight:700; color:var(--crema); letter-spacing:.5px; margin-bottom:1.2rem; line-height:1.05;
+}
+.intro-heading em {
+  font-style:normal;
+  background:linear-gradient(125deg,var(--acc),var(--acc2));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+.intro-text { font-size:1.1rem; color:var(--cdim); line-height:1.95; font-weight:300; }
+.intro-text + .intro-text { margin-top:1rem; }
+
+.stat-card {
+  background:rgba(200,146,42,.04); border:1px solid var(--acc-border);
+  border-radius:6px; padding:1.8rem;
+  position:sticky; top:calc(var(--nav)+5px+60px);
+}
+.stat-row { margin-bottom:1.2rem; padding-bottom:1.2rem; border-bottom:1px solid rgba(200,146,42,.1); }
+.stat-row:last-child { margin-bottom:0; padding-bottom:0; border-bottom:none; }
+.stat-label { font-family:var(--ffc); font-size:.6rem; letter-spacing:3px; text-transform:uppercase; color:var(--acc); margin-bottom:.3rem; }
+.stat-val { font-family:var(--ffb); font-size:1rem; color:var(--crema); line-height:1.5; font-weight:400; }
+
+/* ════════════════════════════════════════
+   SECTION DIVIDERS
+════════════════════════════════════════ */
+.sec-div { height:1px; margin:3rem 0; background:linear-gradient(90deg,transparent,var(--acc-border),transparent); }
+.wiphala-div {
+  height:2px; max-width:1100px; margin:4rem auto 3rem;
+  background:linear-gradient(90deg,transparent,var(--rojo),var(--naranja),var(--amarillo),var(--verde),var(--azul),var(--violeta),transparent);
+  opacity:.22;
+}
+
+/* ════════════════════════════════════════
+   ANALYSIS BLOCKS (alternating text + image)
+════════════════════════════════════════ */
+.archetypes { padding:2rem 0 3rem; }
+.arch-section-title {
+  font-family:var(--ffd); font-size:clamp(1.3rem,3vw,2rem);
+  font-weight:700; color:var(--crema); letter-spacing:1px;
+  margin-bottom:2.5rem;
+  display:flex; align-items:center; gap:1rem;
+}
+.arch-section-title::after { content:''; flex:1; height:1px; background:var(--acc-border); }
+
+.arch-block {
+  display:grid; grid-template-columns:1fr 1fr; gap:2.5rem;
+  align-items:start; margin-bottom:3.5rem;
+}
+.arch-block.reverse { direction:rtl; }
+.arch-block.reverse > * { direction:ltr; }
+
+.arch-img-wrap {
+  position:relative; overflow:hidden; border-radius:4px;
+  border:1px solid var(--acc-border); background:rgba(200,146,42,.05);
+}
+.arch-img-wrap img {
+  width:100%; display:block; object-fit:cover;
+  transition:transform .7s var(--ease); aspect-ratio:4/3;
+}
+.arch-img-wrap:hover img { transform:scale(1.05); }
+.arch-img-caption {
+  position:absolute; bottom:0; left:0; right:0;
+  background:linear-gradient(to top, rgba(6,4,8,.85) 0%, transparent 100%);
+  padding:1.2rem .9rem .6rem;
+  font-family:var(--ffc); font-size:.62rem; letter-spacing:1.5px; text-transform:uppercase;
+  color:rgba(240,230,208,.55);
+}
+.arch-img-badge {
+  position:absolute; top:.65rem; left:.65rem;
+  font-family:var(--ffc); font-size:.58rem; letter-spacing:2px; text-transform:uppercase;
+  background:var(--acc); color:var(--noche); padding:.18rem .55rem; border-radius:20px; font-weight:700;
+}
+.arch-img-wrap .gi-overlay {
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  background:rgba(200,146,42,0); transition:background .3s;
+}
+.arch-img-wrap:hover .gi-overlay { background:rgba(200,146,42,.12); }
+.arch-img-wrap .gi-overlay i { color:#fff; font-size:1.4rem; opacity:0; transition:opacity .3s; }
+.arch-img-wrap:hover .gi-overlay i { opacity:.8; }
+
+.arch-label {
+  font-family:var(--ffc); font-size:.65rem; letter-spacing:3.5px; text-transform:uppercase;
+  color:var(--acc); margin-bottom:.6rem; display:flex; align-items:center; gap:.5rem;
+}
+.arch-label::before { content:''; width:14px; height:1px; background:currentColor; }
+.arch-title { font-family:var(--ffd); font-size:clamp(1.1rem,2.5vw,1.6rem); font-weight:700; color:var(--crema); margin-bottom:1rem; line-height:1.1; }
+.arch-body { font-family:var(--ffb); font-size:1.02rem; color:var(--cdim); line-height:1.95; font-weight:300; }
+.arch-body + .arch-body { margin-top:.9rem; }
+.arch-quote {
+  margin-top:1.2rem; padding:.9rem 1.1rem;
+  border-left:3px solid var(--acc);
+  background:rgba(200,146,42,.05); border-radius:0 4px 4px 0;
+  font-family:var(--ffb); font-size:.98rem; font-style:italic;
+  color:rgba(240,230,208,.5); line-height:1.7;
+}
+
+/* ════════════════════════════════════════
+   IMAGE GRIDS
+════════════════════════════════════════ */
+.img-grid-4 {
+  display:grid; grid-template-columns:repeat(2,1fr); gap:6px;
+  margin:2rem 0; border-radius:6px; overflow:hidden; border:1px solid var(--acc-border);
+}
+.img-grid-3 {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:6px;
+  margin:2rem 0; border-radius:6px; overflow:hidden; border:1px solid var(--acc-border);
+}
+.gi {
+  overflow:hidden; position:relative; aspect-ratio:4/3; cursor:pointer;
+}
+.gi img { width:100%; height:100%; object-fit:cover; transition:transform .6s var(--ease); }
+.gi:hover img { transform:scale(1.08); }
+.gi-overlay {
+  position:absolute; inset:0; background:rgba(200,146,42,.0);
+  transition:background .3s; display:flex; align-items:center; justify-content:center;
+}
+.gi:hover .gi-overlay { background:rgba(200,146,42,.14); }
+.gi-overlay i { color:#fff; font-size:1.4rem; opacity:0; transition:opacity .3s; }
+.gi:hover .gi-overlay i { opacity:.8; }
+.grid-hint {
+  font-family:var(--ffc); font-size:.6rem; letter-spacing:1.5px; text-transform:uppercase;
+  color:rgba(240,230,208,.3); margin-top:.5rem; text-align:center;
+}
+
+/* ════════════════════════════════════════
+   GALLERY FULL — full-width image strip
+════════════════════════════════════════ */
+.gallery-strip {
+  display:grid; grid-template-columns:repeat(4,1fr); gap:4px;
+  margin:2.5rem 0; border-radius:6px; overflow:hidden;
+  border:1px solid var(--acc-border);
+}
+.gallery-strip .gi { aspect-ratio:3/4; }
+@media(max-width:768px){ .gallery-strip{ grid-template-columns:repeat(2,1fr); } }
+
+/* ════════════════════════════════════════
+   LIGHTBOX
+════════════════════════════════════════ */
+#lb {
+  display:none; position:fixed; inset:0; z-index:1000;
+  background:rgba(0,0,0,.97); align-items:center; justify-content:center;
+  backdrop-filter:blur(12px);
+}
+#lb.open { display:flex; }
+#lb-img { max-width:94vw; max-height:92vh; object-fit:contain; border-radius:3px; animation:lbIn .3s var(--ease) both; }
+@keyframes lbIn{from{opacity:0;transform:scale(.93);}to{opacity:1;transform:none;}}
+#lb-close { position:absolute; top:1rem; right:1rem; width:42px; height:42px; border-radius:50%; background:rgba(0,0,0,.6); border:1px solid rgba(200,146,42,.3); color:var(--crema); display:flex; align-items:center; justify-content:center; font-size:1.1rem; transition:var(--tr); z-index:2; }
+#lb-close:hover { background:var(--rojo); }
+#lb-prev, #lb-next { position:absolute; top:50%; transform:translateY(-50%); background:rgba(0,0,0,.5); border:1px solid rgba(200,146,42,.3); color:var(--crema); width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1rem; transition:var(--tr); }
+#lb-prev { left:1rem; } #lb-next { right:1rem; }
+#lb-prev:hover, #lb-next:hover { background:var(--acc); color:var(--noche); }
+
+/* ════════════════════════════════════════
+   BOTTOM CTA
+════════════════════════════════════════ */
+.bottom-cta { text-align:center; padding:4rem 2rem 5rem; background:linear-gradient(to bottom,transparent,rgba(200,146,42,.04)); }
+.cta-title { font-family:var(--ffd); font-size:clamp(1.5rem,4vw,2.5rem); font-weight:700; color:var(--crema); margin-bottom:1.2rem; letter-spacing:1px; }
+.cta-sub { font-family:var(--ffb); font-size:1rem; color:var(--cdim); margin-bottom:2rem; }
+.cta-btns { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
+.cta-btn-primary {
+  display:inline-flex; align-items:center; gap:.6rem;
+  font-family:var(--ffd); font-size:.82rem; letter-spacing:2.5px; text-transform:uppercase; font-weight:700;
+  background:linear-gradient(135deg,var(--acc),var(--acc2));
+  color:var(--noche); padding:.9rem 2rem; border-radius:3px;
+  box-shadow:0 8px 28px var(--acc-glow); transition:var(--tr);
+}
+.cta-btn-primary:hover { transform:translateY(-3px); box-shadow:0 14px 40px var(--acc-glow); }
+.cta-btn-secondary {
+  display:inline-flex; align-items:center; gap:.6rem;
+  font-family:var(--ffc); font-size:.78rem; letter-spacing:2px; text-transform:uppercase;
+  border:1.5px solid var(--acc-border); color:var(--cdim);
+  padding:.85rem 1.8rem; border-radius:3px; transition:var(--tr);
+}
+.cta-btn-secondary:hover { border-color:var(--acc); color:var(--acc); }
+
+/* ════════════════════════════════════════
+   FOOTER
+════════════════════════════════════════ */
+footer { position:relative; z-index:1; border-top:1px solid var(--acc-border); padding:2rem 2rem 1.8rem; text-align:center; }
+.footer-logo { font-family:var(--ffd); font-size:1.1rem; color:var(--acc); letter-spacing:3px; margin-bottom:.35rem; }
+.footer-sub { font-family:var(--ffc); font-size:.62rem; letter-spacing:2px; text-transform:uppercase; color:rgba(240,230,208,.18); }
+
+/* ════════════════════════════════════════
+   SCROLL REVEAL
+════════════════════════════════════════ */
+.sr { opacity:0; transform:translateY(22px); transition:opacity .65s var(--ease),transform .65s var(--ease); }
+.sr.visible { opacity:1; transform:none; }
+.d1{transition-delay:.08s;} .d2{transition-delay:.16s;} .d3{transition-delay:.24s;} .d4{transition-delay:.32s;}
+.sr-left { opacity:0; transform:translateX(-22px); transition:opacity .65s var(--ease),transform .65s var(--ease); }
+.sr-right { opacity:0; transform:translateX(22px); transition:opacity .65s var(--ease),transform .65s var(--ease); }
+.sr-left.visible, .sr-right.visible { opacity:1; transform:none; }
+
+/* ════════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════════ */
+@media(max-width:900px){
+  .intro-block { grid-template-columns:1fr; gap:2rem; }
+  .stat-card { position:static; }
+  .arch-block { grid-template-columns:1fr; }
+  .arch-block.reverse { direction:ltr; }
+  .img-grid-3 { grid-template-columns:1fr 1fr; }
+}
+@media(max-width:768px){
+  :root{ --nav:56px; }
+  .lang-sel { display:none !important; }
+  .hamburger { display:flex !important; }
+  .hero { height:min(75vw,520px); }
+  .hero-content { padding:0 1.2rem 2.5rem; }
+  .hero-title { font-size:clamp(2.2rem,8vw,4rem); }
+  .content-wrap { padding:0 1rem; }
+  .intro-block { padding:2.5rem 0 1rem; }
+  .cta-btns { flex-direction:column; align-items:center; }
+  .ficha-inner { padding:.55rem 1rem; gap:1rem; }
+  .wa-ficha { display:none; }
+  .img-grid-4 { grid-template-columns:1fr 1fr; }
+  .img-grid-3 { grid-template-columns:1fr; }
+}
+@media(max-width:480px) {
+  .img-grid-4 { grid-template-columns:1fr; }
+  .gallery-strip { grid-template-columns:1fr; }
+}
+@media(prefers-reduced-motion:reduce){ *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;} }
+</style>
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+<div class="andean-bg"></div>
+<div class="ambient-glow"></div>
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- ══ NAV ══ -->
+<nav id="nav">
+  <div class="wiphala"></div>
+  <div class="nav-bar">
+    <div class="nav-left">
+      <a href="NaliArt.html" class="nav-back"><i class="fas fa-arrow-left"></i> <span data-i18n="back">Murales</span></a>
+      <a href="index.html" class="nav-logo" style="margin-left:.4rem;">NAL<span>I</span></a>
+    </div>
+    <div class="nav-right">
+      <div class="lang-sel">
+        <button class="lang-btn active" data-lang="es">ES</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="pl">PL</button>
+        <button class="lang-btn" data-lang="fr">FR</button>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- DRAWER -->
+<div class="drawer-overlay" id="dOverlay"></div>
+<div class="mobile-drawer" id="drawer" role="dialog" aria-modal="true">
+  <div class="drawer-head">
+    <span class="nav-logo" style="font-size:1rem;">NAL<span>I</span></span>
+    <button class="drawer-close" id="drawerClose"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="drawer-body">
+    <a href="NaliArt.html" class="drawer-link"><span class="di"><i class="fas fa-arrow-left"></i></span><span data-i18n="back">Murales</span></a>
+    <a href="index.html" class="drawer-link"><span class="di"><i class="fas fa-home"></i></span><span data-i18n="nav_home">Inicio</span></a>
+    <a href="Galer.html" class="drawer-link"><span class="di"><i class="fas fa-paint-roller"></i></span><span data-i18n="nav_galeria">Galería</span></a>
+    <a href="diccionario.html" class="drawer-link"><span class="di"><i class="fas fa-book-open"></i></span><span data-i18n="nav_dict">Diccionario</span></a>
+    <a href="https://wa.me/48692971895" target="_blank" rel="noopener" class="drawer-link"><span class="di"><i class="fab fa-whatsapp"></i></span>WhatsApp</a>
+  </div>
+  <div class="drawer-foot">
+    <a href="https://wa.me/48692971895?text=Hola%20Nali%2C%20me%20interesa%20la%20obra%20Abya%20Yala" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:.5rem;background:linear-gradient(135deg,#128C7E,#075E54);color:#fff;font-family:var(--ffc);font-size:.78rem;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;padding:.75rem 1.1rem;border-radius:50px;margin-bottom:.8rem;">
+      <i class="fab fa-whatsapp"></i> WhatsApp
+    </a>
+    <div class="drawer-lang">
+      <button class="lang-btn active" data-lang="es">ES</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="pl">PL</button>
+      <button class="lang-btn" data-lang="fr">FR</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <img class="hero-img" src="https://i.ibb.co/VcDkNpfZ/IMG-20260527-WA0105.jpg" alt="Abya Yala — Vista general del mural">
+  <div class="hero-gradient"></div>
+  <div class="hero-content">
+    <p class="hero-cat" data-i18n="hero_cat">Mural · Serie Ojos Rasgados · Técnica mixta</p>
+    <h1 class="hero-title">Abya Yala</h1>
+    <p class="hero-subtitle" data-i18n="hero_sub">La Persistencia de la Memoria Fracturada</p>
+    <div class="hero-meta">
+      <span class="hero-meta-item"><i class="fas fa-ruler-combined"></i> 3m × 4m</span>
+      <span class="hero-meta-item"><i class="fas fa-palette"></i> <span data-i18n="hero_tech">Acrílico · Pintura mural · Trencadís</span></span>
+      <span class="hero-meta-item"><i class="fas fa-calendar"></i> 2026</span>
+      <span class="hero-meta-item"><i class="fas fa-map-marker-alt"></i> Salta, Argentina</span>
+    </div>
+  </div>
+  <div class="hero-scroll-hint">
+    <i class="fas fa-chevron-down"></i>
+    <span data-i18n="scroll_hint">Explorar</span>
+  </div>
+</section>
+
+<!-- ══ FICHA STRIP ══ -->
+<div class="ficha-strip">
+  <div class="ficha-inner">
+    <div class="ficha-item"><span class="ficha-label" data-i18n="f_artista">Artista</span><span class="ficha-val">Nali Alma · Natalia Almagro</span></div>
+    <div class="ficha-sep"></div>
+    <div class="ficha-item"><span class="ficha-label" data-i18n="f_tech">Técnica</span><span class="ficha-val" data-i18n="f_tech_v">Acrílico · Pintura mural · Trencadís</span></div>
+    <div class="ficha-sep"></div>
+    <div class="ficha-item"><span class="ficha-label" data-i18n="f_dim">Dimensiones</span><span class="ficha-val">3m × 4m</span></div>
+    <div class="ficha-sep"></div>
+    <div class="ficha-item"><span class="ficha-label" data-i18n="f_año">Año</span><span class="ficha-val">2026</span></div>
+    <div class="ficha-sep"></div>
+    <div class="ficha-item"><span class="ficha-label" data-i18n="f_loc">Ubicación</span><span class="ficha-val">Salta, Argentina</span></div>
+    <a href="https://wa.me/48692971895?text=Hola%20Nali%2C%20me%20interesa%20la%20obra%20%22Abya%20Yala%22" target="_blank" rel="noopener" class="wa-ficha">
+      <i class="fab fa-whatsapp"></i> <span data-i18n="f_wa">Consultar</span>
+    </a>
+  </div>
+</div>
+
+<!-- ══ MAIN ══ -->
+<main>
+  <div class="content-wrap">
+
+    <!-- INTRO -->
+    <div class="intro-block">
+      <div>
+        <p class="intro-eyebrow sr" data-i18n="intro_ey">Descolonialismo · Cuerpo-Territorio · Dialéctica Matérica</p>
+        <h2 class="intro-heading sr d1">Abya Yala:<br><em>Tierra en plena madurez</em></h2>
+        <p class="intro-text sr d2" data-i18n="intro_p1">Decidí titular esta obra Abya Yala por el profundo peso histórico y geopolítico que el término sostiene dentro de las ciencias sociales y las teorías descoloniales contemporáneas. La expresión proviene de la lengua del pueblo Kuna (originario de Panamá y Colombia) y se traduce como "tierra en plena madurez", "tierra de sangre vital" o "tierra floreciente".</p>
+        <p class="intro-text sr d3" data-i18n="intro_p2">En 1992, las naciones indígenas del continente adoptaron formalmente este término como un acto de autodeterminación e identidad compartida, rechazando la imposición colonial del nombre "América". Al bautizar mi obra de este modo, conecto la geografía específica de Salta con una escala continental, declarando que el espacio que intervengo forma parte de un organismo vivo y ancestral en constante resistencia.</p>
+      </div>
+      <div class="stat-card sr d2">
+        <div class="stat-row">
+          <p class="stat-label" data-i18n="s_artista">Artista</p>
+          <p class="stat-val">Nali Alma (Natalia Almagro)</p>
+        </div>
+        <div class="stat-row">
+          <p class="stat-label" data-i18n="s_serie">Serie</p>
+          <p class="stat-val" data-i18n="s_serie_v">Serie Ojos Rasgados</p>
+        </div>
+        <div class="stat-row">
+          <p class="stat-label" data-i18n="s_tech">Técnica</p>
+          <p class="stat-val" data-i18n="s_tech_v">Técnica mixta: acrílico, pintura mural y trencadís (mosaico de azulejos recuperados)</p>
+        </div>
+        <div class="stat-row">
+          <p class="stat-label" data-i18n="s_dim">Dimensiones</p>
+          <p class="stat-val">3m alto × 4m largo</p>
+        </div>
+        <div class="stat-row">
+          <p class="stat-label" data-i18n="s_loc2">Localización</p>
+          <p class="stat-val" data-i18n="s_loc_v">Intervención en espacios interiores, Salta, Argentina · 2026</p>
+        </div>
+        <div class="stat-row">
+          <p class="stat-label" data-i18n="s_titulo">Origen del título</p>
+          <p class="stat-val" data-i18n="s_titulo_v">"Abya Yala" = tierra en plena madurez, lengua Kuna (Panamá y Colombia)</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="wiphala-div sr"></div>
+
+    <!-- ═══ ANÁLISIS ═══ -->
+    <div class="archetypes">
+
+      <!-- GALERÍA PRINCIPAL — 4 imágenes en grilla -->
+      <h3 class="arch-section-title sr" data-i18n="gallery_title">La Obra · Vistas</h3>
+      <div class="gallery-strip sr">
+        <div class="gi" data-img="https://i.ibb.co/VcDkNpfZ/IMG-20260527-WA0105.jpg">
+          <img src="https://i.ibb.co/VcDkNpfZ/IMG-20260527-WA0105.jpg" alt="Abya Yala — Vista 1" loading="lazy">
+          <div class="gi-overlay"><i class="fas fa-expand-alt"></i></div>
+        </div>
+        <div class="gi" data-img="https://i.ibb.co/5hqNtCvb/IMG-20260527-WA0049.jpg">
+          <img src="https://i.ibb.co/5hqNtCvb/IMG-20260527-WA0049.jpg" alt="Abya Yala — Vista 2" loading="lazy">
+          <div class="gi-overlay"><i class="fas fa-expand-alt"></i></div>
+        </div>
+        <div class="gi" data-img="https://i.ibb.co/Rpqvx0DL/IMG-20260521-WA0074.jpg">
+          <img src="https://i.ibb.co/Rpqvx0DL/IMG-20260521-WA0074.jpg" alt="Abya Yala — Vista 3" loading="lazy">
+          <div class="gi-overlay"><i class="fas fa-expand-alt"></i></div>
+        </div>
+        <div class="gi" data-img="https://i.ibb.co/MjcqqhP/IMG-20260522-WA0004.jpg">
+          <img src="https://i.ibb.co/MjcqqhP/IMG-20260522-WA0004.jpg" alt="Abya Yala — Vista 4" loading="lazy">
+          <div class="gi-overlay"><i class="fas fa-expand-alt"></i></div>
+        </div>
+      </div>
+      <p class="grid-hint sr" data-i18n="grid_hint">Clic en cada imagen para ampliar</p>
+
+      <div class="sec-div sr"></div>
+
+      <!-- DUALIDAD MATÉRICA — intro -->
+      <h3 class="arch-section-title sr" data-i18n="dual_title">Análisis Teórico e Iconográfico · Dualidad Matérica</h3>
+      <p class="sr" style="font-family:var(--ffb);font-size:1.05rem;color:var(--cdim);line-height:1.9;margin-bottom:2.5rem;max-width:760px;" data-i18n="dual_intro">Articulo formalmente la obra a partir de una dualidad matérica y conceptual, dividiendo el plano en dos fuerzas que entran en tensión dialéctica: la fluidez orgánica del acrílico que da vida al cuerpo-territorio, y la fragmentación dura y discontinua del mosaico de azulejos que representa la ciudad moderna.</p>
+
+      <!-- 1. CUERPO-TERRITORIO -->
+      <div class="arch-block sr">
+        <div class="sr-left">
+          <div class="img-grid-4" style="grid-template-columns:1fr 1fr;">
+            <div class="gi" data-img="https://i.ibb.co/VcDkNpfZ/IMG-20260527-WA0105.jpg">
+              <img src="https://i.ibb.co/VcDkNpfZ/IMG-20260527-WA0105.jpg" alt="La Mujer-Montaña — Vista 1" loading="lazy">
+              <div class="gi-overlay"><i class="fas fa-expand-alt"></i></div>
+            </div>
+            <div class="gi" data-img="https://i.ibb.co/5hqNtCvb/IMG-20260527-WA0049.jpg">
+              <img src="https://i.ibb.co/5hqNtCvb/IMG-20260527-WA0049.jpg" alt="La Mujer-Montaña — Vista 2" loading="lazy">
+              <div class="gi-overlay"><i class="fas fa-expand-alt"></i></div>
+            </div>
+          </div>
+          <p class="grid-hint" data-i18n="grid_hint">Clic para ampliar</p>
+        </div>
+        <div class="arch-text sr-right">
+          <p class="arch-label" data-i18n="cuerpo_label">01 · El Eje Figurativo</p>
+          <h4 class="arch-title" data-i18n="cuerpo_h">El Cuerpo-Territorio: La Mujer-Montaña y el Poncho Salteño</h4>
+          <p class="arch-body" data-i18n="cuerpo_b1">El eje figurativo de mi propuesta está dominado por la representación de una mujer nativa cuyo ropaje, inspirado en el tradicional poncho salteño, se transmuta orgánicamente en la morfología de una montaña. Con esta operación de hibridación visual, apelo al concepto andino de cuerpo-territorio: la geografía no como un paisaje pasivo, sino como una extensión de la identidad comunitaria, biológica y política.</p>
+          <p class="arch-body" data-i18n="cuerpo_b2">Proyecto las líneas y pliegues del poncho como fallas geológicas y laderas, sugiriendo que la lucha ancestral está inscrita en la misma orografía del Norte Grande argentino. El sujeto femenino deviene, en mi pintura, guardián y cimiento de la memoria colectiva, asumiendo la escala y la inmutabilidad de la cordillera.</p>
+          <div class="arch-quote" data-i18n="cuerpo_q">El poncho que se convierte en montaña: el cuerpo femenino como geografía, la geografía como cuerpo femenino. Una sola cosa con dos nombres.</div>
+        </div>
+      </div>
+
+      <div class="sec-div sr"></div>
+
+      <!-- 2. URBE FRAGMENTADA — TRENCADÍS -->
+      <div class="arch-block reverse sr">
+        <div class="arch-text sr-left">
+          <p class="arch-label" data-i18n="trenc_label">02 · La Técnica como Argumento</p>
+          <h4 class="arch-title" data-i18n="trenc_h">La Urbe Fragmentada: El Muralismo de Azulejos Recuperados</h4>
+          <p class="arch-body" data-i18n="trenc_b1">En contraposición a la fluidez orgánica del acrílico con el que doy vida al cuerpo-territorio, ejecuto la representación de la ciudad mediante la técnica del trencadís o mosaico de azulejos rotos y recuperados. Esta decisión técnica la planteo desde una densa carga semiótica: utilizo fragmentos cerámicos descartados para aludir a la naturaleza de la urbe moderna — un espacio construido sobre la acumulación, la ruptura, la obsolescencia y la reconfiguración constante.</p>
+          <p class="arch-body" data-i18n="trenc_b2">Las aristas y la rigidez de los azulejos rotos me permiten simbolizar la violencia geométrica con la que la cuadrícula urbana colonial e industrial se impuso sobre el territorio ancestral. Represento la ciudad como un tejido fragmentado que quiebra la continuidad de la tierra, pero que a través del muralismo logro articular y resignificar en una nueva narrativa visual.</p>
+          <div class="arch-quote" data-i18n="trenc_q">El azulejo roto no es un desperdicio: es una cita material de la ciudad que muta. Cada fragmento tiene una historia antes de integrarse a este muro.</div>
+        </div>
+        <div class="sr-right">
+          <div class="img-grid-4" style="grid-template-columns:1fr 1fr;">
+            <div class="gi" data-img="https://i.ibb.co/xSKXgBbQ/IMG-20260520-WA0030.jpg">
+              <img src="https://i.ibb.co/xSKXgBbQ/IMG-20260520-WA0030.jpg" alt="Trencadís — Azulejos recuperados 1" loading="lazy">
+              <div class="gi-overlay"><i class="fas fa-expand-alt"></i></div>
+            </div>
+            <div class="gi" data-img="https://i.ibb.co/HTFnGXR9/IMG-20260520-WA0031.jpg">
+              <img src="https://i.ibb.co/HTFnGXR9/IMG-20260520-WA0031.jpg" alt="Trencadís — Azulejos recuperados 2" loading="lazy">
+              <div class="gi-overlay"><i class="fas fa-expand-alt"></i></div>
+            </div>
+          </div>
+          <p class="grid-hint" data-i18n="grid_hint">Clic para ampliar</p>
+        </div>
+      </div>
+
+      <div class="sec-div sr"></div>
+
+      <!-- 3. DIALÉCTICA DE MATERIALES -->
+      <div class="arch-block sr">
+        <div class="arch-img-wrap sr-left" style="cursor:pointer;" onclick="openLB('https://i.ibb.co/N6Swcvrd/IMG-20260520-WA0027.jpg')">
+          <span class="arch-img-badge" data-i18n="badge_dial">Dialéctica</span>
+          <img src="https://i.ibb.co/N6Swcvrd/IMG-20260520-WA0027.jpg" alt="Dialéctica de materiales — acrílico y azulejo" loading="lazy">
+          <p class="arch-img-caption" data-i18n="dial_cap">Encuentro matérico · Acrílico fluido y azulejo cortante</p>
+          <div class="gi-overlay"><i class="fas fa-expand-alt"></i></div>
+        </div>
+        <div class="arch-text sr-right">
+          <p class="arch-label" data-i18n="dial_label">03 · Dispositivo Crítico</p>
+          <h4 class="arch-title" data-i18n="dial_h">Dialéctica de Materiales como Dispositivo Crítico</h4>
+          <p class="arch-body" data-i18n="dial_b1">El valor plástico que persigo en esta pieza radica en su hibridación técnica. Hago convivir el acrílico —maleable y continuo— con el azulejo roto —duro, cortante y discontinuo— para que opere como una metáfora de la experiencia histórica subalterna en América Latina.</p>
+          <p class="arch-body" data-i18n="dial_b2">Los pueblos originarios no habitan un pasado idílico, sino un presente complejo donde deben negociar constantemente su identidad con los restos y las ruinas de la modernidad urbana. Al integrar los azulejos recuperados dentro del muro, realizo una operación de sutura social: utilizo los fragmentos de la misma ciudad que segrega para reconstruir los contornos de la memoria indígena.</p>
+          <div class="arch-quote" data-i18n="dial_q">Los fragmentos de la misma ciudad que segrega, convertidos en material noble para la monumentalidad y la estética de la resistencia de la gran Abya Yala.</div>
+        </div>
+      </div>
+
+      <div class="sec-div sr"></div>
+
+      <!-- 4. PROCESO — preparación y colocación -->
+      <h3 class="arch-section-title sr" data-i18n="proc_title">Proceso de Creación · Del Fragmento al Mural</h3>
+      <p class="sr d1" style="font-family:var(--ffb);font-size:1.02rem;color:var(--cdim);line-height:1.9;margin-bottom:2rem;max-width:720px;" data-i18n="proc_intro">La técnica del trencadís requiere un proceso de recolección, clasificación y montaje que trasciende lo pictórico. Cada azulejo es recuperado, cortado y posicionado en el muro antes de recibir la capa de acrílico que unifica ambas materialidades.</p>
+
+      <div class="img-grid-3 sr">
+        <div class="gi" data-img="https://i.ibb.co/xSKXgBbQ/IMG-20260520-WA0030.jpg">
+          <img src="https://i.ibb.co/xSKXgBbQ/IMG-20260520-WA0030.jpg" alt="Proceso — etapa 1" loading="lazy">
+          <div class="gi-overlay"><i class="fas fa-expand-alt"></i></div>
+        </div>
+        <div class="gi" data-img="https://i.ibb.co/HTFnGXR9/IMG-20260520-WA0031.jpg">
+          <img src="https://i.ibb.co/HTFnGXR9/IMG-20260520-WA0031.jpg" alt="Proceso — etapa 2" loading="lazy">
+          <div class="gi-overlay"><i class="fas fa-expand-alt"></i></div>
+        </div>
+        <div class="gi" data-img="https://i.ibb.co/N6Swcvrd/IMG-20260520-WA0027.jpg">
+          <img src="https://i.ibb.co/N6Swcvrd/IMG-20260520-WA0027.jpg" alt="Proceso — etapa 3" loading="lazy">
+          <div class="gi-overlay"><i class="fas fa-expand-alt"></i></div>
+        </div>
+        <div class="gi" data-img="https://i.ibb.co/Xrtd6Ljn/IMG-20260520-WA0026.jpg">
+          <img src="https://i.ibb.co/Xrtd6Ljn/IMG-20260520-WA0026.jpg" alt="Proceso — etapa 4" loading="lazy">
+          <div class="gi-overlay"><i class="fas fa-expand-alt"></i></div>
+        </div>
+        <div class="gi" data-img="https://i.ibb.co/Rpqvx0DL/IMG-20260521-WA0074.jpg">
+          <img src="https://i.ibb.co/Rpqvx0DL/IMG-20260521-WA0074.jpg" alt="Proceso — avance" loading="lazy">
+          <div class="gi-overlay"><i class="fas fa-expand-alt"></i></div>
+        </div>
+        <div class="gi" data-img="https://i.ibb.co/MjcqqhP/IMG-20260522-WA0004.jpg">
+          <img src="https://i.ibb.co/MjcqqhP/IMG-20260522-WA0004.jpg" alt="Proceso — finalización" loading="lazy">
+          <div class="gi-overlay"><i class="fas fa-expand-alt"></i></div>
+        </div>
+      </div>
+      <p class="grid-hint sr" data-i18n="grid_hint">Clic para ampliar · Desliza para explorar</p>
+
+    </div><!-- /archetypes -->
+
+  </div><!-- /content-wrap -->
+
+  <!-- BOTTOM CTA -->
+  <div class="bottom-cta sr">
+    <p style="font-family:var(--ffc);font-size:.68rem;letter-spacing:4px;text-transform:uppercase;color:var(--acc);margin-bottom:.7rem;" data-i18n="cta_ey">Nali · Arte Visual · Salta 2026</p>
+    <h2 class="cta-title" data-i18n="cta_title">¿Te interesa esta obra<br>o un trabajo con técnica mixta?</h2>
+    <p class="cta-sub" data-i18n="cta_sub">Murales con trencadís, pintura mural y acrílico. Consultá por encargos, comisiones y proyectos.</p>
+    <div class="cta-btns">
+      <a href="https://wa.me/48692971895?text=Hola%20Nali%2C%20me%20interesa%20la%20obra%20%22Abya%20Yala%22" target="_blank" rel="noopener" class="cta-btn-primary">
+        <i class="fab fa-whatsapp"></i> <span data-i18n="cta_wa">Escribir por WhatsApp</span>
+      </a>
+      <a href="NaliArt.html" class="cta-btn-secondary">
+        <i class="fas fa-arrow-left"></i> <span data-i18n="cta_back">Volver a Murales</span>
+      </a>
+      <a href="harta-la-gasta.html" class="cta-btn-secondary">
+        <i class="fas fa-paint-roller"></i> <span data-i18n="cta_harta">Ver Harta la Gasta</span>
+      </a>
+    </div>
+  </div>
+
+</main>
+
+<!-- LIGHTBOX -->
+<div id="lb">
+  <button id="lb-close"><i class="fas fa-times"></i></button>
+  <button id="lb-prev"><i class="fas fa-chevron-left"></i></button>
+  <img id="lb-img" src="" alt="">
+  <button id="lb-next"><i class="fas fa-chevron-right"></i></button>
+</div>
+
+<footer>
+  <div class="wiphala" style="max-width:180px;margin:0 auto 1.1rem;border-radius:3px;"></div>
+  <div class="footer-logo">NALI</div>
+  <p class="footer-sub" data-i18n="foot">Arte Visual · Salta, Argentina · 2026</p>
+</footer>
+
+<!-- ══ SCRIPTS ══ -->
+<script>
+/* ── TRANSLATIONS ── */
+const T = {
+  es:{
+    back:'Murales', nav_home:'Inicio', nav_galeria:'Galería', nav_dict:'Diccionario',
+    hero_cat:'Mural · Serie Ojos Rasgados · Técnica mixta',
+    hero_sub:'La Persistencia de la Memoria Fracturada',
+    hero_tech:'Acrílico · Pintura mural · Trencadís', scroll_hint:'Explorar',
+    f_artista:'Artista', f_tech:'Técnica', f_tech_v:'Acrílico · Pintura mural · Trencadís',
+    f_dim:'Dimensiones', f_año:'Año', f_loc:'Ubicación', f_wa:'Consultar',
+    intro_ey:'Descolonialismo · Cuerpo-Territorio · Dialéctica Matérica',
+    intro_p1:'Decidí titular esta obra Abya Yala por el profundo peso histórico y geopolítico que el término sostiene dentro de las ciencias sociales y las teorías descoloniales contemporáneas. La expresión proviene de la lengua del pueblo Kuna (originario de Panamá y Colombia) y se traduce como "tierra en plena madurez", "tierra de sangre vital" o "tierra floreciente".',
+    intro_p2:'En 1992, las naciones indígenas del continente adoptaron formalmente este término como un acto de autodeterminación e identidad compartida, rechazando la imposición colonial del nombre "América". Al bautizar mi obra de este modo, conecto la geografía específica de Salta con una escala continental, declarando que el espacio que intervengo forma parte de un organismo vivo y ancestral en constante resistencia.',
+    s_artista:'Artista', s_serie:'Serie', s_serie_v:'Serie Ojos Rasgados',
+    s_tech:'Técnica', s_tech_v:'Técnica mixta: acrílico, pintura mural y trencadís (mosaico de azulejos recuperados)',
+    s_dim:'Dimensiones', s_loc2:'Localización',
+    s_loc_v:'Intervención en espacios interiores, Salta, Argentina · 2026',
+    s_titulo:'Origen del título', s_titulo_v:'"Abya Yala" = tierra en plena madurez, lengua Kuna (Panamá y Colombia)',
+    gallery_title:'La Obra · Vistas',
+    dual_title:'Análisis Teórico e Iconográfico · Dualidad Matérica',
+    dual_intro:'Articulo formalmente la obra a partir de una dualidad matérica y conceptual, dividiendo el plano en dos fuerzas que entran en tensión dialéctica: la fluidez orgánica del acrílico que da vida al cuerpo-territorio, y la fragmentación dura y discontinua del mosaico de azulejos que representa la ciudad moderna.',
+    cuerpo_label:'01 · El Eje Figurativo',
+    cuerpo_h:'El Cuerpo-Territorio: La Mujer-Montaña y el Poncho Salteño',
+    cuerpo_b1:'El eje figurativo de mi propuesta está dominado por la representación de una mujer nativa cuyo ropaje, inspirado en el tradicional poncho salteño, se transmuta orgánicamente en la morfología de una montaña. Con esta operación de hibridación visual, apelo al concepto andino de cuerpo-territorio: la geografía no como un paisaje pasivo, sino como una extensión de la identidad comunitaria, biológica y política.',
+    cuerpo_b2:'Proyecto las líneas y pliegues del poncho como fallas geológicas y laderas, sugiriendo que la lucha ancestral está inscrita en la misma orografía del Norte Grande argentino. El sujeto femenino deviene, en mi pintura, guardián y cimiento de la memoria colectiva, asumiendo la escala y la inmutabilidad de la cordillera.',
+    cuerpo_q:'El poncho que se convierte en montaña: el cuerpo femenino como geografía, la geografía como cuerpo femenino. Una sola cosa con dos nombres.',
+    trenc_label:'02 · La Técnica como Argumento',
+    trenc_h:'La Urbe Fragmentada: El Muralismo de Azulejos Recuperados',
+    trenc_b1:'En contraposición a la fluidez orgánica del acrílico, ejecuto la representación de la ciudad mediante la técnica del trencadís o mosaico de azulejos rotos y recuperados. Utilizo fragmentos cerámicos descartados para aludir a la naturaleza de la urbe moderna — un espacio construido sobre la acumulación, la ruptura, la obsolescencia y la reconfiguración constante.',
+    trenc_b2:'Las aristas y la rigidez de los azulejos rotos simbolizan la violencia geométrica con la que la cuadrícula urbana colonial se impuso sobre el territorio ancestral. Represento la ciudad como un tejido fragmentado que quiebra la continuidad de la tierra, pero que a través del muralismo logro articular y resignificar en una nueva narrativa visual.',
+    trenc_q:'El azulejo roto no es un desperdicio: es una cita material de la ciudad que muta. Cada fragmento tiene una historia antes de integrarse a este muro.',
+    badge_dial:'Dialéctica', dial_cap:'Encuentro matérico · Acrílico fluido y azulejo cortante',
+    dial_label:'03 · Dispositivo Crítico',
+    dial_h:'Dialéctica de Materiales como Dispositivo Crítico',
+    dial_b1:'El valor plástico que persigo en esta pieza radica en su hibridación técnica. Hago convivir el acrílico —maleable y continuo— con el azulejo roto —duro, cortante y discontinuo— para que opere como una metáfora de la experiencia histórica subalterna en América Latina.',
+    dial_b2:'Al integrar los azulejos recuperados dentro del muro, realizo una operación de sutura social: utilizo los fragmentos de la misma ciudad que segrega para reconstruir los contornos de la memoria indígena. Mi objetivo es trasladar la discusión teórica del plano pictórico al plano objetual y matérico, transformando el residuo urbano en material noble para la monumentalidad de la resistencia.',
+    dial_q:'Los fragmentos de la misma ciudad que segrega, convertidos en material noble para la monumentalidad y la estética de la resistencia de la gran Abya Yala.',
+    proc_title:'Proceso de Creación · Del Fragmento al Mural',
+    proc_intro:'La técnica del trencadís requiere un proceso de recolección, clasificación y montaje que trasciende lo pictórico. Cada azulejo es recuperado, cortado y posicionado en el muro antes de recibir la capa de acrílico que unifica ambas materialidades.',
+    grid_hint:'Clic para ampliar · Desliza para explorar',
+    cta_ey:'Nali · Arte Visual · Salta 2026',
+    cta_title:'¿Te interesa esta obra<br>o un trabajo con técnica mixta?',
+    cta_sub:'Murales con trencadís, pintura mural y acrílico. Consultá por encargos, comisiones y proyectos.',
+    cta_wa:'Escribir por WhatsApp', cta_back:'Volver a Murales', cta_harta:'Ver Harta la Gasta',
+    foot:'Arte Visual · Salta, Argentina · 2026'
+  },
+  en:{
+    back:'Murals', nav_home:'Home', nav_galeria:'Gallery', nav_dict:'Dictionary',
+    hero_cat:'Mural · Ojos Rasgados Series · Mixed media',
+    hero_sub:'The Persistence of Fractured Memory',
+    hero_tech:'Acrylic · Mural paint · Trencadís', scroll_hint:'Explore',
+    f_artista:'Artist', f_tech:'Technique', f_tech_v:'Acrylic · Mural paint · Trencadís',
+    f_dim:'Dimensions', f_año:'Year', f_loc:'Location', f_wa:'Inquire',
+    intro_ey:'Decolonialism · Body-Territory · Material Dialectics',
+    intro_p1:'I chose to title this work Abya Yala for the deep historical and geopolitical weight the term holds within the social sciences and contemporary decolonial theories. The expression comes from the language of the Kuna people (indigenous to Panama and Colombia) and translates as "land in full maturity", "land of vital blood" or "flourishing land".',
+    intro_p2:'In 1992, indigenous nations across the continent formally adopted this term as an act of self-determination and shared identity, rejecting the colonial imposition of the name "America". By naming my work this way, I connect the specific geography of Salta with a continental scale, declaring that the space I intervene in forms part of a living, ancestral organism in constant resistance.',
+    s_artista:'Artist', s_serie:'Series', s_serie_v:'Ojos Rasgados Series',
+    s_tech:'Technique', s_tech_v:'Mixed media: acrylic, mural paint and trencadís (recovered tile mosaic)',
+    s_dim:'Dimensions', s_loc2:'Location',
+    s_loc_v:'Interior space intervention, Salta, Argentina · 2026',
+    s_titulo:'Title origin', s_titulo_v:'"Abya Yala" = land in full maturity, Kuna language (Panama & Colombia)',
+    gallery_title:'The Work · Views',
+    dual_title:'Theoretical & Iconographic Analysis · Material Duality',
+    dual_intro:'I formally articulate the work from a material and conceptual duality, dividing the plane into two forces that enter into dialectical tension: the organic fluidity of the acrylic that gives life to the body-territory, and the hard, discontinuous fragmentation of the tile mosaic representing the modern city.',
+    cuerpo_label:'01 · The Figurative Axis',
+    cuerpo_h:'The Body-Territory: The Woman-Mountain and the Salteño Poncho',
+    cuerpo_b1:'The figurative axis of my proposal is dominated by the representation of an indigenous woman whose garment, inspired by the traditional Salteño poncho, organically transforms into the morphology of a mountain. With this visual hybridisation, I appeal to the Andean concept of body-territory: geography not as a passive landscape, but as an extension of communal, biological and political identity.',
+    cuerpo_b2:'I project the lines and folds of the poncho as geological faults and hillsides, suggesting that ancestral struggle is inscribed in the very orography of northern Argentina. The female subject becomes, in my painting, guardian and foundation of collective memory, assuming the scale and immutability of the mountain range.',
+    cuerpo_q:'The poncho that becomes a mountain: the female body as geography, geography as female body. One single thing with two names.',
+    trenc_label:'02 · Technique as Argument',
+    trenc_h:'The Fragmented City: Mural Art with Recovered Tiles',
+    trenc_b1:'In contrast to the organic fluidity of the acrylic, I execute the representation of the city through the technique of trencadís or mosaic of broken, recovered tiles. I use discarded ceramic fragments to allude to the nature of the modern city — a space built on accumulation, rupture, obsolescence and constant reconfiguration.',
+    trenc_b2:'The edges and rigidity of the broken tiles symbolise the geometric violence with which the colonial urban grid was imposed on the ancestral territory. I represent the city as a fragmented fabric that breaks the continuity of the land, but which through muralism I manage to articulate and resignify into a new visual narrative.',
+    trenc_q:'The broken tile is not waste: it is a material quotation of the mutating city. Each fragment has a history before integrating into this wall.',
+    badge_dial:'Dialectics', dial_cap:'Material encounter · Fluid acrylic and sharp tile',
+    dial_label:'03 · Critical Device',
+    dial_h:'Material Dialectics as a Critical Device',
+    dial_b1:'The plastic value I pursue in this piece lies in its technical hybridisation. I bring acrylic —malleable and continuous— together with broken tile —hard, sharp and discontinuous— to operate as a metaphor for the subaltern historical experience in Latin America.',
+    dial_b2:'By integrating recovered tiles into the wall, I perform an operation of social suture: I use the fragments of the very city that segregates to reconstruct the contours of indigenous memory. My goal is to move the theoretical discussion from the purely pictorial plane to the objectual and material plane, transforming urban residue into a noble material for the monumentality of resistance.',
+    dial_q:'The fragments of the very city that segregates, turned into noble material for the monumentality and aesthetics of the resistance of great Abya Yala.',
+    proc_title:'Creative Process · From Fragment to Mural',
+    proc_intro:'The trencadís technique requires a process of collection, classification and assembly that transcends the pictorial. Each tile is recovered, cut and positioned on the wall before receiving the acrylic layer that unifies both materialities.',
+    grid_hint:'Click to enlarge · Swipe to explore',
+    cta_ey:'Nali · Visual Art · Salta 2026',
+    cta_title:'Interested in this work<br>or a mixed media project?',
+    cta_sub:'Murals with trencadís, mural paint and acrylic. Inquire about commissions and projects.',
+    cta_wa:'Write on WhatsApp', cta_back:'Back to Murals', cta_harta:'See Harta la Gasta',
+    foot:'Visual Art · Salta, Argentina · 2026'
+  },
+  pl:{
+    back:'Murale', nav_home:'Start', nav_galeria:'Galeria', nav_dict:'Słownik',
+    hero_cat:'Mural · Seria Ojos Rasgados · Technika mieszana',
+    hero_sub:'Trwałość Ułamkowej Pamięci',
+    hero_tech:'Akryl · Farba muralna · Trencadís', scroll_hint:'Eksploruj',
+    f_artista:'Artystka', f_tech:'Technika', f_tech_v:'Akryl · Farba muralna · Trencadís',
+    f_dim:'Wymiary', f_año:'Rok', f_loc:'Lokalizacja', f_wa:'Zapytaj',
+    intro_ey:'Dekolonializm · Ciało-Terytorium · Dialektyka Materii',
+    intro_p1:'Postanowiłam zatytułować tę pracę Abya Yala ze względu na głęboki historyczny i geopolityczny ciężar, jaki termin ten niesie w naukach społecznych i współczesnych teoriach dekolonialnych. Wyrażenie pochodzi z języka ludu Kuna (rdzennego z Panamy i Kolumbii) i tłumaczy się jako "ziemia w pełnym rozkwicie", "ziemia życiodajnej krwi" lub "ziemia kwitnąca".',
+    intro_p2:'W 1992 roku narody rdzenne kontynentu formalnie przyjęły ten termin jako akt samostanowienia i wspólnej tożsamości, odrzucając kolonialny narzut nazwy "Ameryka". Nadając mojemu dziełu ten tytuł, łączę konkretną geografię Salty z skalą kontynentalną.',
+    s_artista:'Artystka', s_serie:'Seria', s_serie_v:'Seria Ojos Rasgados',
+    s_tech:'Technika', s_tech_v:'Technika mieszana: akryl, farba muralna i trencadís (mozaika z odzyskanych płytek)',
+    s_dim:'Wymiary', s_loc2:'Lokalizacja',
+    s_loc_v:'Interwencja w przestrzeniach wewnętrznych, Salta, Argentyna · 2026',
+    s_titulo:'Pochodzenie tytułu', s_titulo_v:'"Abya Yala" = ziemia w pełnym rozkwicie, język Kuna (Panama i Kolumbia)',
+    gallery_title:'Dzieło · Widoki',
+    dual_title:'Analiza Teoretyczna i Ikonograficzna · Dialektyka Materii',
+    dual_intro:'Formalnie artykuluję dzieło w oparciu o materialną i koncepcyjną dualność, dzieląc płaszczyznę na dwie siły wchodzące w dialektyczne napięcie: organiczna płynność akrylu dająca życie ciału-terytorium, i twarda, nieciągła fragmentacja mozaiki kafelkowej reprezentującej nowoczesne miasto.',
+    cuerpo_label:'01 · Oś Figuratywna',
+    cuerpo_h:'Ciało-Terytorium: Kobieta-Góra i Ponczo z Salty',
+    cuerpo_b1:'Oś figuratywną mojej propozycji dominuje wizerunek rdzennej kobiety, której strój, zainspirowany tradycyjnym ponczo z Salty, organicznie przekształca się w morfologię góry. Tą operacją hybridyzacji wizualnej odwołuję się do andyjskiego pojęcia ciała-terytorium: geografia nie jako pasywny krajobraz, lecz jako rozszerzenie tożsamości wspólnotowej.',
+    cuerpo_b2:'Projektuję linie i fałdy poncza jako uskoki geologiczne i stoki, sugerując, że walka przodków jest wpisana w samą orografię północnej Argentyny. Postać kobieca staje się w mojej malarstwie strażnikiem i fundamentem zbiorowej pamięci.',
+    cuerpo_q:'Ponczo, które staje się górą: kobiece ciało jako geografia, geografia jako kobiece ciało. Jedna rzecz z dwoma nazwami.',
+    trenc_label:'02 · Technika jako Argument',
+    trenc_h:'Sfragmentowane Miasto: Mural z Odzyskanych Płytek',
+    trenc_b1:'W przeciwieństwie do organicznej płynności akrylu, reprezentację miasta realizuję techniką trencadís lub mozaiki z potłuczonych, odzyskanych płytek. Używam odrzuconych fragmentów ceramicznych, by nawiązać do natury nowoczesnego miasta — przestrzeni zbudowanej na akumulacji, rupturze, obsolescencji i ciągłej rekonfiguracji.',
+    trenc_b2:'Krawędzie i sztywność potłuczonych płytek symbolizują geometryczną przemoc, z jaką kolonialna siatka miejska narzuciła się na terytorium przodków. Reprezentuję miasto jako sfragmentowaną tkaninę, która przerywa ciągłość ziemi, ale poprzez muralismo udaje mi się ją artykułować w nową narrację wizualną.',
+    trenc_q:'Potłuczona płytka to nie odpad: to materialna cytata z mutującego miasta. Każdy fragment ma historię zanim wejdzie w ten mur.',
+    badge_dial:'Dialektyka', dial_cap:'Spotkanie materiałów · Płynny akryl i ostra płytka',
+    dial_label:'03 · Urządzenie Krytyczne',
+    dial_h:'Dialektyka Materiałów jako Urządzenie Krytyczne',
+    dial_b1:'Wartość plastyczna, którą osiągam w tej pracy, tkwi w technicznej hybrydyzacji. Łączę akryl —plastyczny i ciągły— z potłuczoną płytką —twardą, ostrą i nieciągłą— aby działała jako metafora podrzędnego doświadczenia historycznego w Ameryce Łacińskiej.',
+    dial_b2:'Integrując odzyskane płytki w murze, wykonuję operację społecznego szycia: używam fragmentów samego miasta, które segreguje, by odbudować kontury rdzennej pamięci. Moim celem jest przeniesienie dyskusji teoretycznej z płaszczyzny czysto malarskiej na płaszczyznę obiektualną i materialną.',
+    dial_q:'Fragmenty tego samego miasta, które segreguje, stają się szlachetnym materiałem dla monumentalności i estetyki oporu wielkiej Abya Yala.',
+    proc_title:'Proces Twórczy · Od Fragmentu do Muralu',
+    proc_intro:'Technika trencadís wymaga procesu zbierania, klasyfikacji i montażu, który wykracza poza to co malarskie. Każda płytka jest odzyskiwana, cięta i pozycjonowana na ścianie przed nałożeniem warstwy akrylu.',
+    grid_hint:'Kliknij, aby powiększyć',
+    cta_ey:'Nali · Sztuka Wizualna · Salta 2026',
+    cta_title:'Interesuje Cię to dzieło<br>lub projekt z techniką mieszaną?',
+    cta_sub:'Murale z trencadís, farbą muralną i akrylem. Zapytaj o zamówienia i projekty.',
+    cta_wa:'Napisz na WhatsApp', cta_back:'Wróć do Murali', cta_harta:'Zobacz Harta la Gasta',
+    foot:'Sztuka Wizualna · Salta, Argentyna · 2026'
+  },
+  fr:{
+    back:'Murales', nav_home:'Accueil', nav_galeria:'Galerie', nav_dict:'Dictionnaire',
+    hero_cat:'Murale · Série Ojos Rasgados · Technique mixte',
+    hero_sub:'La Persistance de la Mémoire Fracturée',
+    hero_tech:'Acrylique · Peinture murale · Trencadís', scroll_hint:'Explorer',
+    f_artista:'Artiste', f_tech:'Technique', f_tech_v:'Acrylique · Peinture murale · Trencadís',
+    f_dim:'Dimensions', f_año:'Année', f_loc:'Localisation', f_wa:'Renseigner',
+    intro_ey:'Décolonialisme · Corps-Territoire · Dialectique Matérielle',
+    intro_p1:"J'ai choisi d'intituler cette œuvre Abya Yala pour le profond poids historique et géopolitique que ce terme porte au sein des sciences sociales et des théories décoloniales contemporaines. L'expression provient de la langue du peuple Kuna (originaire du Panama et de la Colombie) et se traduit par \"terre en pleine maturité\", \"terre de sang vital\" ou \"terre florissante\".",
+    intro_p2:"En 1992, les nations indigènes du continent ont formellement adopté ce terme comme un acte d'autodétermination et d'identité partagée, rejetant l'imposition coloniale du nom \"Amérique\". En baptisant mon œuvre ainsi, je connecte la géographie spécifique de Salta à une échelle continentale.",
+    s_artista:'Artiste', s_serie:'Série', s_serie_v:'Série Ojos Rasgados',
+    s_tech:'Technique', s_tech_v:'Technique mixte: acrylique, peinture murale et trencadís (mosaïque de carreaux récupérés)',
+    s_dim:'Dimensions', s_loc2:'Localisation',
+    s_loc_v:'Intervention en espaces intérieurs, Salta, Argentine · 2026',
+    s_titulo:'Origine du titre', s_titulo_v:'"Abya Yala" = terre en pleine maturité, langue Kuna (Panama et Colombie)',
+    gallery_title:"L'Œuvre · Vues",
+    dual_title:'Analyse Théorique et Iconographique · Dualité Matérielle',
+    dual_intro:"J'articule formellement l'œuvre à partir d'une dualité matérielle et conceptuelle, divisant le plan en deux forces entrant en tension dialectique: la fluidité organique de l'acrylique qui donne vie au corps-territoire, et la fragmentation dure et discontinue de la mosaïque de carreaux représentant la ville moderne.",
+    cuerpo_label:"01 · L'Axe Figuratif",
+    cuerpo_h:'Le Corps-Territoire: La Femme-Montagne et le Poncho Salteño',
+    cuerpo_b1:"L'axe figuratif de ma proposition est dominé par la représentation d'une femme autochtone dont le vêtement, inspiré du traditionnel poncho salteño, se transmute organiquement en la morphologie d'une montagne. Avec cette opération d'hybridation visuelle, je fais appel au concept andin de corps-territoire: la géographie non comme un paysage passif, mais comme une extension de l'identité communautaire.",
+    cuerpo_b2:"Je projette les lignes et les plis du poncho comme des failles géologiques et des versants, suggérant que la lutte ancestrale est inscrite dans l'orographie même du nord de l'Argentine. Le sujet féminin devient, dans ma peinture, gardien et fondement de la mémoire collective.",
+    cuerpo_q:'Le poncho qui devient montagne: le corps féminin comme géographie, la géographie comme corps féminin. Une seule chose avec deux noms.',
+    trenc_label:'02 · La Technique comme Argument',
+    trenc_h:"La Ville Fragmentée: Le Muralisme de Carreaux Récupérés",
+    trenc_b1:"En contraste avec la fluidité organique de l'acrylique, j'exécute la représentation de la ville à travers la technique du trencadís ou mosaïque de carreaux cassés et récupérés. J'utilise des fragments céramiques mis au rebut pour allusion à la nature de la ville moderne — un espace construit sur l'accumulation, la rupture, l'obsolescence et la reconfiguration constante.",
+    trenc_b2:"Les arêtes et la rigidité des carreaux cassés symbolisent la violence géométrique avec laquelle la grille urbaine coloniale s'est imposée sur le territoire ancestral. Je représente la ville comme un tissu fragmenté qui brise la continuité de la terre.",
+    trenc_q:"Le carreau cassé n'est pas un déchet: c'est une citation matérielle de la ville qui mute. Chaque fragment a une histoire avant de s'intégrer dans ce mur.",
+    badge_dial:'Dialectique', dial_cap:'Rencontre matérielle · Acrylique fluide et carreau tranchant',
+    dial_label:'03 · Dispositif Critique',
+    dial_h:'Dialectique des Matériaux comme Dispositif Critique',
+    dial_b1:"La valeur plastique que je poursuis dans cette pièce réside dans son hybridation technique. Je fais coexister l'acrylique —malléable et continu— avec le carreau cassé —dur, tranchant et discontinu— pour qu'il opère comme une métaphore de l'expérience historique subalternes en Amérique Latine.",
+    dial_b2:"En intégrant les carreaux récupérés dans le mur, je réalise une opération de suture sociale: j'utilise les fragments de la même ville qui ségregue pour reconstruire les contours de la mémoire indigène.",
+    dial_q:"Les fragments de la même ville qui ségregue, convertis en matériau noble pour la monumentalité et l'esthétique de la résistance de la grande Abya Yala.",
+    proc_title:'Processus de Création · Du Fragment au Murale',
+    proc_intro:"La technique du trencadís requiert un processus de collecte, classification et montage qui transcende le pictural. Chaque carreau est récupéré, coupé et positionné sur le mur avant de recevoir la couche d'acrylique qui unifie les deux matérialités.",
+    grid_hint:'Cliquer pour agrandir · Glisser pour explorer',
+    cta_ey:'Nali · Art Visuel · Salta 2026',
+    cta_title:'Intéressé par cette œuvre<br>ou un projet en technique mixte?',
+    cta_sub:'Murales avec trencadís, peinture murale et acrylique. Renseignez-vous pour les commissions.',
+    cta_wa:'Écrire sur WhatsApp', cta_back:'Retour aux Murales', cta_harta:'Voir Harta la Gasta',
+    foot:'Art Visuel · Salta, Argentine · 2026'
+  }
+};
+
+let lang = 'es';
+function applyLang(l) {
+  lang = l;
+  document.documentElement.lang = l;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.getAttribute('data-i18n');
+    if (T[l] && T[l][k] != null) el.innerHTML = T[l][k];
+  });
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === l));
+  try { sessionStorage.setItem('nali_lang', l); } catch(e){}
+}
+document.querySelectorAll('.lang-btn').forEach(b => b.addEventListener('click', () => applyLang(b.dataset.lang)));
+try { const sl = sessionStorage.getItem('nali_lang'); if (sl && T[sl]) lang = sl; } catch(e){}
+applyLang(lang);
+
+/* ── PARTICLES ── */
+(function(){
+  const c = document.getElementById('particles');
+  const ctx = c.getContext('2d');
+  let W, H, pts = [];
+  function resize(){ W = c.width = innerWidth; H = c.height = innerHeight; }
+  resize(); addEventListener('resize', resize, {passive:true});
+  const cols = ['#C8922A','#E8B84B','#CC0000','#005BAA','#F5C400'];
+  for(let i=0;i<40;i++) pts.push({
+    x:Math.random()*2000, y:Math.random()*2000,
+    vx:(Math.random()-.5)*.15, vy:(Math.random()-.5)*.15,
+    r:Math.random()*1.3+.2, c:cols[i%5], o:Math.random()*.42+.08
+  });
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    pts.forEach(p=>{ p.x=(p.x+p.vx+W)%W; p.y=(p.y+p.vy+H)%H;
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=p.c+Math.round(p.o*255).toString(16).padStart(2,'0');
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ── PROGRESS BAR ── */
+const pb = document.getElementById('progressBar');
+addEventListener('scroll', () => {
+  const d = document.documentElement;
+  pb.style.width = (scrollY / (d.scrollHeight - d.clientHeight) * 100) + '%';
+}, {passive:true});
+
+/* ── NAV SCROLL ── */
+addEventListener('scroll', () => document.getElementById('nav').classList.toggle('scrolled', scrollY > 60), {passive:true});
+
+/* ── DRAWER ── */
+const hbg = document.getElementById('hamburger');
+const drawer = document.getElementById('drawer');
+const overlay = document.getElementById('dOverlay');
+const dClose = document.getElementById('drawerClose');
+function openDrawer(){ drawer.classList.add('open'); overlay.classList.add('open'); hbg.classList.add('open'); hbg.setAttribute('aria-expanded','true'); document.body.classList.add('locked'); }
+function closeDrawer(){ drawer.classList.remove('open'); overlay.classList.remove('open'); hbg.classList.remove('open'); hbg.setAttribute('aria-expanded','false'); document.body.classList.remove('locked'); }
+hbg.addEventListener('click', e => { e.stopPropagation(); drawer.classList.contains('open') ? closeDrawer() : openDrawer(); });
+dClose.addEventListener('click', closeDrawer);
+overlay.addEventListener('click', closeDrawer);
+document.addEventListener('keydown', e => { if(e.key==='Escape'){ closeDrawer(); closeLB(); } });
+
+/* ── LIGHTBOX ── */
+const lb = document.getElementById('lb');
+const lbImg = document.getElementById('lb-img');
+let lbImages = [], lbIdx = 0;
+
+function buildLB(){
+  lbImages = [...document.querySelectorAll('.gi[data-img]')].map(el => el.dataset.img);
+}
+function openLB(src){
+  buildLB();
+  lbIdx = lbImages.indexOf(src);
+  if(lbIdx < 0) lbIdx = 0;
+  lbImg.src = lbImages[lbIdx] || src;
+  lb.classList.add('open');
+  document.body.classList.add('locked');
+}
+function closeLB(){ lb.classList.remove('open'); document.body.classList.remove('locked'); }
+function prevLB(){ lbIdx = (lbIdx - 1 + lbImages.length) % lbImages.length; lbImg.src = lbImages[lbIdx]; }
+function nextLB(){ lbIdx = (lbIdx + 1) % lbImages.length; lbImg.src = lbImages[lbIdx]; }
+
+document.getElementById('lb-close').addEventListener('click', closeLB);
+document.getElementById('lb-prev').addEventListener('click', prevLB);
+document.getElementById('lb-next').addEventListener('click', nextLB);
+lb.addEventListener('click', e => { if(e.target===lb) closeLB(); });
+document.addEventListener('keydown', e => {
+  if(!lb.classList.contains('open')) return;
+  if(e.key==='ArrowLeft') prevLB();
+  if(e.key==='ArrowRight') nextLB();
+});
+let ts = 0;
+lb.addEventListener('touchstart', e=>{ ts=e.touches[0].clientX; },{passive:true});
+lb.addEventListener('touchend', e=>{ const dx=e.changedTouches[0].clientX-ts; if(Math.abs(dx)>45){dx<0?nextLB():prevLB();} },{passive:true});
+
+document.querySelectorAll('.gi').forEach(gi => gi.addEventListener('click', () => openLB(gi.dataset.img)));
+document.querySelectorAll('.arch-img-wrap').forEach(w => {
+  w.addEventListener('click', () => {
+    const src = w.querySelector('img')?.src;
+    if(src) openLB(src);
+  });
+});
+
+/* ── SCROLL REVEAL ── */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(en => { if(en.isIntersecting){ en.target.classList.add('visible'); obs.unobserve(en.target); } });
+}, { threshold:.07, rootMargin:'0px 0px -20px 0px' });
+document.querySelectorAll('.sr, .sr-left, .sr-right').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
