@@ -653,8 +653,8 @@ footer {
   <div class="wiphala"></div>
   <div class="nav-bar">
     <div class="nav-left">
-      <a href="galeria.html" class="nav-back"><i class="fas fa-arrow-left"></i> <span data-i18n="back">Galería</span></a>
-      <a href="galeria.html" class="nav-logo" style="margin-left:.4rem;">NAL<span>I</span></a>
+      <a href="NaliArt.html" class="nav-back"><i class="fas fa-arrow-left"></i> <span data-i18n="back">Murales</span></a>
+      <a href="index.html" class="nav-logo" style="margin-left:.4rem;">NAL<span>I</span></a>
     </div>
     <div class="nav-right">
       <div class="lang-sel">
@@ -678,12 +678,16 @@ footer {
     <button class="drawer-close" id="drawerClose"><i class="fas fa-times"></i></button>
   </div>
   <div class="drawer-body">
-    <a href="galeria.html" class="drawer-link"><span class="di"><i class="fas fa-arrow-left"></i></span><span data-i18n="back">Galería</span></a>
-    <a href="galeria.html" class="drawer-link"><span class="di"><i class="fas fa-paint-roller"></i></span><span data-i18n="nav_murales">Murales</span></a>
+    <a href="NaliArt.html" class="drawer-link"><span class="di"><i class="fas fa-arrow-left"></i></span><span data-i18n="back">Murales</span></a>
+    <a href="index.html" class="drawer-link"><span class="di"><i class="fas fa-home"></i></span><span data-i18n="nav_home">Inicio</span></a>
+    <a href="Galer.html" class="drawer-link"><span class="di"><i class="fas fa-paint-roller"></i></span><span data-i18n="nav_galeria">Galería</span></a>
     <a href="diccionario.html" class="drawer-link"><span class="di"><i class="fas fa-book-open"></i></span><span data-i18n="nav_dict">Diccionario</span></a>
     <a href="https://wa.me/48692971895" target="_blank" rel="noopener" class="drawer-link"><span class="di"><i class="fab fa-whatsapp"></i></span>WhatsApp</a>
   </div>
   <div class="drawer-foot">
+    <a href="https://wa.me/48692971895?text=Hola%20Nali%2C%20me%20interesa%20la%20obra%20Harta%20la%20Gasta" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:.5rem;background:linear-gradient(135deg,#128C7E,#075E54);color:#fff;font-family:var(--ffc);font-size:.78rem;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;padding:.75rem 1.1rem;border-radius:50px;margin-bottom:.8rem;">
+      <i class="fab fa-whatsapp"></i> WhatsApp
+    </a>
     <div class="drawer-lang">
       <button class="lang-btn active" data-lang="es">ES</button>
       <button class="lang-btn" data-lang="en">EN</button>
@@ -695,7 +699,7 @@ footer {
 
 <!-- ══ HERO ══ -->
 <section class="hero">
-  <img class="hero-img" src="https://i.ibb.co/d0P0Knz4/IMG-20260521-WA0023.jpg" alt="Harta la Gasta — Mural completo">
+  <img class="hero-img" src="https://i.ibb.co/sn1G60g/IMG-20260521-WA0019.jpg" alt="Harta la Gasta — Vista general del mural">
   <div class="hero-gradient"></div>
   <div class="hero-content content-wrap" style="left:0;right:0;position:absolute;bottom:0;">
     <p class="hero-cat" data-i18n="hero_cat">Mural · Serie Arquetipos</p>
@@ -775,66 +779,205 @@ footer {
 
     <!-- ═══ EJE CENTRAL: PACHAMAMA ═══ -->
     <div class="archetypes">
-      <h3 class="arch-section-title sr" data-i18n="pacha_section">Eje Central · La Pachamama Contemporánea</h3>
+      <h3 class="arch-section-title sr" data-i18n="pacha_section">Eje Central · La Pachamama Contemporánea y la Tensión Cósmica</h3>
 
+      <!-- VISTA GENERAL PACHA -->
       <div class="arch-block sr">
-        <div class="arch-img-wrap sr-left" style="cursor:pointer;" onclick="openLB('https://i.ibb.co/hhCyb4M/IMG-20260527-WA0260.jpg')">
-          <span class="arch-img-badge" data-i18n="badge_eje">Eje Central</span>
-          <img src="https://i.ibb.co/hhCyb4M/IMG-20260527-WA0260.jpg" alt="La Pachamama — Eje central del mural" loading="lazy">
-          <p class="arch-img-caption" data-i18n="pacha_cap">La Pacha · Mujer de tez verde · Centro compositivo</p>
-          <div class="gi-overlay" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(232,114,12,0);transition:background .3s;">
-            <i class="fas fa-expand-alt" style="color:#fff;font-size:1.4rem;opacity:0;transition:opacity .3s;"></i>
+        <div class="sr-left">
+          <div class="img-grid-4" style="grid-template-columns:1fr 1fr;">
+            <div class="gi" data-img="https://i.ibb.co/Df6WgjP8/IMG-20260527-WA0192.jpg">
+              <img src="https://i.ibb.co/Df6WgjP8/IMG-20260527-WA0192.jpg" alt="Pachamama — vista 1" loading="lazy">
+              <div class="gi-overlay"><i class="fas fa-expand-alt"></i></div>
+            </div>
+            <div class="gi" data-img="https://i.ibb.co/HL4YWD51/IMG-20260527-WA0243.jpg">
+              <img src="https://i.ibb.co/HL4YWD51/IMG-20260527-WA0243.jpg" alt="Pachamama — vista 2" loading="lazy">
+              <div class="gi-overlay"><i class="fas fa-expand-alt"></i></div>
+            </div>
           </div>
+          <p style="font-family:var(--ffc);font-size:.6rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(240,230,208,.3);margin-top:.5rem;text-align:center;" data-i18n="grid_hint">Clic para ampliar</p>
         </div>
         <div class="arch-text sr-right">
           <p class="arch-label" data-i18n="pacha_label">Núcleo Conceptual</p>
-          <h4 class="arch-title" data-i18n="pacha_h">La Pachamama Contemporánea</h4>
-          <p class="arch-body" data-i18n="pacha_b1">El núcleo compositivo y conceptual de la intervención está articulado por la figura monumental de la Pacha, representada como una mujer de tez verde — coloración que la vincula directamente con la vitalidad vegetal y la biomasa de la Madre Tierra. Lejos de la iconografía idílica tradicional, esta figura encarna una dimensión dialéctica y reflexiva.</p>
-          <p class="arch-body" style="margin-top:.9rem;" data-i18n="pacha_b2">Tres elementos iconográficos clave la definen: la <strong style="color:var(--crema);">mochila con la ciudad que se derrite</strong> (la carga global), los <strong style="color:var(--crema);">ojos cerrados</strong> (cansancio ontológico y vigilia latente) y el <strong style="color:var(--crema);">acto de fumar</strong> (canal ritual entre lo sagrado y lo profano).</p>
+          <h4 class="arch-title" data-i18n="pacha_h">La Pachamama Contemporánea — Mujer Verde</h4>
+          <p class="arch-body" data-i18n="pacha_b1">El núcleo compositivo y conceptual de mi intervención está articulado por la figura monumental de la Pacha, representada como una mujer de tez verde — una elección cromática que la vincula directamente con la vitalidad vegetal, la fotosíntesis y la biomasa de la Madre Tierra. Lejos de las representaciones folclóricas idílicas y pasivas, esta figura encarna una dimensión dialéctica, política y reflexiva a través de una simbología anatómica y objetual específica.</p>
           <div class="arch-quote" data-i18n="pacha_q">La Pacha espera con los ojos cerrados, midiendo el tiempo histórico de los humanos, aguardando el momento de una reacción o despertar colectivo.</div>
         </div>
       </div>
 
       <div class="sec-div sr"></div>
 
-      <!-- PIRÁMIDE SOCIAL -->
-      <h3 class="arch-section-title sr" data-i18n="piramide_title">Pirámide Social · Iconografía Antropomorfa</h3>
-      <p class="sr" style="font-family:var(--ffb);font-size:1.02rem;color:var(--cdim);line-height:1.9;margin-bottom:2.5rem;max-width:760px;" data-i18n="piramide_intro">Hacia los márgenes de la figura central, la obra se organiza a través de una pirámide social invertida que disecciona los estratos de la sociedad actual. Cada figura antropomorfa representa un sector social con sus propios símbolos, comportamientos y posición estructural.</p>
-
-      <!-- 1. SAPO — EL ARTISTA -->
-      <div class="arch-block sr">
-        <div class="arch-img-wrap sr-left" style="cursor:pointer;" onclick="openLB('https://i.ibb.co/WNgjDbC1/IMG-20260527-WA0249.jpg')">
-          <span class="arch-img-badge" data-i18n="badge_base">Base Demiúrgica</span>
-          <img src="https://i.ibb.co/WNgjDbC1/IMG-20260527-WA0249.jpg" alt="El Sapo — El Artista" loading="lazy">
-          <p class="arch-img-caption" data-i18n="sapo_cap">El Sapo · Arquetipo del artista · Base de la pirámide</p>
-          <div class="gi-overlay" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(232,114,12,0);transition:background .3s;"><i class="fas fa-expand-alt" style="color:#fff;font-size:1.4rem;opacity:0;transition:opacity .3s;"></i></div>
+      <!-- LOS UNIVERSOS EN COLAPSO — EL PECHO -->
+      <div class="arch-block reverse sr">
+        <div class="arch-text sr-left">
+          <p class="arch-label" data-i18n="pecho_label">Simbología Anatómica · I</p>
+          <h4 class="arch-title" data-i18n="pecho_h">Los Universos en Colapso — El Pecho</h4>
+          <p class="arch-body" data-i18n="pecho_b">En su pecho —el espacio arquetípico del alimento, el amamantamiento y el origen de la vida— pinto dos universos que se encuentran al borde de la colisión y el colapso catastrófico. Esta dualidad simboliza la crisis terminal entre el tiempo cósmico de la naturaleza y el tiempo acelerado de la destrucción humana; un tejido vital que nutre al mismo tiempo que resiste su propia extinción.</p>
+          <div class="arch-quote" data-i18n="pecho_q">El pecho que alimenta y los universos que colisionan: la misma mano que da la vida sostiene el peso de su propio colapso.</div>
         </div>
-        <div class="arch-text sr-right">
-          <p class="arch-label" data-i18n="sapo_label">01 · Base Demiúrgica</p>
-          <h4 class="arch-title" data-i18n="sapo_h">El Sapo — El Artista</h4>
-          <p class="arch-body" data-i18n="sapo_b">Ubicado en la raíz de la composición, encarna el arquetipo de la comunidad artística, el pensamiento disruptivo y el realismo mágico latinoamericano. Caracterizado con auriculares, el personaje simboliza el repliegue reflexivo: la capacidad del creador de aislarse del ruido exterior para producir desde su esencia.</p>
-          <div class="arch-quote" data-i18n="sapo_q">Desde un plano demiúrgico, el sapo es el agente catalizador que metaboliza el contexto y subvierte el orden establecido mediante la transformación simbólica.</div>
+        <div class="arch-img-wrap sr-right" style="cursor:pointer;" onclick="openLB('https://i.ibb.co/Hfn62HjL/IMG-20260527-WA0194.jpg')">
+          <span class="arch-img-badge" data-i18n="badge_cosmo">Cosmología</span>
+          <img src="https://i.ibb.co/Hfn62HjL/IMG-20260527-WA0194.jpg" alt="Los universos en colapso — El pecho" loading="lazy">
+          <p class="arch-img-caption" data-i18n="pecho_cap">El Pecho · Dos universos en colisión catastrófica</p>
+          <div class="gi-overlay" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(232,114,12,0);transition:background .3s;"><i class="fas fa-expand-alt" style="color:#fff;font-size:1.4rem;opacity:0;transition:opacity .3s;"></i></div>
         </div>
       </div>
 
       <div class="sec-div sr"></div>
 
-      <!-- 2. CERDO ALADO — MAGNATES -->
+      <!-- LA INCERTIDUMBRE TEMPORAL — EL VIENTRE -->
+      <div class="arch-block sr">
+        <div class="arch-img-wrap sr-left" style="cursor:pointer;" onclick="openLB('https://i.ibb.co/HL4YWD51/IMG-20260527-WA0243.jpg')">
+          <span class="arch-img-badge" data-i18n="badge_tiempo">Temporalidad</span>
+          <img src="https://i.ibb.co/HL4YWD51/IMG-20260527-WA0243.jpg" alt="El vientre y las montañas" loading="lazy">
+          <p class="arch-img-caption" data-i18n="vientre_cap">El Vientre · El sol suspendido · Las montañas de Salta</p>
+          <div class="gi-overlay" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(232,114,12,0);transition:background .3s;"><i class="fas fa-expand-alt" style="color:#fff;font-size:1.4rem;opacity:0;transition:opacity .3s;"></i></div>
+        </div>
+        <div class="arch-text sr-right">
+          <p class="arch-label" data-i18n="vientre_label">Simbología Anatómica · II</p>
+          <h4 class="arch-title" data-i18n="vientre_h">La Incertidumbre Temporal — El Vientre y las Montañas</h4>
+          <p class="arch-body" data-i18n="vientre_b">En su estómago habita el sol en una ambigüedad fronteriza: se encuentra suspendido en el tránsito exacto entre el atardecer y el amanecer. La obra no define si nos dirigimos hacia el anochecer total o hacia un nuevo despertar, dejando esa encrucijada en manos de la historia. Inmediatamente debajo, emergen los perfiles geográficos de las montañas de Salta, sugiriendo que el territorio local es el soporte carnal de esta incertidumbre global.</p>
+          <div class="arch-quote" data-i18n="vientre_q">El sol que no decide si es alba o crepúsculo: la historia como encrucijada abierta, las montañas de Salta como su único suelo.</div>
+        </div>
+      </div>
+
+      <div class="sec-div sr"></div>
+
+      <!-- LA CARGA GLOBALIZADA — LA MOCHILA -->
+      <div class="arch-block reverse sr">
+        <div class="arch-text sr-left">
+          <p class="arch-label" data-i18n="mochila_label">Simbología Objetual · I</p>
+          <h4 class="arch-title" data-i18n="mochila_h">La Carga Globalizada — La Mochila y la Ciudad Licuada</h4>
+          <p class="arch-body" data-i18n="mochila_b">Sobre su espalda, la deidad porta una mochila, elemento textil identitario profundamente arraigado en las comunidades andinas transfronterizas de Bolivia, Jujuy, Salta y Perú. Este objeto opera como un conector geopolítico que unifica a Latinoamérica (Abya Yala) como un solo cuerpo continental que respira bajo un mismo pulso. Sobre esta mochila de resistencia recae el peso de la modernidad: una urbe gris que se derrite, metáfora visual de la insostenibilidad de las ciudades hiperurbanizadas.</p>
+          <div class="arch-quote" data-i18n="mochila_q">La mochila andina que sostiene el peso de la ciudad que se derrumba: Abya Yala entera cargando la modernidad sobre su espalda.</div>
+        </div>
+        <div class="arch-img-wrap sr-right" style="cursor:pointer;" onclick="openLB('https://i.ibb.co/8gC6V825/IMG-20260527-WA0236.jpg')">
+          <span class="arch-img-badge" data-i18n="badge_carga">Geopolítica</span>
+          <img src="https://i.ibb.co/8gC6V825/IMG-20260527-WA0236.jpg" alt="La mochila y la ciudad licuada" loading="lazy">
+          <p class="arch-img-caption" data-i18n="mochila_cap">La Mochila · La ciudad que se derrite · Abya Yala</p>
+          <div class="gi-overlay" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(232,114,12,0);transition:background .3s;"><i class="fas fa-expand-alt" style="color:#fff;font-size:1.4rem;opacity:0;transition:opacity .3s;"></i></div>
+        </div>
+      </div>
+
+      <div class="sec-div sr"></div>
+
+      <!-- EL REPOSO CRÍTICO — LOS OJOS CERRADOS -->
+      <div class="arch-block sr">
+        <div class="arch-img-wrap sr-left" style="cursor:pointer;" onclick="openLB('https://i.ibb.co/dsMnrTxZ/IMG-20260521-WA0033.jpg')">
+          <span class="arch-img-badge" data-i18n="badge_reposo">Introspección</span>
+          <img src="https://i.ibb.co/dsMnrTxZ/IMG-20260521-WA0033.jpg" alt="Los ojos cerrados — reposo crítico" loading="lazy">
+          <p class="arch-img-caption" data-i18n="ojos_cap">Los Ojos Cerrados · Cansancio ontológico · Vigilia latente</p>
+          <div class="gi-overlay" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(232,114,12,0);transition:background .3s;"><i class="fas fa-expand-alt" style="color:#fff;font-size:1.4rem;opacity:0;transition:opacity .3s;"></i></div>
+        </div>
+        <div class="arch-text sr-right">
+          <p class="arch-label" data-i18n="ojos_label">Simbología Anatómica · III</p>
+          <h4 class="arch-title" data-i18n="ojos_h">El Reposo Crítico — Los Ojos Cerrados</h4>
+          <p class="arch-body" data-i18n="ojos_b">La Pacha mantiene los ojos cerrados, denotando un profundo cansancio ontológico. Está exhausta de soportar el peso histórico del antropocentrismo destructivo. Sin embargo, este gesto no implica derrota, sino un estado de introspección y vigilia. La deidad espera y medita, aguardando el momento de una reacción o despertar colectivo.</p>
+          <div class="arch-quote" data-i18n="ojos_q">Los ojos cerrados no son rendición: son la paciencia geológica de quien mide el tiempo en eras, no en siglos.</div>
+        </div>
+      </div>
+
+      <div class="sec-div sr"></div>
+
+      <!-- EL ACTO DE FUMAR -->
+      <div class="arch-block reverse sr">
+        <div class="arch-text sr-left">
+          <p class="arch-label" data-i18n="fumar_label">Ritual · Exhalación</p>
+          <h4 class="arch-title" data-i18n="fumar_h">El Acto de Fumar — Ritual y Exhalación</h4>
+          <p class="arch-body" data-i18n="fumar_b">El acto de fumar conecta la esfera de lo sagrado con lo profano. El humo exhalado funciona como un canal de comunicación ritual, un aliento vital que limpia pero que también advierte, transformándose formalmente en las derivaciones estéticas del fileteado porteño que cruzan el resto del mural y conectan todas las figuras.</p>
+          <div class="arch-quote" data-i18n="fumar_q">El humo que sale de sus labios es el fileteado que todo lo conecta: la frontera entre lo sagrado y lo profano dibujada en cada bocanada.</div>
+        </div>
+        <div class="arch-img-wrap sr-right" style="cursor:pointer;" onclick="openLB('https://i.ibb.co/hhyMQZv/IMG-20260521-WA0023.jpg')">
+          <span class="arch-img-badge" data-i18n="badge_ritual">Ritual</span>
+          <img src="https://i.ibb.co/hhyMQZv/IMG-20260521-WA0023.jpg" alt="El acto de fumar — canal ritual" loading="lazy">
+          <p class="arch-img-caption" data-i18n="fumar_cap">El Acto de Fumar · Canal ritual · Humo que advierte y conecta</p>
+          <div class="gi-overlay" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(232,114,12,0);transition:background .3s;"><i class="fas fa-expand-alt" style="color:#fff;font-size:1.4rem;opacity:0;transition:opacity .3s;"></i></div>
+        </div>
+      </div>
+
+      <div class="sec-div sr"></div>
+
+      <!-- WIPHALA -->
+      <h3 class="arch-section-title sr" data-i18n="wiphala_section">La Wiphala — Eje Político e Intercultural</h3>
+
+      <div class="arch-block sr">
+        <div class="arch-img-wrap sr-left" style="cursor:pointer;" onclick="openLB('https://i.ibb.co/ksMfH9zs/In-Shot-20260619-084030635.jpg')">
+          <span class="arch-img-badge" data-i18n="badge_wiphala">Símbolo Político</span>
+          <img src="https://i.ibb.co/ksMfH9zs/In-Shot-20260619-084030635.jpg" alt="La Wiphala — centro geométrico" loading="lazy">
+          <p class="arch-img-caption" data-i18n="wiphala_cap">La Wiphala · Centro geométrico · Rodeada de arquetipos</p>
+          <div class="gi-overlay" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(232,114,12,0);transition:background .3s;"><i class="fas fa-expand-alt" style="color:#fff;font-size:1.4rem;opacity:0;transition:opacity .3s;"></i></div>
+        </div>
+        <div class="arch-text sr-right">
+          <p class="arch-label" data-i18n="wiphala_label">Articulación Sociopolítica</p>
+          <h4 class="arch-title" data-i18n="wiphala_h">La Wiphala como Eje Político e Intercultural</h4>
+          <p class="arch-body" data-i18n="wiphala_b1">Ubicada estratégicamente en el centro geométrico de la composición y rodeada por los diferentes arquetipos animales, introduzco la Wiphala. Esta insignia cuadrangular de cuarenta y nueve escaques simétricos no aparece como elemento meramente decorativo, sino como un potente dispositivo de articulación sociopolítica.</p>
+          <p class="arch-body" style="margin-top:.9rem;" data-i18n="wiphala_b2">Cada uno de sus siete colores representa un plano de la existencia andina: la energía, la tierra, la sociedad, la cultura, el tiempo, el espacio y la estructura cósmica. La bandera se despliega resguardada bajo el humo denso de la Pacha, afirmando que las naciones originarias preexisten y son parte activa y constitutiva del pueblo argentino actual, disputando el relato homogeneizador del Estado-Nación desde la periferia salteña.</p>
+          <div class="arch-quote" data-i18n="wiphala_q">La Wiphala al centro, los arquetipos del poder a los márgenes: la geometría de la composición es en sí misma un acto político.</div>
+        </div>
+      </div>
+
+      <div class="sec-div sr"></div>
+
+      <!-- PIRÁMIDE SOCIAL — VISTA GENERAL -->
+      <h3 class="arch-section-title sr" data-i18n="piramide_title">Pirámide Social · Iconografía Antropomorfa</h3>
+
+      <div class="arch-block reverse sr">
+        <div class="arch-text sr-left">
+          <p class="arch-label" data-i18n="piramide_label">Estructura Compositiva</p>
+          <h4 class="arch-title" data-i18n="piramide_h">La Pirámide Social Invertida</h4>
+          <p class="arch-body" data-i18n="piramide_intro">Hacia los márgenes del eje central, organizo formalmente el espacio a través de una pirámide social invertida mediante una fauna arquetípica contemporánea que disecciona las dinámicas de clase de la sociedad actual. Cada animal representa un sector social con sus propios símbolos, comportamientos y posición estructural.</p>
+          <div class="arch-quote" data-i18n="piramide_q">La inversión de la pirámide no es accidente formal: es tesis política. Lo que el sistema ubica arriba, el mural lo coloca abajo — y viceversa.</div>
+        </div>
+        <div class="arch-img-wrap sr-right" style="cursor:pointer;" onclick="openLB('https://i.ibb.co/0HvdxrK/IMG-20260527-WA0254.jpg')">
+          <span class="arch-img-badge" data-i18n="badge_piramide">Estructura Social</span>
+          <img src="https://i.ibb.co/0HvdxrK/IMG-20260527-WA0254.jpg" alt="Pirámide social invertida — vista general" loading="lazy">
+          <p class="arch-img-caption" data-i18n="piramide_cap">Vista general · Pirámide social invertida · Fauna arquetípica</p>
+          <div class="gi-overlay" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(232,114,12,0);transition:background .3s;"><i class="fas fa-expand-alt" style="color:#fff;font-size:1.4rem;opacity:0;transition:opacity .3s;"></i></div>
+        </div>
+      </div>
+
+      <div class="sec-div sr"></div>
+
+      <!-- 1. SAPO -->
+      <div class="arch-block sr">
+        <div class="sr-left">
+          <div class="img-grid-4" style="grid-template-columns:1fr 1fr;">
+            <div class="gi" data-img="https://i.ibb.co/WNgjDbC1/IMG-20260527-WA0249.jpg">
+              <img src="https://i.ibb.co/WNgjDbC1/IMG-20260527-WA0249.jpg" alt="El Sapo — El Artista 1" loading="lazy">
+              <div class="gi-overlay"><i class="fas fa-expand-alt"></i></div>
+            </div>
+            <div class="gi" data-img="https://i.ibb.co/WW5nLtKh/IMG-20260527-WA0251.jpg">
+              <img src="https://i.ibb.co/WW5nLtKh/IMG-20260527-WA0251.jpg" alt="El Sapo — El Artista 2" loading="lazy">
+              <div class="gi-overlay"><i class="fas fa-expand-alt"></i></div>
+            </div>
+          </div>
+          <p style="font-family:var(--ffc);font-size:.6rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(240,230,208,.3);margin-top:.5rem;text-align:center;" data-i18n="grid_hint">Clic para ampliar</p>
+        </div>
+        <div class="arch-text sr-right">
+          <p class="arch-label" data-i18n="sapo_label">01 · Base Demiúrgica</p>
+          <h4 class="arch-title" data-i18n="sapo_h">El Sapo — El Artista</h4>
+          <p class="arch-body" data-i18n="sapo_b">Ubicado en la raíz de la composición, encarna el arquetipo de la comunidad artística, el pensamiento disruptivo y el realismo mágico latinoamericano. Caracterizado con auriculares, el personaje simboliza el repliegue reflexivo: la capacidad del creador de aislarse del ruido exterior para producir desde su esencia ontológica. Desde un plano demiúrgico, el sapo es el agente catalizador que metaboliza el contexto y tiene la potencia de mover y transformar los demás arquetipos si así lo desea.</p>
+          <div class="arch-quote" data-i18n="sapo_q">El sapo no está al margen: está en la raíz. Desde ahí manipula las tensiones de los estratos superiores, subvirtiendo el orden mediante la transformación simbólica.</div>
+        </div>
+      </div>
+
+      <div class="sec-div sr"></div>
+
+      <!-- 2. CERDO ALADO -->
       <div class="arch-block reverse sr">
         <div class="arch-text sr-left">
           <p class="arch-label" data-i18n="cerdo_label">02 · Hegemonía Financiera</p>
           <h4 class="arch-title" data-i18n="cerdo_h">El Cerdo Alado — Los Magnates</h4>
-          <p class="arch-body" data-i18n="cerdo_b">En el segundo escalón de la pirámide se ubica el cerdo con alas, representación satírica de la oligarquía económica y las élites corporativas. Sus guantes blancos aluden directamente a la criminalidad financiera que opera desde la impunidad estructural. El componente zoológico denota la voracidad del capital acumulativo, mientras las alas ironizan sobre su percepción de superioridad jerárquica.</p>
+          <p class="arch-body" data-i18n="cerdo_b">En el segundo escalón de la pirámide se ubica el cerdo con alas, una representación satírica de la oligarquía económica y las élites corporativas globales. Sus guantes blancos aluden directamente a la criminalidad financiera que opera desde la impunidad estructural. El componente zoológico denota la voracidad del capital acumulativo, mientras que las alas ironizan sobre su percepción de superioridad jerárquica frente a una masa social mayoritaria.</p>
           <div class="arch-quote" data-i18n="cerdo_q">Los "ladrones de guante blanco": la voracidad del cerdo con la ilusión de las alas. El capital que se cree por encima del mundo que explota.</div>
         </div>
         <div class="sr-right">
           <div class="img-grid-4" style="grid-template-columns:1fr 1fr;">
             <div class="gi" data-img="https://i.ibb.co/xSvqKrFj/IMG-20260527-WA0204.jpg">
-              <img src="https://i.ibb.co/xSvqKrFj/IMG-20260527-WA0204.jpg" alt="El Cerdo Alado — detalle 1" loading="lazy">
+              <img src="https://i.ibb.co/xSvqKrFj/IMG-20260527-WA0204.jpg" alt="El Cerdo Alado — 1" loading="lazy">
               <div class="gi-overlay"><i class="fas fa-expand-alt"></i></div>
             </div>
             <div class="gi" data-img="https://i.ibb.co/p60cW2W7/IMG-20260527-WA0218.jpg">
-              <img src="https://i.ibb.co/p60cW2W7/IMG-20260527-WA0218.jpg" alt="El Cerdo Alado — detalle 2" loading="lazy">
+              <img src="https://i.ibb.co/p60cW2W7/IMG-20260527-WA0218.jpg" alt="El Cerdo Alado — 2" loading="lazy">
               <div class="gi-overlay"><i class="fas fa-expand-alt"></i></div>
             </div>
           </div>
@@ -844,16 +987,16 @@ footer {
 
       <div class="sec-div sr"></div>
 
-      <!-- 3. TORO/VACA — EL PUEBLO TRABAJADOR -->
+      <!-- 3. TORO/VACA -->
       <div class="arch-block sr">
         <div class="sr-left">
           <div class="img-grid-4" style="grid-template-columns:1fr 1fr;">
             <div class="gi" data-img="https://i.ibb.co/HDbvPSS7/IMG-20260521-WA0039.jpg">
-              <img src="https://i.ibb.co/HDbvPSS7/IMG-20260521-WA0039.jpg" alt="El Toro/Vaca — El Pueblo Trabajador 1" loading="lazy">
+              <img src="https://i.ibb.co/HDbvPSS7/IMG-20260521-WA0039.jpg" alt="El Toro — 1" loading="lazy">
               <div class="gi-overlay"><i class="fas fa-expand-alt"></i></div>
             </div>
             <div class="gi" data-img="https://i.ibb.co/3wMhHhs/IMG-20260521-WA0036.jpg">
-              <img src="https://i.ibb.co/3wMhHhs/IMG-20260521-WA0036.jpg" alt="El Toro/Vaca — El Pueblo Trabajador 2" loading="lazy">
+              <img src="https://i.ibb.co/3wMhHhs/IMG-20260521-WA0036.jpg" alt="El Toro — 2" loading="lazy">
               <div class="gi-overlay"><i class="fas fa-expand-alt"></i></div>
             </div>
           </div>
@@ -862,29 +1005,29 @@ footer {
         <div class="arch-text sr-right">
           <p class="arch-label" data-i18n="toro_label">03 · Alienación Laboral</p>
           <h4 class="arch-title" data-i18n="toro_h">El Toro/Vaca — El Pueblo Trabajador</h4>
-          <p class="arch-body" data-i18n="toro_b">Este arquetipo condensa la fuerza de trabajo alienada. La pieza examina el concepto de masa a través del comportamiento de rebaño. Las figuras vacunas se configuran en un estado de subordinación: algunos sujetos habitan con resignación o comodidad la opresión de su estatus de "ganado", mientras que otros continúan bajo dinámicas de sometimiento sin haber desarrollado una conciencia de su condición periférica.</p>
+          <p class="arch-body" data-i18n="toro_b">Este arquetipo condensa la fuerza de trabajo alienada. Examino el concepto de masa a través del comportamiento de rebaño. Las figuras vacunas se configuran en un estado de subordinación: algunos sujetos habitan con resignación o comodidad la opresión de su estatus de "ganado", mientras que otros continúan bajo dinámicas de sometimiento sin haber desarrollado una conciencia plena de su condición periférica.</p>
           <div class="arch-quote" data-i18n="toro_q">La masa como rebaño: el que conoce su jaula y elige quedarse, y el que ni siquiera sabe que está encerrado. Dos formas de la misma pérdida.</div>
         </div>
       </div>
 
       <div class="sec-div sr"></div>
 
-      <!-- 4. LLAMA — TURISMO / FETICHISMO -->
+      <!-- 4. LLAMA -->
       <div class="arch-block reverse sr">
         <div class="arch-text sr-left">
           <p class="arch-label" data-i18n="llama_label">04 · Fetichismo de la Mercancía</p>
           <h4 class="arch-title" data-i18n="llama_h">La Llama — El Turismo de Consumo</h4>
-          <p class="arch-body" data-i18n="llama_b">Como elemento idiosincrático del norte argentino, la llama se introduce como una crítica a la mercantilización de la identidad local. Representa la economía del turismo extractivista y la conversión de los símbolos autóctonos en bienes de consumo simplificados para la mirada del capital global. Lo sagrado, reducido a souvenir.</p>
+          <p class="arch-body" data-i18n="llama_b">Como elemento idiosincrático del norte argentino, la llama se introduce como una crítica a la mercantilización de la identidad local. Representa la economía del turismo extractivista y la conversión de los símbolos autóctonos en bienes de consumo simplificados para la mirada y el usufructo del capital global. Lo sagrado, reducido a souvenir.</p>
           <div class="arch-quote" data-i18n="llama_q">La llama fotografiada por el turista que nunca aprenderá su nombre en quechua. El exotismo como industria, la identidad como producto.</div>
         </div>
         <div class="sr-right">
           <div class="img-grid-4" style="grid-template-columns:1fr 1fr;">
             <div class="gi" data-img="https://i.ibb.co/CKfsdZTj/IMG-20260521-WA0038.jpg">
-              <img src="https://i.ibb.co/CKfsdZTj/IMG-20260521-WA0038.jpg" alt="La Llama — Fetichismo de la mercancía 1" loading="lazy">
+              <img src="https://i.ibb.co/CKfsdZTj/IMG-20260521-WA0038.jpg" alt="La Llama — 1" loading="lazy">
               <div class="gi-overlay"><i class="fas fa-expand-alt"></i></div>
             </div>
             <div class="gi" data-img="https://i.ibb.co/b5g9nFRF/IMG-20260521-WA0034.jpg">
-              <img src="https://i.ibb.co/b5g9nFRF/IMG-20260521-WA0034.jpg" alt="La Llama — Fetichismo de la mercancía 2" loading="lazy">
+              <img src="https://i.ibb.co/b5g9nFRF/IMG-20260521-WA0034.jpg" alt="La Llama — 2" loading="lazy">
               <div class="gi-overlay"><i class="fas fa-expand-alt"></i></div>
             </div>
           </div>
@@ -894,16 +1037,16 @@ footer {
 
       <div class="sec-div sr"></div>
 
-      <!-- 5. QUIRQUINCHO — FÚTBOL / CULTURA POPULAR -->
+      <!-- 5. QUIRQUINCHO -->
       <div class="arch-block sr">
         <div class="sr-left">
           <div class="img-grid-4" style="grid-template-columns:1fr 1fr;">
             <div class="gi" data-img="https://i.ibb.co/b5g9nFRF/IMG-20260521-WA0034.jpg">
-              <img src="https://i.ibb.co/b5g9nFRF/IMG-20260521-WA0034.jpg" alt="El Quirquincho — Cultura popular 1" loading="lazy">
+              <img src="https://i.ibb.co/b5g9nFRF/IMG-20260521-WA0034.jpg" alt="El Quirquincho — 1" loading="lazy">
               <div class="gi-overlay"><i class="fas fa-expand-alt"></i></div>
             </div>
             <div class="gi" data-img="https://i.ibb.co/23WpsNRQ/IMG-20260521-WA0031.jpg">
-              <img src="https://i.ibb.co/23WpsNRQ/IMG-20260521-WA0031.jpg" alt="El Quirquincho — Cultura popular 2" loading="lazy">
+              <img src="https://i.ibb.co/23WpsNRQ/IMG-20260521-WA0031.jpg" alt="El Quirquincho — 2" loading="lazy">
               <div class="gi-overlay"><i class="fas fa-expand-alt"></i></div>
             </div>
           </div>
@@ -912,26 +1055,26 @@ footer {
         <div class="arch-text sr-right">
           <p class="arch-label" data-i18n="quirq_label">05 · Cohesión Colectiva</p>
           <h4 class="arch-title" data-i18n="quirq_h">El Quirquincho — La Pasión Deportiva</h4>
-          <p class="arch-body" data-i18n="quirq_b">El quirquincho asociado al fútbol materializa el arraigo de las pasiones populares en el Cono Sur. La coraza impenetrable del animal funciona como una metáfora visual de la resiliencia y la inquebrantable armadura emocional que genera el deporte como aglutinador social en contextos de crisis.</p>
+          <p class="arch-body" data-i18n="quirq_b">El quirquincho asociado al fútbol materializa el arraigo de las pasiones populares en el Cono Sur. La coraza impenetrable del animal funciona como una metáfora visual de la resiliencia y la inquebrantable armadura emocional que genera el deporte como aglutinador social en contextos de crisis sistémica.</p>
           <div class="arch-quote" data-i18n="quirq_q">La coraza del quirquincho: lo que no nos rompe, nos sostiene. El fútbol como ritual colectivo de pertenencia cuando todo lo demás falla.</div>
         </div>
       </div>
 
       <div class="sec-div sr"></div>
 
-      <!-- HIBRIDACIÓN: CACTUS + FILETEADO -->
+      <!-- HIBRIDACIÓN -->
       <h3 class="arch-section-title sr" data-i18n="hibrid_title">Hibridación Cultural · Elementos de Conectividad</h3>
 
       <!-- CACTUS -->
       <div class="arch-block reverse sr">
         <div class="arch-text sr-left">
-          <p class="arch-label" data-i18n="cactus_label">Elemento Territorial</p>
+          <p class="arch-label" data-i18n="cactus_label">Tierra · Agua · Fuego</p>
           <h4 class="arch-title" data-i18n="cactus_h">La Tierra, el Agua y el Fuego — El Cactus</h4>
           <p class="arch-body" data-i18n="cactus_b">La flora vernácula actúa como un recordatorio de los ciclos vitales esenciales que persisten debajo de las superestructuras sociales. El cactus es el anclaje físico con el territorio árido andino: sobrevive sin concesiones, almacena lo que necesita, y florece en el momento exacto. Frente a toda arquitectura social, la tierra reclama su permanencia.</p>
           <div class="arch-quote" data-i18n="cactus_q">El cactus no pide permiso para existir. Florece donde otros no pueden. Ese es el mandato que la Pacha lleva en su cuerpo.</div>
         </div>
         <div class="arch-img-wrap sr-right" style="cursor:pointer;" onclick="openLB('https://i.ibb.co/23WpsNRQ/IMG-20260521-WA0031.jpg')">
-          <span class="arch-img-badge" data-i18n="badge_elem">Elemento</span>
+          <span class="arch-img-badge" data-i18n="badge_elem">Elemento Territorial</span>
           <img src="https://i.ibb.co/23WpsNRQ/IMG-20260521-WA0031.jpg" alt="El Cactus — flora vernácula andina" loading="lazy">
           <p class="arch-img-caption" data-i18n="cactus_cap">El Cactus · Anclaje territorial andino</p>
           <div class="gi-overlay" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(232,114,12,0);transition:background .3s;"><i class="fas fa-expand-alt" style="color:#fff;font-size:1.4rem;opacity:0;transition:opacity .3s;"></i></div>
@@ -940,31 +1083,31 @@ footer {
 
       <div class="sec-div sr"></div>
 
-      <!-- FILETEADO / HUMO -->
+      <!-- FILETEADO -->
       <div class="arch-block sr">
         <div class="arch-text sr-left">
           <p class="arch-label" data-i18n="filet_label">Hibridación Transregional</p>
           <h4 class="arch-title" data-i18n="filet_h">El Humo en Fileteado Porteño</h4>
           <p class="arch-body" data-i18n="filet_b">Las emanaciones gaseosas que brotan de la Pacha adoptan la grafía curva y dinámica del fileteado porteño — estilo pictórico histórico de los barrios de inmigrantes en La Boca, Buenos Aires. Esta decisión formal descentraliza la mirada estrictamente andina al introducir un código visual de la periferia rioplatense.</p>
-          <p class="arch-body" style="margin-top:.9rem;" data-i18n="filet_b2">Se establece así un diálogo transregional sobre los flujos migratorios y las identidades superpuestas que componen la Argentina contemporánea. El humo no tiene fronteras: sube, se expande, se mezcla — como las culturas que dan forma a este país.</p>
+          <p class="arch-body" style="margin-top:.9rem;" data-i18n="filet_b2">Se establece así un diálogo transregional sobre los flujos migratorios, las hibridaciones estéticas y las identidades superpuestas que componen la Argentina contemporánea. El humo no tiene fronteras: sube, se expande, se mezcla.</p>
           <div class="arch-quote" data-i18n="filet_q">La curva del fileteado porteño en el mural salteño: Argentina entera contenida en una sola línea que no sabe de fronteras.</div>
         </div>
         <div class="sr-right">
           <div class="img-grid-4">
             <div class="gi" data-img="https://i.ibb.co/PZHrFqJW/IMG-20260527-WA0226.jpg">
-              <img src="https://i.ibb.co/PZHrFqJW/IMG-20260527-WA0226.jpg" alt="Fileteado porteño — detalle 1" loading="lazy">
+              <img src="https://i.ibb.co/PZHrFqJW/IMG-20260527-WA0226.jpg" alt="Fileteado 1" loading="lazy">
               <div class="gi-overlay"><i class="fas fa-expand-alt"></i></div>
             </div>
             <div class="gi" data-img="https://i.ibb.co/9kGwG99J/IMG-20260527-WA0216.jpg">
-              <img src="https://i.ibb.co/9kGwG99J/IMG-20260527-WA0216.jpg" alt="Fileteado porteño — detalle 2" loading="lazy">
+              <img src="https://i.ibb.co/9kGwG99J/IMG-20260527-WA0216.jpg" alt="Fileteado 2" loading="lazy">
               <div class="gi-overlay"><i class="fas fa-expand-alt"></i></div>
             </div>
             <div class="gi" data-img="https://i.ibb.co/5gXZhzvT/IMG-20260527-WA0201.jpg">
-              <img src="https://i.ibb.co/5gXZhzvT/IMG-20260527-WA0201.jpg" alt="Fileteado porteño — detalle 3" loading="lazy">
+              <img src="https://i.ibb.co/5gXZhzvT/IMG-20260527-WA0201.jpg" alt="Fileteado 3" loading="lazy">
               <div class="gi-overlay"><i class="fas fa-expand-alt"></i></div>
             </div>
             <div class="gi" data-img="https://i.ibb.co/SX7gV0QN/IMG-20260527-WA0189.jpg">
-              <img src="https://i.ibb.co/SX7gV0QN/IMG-20260527-WA0189.jpg" alt="Fileteado porteño — detalle 4" loading="lazy">
+              <img src="https://i.ibb.co/SX7gV0QN/IMG-20260527-WA0189.jpg" alt="Fileteado 4" loading="lazy">
               <div class="gi-overlay"><i class="fas fa-expand-alt"></i></div>
             </div>
           </div>
@@ -973,6 +1116,8 @@ footer {
       </div>
 
     </div><!-- /archetypes -->
+
+        </div><!-- /archetypes -->
 
     <div class="wiphala-div sr"></div>
 
@@ -1026,8 +1171,8 @@ footer {
       <a href="https://wa.me/48692971895?text=Hola%20Nali%2C%20me%20interesa%20la%20obra%20%22Harta%20la%20Gasta%22" target="_blank" rel="noopener" class="cta-btn-primary">
         <i class="fab fa-whatsapp"></i> <span data-i18n="cta_wa">Escribir por WhatsApp</span>
       </a>
-      <a href="galeria.html" class="cta-btn-secondary">
-        <i class="fas fa-arrow-left"></i> <span data-i18n="cta_gallery">Ver más obras</span>
+      <a href="NaliArt.html" class="cta-btn-secondary">
+        <i class="fas fa-arrow-left"></i> <span data-i18n="cta_gallery">Volver a Murales</span>
       </a>
       <a href="diccionario.html" class="cta-btn-secondary">
         <i class="fas fa-book-open"></i> <span data-i18n="cta_dict">Diccionario Andino</span>
@@ -1067,7 +1212,41 @@ const T = {
     s_tech:'Técnica', s_tech_v:'Técnica mixta: acrílico y látex sobre muro',
     s_dim:'Dimensiones', s_loc2:'Localización',
     s_titulo:'Origen del título', s_titulo_v:'"Gasta" = pueblo en kakán, lengua diaguita-calchaquí',
-    pacha_section:'Eje Central · La Pachamama Contemporánea',
+    pacha_section:'Eje Central · La Pachamama Contemporánea y la Tensión Cósmica',
+    pecho_label:'Simbología Anatómica · I', pecho_h:'Los Universos en Colapso — El Pecho',
+    pecho_b:'En su pecho —el espacio arquetípico del alimento, el amamantamiento y el origen de la vida— pinto dos universos que se encuentran al borde de la colisión y el colapso catastrófico. Esta dualidad simboliza la crisis terminal entre el tiempo cósmico de la naturaleza y el tiempo acelerado de la destrucción humana; un tejido vital que nutre al mismo tiempo que resiste su propia extinción.',
+    pecho_q:'El pecho que alimenta y los universos que colisionan: la misma mano que da la vida sostiene el peso de su propio colapso.',
+    pecho_cap:'El Pecho · Dos universos en colisión catastrófica',
+    badge_cosmo:'Cosmología', badge_tiempo:'Temporalidad', badge_carga:'Geopolítica',
+    badge_reposo:'Introspección', badge_ritual:'Ritual', badge_wiphala:'Símbolo Político',
+    badge_piramide:'Estructura Social',
+    vientre_label:'Simbología Anatómica · II', vientre_h:'La Incertidumbre Temporal — El Vientre y las Montañas',
+    vientre_b:'En su estómago habita el sol en una ambigüedad fronteriza: se encuentra suspendido en el tránsito exacto entre el atardecer y el amanecer. La obra no define si nos dirigimos hacia el anochecer total o hacia un nuevo despertar, dejando esa encrucijada en manos de la historia. Inmediatamente debajo, emergen los perfiles geográficos de las montañas de Salta, sugiriendo que el territorio local es el soporte carnal de esta incertidumbre global.',
+    vientre_q:'El sol que no decide si es alba o crepúsculo: la historia como encrucijada abierta, las montañas de Salta como su único suelo.',
+    vientre_cap:'El Vientre · El sol suspendido · Las montañas de Salta',
+    mochila_label:'Simbología Objetual · I', mochila_h:'La Carga Globalizada — La Mochila y la Ciudad Licuada',
+    mochila_b:'Sobre su espalda, la deidad porta una mochila, elemento textil identitario profundamente arraigado en las comunidades andinas transfronterizas de Bolivia, Jujuy, Salta y Perú. Este objeto opera como un conector geopolítico que unifica a Latinoamérica (Abya Yala) como un solo cuerpo continental. Sobre esta mochila de resistencia recae el peso de la modernidad: una urbe gris que se derrite.',
+    mochila_q:'La mochila andina que sostiene el peso de la ciudad que se derrumba: Abya Yala entera cargando la modernidad sobre su espalda.',
+    mochila_cap:'La Mochila · La ciudad que se derrite · Abya Yala',
+    ojos_label:'Simbología Anatómica · III', ojos_h:'El Reposo Crítico — Los Ojos Cerrados',
+    ojos_b:'La Pacha mantiene los ojos cerrados, denotando un profundo cansancio ontológico. Está exhausta de soportar el peso histórico del antropocentrismo destructivo. Sin embargo, este gesto no implica derrota, sino un estado de introspección y vigilia. La deidad espera y medita, aguardando el momento de una reacción o despertar colectivo.',
+    ojos_q:'Los ojos cerrados no son rendición: son la paciencia geológica de quien mide el tiempo en eras, no en siglos.',
+    ojos_cap:'Los Ojos Cerrados · Cansancio ontológico · Vigilia latente',
+    fumar_label:'Ritual · Exhalación', fumar_h:'El Acto de Fumar — Ritual y Exhalación',
+    fumar_b:'El acto de fumar conecta la esfera de lo sagrado con lo profano. El humo exhalado funciona como un canal de comunicación ritual, un aliento vital que limpia pero que también advierte, transformándose formalmente en las derivaciones estéticas del fileteado porteño que cruzan el resto del mural y conectan todas las figuras.',
+    fumar_q:'El humo que sale de sus labios es el fileteado que todo lo conecta: la frontera entre lo sagrado y lo profano dibujada en cada bocanada.',
+    fumar_cap:'El Acto de Fumar · Canal ritual · Humo que advierte y conecta',
+    wiphala_section:'La Wiphala — Eje Político e Intercultural',
+    wiphala_label:'Articulación Sociopolítica', wiphala_h:'La Wiphala como Eje Político e Intercultural',
+    wiphala_b1:'Ubicada estratégicamente en el centro geométrico de la composición y rodeada por los diferentes arquetipos animales, introduzco la Wiphala. Esta insignia cuadrangular de cuarenta y nueve escaques simétricos no aparece como elemento meramente decorativo, sino como un potente dispositivo de articulación sociopolítica.',
+    wiphala_b2:'Cada uno de sus siete colores representa un plano de la existencia andina: la energía, la tierra, la sociedad, la cultura, el tiempo, el espacio y la estructura cósmica. La bandera se despliega resguardada bajo el humo denso de la Pacha, afirmando que las naciones originarias preexisten y son parte activa del pueblo argentino actual.',
+    wiphala_q:'La Wiphala al centro, los arquetipos del poder a los márgenes: la geometría de la composición es en sí misma un acto político.',
+    wiphala_cap:'La Wiphala · Centro geométrico · Rodeada de arquetipos',
+    piramide_label:'Estructura Compositiva', piramide_h:'La Pirámide Social Invertida',
+    piramide_cap:'Vista general · Pirámide social invertida · Fauna arquetípica',
+    piramide_q:'La inversión de la pirámide no es accidente formal: es tesis política.',
+    cta_gallery:'Volver a Murales',
+    nav_home:'Inicio', nav_galeria:'Galería',
     badge_eje:'Eje Central',
     pacha_cap:'La Pacha · Mujer de tez verde · Centro compositivo',
     pacha_label:'Núcleo Conceptual', pacha_h:'La Pachamama Contemporánea',
@@ -1114,7 +1293,7 @@ const T = {
     foot:'Arte Visual · Salta, Argentina · 2026'
   },
   en:{
-    back:'Gallery', nav_murales:'Murals', nav_dict:'Dictionary',
+    back:'Murals', nav_murales:'Murals', nav_home:'Home', nav_galeria:'Gallery', nav_dict:'Dictionary',
     hero_cat:'Mural · Syncretism · Archetypes', hero_tech:'Mixed media · Acrylic & latex', scroll_hint:'Explore',
     f_tech:'Technique', f_artista:'Artist', f_dim:'Dimensions', f_año:'Year', f_loc:'Location', f_wa:'Inquire',
     intro_ey:'Syncretism · Social Stratification · Anthropomorphic Archetypes',
@@ -1125,7 +1304,41 @@ const T = {
     s_tech:'Technique', s_tech_v:'Mixed media: acrylic and latex on wall',
     s_dim:'Dimensions', s_loc2:'Location',
     s_titulo:'Title origin', s_titulo_v:'"Gasta" = people/town in Kakán, Diaguita-Calchaquí language',
-    pacha_section:'Central Axis · The Contemporary Pachamama',
+    pacha_section:'Central Axis · The Contemporary Pachamama and Cosmic Tension',
+    pecho_label:'Anatomical Symbolism · I', pecho_h:'The Collapsing Universes — The Chest',
+    pecho_b:'On her chest —the archetypal space of nourishment, breastfeeding and the origin of life— I paint two universes on the brink of catastrophic collision. This duality symbolises the terminal crisis between the cosmic time of nature and the accelerated time of human destruction.',
+    pecho_q:'The chest that nourishes and the universes that collide: the same hand that gives life bears the weight of its own collapse.',
+    pecho_cap:'The Chest · Two universes in catastrophic collision',
+    badge_cosmo:'Cosmology', badge_tiempo:'Temporality', badge_carga:'Geopolitics',
+    badge_reposo:'Introspection', badge_ritual:'Ritual', badge_wiphala:'Political Symbol',
+    badge_piramide:'Social Structure',
+    vientre_label:'Anatomical Symbolism · II', vientre_h:'Temporal Uncertainty — The Womb and the Mountains',
+    vientre_b:'In her stomach dwells the sun in a frontier ambiguity: suspended in the exact transit between sunset and sunrise. The work does not define whether we head toward total darkness or a new awakening, leaving that crossroads in the hands of history. Below this solar womb emerge the geographical profiles of the mountains of Salta.',
+    vientre_q:'The sun that cannot decide if it is dawn or dusk: history as an open crossroads, the mountains of Salta as its only ground.',
+    vientre_cap:'The Womb · Suspended sun · The mountains of Salta',
+    mochila_label:'Object Symbolism · I', mochila_h:'The Globalised Burden — The Backpack and the Liquefied City',
+    mochila_b:'On her back, the deity carries a backpack, a deeply rooted identity textile in the cross-border Andean communities of Bolivia, Jujuy, Salta and Peru. This object operates as a geopolitical connector unifying Latin America (Abya Yala) as a single continental body. On this backpack of resistance falls the weight of modernity: a grey city that melts.',
+    mochila_q:'The Andean backpack bearing the weight of the crumbling city: all of Abya Yala carrying modernity on its back.',
+    mochila_cap:'The Backpack · The melting city · Abya Yala connector',
+    ojos_label:'Anatomical Symbolism · III', ojos_h:'Critical Rest — The Closed Eyes',
+    ojos_b:'The Pacha keeps her eyes closed, denoting a deep ontological exhaustion. She is tired of bearing the historical weight of destructive anthropocentrism. However, this gesture implies no defeat, but a state of introspection and vigil. The deity waits and meditates, awaiting the moment of a collective reaction or awakening.',
+    ojos_q:'Closed eyes are not surrender: they are the geological patience of one who measures time in eras, not centuries.',
+    ojos_cap:'The Closed Eyes · Ontological exhaustion · Latent vigil',
+    fumar_label:'Ritual · Exhalation', fumar_h:'The Act of Smoking — Ritual and Exhalation',
+    fumar_b:'The act of smoking connects the sacred with the profane. The exhaled smoke functions as a ritual communication channel, a vital breath that cleanses but also warns, formally transforming into the aesthetic derivations of the porteño fileteado that cross the rest of the mural and connect all the figures.',
+    fumar_q:'The smoke from her lips is the fileteado that connects everything: the border between the sacred and the profane drawn in each puff.',
+    fumar_cap:'The Act of Smoking · Ritual channel · Smoke that warns and connects',
+    wiphala_section:'The Wiphala — Political and Intercultural Axis',
+    wiphala_label:'Sociopolitical Articulation', wiphala_h:'The Wiphala as Political and Intercultural Axis',
+    wiphala_b1:'Strategically positioned at the geometric centre of the composition and surrounded by the different animal archetypes, I introduce the Wiphala. This square insignia of forty-nine symmetric squares does not appear as a merely decorative element, but as a powerful device of sociopolitical articulation.',
+    wiphala_b2:'Each of its seven colours represents a plane of Andean existence: energy, earth, society, culture, time, space and cosmic structure. The flag unfurls sheltered beneath the dense smoke of the Pacha, affirming that indigenous nations pre-exist and are an active and constitutive part of today's Argentine people.',
+    wiphala_q:'The Wiphala at centre, the archetypes of power at the margins: the geometry of the composition is itself a political act.',
+    wiphala_cap:'The Wiphala · Geometric centre · Surrounded by archetypes',
+    piramide_label:'Compositional Structure', piramide_h:'The Inverted Social Pyramid',
+    piramide_cap:'General view · Inverted social pyramid · Archetypal fauna',
+    piramide_q:'The inversion of the pyramid is no formal accident: it is political thesis.',
+    cta_gallery:'Back to Murals',
+    nav_home:'Home', nav_galeria:'Gallery',
     badge_eje:'Central Axis',
     pacha_cap:'The Pacha · Green-skinned woman · Compositional center',
     pacha_label:'Conceptual Core', pacha_h:'The Contemporary Pachamama',
@@ -1172,7 +1385,7 @@ const T = {
     foot:'Visual Art · Salta, Argentina · 2026'
   },
   pl:{
-    back:'Galeria', nav_murales:'Murale', nav_dict:'Słownik',
+    back:'Murale', nav_murales:'Murale', nav_home:'Start', nav_galeria:'Galeria', nav_dict:'Słownik',
     hero_cat:'Mural · Synkretyzm · Archetypy', hero_tech:'Technika mieszana · Akryl i lateks', scroll_hint:'Eksploruj',
     f_tech:'Technika', f_artista:'Artystka', f_dim:'Wymiary', f_año:'Rok', f_loc:'Lokalizacja', f_wa:'Zapytaj',
     intro_ey:'Synkretyzm · Stratyfikacja Społeczna · Archetypy Antropomorficzne',
@@ -1183,7 +1396,41 @@ const T = {
     s_tech:'Technika', s_tech_v:'Technika mieszana: akryl i lateks na ścianie',
     s_dim:'Wymiary', s_loc2:'Lokalizacja',
     s_titulo:'Pochodzenie tytułu', s_titulo_v:'"Gasta" = lud/miasto w Kakán, język Diaguita-Calchaquí',
-    pacha_section:'Oś Centralna · Współczesna Pachamama',
+    pacha_section:'Oś Centralna · Współczesna Pachamama i Kosmiczne Napięcie',
+    pecho_label:'Symbolika Anatomiczna · I', pecho_h:'Kolidujące Wszechświaty — Pierś',
+    pecho_b:'Na jej piersi —archetypowej przestrzeni odżywiania, karmienia piersią i pochodzenia życia— maluję dwa wszechświaty na krawędzi katastrofalnej kolizji. Ta dualność symbolizuje terminalny kryzys między kosmicznym czasem natury a przyspieszonym czasem ludzkiego zniszczenia.',
+    pecho_q:'Pierś, która karmi, i wszechświaty, które kolidują: ta sama dłoń, która daje życie, dźwiga ciężar własnej zagłady.',
+    pecho_cap:'Pierś · Dwa wszechświaty w katastrofalnej kolizji',
+    badge_cosmo:'Kosmologia', badge_tiempo:'Temporalność', badge_carga:'Geopolityka',
+    badge_reposo:'Introspekcja', badge_ritual:'Rytuał', badge_wiphala:'Symbol Polityczny',
+    badge_piramide:'Struktura Społeczna',
+    vientre_label:'Symbolika Anatomiczna · II', vientre_h:'Niepewność Temporalna — Łono i Góry',
+    vientre_b:'W jej żołądku mieszka słońce w granicznej dwuznaczności: zawieszone w dokładnym tranzycie między zachodem a wschodem słońca. Dzieło nie definiuje, czy zmierzamy ku totalnej ciemności czy nowemu przebudzeniu, pozostawiając to rozdroże w rękach historii.',
+    vientre_q:'Słońce, które nie może zdecydować, czy to świt czy zmierzch: historia jako otwarte rozdroże, góry Salty jako jedyne podłoże.',
+    vientre_cap:'Łono · Zawieszone słońce · Góry Salty',
+    mochila_label:'Symbolika Przedmiotowa · I', mochila_h:'Zglobalizowany Ciężar — Plecak i Stopione Miasto',
+    mochila_b:'Na jej plecach bóstwo nosi plecak, głęboko zakorzeniony tekstylny element tożsamości w transgranicznych wspólnotach andyjskich Boliwii, Jujuy, Salty i Peru. Obiekt ten działa jako geopolityczny łącznik unifikujący Amerykę Łacińską (Abya Yala) jako jedno kontynentalne ciało.',
+    mochila_q:'Andyjski plecak dźwigający ciężar walącego się miasta: cała Abya Yala niosąca nowoczesność na swoich plecach.',
+    mochila_cap:'Plecak · Topiące się miasto · Łącznik Abya Yala',
+    ojos_label:'Symbolika Anatomiczna · III', ojos_h:'Krytyczny Odpoczynek — Zamknięte Oczy',
+    ojos_b:'Pacha trzyma oczy zamknięte, wyrażając głębokie ontologiczne wyczerpanie. Jest zmęczona dźwiganiem historycznego ciężaru destruktywnego antropocentryzmu. Jednak ten gest nie oznacza klęski, lecz stan introspekcji i czuwania.',
+    ojos_q:'Zamknięte oczy to nie kapitulacja: to geologiczna cierpliwość kogoś, kto mierzy czas erami, nie wiekami.',
+    ojos_cap:'Zamknięte Oczy · Ontologiczne wyczerpanie · Ukryte czuwanie',
+    fumar_label:'Rytuał · Wydech', fumar_h:'Akt Palenia — Rytuał i Wydech',
+    fumar_b:'Akt palenia łączy sferę sacrum z profanum. Wydychany dym funkcjonuje jako rytualny kanał komunikacji, życiodajny oddech, który oczyszcza, ale też ostrzega, formalnie przekształcając się w estetyczne pochodne fileteado porteño.',
+    fumar_q:'Dym z jej ust to fileteado, które wszystko łączy: granica między sacrum a profanum narysowana w każdym kłębku dymu.',
+    fumar_cap:'Akt Palenia · Kanał rytualny · Dym który ostrzega i łączy',
+    wiphala_section:'Wiphala — Polityczna i Międzykulturowa Oś',
+    wiphala_label:'Artykulacja Społeczno-Polityczna', wiphala_h:'Wiphala jako Polityczna i Międzykulturowa Oś',
+    wiphala_b1:'Strategicznie umieszczona w geometrycznym centrum kompozycji i otoczona różnymi zwierzęcymi archetypami, wprowadzam Wiphalę. Ta kwadratowa odznaka z czterdziestoma dziewięcioma symetrycznymi kwadratami nie pojawia się jako element czysto dekoracyjny, lecz jako potężne urządzenie artykulacji społeczno-politycznej.',
+    wiphala_b2:'Każdy z jej siedmiu kolorów reprezentuje płaszczyznę andyjskiej egzystencji: energię, ziemię, społeczeństwo, kulturę, czas, przestrzeń i kosmiczną strukturę.',
+    wiphala_q:'Wiphala w centrum, archetypy władzy na marginesach: geometria kompozycji jest sama w sobie aktem politycznym.',
+    wiphala_cap:'Wiphala · Centrum geometryczne · Otoczona archetypami',
+    piramide_label:'Struktura Kompozycyjna', piramide_h:'Odwrócona Piramida Społeczna',
+    piramide_cap:'Widok ogólny · Odwrócona piramida społeczna · Archetypiczna fauna',
+    piramide_q:'Odwrócenie piramidy to nie przypadek formalny: to teza polityczna.',
+    cta_gallery:'Wróć do Murali',
+    nav_home:'Start', nav_galeria:'Galeria',
     badge_eje:'Oś Centralna',
     pacha_cap:'Pacha · Kobieta o zielonej skórze · Centrum kompozycji',
     pacha_label:'Rdzeń Koncepcyjny', pacha_h:'Współczesna Pachamama',
@@ -1230,7 +1477,7 @@ const T = {
     foot:'Sztuka Wizualna · Salta, Argentyna · 2026'
   },
   fr:{
-    back:'Galerie', nav_murales:'Murales', nav_dict:'Dictionnaire',
+    back:'Murales', nav_murales:'Murales', nav_home:'Accueil', nav_galeria:'Galerie', nav_dict:'Dictionnaire',
     hero_cat:'Murale · Syncrétisme · Archétypes', hero_tech:'Technique mixte · Acrylique et latex', scroll_hint:'Explorer',
     f_tech:'Technique', f_artista:'Artiste', f_dim:'Dimensions', f_año:'Année', f_loc:'Localisation', f_wa:'Renseigner',
     intro_ey:'Syncrétisme · Stratification Sociale · Archétypes Anthropomorphes',
@@ -1241,7 +1488,41 @@ const T = {
     s_tech:'Technique', s_tech_v:'Technique mixte: acrylique et latex sur mur',
     s_dim:'Dimensions', s_loc2:'Localisation',
     s_titulo:'Origine du titre', s_titulo_v:'"Gasta" = peuple/village en Kakán, langue Diaguita-Calchaquí',
-    pacha_section:'Axe Central · La Pachamama Contemporaine',
+    pacha_section:'Axe Central · La Pachamama Contemporaine et la Tension Cosmique',
+    pecho_label:'Symbolique Anatomique · I', pecho_h:'Les Univers en Collision — La Poitrine',
+    pecho_b:"Sur sa poitrine —l'espace archétypal de l'alimentation, de l'allaitement et de l'origine de la vie— je peins deux univers au bord d'une collision et d'un effondrement catastrophiques. Cette dualité symbolise la crise terminale entre le temps cosmique de la nature et le temps accéléré de la destruction humaine.",
+    pecho_q:"La poitrine qui nourrit et les univers qui entrent en collision: la même main qui donne la vie porte le poids de son propre effondrement.",
+    pecho_cap:'La Poitrine · Deux univers en collision catastrophique',
+    badge_cosmo:'Cosmologie', badge_tiempo:'Temporalité', badge_carga:'Géopolitique',
+    badge_reposo:'Introspection', badge_ritual:'Rituel', badge_wiphala:'Symbole Politique',
+    badge_piramide:'Structure Sociale',
+    vientre_label:'Symbolique Anatomique · II', vientre_h:"L'Incertitude Temporelle — Le Ventre et les Montagnes",
+    vientre_b:"Dans son estomac habite le soleil dans une ambiguïté frontalière: il est suspendu dans le transit exact entre le coucher et le lever du soleil. L'œuvre ne définit pas si nous nous dirigeons vers la nuit totale ou vers un nouveau réveil, laissant ce carrefour entre les mains de l'histoire.",
+    vientre_q:"Le soleil qui ne décide pas s'il est aube ou crépuscule: l'histoire comme carrefour ouvert, les montagnes de Salta comme son seul sol.",
+    vientre_cap:'Le Ventre · Le soleil suspendu · Les montagnes de Salta',
+    mochila_label:'Symbolique Objectale · I', mochila_h:'Le Fardeau Mondialisé — Le Sac à Dos et la Ville Liquéfiée',
+    mochila_b:"Sur son dos, la déité porte un sac à dos, un élément textile identitaire profondément enraciné dans les communautés andines transfrontalières de Bolivie, Jujuy, Salta et Pérou. Cet objet opère comme un connecteur géopolitique unifiant l'Amérique Latine (Abya Yala) comme un seul corps continental.",
+    mochila_q:"Le sac à dos andin portant le poids de la ville qui s'effondre: toute Abya Yala portant la modernité sur son dos.",
+    mochila_cap:'Le Sac à Dos · La ville qui fond · Connecteur Abya Yala',
+    ojos_label:'Symbolique Anatomique · III', ojos_h:'Le Repos Critique — Les Yeux Fermés',
+    ojos_b:"La Pacha garde les yeux fermés, dénotant un profond épuisement ontologique. Elle est épuisée de porter le poids historique de l'anthropocentrisme destructeur. Cependant, ce geste n'implique pas la défaite, mais un état d'introspection et de veille.",
+    ojos_q:"Les yeux fermés ne sont pas une reddition: c'est la patience géologique de celui qui mesure le temps en ères, pas en siècles.",
+    ojos_cap:'Les Yeux Fermés · Épuisement ontologique · Veille latente',
+    fumar_label:'Rituel · Exhalation', fumar_h:"L'Acte de Fumer — Rituel et Exhalation",
+    fumar_b:"L'acte de fumer connecte la sphère du sacré avec le profane. La fumée exhalée fonctionne comme un canal de communication rituel, un souffle vital qui purifie mais qui avertit aussi, se transformant formellement dans les dérivations esthétiques du fileteado porteño.",
+    fumar_q:"La fumée qui sort de ses lèvres est le fileteado qui connecte tout: la frontière entre le sacré et le profane dessinée dans chaque bouffée.",
+    fumar_cap:"L'Acte de Fumer · Canal rituel · Fumée qui avertit et connecte",
+    wiphala_section:'La Wiphala — Axe Politique et Interculturel',
+    wiphala_label:'Articulation Sociopolitique', wiphala_h:'La Wiphala comme Axe Politique et Interculturel',
+    wiphala_b1:"Positionnée stratégiquement au centre géométrique de la composition et entourée des différents archétypes animaux, j'introduis la Wiphala. Cet insigne carré de quarante-neuf carrés symétriques n'apparaît pas comme un simple élément décoratif, mais comme un puissant dispositif d'articulation sociopolitique.",
+    wiphala_b2:"Chacune de ses sept couleurs représente un plan de l'existence andine: l'énergie, la terre, la société, la culture, le temps, l'espace et la structure cosmique. Le drapeau se déploie protégé sous la fumée dense de la Pacha, affirmant que les nations originaires préexistent et font partie active du peuple argentin actuel.",
+    wiphala_q:"La Wiphala au centre, les archétypes du pouvoir aux marges: la géométrie de la composition est elle-même un acte politique.",
+    wiphala_cap:'La Wiphala · Centre géométrique · Entourée d'archétypes',
+    piramide_label:'Structure Compositionnelle', piramide_h:'La Pyramide Sociale Inversée',
+    piramide_cap:'Vue générale · Pyramide sociale inversée · Faune archétypique',
+    piramide_q:"L'inversion de la pyramide n'est pas un accident formel: c'est une thèse politique.",
+    cta_gallery:'Retour aux Murales',
+    nav_home:'Accueil', nav_galeria:'Galerie',
     badge_eje:'Axe Central',
     pacha_cap:'La Pacha · Femme à la peau verte · Centre compositif',
     pacha_label:'Noyau Conceptuel', pacha_h:'La Pachamama Contemporaine',
