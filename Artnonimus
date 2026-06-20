@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>ArtNonimu's — Pracownia Portretu na Zamówienie</title>
+<meta name="description" content="Ręcznie malowane i rysowane portrety zwierząt i ludzi na zamówienie. Malarstwo na drewnie, rysunek ołówkiem, karykatury. Wysyłka po całej Polsce.">
+<meta name="theme-color" content="#15110D">
+
+<!-- =====================================================================
+     FUENTES (Google Fonts): 
+     - Fraunces  -> tipografía de exhibición (titulares, con cursiva artística)
+     - Outfit    -> tipografía de cuerpo (texto general, UI)
+     - JetBrains Mono -> tipografía de "placa de museo" (etiquetas, datos, nav)
+     ===================================================================== -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- =====================================================================
+     TAILWIND CSS (embebido vía CDN — sin build step, sin librerías pesadas)
+     ===================================================================== -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  // ---------------------------------------------------------------------
+  // CONFIGURACIÓN DE TAILWIND — Paleta y tipografías propias del estudio.
+  // Edita aquí los colores de marca si quieres cambiar la identidad visual.
+  // ---------------------------------------------------------------------
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          bg:        '#15110D', // fondo principal — "pared de galería" casi negra y cálida
+          panel:     '#1E1812', // fondo de tarjetas / paneles
+          frame:     '#2A2118', // bordes, líneas divisorias (marco de madera envejecida)
+          gold:      '#C9A24B', // acento principal — hoja de oro / latón
+          goldlight: '#E3C572', // acento claro — hover / brillo
+          rust:      '#B8542E', // acento secundario — terracota cálida
+          bone:      '#F1E8D9', // texto principal sobre fondo oscuro
+          bonedim:   '#B9AC97', // texto secundario / atenuado
+        },
+        fontFamily: {
+          display: ['"Fraunces"', 'serif'],
+          body:    ['"Outfit"', 'sans-serif'],
+          mono:    ['"JetBrains Mono"', 'monospace'],
+        },
+        boxShadow: {
+          gold: '0 0 0 1px rgba(201,162,75,0.35)',
+        }
+      }
+    }
+  }
+</script>
+
+<style>
+  /* =====================================================================
+     ESTILOS BASE Y VARIABLES
+     ===================================================================== */
+  :root{
+    --mx: 50%; /* posición X del cursor, usada en el resplandor del hero */
+    --my: 35%; /* posición Y del cursor */
+    --header-h: 84px;
+  }
+  html{ scroll-behavior: smooth; }
+  body{
+    background-color:#15110D;
+    font-family:'Outfit', sans-serif;
+    overscroll-behavior-y: none;
+  }
+  /* Compensa el header fijo al hacer scroll a una sección por ancla */
+  section[id]{ scroll-margin-top: var(--header-h); }
+
+  /* Texturiza el fondo como un lienzo / pared de galería (ruido sutil en SVG, muy ligero) */
+  .canvas-texture{
+    position:fixed; inset:0; z-index:1; pointer-events:none;
+    opacity:.05; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  /* =====================================================================
+     SPLASH SCREEN — animación de bienvenida
+     ===================================================================== */
+  #splash{
+    position:fixed; inset:0; z-index:100;
+    display:flex; align-items:center; justify-content:center;
+    background: radial-gradient(circle at 50% 40%, #221a12 0%, #120e0a 70%, #0c0a08 100%);
+    transition: opacity .9s ease, visibility .9s ease;
+  }
+  #splash.splash-hide{ opacity:0; visibility:hidden; pointer-events:none; }
+  body.no-scroll{ overflow:hidden; height:100%; }
+
+  .splash-ring{
+    position:absolute; border-radius:9999px; border:1px solid rgba(201,162,75,.35);
+    animation: splashRing 2.6s ease-out infinite;
+  }
+  .splash-ring.r2{ animation-delay:.7s; }
+  .splash-ring.r3{ animation-delay:1.4s; }
+  @keyframes splashRing{
+    0%{ width:90px; height:90px; opacity:.7; }
+    100%{ width:260px; height:260px; opacity:0; }
+  }
+  .splash-logo{ animation: splashPulse 2.4s ease-in-out infinite; }
+  @keyframes splashPulse{
+    0%,100%{ transform:scale(.96); box-shadow:0 0 0 0 rgba(201,162,75,.0); }
+    50%{ transform:scale(1.03); box-shadow:0 0 40px 6px rgba(201,162,75,.18); }
+  }
+  .splash-dot{ animation: splashDots 1.3s ease-in-out infinite; }
+  .splash-dot:nth-child(2){ animation-delay:.15s; }
+  .splash-dot:nth-child(3){ animation-delay:.3s; }
+  @keyframes splashDots{ 0%,80%,100%{ opacity:.25; transform:translateY(0);} 40%{ opacity:1; transform:translateY(-3px);} }
+
+  /* =====================================================================
+     CABECERA (HEADER)
+     ===================================================================== */
+  #site-header{ height:var(--header-h); transition: background-color .4s ease, border-color .4s ease, height .4s ease; }
+  #site-header.scrolled{ background-color: rgba(21,17,13,.86); backdrop-filter: blur(10px); border-bottom:1px solid rgba(201,162,75,.18); }
+  #site-header:not(.scrolled){ border-bottom:1px solid transparent; }
+
+  .nav-link{ position:relative; color:#B9AC97; }
+  .nav-link::after{
+    content:''; position:absolute; left:0; right:0; bottom:-6px; height:1px;
+    background:#C9A24B; transform:scaleX(0); transform-origin:left; transition:transform .35s ease;
+  }
+  .nav-link:hover{ color:#F1E8D9; }
+  .nav-link:hover::after{ transform:scaleX(1); }
+  .nav-link.is-active{ color:#E3C572; }
+
+  /* Selector de idioma */
+  .lang-pill{ color:#B9AC97; border:1px solid rgba(185,172,151,.25); transition:all .25s ease; }
+  .lang-pill:hover{ color:#F1E8D9; border-color:rgba(201,162,75,.5); }
+  .lang-pill.is-active{ color:#15110D; background:#C9A24B; border-color:#C9A24B; }
+
+  /* Botón dorado relleno (CTA principal) */
+  .btn-gold{
+    background:#C9A24B; color:#15110D; transition: transform .3s cubic-bezier(.16,1,.3,1), background-color .3s ease, box-shadow .3s ease;
+  }
+  .btn-gold:hover{ background:#E3C572; transform:translateY(-2px); box-shadow:0 12px 28px -10px rgba(201,162,75,.55); }
+  .btn-gold:active{ transform:translateY(0); }
+
+  /* Botón contorno dorado (CTA secundario) */
+  .btn-outline{
+    border:1px solid rgba(201,162,75,.55); color:#F1E8D9; transition: all .3s ease;
+  }
+  .btn-outline:hover{ border-color:#E3C572; background:rgba(201,162,75,.08); transform:translateY(-2px); }
+
+  /* =====================================================================
+     MENÚ MÓVIL
+     ===================================================================== */
+  #mobile-nav{ transition: opacity .45s ease, visibility .45s ease; }
+  #mobile-nav.is-open{ opacity:1; visibility:visible; }
+  #mobile-nav:not(.is-open){ opacity:0; visibility:hidden; }
+  #mobile-nav .mnav-link{ opacity:0; transform:translateY(14px); transition:opacity .5s ease, transform .5s ease; }
+  #mobile-nav.is-open .mnav-link{ opacity:1; transform:translateY(0); }
+
+  /* =====================================================================
+     HERO — resplandor tipo foco de galería que sigue al cursor
+     ===================================================================== */
+  .hero-spotlight{
+    background: radial-gradient(560px circle at var(--mx) var(--my), rgba(201,162,75,.16), transparent 60%);
+  }
+  .hero-frame{ animation: floatY 6s ease-in-out infinite; will-change:transform; }
+  @keyframes floatY{ 0%,100%{ transform:translateY(0) rotate(-1.2deg);} 50%{ transform:translateY(-14px) rotate(.6deg);} }
+
+  /* Marquesina de técnicas (desplazamiento infinito en CSS puro) */
+  .marquee-track{ animation: marquee 28s linear infinite; }
+  .marquee-track:hover{ animation-play-state: paused; }
+  @keyframes marquee{ from{ transform:translateX(0);} to{ transform:translateX(-50%);} }
+
+  /* =====================================================================
+     "ESQUINAS DE MARCO" — elemento firma del diseño.
+     Simula la esquina de un cuadro enmarcado en oro, como en una galería.
+     Se usa en el hero, en las tarjetas de obras y en el lightbox.
+     ===================================================================== */
+  .frame-corners{ position:relative; }
+  .frame-corners::before,
+  .frame-corners::after,
+  .frame-corners .fc-tr,
+  .frame-corners .fc-bl{
+    content:''; position:absolute; width:22px; height:22px; pointer-events:none; z-index:2;
+    transition: width .35s ease, height .35s ease, opacity .35s ease;
+  }
+  .frame-corners::before{ top:8px; left:8px; border-top:2px solid #C9A24B; border-left:2px solid #C9A24B; }
+  .frame-corners::after{ bottom:8px; right:8px; border-bottom:2px solid #C9A24B; border-right:2px solid #C9A24B; }
+  .frame-corners .fc-tr{ top:8px; right:8px; border-top:2px solid #C9A24B; border-right:2px solid #C9A24B; }
+  .frame-corners .fc-bl{ bottom:8px; left:8px; border-bottom:2px solid #C9A24B; border-left:2px solid #C9A24B; }
+  .frame-corners:hover::before, .frame-corners:hover::after,
+  .frame-corners:hover .fc-tr, .frame-corners:hover .fc-bl{ width:30px; height:30px; }
+
+  /* =====================================================================
+     SECCIONES CON "REVELADO" AL HACER SCROLL (IntersectionObserver)
+     ===================================================================== */
+  .reveal{ opacity:0; transform:translateY(28px); transition:opacity .85s cubic-bezier(.16,1,.3,1), transform .85s cubic-bezier(.16,1,.3,1); }
+  .reveal.is-visible{ opacity:1; transform:translateY(0); }
+
+  /* =====================================================================
+     GALERÍA — disposición tipo "masonry" con columnas CSS (sin librerías)
+     ===================================================================== */
+  .masonry{ column-count:1; column-gap:1.25rem; }
+  @media(min-width:640px){ .masonry{ column-count:2; } }
+  @media(min-width:1024px){ .masonry{ column-count:3; } }
+  .masonry-item{ break-inside:avoid; margin-bottom:1.25rem; }
+  .masonry-item.is-hidden{ display:none; }
+  .masonry-item img{ transition: transform .7s cubic-bezier(.16,1,.3,1); }
+  .masonry-item:hover img{ transform:scale(1.045); }
+
+  .gallery-overlay{ background:linear-gradient(180deg, rgba(21,17,13,0) 35%, rgba(21,17,13,.92) 100%); opacity:0; transition:opacity .4s ease; }
+  .masonry-item:hover .gallery-overlay, .masonry-item:focus-within .gallery-overlay{ opacity:1; }
+  .gallery-overlay-btn{ transform:translateY(10px); opacity:0; transition: all .4s ease .05s; }
+  .masonry-item:hover .gallery-overlay-btn, .masonry-item:focus-within .gallery-overlay-btn{ transform:translateY(0); opacity:1; }
+
+  /* Pestañas de filtro (subcategorías) */
+  .filter-pill{ border:1px solid rgba(185,172,151,.25); color:#B9AC97; transition: all .25s ease; }
+  .filter-pill:hover{ color:#F1E8D9; border-color:rgba(201,162,75,.45); }
+  .filter-pill.is-active{ background:#C9A24B; color:#15110D; border-color:#C9A24B; }
+
+  /* =====================================================================
+     LIGHTBOX (visor de obra ampliada)
+     ===================================================================== */
+  #lightbox{ transition: opacity .4s ease, visibility .4s ease; }
+  #lightbox.is-open{ opacity:1; visibility:visible; }
+  #lightbox:not(.is-open){ opacity:0; visibility:hidden; pointer-events:none; }
+  #lightbox-stage{ transition: transform .45s cubic-bezier(.16,1,.3,1), opacity .35s ease; }
+
+  /* =====================================================================
+     BOTÓN FLOTANTE DE WHATSAPP
+     ===================================================================== */
+  #wa-float{ animation: waBounce 3.2s ease-in-out infinite; }
+  @keyframes waBounce{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-8px);} }
+  .wa-ring{ animation: waPulse 2.6s ease-out infinite; }
+  @keyframes waPulse{ 0%{ transform:scale(.85); opacity:.55; } 100%{ transform:scale(1.9); opacity:0; } }
+
+  /* Accesibilidad: foco visible consistente en todo el sitio */
+  a:focus-visible, button:focus-visible{ outline:2px solid #E3C572; outline-offset:3px; border-radius:2px; }
+
+  /* Respeta la preferencia de "reducir movimiento" del usuario */
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important; }
+  }
+
+  /* Scrollbar discreta acorde a la paleta */
+  ::-webkit-scrollbar{ width:10px; }
+  ::-webkit-scrollbar-track{ background:#15110D; }
+  ::-webkit-scrollbar-thumb{ background:#2A2118; border-radius:8px; border:2px solid #15110D; }
+</style>
+</head>
+
+<body class="bg-bg text-bone font-body antialiased no-scroll">
+
+<!-- Capa de textura tipo lienzo, sobre todo el sitio -->
+<div class="canvas-texture"></div>
+
+<!-- =====================================================================
+     1) SPLASH SCREEN — pantalla de bienvenida animada
+     EDITA AQUÍ: cambia el monograma/foto de perfil dentro de #splash-logo
+     ===================================================================== -->
+<div id="splash" aria-hidden="true">
+  <div class="relative flex flex-col items-center gap-6">
+    <div class="relative flex items-center justify-center w-[110px] h-[110px]">
+      <span class="splash-ring r1 absolute"></span>
+      <span class="splash-ring r2 absolute"></span>
+      <span class="splash-ring r3 absolute"></span>
+      <!-- Marcador de posición del logotipo / foto de perfil -->
+      <div id="splash-logo" class="splash-logo relative z-10 w-[78px] h-[78px] rounded-full bg-panel border border-gold/50 flex items-center justify-center font-display italic text-2xl text-goldlight">
+        AN
+      </div>
+    </div>
+    <p class="font-mono text-[11px] tracking-[0.3em] uppercase text-bonedim" data-i18n="splash_tagline">Otwieram galerię…</p>
+    <div class="flex gap-1.5">
+      <span class="splash-dot w-1.5 h-1.5 rounded-full bg-gold"></span>
+      <span class="splash-dot w-1.5 h-1.5 rounded-full bg-gold"></span>
+      <span class="splash-dot w-1.5 h-1.5 rounded-full bg-gold"></span>
+    </div>
+  </div>
+</div>
+
+<!-- =====================================================================
+     2) HEADER — navegación, selector de idioma y CTA
+     ===================================================================== -->
+<header id="site-header" class="fixed top-0 inset-x-0 z-50">
+  <div class="max-w-7xl mx-auto h-full px-5 md:px-8 flex items-center justify-between">
+
+    <!-- Logo / marca -->
+    <a href="#home" class="flex items-center gap-3 shrink-0">
+      <span class="w-10 h-10 rounded-full border border-gold/50 bg-panel flex items-center justify-center font-display italic text-base text-goldlight">AN</span>
+      <span class="font-display italic text-lg text-bone hidden sm:block">ArtNonimu's</span>
+    </a>
+
+    <!-- Navegación de escritorio -->
+    <nav class="hidden lg:flex items-center gap-9 font-mono text-[11px] uppercase tracking-[0.18em]">
+      <a href="#home" class="nav-link" data-i18n="nav_home">Start</a>
+      <a href="#about" class="nav-link" data-i18n="nav_about">Pracownia</a>
+      <a href="#process" class="nav-link" data-i18n="nav_process">Proces</a>
+      <a href="#galeria-zwierzeta" class="nav-link" data-i18n="nav_gallery_a">Zwierzęta</a>
+      <a href="#galeria-ludzie" class="nav-link" data-i18n="nav_gallery_b">Ludzie</a>
+      <a href="#kontakt" class="nav-link" data-i18n="nav_contact">Kontakt</a>
+    </nav>
+
+    <div class="flex items-center gap-3 md:gap-4">
+      <!-- Selector de idioma (PL / EN / ES) -->
+      <div class="lang-switch flex items-center gap-1 font-mono text-[11px]" role="group" aria-label="Język / Language / Idioma">
+        <button type="button" data-lang="pl" class="lang-pill px-2 py-1 rounded">PL</button>
+        <button type="button" data-lang="en" class="lang-pill px-2 py-1 rounded">EN</button>
+        <button type="button" data-lang="es" class="lang-pill px-2 py-1 rounded">ES</button>
+      </div>
+
+      <!-- CTA de WhatsApp en cabecera (solo escritorio) -->
+      <a id="header-wa" href="#" target="_blank" rel="noopener" class="js-wa-generic btn-gold hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-sm font-mono text-[11px] uppercase tracking-wider">
+        <span data-i18n="header_cta">Napisz na WhatsApp</span>
+      </a>
+
+      <!-- Botón de menú móvil -->
+      <button id="menu-toggle" type="button" class="lg:hidden text-bone p-2" aria-label="Menu" aria-expanded="false" aria-controls="mobile-nav">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- =====================================================================
+     3) MENÚ MÓVIL (pantalla completa)
+     ===================================================================== -->
+<div id="mobile-nav" class="fixed inset-0 z-[60] bg-bg/98 backdrop-blur-md flex flex-col">
+  <div class="flex items-center justify-between px-5 h-[84px] border-b border-frame">
+    <span class="font-display italic text-lg text-bone">ArtNonimu's</span>
+    <button id="menu-close" type="button" class="text-bone p-2" aria-label="Zamknij menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
+    </button>
+  </div>
+  <nav class="flex-1 flex flex-col justify-center items-start gap-6 px-8 font-display italic text-3xl">
+    <a href="#home" class="mnav-link" data-i18n="nav_home">Start</a>
+    <a href="#about" class="mnav-link" data-i18n="nav_about">Pracownia</a>
+    <a href="#process" class="mnav-link" data-i18n="nav_process">Proces</a>
+    <a href="#galeria-zwierzeta" class="mnav-link" data-i18n="nav_gallery_a">Zwierzęta</a>
+    <a href="#galeria-ludzie" class="mnav-link" data-i18n="nav_gallery_b">Ludzie</a>
+    <a href="#kontakt" class="mnav-link" data-i18n="nav_contact">Kontakt</a>
+  </nav>
+  <div class="px-8 pb-10 flex flex-col gap-5">
+    <div class="flex gap-2 font-mono text-xs">
+      <button type="button" data-lang="pl" class="lang-pill px-3 py-1.5 rounded">PL</button>
+      <button type="button" data-lang="en" class="lang-pill px-3 py-1.5 rounded">EN</button>
+      <button type="button" data-lang="es" class="lang-pill px-3 py-1.5 rounded">ES</button>
+    </div>
+    <a href="#" target="_blank" rel="noopener" class="js-wa-generic btn-gold flex items-center justify-center gap-2 px-5 py-3 rounded-sm font-mono text-xs uppercase tracking-wider">
+      <span data-i18n="header_cta">Napisz na WhatsApp</span>
+    </a>
+  </div>
+</div>
+
+<main>
+
+  <!-- ===================================================================
+       4) HERO
+       =================================================================== -->
+  <section id="home" class="relative min-h-[100svh] flex items-center pt-[var(--header-h)] overflow-hidden hero-spotlight">
+    <div class="max-w-7xl mx-auto w-full px-5 md:px-8 grid lg:grid-cols-12 gap-12 items-center py-16">
+
+      <div class="lg:col-span-7">
+        <p class="reveal font-mono text-[11px] uppercase tracking-[0.3em] text-gold mb-6" data-i18n="hero_eyebrow">Pracownia portretu · Polska</p>
+        <h1 class="reveal font-display font-medium text-[2.6rem] leading-[1.08] sm:text-6xl lg:text-[4.2rem] lg:leading-[1.05] text-bone" data-i18n-html="hero_title">
+          Twoje wspomnienia, <em class="italic text-goldlight">namalowane</em> ręcznie.
+        </h1>
+        <p class="reveal mt-7 max-w-xl text-base sm:text-lg text-bonedim leading-relaxed" data-i18n="hero_subtitle">
+          Zamieniam zdjęcia ulubionych zwierząt i bliskich osób w unikatowe dzieła.
+        </p>
+
+        <div class="reveal mt-10 flex flex-wrap items-center gap-4">
+          <a href="#" target="_blank" rel="noopener" class="js-wa-generic btn-gold inline-flex items-center gap-2 px-6 py-3.5 rounded-sm font-mono text-xs uppercase tracking-wider">
+            <span data-i18n="hero_cta_primary">Zamów swój portret</span>
+          </a>
+          <a href="#galeria-zwierzeta" class="btn-outline inline-flex items-center gap-2 px-6 py-3.5 rounded-sm font-mono text-xs uppercase tracking-wider">
+            <span data-i18n="hero_cta_secondary">Przejdź do galerii</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Obra flotante destacada -->
+      <div class="lg:col-span-5 reveal">
+        <div class="hero-frame frame-corners relative max-w-sm mx-auto p-3 bg-panel border border-frame rounded-sm shadow-2xl">
+          <span class="fc-tr"></span><span class="fc-bl"></span>
+          <img src="https://i.ibb.co/ks3g5d7K/IMG-20260620-WA0017.jpg" alt="Portret na zamówienie — ArtNonimu's" class="w-full h-[420px] object-cover rounded-[2px]" loading="eager">
+          <div class="absolute -bottom-5 left-6 right-6 bg-bg border border-gold/40 px-4 py-2.5 font-mono text-[10px] uppercase tracking-widest text-bonedim flex justify-between">
+            <span>ArtNonimu's</span><span class="text-gold">Oryginał · 01/01</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Marquesina con las técnicas del estudio (desplazamiento infinito en CSS) -->
+    <div class="absolute bottom-0 inset-x-0 border-t border-frame bg-bg/70 backdrop-blur-sm overflow-hidden py-3.5">
+      <div id="marquee-track" class="marquee-track flex whitespace-nowrap font-mono text-xs uppercase tracking-[0.25em] text-bonedim gap-10"></div>
+    </div>
+  </section>
+
+  <!-- ===================================================================
+       5) ABOUT — sobre la pracownia / artista
+       =================================================================== -->
+  <section id="about" class="py-28 md:py-36 border-t border-frame">
+    <div class="max-w-7xl mx-auto px-5 md:px-8 grid lg:grid-cols-12 gap-14 items-center">
+
+      <div class="lg:col-span-5 reveal order-2 lg:order-1">
+        <div class="frame-corners relative max-w-sm mx-auto">
+          <span class="fc-tr"></span><span class="fc-bl"></span>
+          <!-- Marcador de posición de foto del artista / logotipo de marca -->
+          <div class="w-full aspect-[4/5] rounded-sm bg-panel border border-frame flex items-center justify-center">
+            <div class="w-28 h-28 rounded-full bg-bg border border-gold/40 flex items-center justify-center font-display italic text-4xl text-goldlight">AN</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-7 order-1 lg:order-2">
+        <p class="reveal font-mono text-[11px] uppercase tracking-[0.3em] text-gold mb-6" data-i18n="about_eyebrow">O pracowni</p>
+        <h2 class="reveal font-display font-medium text-3xl sm:text-4xl lg:text-5xl leading-tight text-bone" data-i18n-html="about_title">
+          Ręka, oko <em class="italic text-goldlight">i odrobina czasu</em>.
+        </h2>
+        <p class="reveal mt-7 text-base sm:text-lg text-bonedim leading-relaxed max-w-2xl" data-i18n="about_text">
+          Każdy portret zaczyna się od zwykłego zdjęcia.
+        </p>
+        <p class="reveal mt-8 font-display italic text-xl text-bone" id="about-signature">ArtNonimu's</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================
+       6) PROCESO — 3 pasos (orden real, por eso sí usa numeración)
+       =================================================================== -->
+  <section id="process" class="py-28 md:py-36 border-t border-frame bg-panel/40">
+    <div class="max-w-7xl mx-auto px-5 md:px-8">
+      <div class="max-w-2xl mb-16 reveal">
+        <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-gold mb-6" data-i18n="process_eyebrow">Jak to działa</p>
+        <h2 class="font-display font-medium text-3xl sm:text-4xl lg:text-5xl text-bone" data-i18n="process_title">Trzy kroki do Twojego dzieła</h2>
+      </div>
+
+      <div class="grid sm:grid-cols-3 gap-10 md:gap-8">
+        <div class="reveal border-t border-gold/40 pt-6">
+          <span class="font-mono text-sm text-gold">01</span>
+          <h3 class="font-display text-2xl mt-3 mb-3 text-bone" data-i18n="process_step1_title">Wyślij zdjęcie</h3>
+          <p class="text-sm text-bonedim leading-relaxed" data-i18n="process_step1_text">Prześlij ulubione zdjęcie przez WhatsApp.</p>
+        </div>
+        <div class="reveal border-t border-gold/40 pt-6">
+          <span class="font-mono text-sm text-gold">02</span>
+          <h3 class="font-display text-2xl mt-3 mb-3 text-bone" data-i18n="process_step2_title">Wybierz technikę</h3>
+          <p class="text-sm text-bonedim leading-relaxed" data-i18n="process_step2_text">Razem dobierzemy najlepszą formę.</p>
+        </div>
+        <div class="reveal border-t border-gold/40 pt-6">
+          <span class="font-mono text-sm text-gold">03</span>
+          <h3 class="font-display text-2xl mt-3 mb-3 text-bone" data-i18n="process_step3_title">Odbierz dzieło</h3>
+          <p class="text-sm text-bonedim leading-relaxed" data-i18n="process_step3_text">Tworzę portret ręcznie i bezpiecznie go wysyłam.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================================
+       7) ROZDZIAŁ I — GALERÍA: PORTRETY ZWIERZĄT
+       =================================================================== -->
+  <section id="galeria-zwierzeta" class="py-28 md:py-36 border-t border-frame">
+    <div class="max-w-7xl mx-auto px-5 md:px-8">
+      <div class="max-w-2xl mb-12 reveal">
+        <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-gold mb-6" data-i18n="cat_a_eyebrow">Rozdział I</p>
+        <h2 class="font-display font-medium text-3xl sm:text-4xl lg:text-5xl text-bone" data-i18n="cat_a_title">Portrety Zwierząt</h2>
+        <p class="mt-5 text-base text-bonedim leading-relaxed" data-i18n="cat_a_subtitle">Psy, koty i inni czworonożni bohaterowie.</p>
+      </div>
+
+      <!-- Pestañas de filtro (subcategorías) -->
+      <div id="filters-a" class="flex flex-wrap gap-2.5 mb-10 reveal"></div>
+
+      <!-- Cuadrícula tipo masonry -->
+      <div id="grid-a" class="masonry"></div>
+      <p id="empty-a" class="hidden font-mono text-xs text-bonedim uppercase tracking-widest py-10 text-center" data-i18n="gallery_empty"></p>
+    </div>
+  </section>
+
+  <!-- ===================================================================
+       8) ROZDZIAŁ II — GALERÍA: PORTRETY LUDZI
+       =================================================================== -->
+  <section id="galeria-ludzie" class="py-28 md:py-36 border-t border-frame bg-panel/40">
+    <div class="max-w-7xl mx-auto px-5 md:px-8">
+      <div class="max-w-2xl mb-12 reveal">
+        <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-gold mb-6" data-i18n="cat_b_eyebrow">Rozdział II</p>
+        <h2 class="font-display font-medium text-3xl sm:text-4xl lg:text-5xl text-bone" data-i18n="cat_b_title">Portrety Ludzi</h2>
+        <p class="mt-5 text-base text-bonedim leading-relaxed" data-i18n="cat_b_subtitle">Portrety bliskich osób.</p>
+      </div>
+
+      <div id="filters-b" class="flex flex-wrap gap-2.5 mb-10 reveal"></div>
+      <div id="grid-b" class="masonry"></div>
+      <p id="empty-b" class="hidden font-mono text-xs text-bonedim uppercase tracking-widest py-10 text-center" data-i18n="gallery_empty"></p>
+    </div>
+  </section>
+
+  <!-- ===================================================================
+       9) CTA FINAL
+       =================================================================== -->
+  <section id="kontakt" class="py-28 md:py-36 border-t border-frame relative overflow-hidden">
+    <div class="absolute inset-0 hero-spotlight pointer-events-none"></div>
+    <div class="max-w-4xl mx-auto px-5 md:px-8 text-center relative">
+      <p class="reveal font-mono text-[11px] uppercase tracking-[0.3em] text-gold mb-6" data-i18n="final_cta_eyebrow">Zaproszenie</p>
+      <h2 class="reveal font-display font-medium text-4xl sm:text-5xl lg:text-6xl leading-tight text-bone" data-i18n-html="final_cta_title">
+        Stwórzmy coś, co <em class="italic text-goldlight">zostanie</em> na zawsze.
+      </h2>
+      <p class="reveal mt-7 text-base sm:text-lg text-bonedim leading-relaxed max-w-xl mx-auto" data-i18n="final_cta_subtitle">
+        Napisz teraz i otrzymaj bezpłatną wycenę.
+      </p>
+      <a href="#" target="_blank" rel="noopener" class="js-wa-generic reveal btn-gold inline-flex items-center gap-2 mt-10 px-8 py-4 rounded-sm font-mono text-xs uppercase tracking-wider">
+        <span data-i18n="final_cta_button">Napisz na WhatsApp</span>
+      </a>
+    </div>
+  </section>
+</main>
+
+<!-- =====================================================================
+     10) FOOTER
+     ===================================================================== -->
+<footer class="border-t border-frame py-16">
+  <div class="max-w-7xl mx-auto px-5 md:px-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-12">
+
+    <div>
+      <a href="#home" class="flex items-center gap-3 mb-4">
+        <span class="w-9 h-9 rounded-full border border-gold/50 bg-panel flex items-center justify-center font-display italic text-sm text-goldlight">AN</span>
+        <span class="font-display italic text-lg text-bone">ArtNonimu's</span>
+      </a>
+      <p class="text-sm text-bonedim leading-relaxed max-w-xs" data-i18n="footer_made">Tworzone ręcznie w Polsce.</p>
+    </div>
+
+    <div>
+      <p class="font-mono text-[11px] uppercase tracking-[0.25em] text-gold mb-5" data-i18n="footer_nav_title">Nawigacja</p>
+      <ul class="space-y-3 text-sm text-bonedim">
+        <li><a href="#about" class="hover:text-bone transition-colors" data-i18n="nav_about">Pracownia</a></li>
+        <li><a href="#galeria-zwierzeta" class="hover:text-bone transition-colors" data-i18n="nav_gallery_a">Zwierzęta</a></li>
+        <li><a href="#galeria-ludzie" class="hover:text-bone transition-colors" data-i18n="nav_gallery_b">Ludzie</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <p class="font-mono text-[11px] uppercase tracking-[0.25em] text-gold mb-5" data-i18n="footer_contact_title">Kontakt</p>
+      <ul class="space-y-3 text-sm text-bonedim">
+        <li><a href="#" target="_blank" rel="noopener" class="js-wa-generic hover:text-bone transition-colors">WhatsApp · +48 514 290 151</a></li>
+      </ul>
+    </div>
+
+    <!-- Redes sociales -->
+    <div>
+      <p class="font-mono text-[11px] uppercase tracking-[0.25em] text-gold mb-5" data-i18n="footer_follow_title">Obserwuj</p>
+      <div class="flex items-center gap-3">
+        <a href="https://www.facebook.com/share/1HShtjirCN/" target="_blank" rel="noopener" aria-label="Facebook" class="w-11 h-11 rounded-full border border-frame flex items-center justify-center text-bonedim hover:text-bone hover:border-gold/50 transition-colors">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06C2 17.08 5.66 21.23 10.44 22v-7.03H7.9v-2.91h2.54V9.84c0-2.5 1.49-3.89 3.78-3.89 1.1 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.45 2.91h-2.33V22C18.34 21.23 22 17.08 22 12.06Z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/artnonimu_s?igsh=M2w1aDN4M3E5aGsy" target="_blank" rel="noopener" aria-label="Instagram" class="w-11 h-11 rounded-full border border-frame flex items-center justify-center text-bonedim hover:text-bone hover:border-gold/50 transition-colors">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-5 md:px-8 mt-14 pt-8 border-t border-frame flex flex-col sm:flex-row gap-3 justify-between text-xs text-bonedim font-mono">
+    <span>© <span id="footer-year"></span> ArtNonimu's. <span data-i18n="footer_rights">Wszelkie prawa zastrzeżone.</span></span>
+    <span>Made in Poland 🇵🇱</span>
+  </div>
+</footer>
+
+<!-- =====================================================================
+     11) BOTÓN FLOTANTE DE WHATSAPP
+     ===================================================================== -->
+<a id="wa-float" href="#" target="_blank" rel="noopener" aria-label="WhatsApp" class="js-wa-generic fixed z-40 right-5 bottom-5 md:right-8 md:bottom-8" style="padding-bottom:env(safe-area-inset-bottom);">
+  <span class="relative flex items-center justify-center w-16 h-16 rounded-full bg-[#25D366] shadow-2xl">
+    <span class="wa-ring absolute inset-0 rounded-full bg-[#25D366]"></span>
+    <svg class="relative z-10" width="30" height="30" viewBox="0 0 24 24" fill="white"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.84.5 3.56 1.36 5.03L2 22l5.21-1.46a9.85 9.85 0 0 0 4.82 1.27h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2Zm5.78 14.06c-.24.69-1.4 1.32-1.93 1.36-.5.04-1 .25-3.37-.7-2.86-1.14-4.7-4.05-4.84-4.24-.14-.19-1.16-1.55-1.16-2.95 0-1.4.73-2.08 1-2.37.26-.28.58-.35.77-.35.19 0 .39 0 .56.01.18.01.42-.07.65.5.24.58.81 2 .88 2.14.07.14.12.31.02.5-.1.19-.15.31-.3.48-.14.16-.3.36-.43.49-.14.14-.29.29-.13.57.17.28.74 1.22 1.59 1.98 1.1.98 2.02 1.28 2.3 1.43.28.14.45.12.61-.07.17-.19.71-.83.9-1.11.19-.28.38-.23.64-.14.26.1 1.66.78 1.94.93.28.14.47.21.54.33.07.12.07.68-.17 1.36Z"/></svg>
+  </span>
+</a>
+
+<!-- =====================================================================
+     12) LIGHTBOX — visor de obra ampliada
+     ===================================================================== -->
+<div id="lightbox" class="fixed inset-0 z-[80] bg-bg/95 backdrop-blur-md flex items-center justify-center px-4 py-10" role="dialog" aria-modal="true" aria-label="Podgląd pracy">
+  <button id="lightbox-close" type="button" class="absolute top-5 right-5 md:top-8 md:right-8 w-11 h-11 rounded-full border border-frame text-bone flex items-center justify-center hover:border-gold/50 transition-colors" aria-label="Zamknij">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
+  </button>
+  <button id="lightbox-prev" type="button" class="absolute left-3 md:left-8 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full border border-frame text-bone flex items-center justify-center hover:border-gold/50 transition-colors" aria-label="Poprzednia">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <button id="lightbox-next" type="button" class="absolute right-3 md:right-8 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full border border-frame text-bone flex items-center justify-center hover:border-gold/50 transition-colors" aria-label="Następna">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><polyline points="9 6 15 12 9 18"/></svg>
+  </button>
+
+  <div id="lightbox-stage" class="frame-corners w-full max-w-3xl bg-panel border border-frame p-3 rounded-sm">
+    <span class="fc-tr"></span><span class="fc-bl"></span>
+    <img id="lightbox-img" src="" alt="" class="w-full max-h-[65vh] object-contain rounded-[2px] bg-bg">
+    <div class="flex flex-wrap items-center justify-between gap-4 mt-4 px-1">
+      <div class="font-mono text-xs uppercase tracking-widest text-bonedim">
+        <p id="lightbox-title" class="text-bone text-sm mb-1"></p>
+        <p id="lightbox-technique" class="text-gold"></p>
+      </div>
+      <a id="lightbox-cta" href="#" target="_blank" rel="noopener" class="btn-gold inline-flex items-center gap-2 px-5 py-3 rounded-sm font-mono text-[11px] uppercase tracking-wider">
+        <span data-i18n="lightbox_cta">Zamów tę pracę</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- =====================================================================
+     13) LÓGICA DE LA PÁGINA (JavaScript nativo, sin librerías externas)
+     ===================================================================== -->
+<script>
+(function(){
+  "use strict";
+
+  /* ===================================================================
+     A) DATOS DE CONFIGURACIÓN — número de WhatsApp y galerías
+     EDITA AQUÍ si cambia el número de teléfono o las fotos del catálogo.
+     =================================================================== */
+  const WHATSAPP_NUMBER = "48514290151"; // +48 514 290 151 (formato internacional sin "+")
+
+  // Cada obra: { src: URL de la imagen, subcat: 'wood' | 'pencil' | 'bw' | 'color' }
+  // Para añadir más fotografías, agrega más objetos a estos arrays.
+  const galleryData = {
+    a: [ // Categoría A — Portrety Zwierząt
+      { src: "https://i.ibb.co/ks3g5d7K/IMG-20260620-WA0017.jpg", subcat: "wood"   },
+      { src: "https://i.ibb.co/DHPdyq5K/IMG-20260620-WA0067.jpg", subcat: "wood"   },
+      { src: "https://i.ibb.co/jvZxQTDS/IMG-20260620-WA0065.jpg", subcat: "pencil" },
+      { src: "https://i.ibb.co/xTdFkgH/IMG-20260620-WA0018.jpg",  subcat: "pencil" },
+      { src: "https://i.ibb.co/prZ0vPPV/FB-IMG-1781952288967.jpg",subcat: "bw"     },
+      { src: "https://i.ibb.co/VhCG4DW/FB-IMG-1781951275111.jpg", subcat: "bw"     },
+      { src: "https://i.ibb.co/4ZDyWMzp/FB-IMG-1781890667100.jpg",subcat: "color"  },
+      { src: "https://i.ibb.co/Ld0fy84w/FB-IMG-1781890658916.jpg",subcat: "color"  },
+    ],
+    b: [ // Categoría B — Portrety Ludzi
+      { src: "https://i.ibb.co/PsNq3hRD/IMG-20260614-WA0005-1.jpg", subcat: "wood"   },
+      { src: "https://i.ibb.co/G4CJH7qt/IMG-20260614-WA0004-1.jpg", subcat: "pencil" },
+      { src: "https://i.ibb.co/WvpjN2d7/IMG-20260614-WA0003-1.jpg", subcat: "bw"     },
+    ]
+  };
+
+  const SUBCATS = ["wood", "pencil", "bw", "color"]; // orden de las pestañas de filtro
+
+  /* ===================================================================
+     B) TRADUCCIONES — objeto central de i18n (PL / EN / ES)
+     EDITA AQUÍ cualquier texto de la página.
+     =================================================================== */
+  const translations = {
+    pl: {
+      nav_home:"Start", nav_about:"Pracownia", nav_process:"Proces", nav_gallery_a:"Zwierzęta", nav_gallery_b:"Ludzie", nav_contact:"Kontakt",
+      header_cta:"Napisz na WhatsApp",
+      splash_tagline:"Otwieram galerię…",
+      hero_eyebrow:"Pracownia portretu · Polska",
+      hero_title:"Twoje wspomnienia, <em class=\"italic text-goldlight\">namalowane</em> ręcznie.",
+      hero_subtitle:"Zamieniam zdjęcia ulubionych zwierząt i bliskich osób w unikatowe dzieła — malowane na drewnie, rysowane ołówkiem lub przedstawione jako karykatura. Każda praca powstaje od podstaw, w jednym egzemplarzu.",
+      hero_cta_primary:"Zamów swój portret", hero_cta_secondary:"Przejdź do galerii",
+      about_eyebrow:"O pracowni",
+      about_title:"Ręka, oko <em class=\"italic text-goldlight\">i odrobina czasu</em>.",
+      about_text:"Każdy portret zaczyna się od zwykłego zdjęcia — i kilkudziesięciu godzin pracy. Maluję na desce lipowej, rysuję grafitem, kreślę karykatury z humorem i czułością. Bez druku, bez kopii — tylko oryginał, który trafia bezpośrednio do Ciebie, gdziekolwiek jesteś w Polsce.",
+      process_eyebrow:"Jak to działa", process_title:"Trzy kroki do Twojego dzieła",
+      process_step1_title:"Wyślij zdjęcie", process_step1_text:"Prześlij ulubione zdjęcie swojego zwierzaka lub bliskiej osoby przez WhatsApp — im wyraźniejsze, tym lepiej.",
+      process_step2_title:"Wybierz technikę", process_step2_text:"Razem dobierzemy najlepszą formę: malarstwo na drewnie, rysunek ołówkiem albo karykaturę czarno-białą lub kolorową.",
+      process_step3_title:"Odbierz dzieło", process_step3_text:"Tworzę portret ręcznie, pokazując po drodze postępy, a gotową pracę bezpiecznie pakuję i wysyłam do Ciebie.",
+      cat_a_eyebrow:"Rozdział I", cat_a_title:"Portrety Zwierząt", cat_a_subtitle:"Psy, koty i inni czworonożni bohaterowie — uwiecznieni z czułością i uwagą na każdy szczegół.",
+      cat_b_eyebrow:"Rozdział II", cat_b_title:"Portrety Ludzi", cat_b_subtitle:"Portrety bliskich osób — od realistycznego rysunku po żartobliwą karykaturę.",
+      filter_all:"Wszystkie", subcat_wood:"Malarstwo na drewnie", subcat_pencil:"Rysunek ołówkiem", subcat_bw:"Karykatura cz.-biała", subcat_color:"Karykatura kolorowa",
+      card_cta:"Zapytaj o wycenę", lightbox_cta:"Zamów tę pracę", gallery_empty:"Wkrótce więcej przykładów w tej kategorii.", piece_label:"Praca",
+      final_cta_eyebrow:"Zaproszenie", final_cta_title:"Stwórzmy coś, co <em class=\"italic text-goldlight\">zostanie</em> na zawsze.",
+      final_cta_subtitle:"Napisz teraz, opowiedz o swoim pomyśle i otrzymaj bezpłatną wycenę w kilka minut.", final_cta_button:"Napisz na WhatsApp",
+      footer_nav_title:"Nawigacja", footer_contact_title:"Kontakt", footer_follow_title:"Obserwuj", footer_rights:"Wszelkie prawa zastrzeżone.", footer_made:"Tworzone ręcznie w Polsce.",
+      lightbox_close:"Zamknij", lightbox_prev:"Poprzednia", lightbox_next:"Następna", menu_open:"Otwórz menu", menu_close:"Zamknij menu", lang_label:"Język",
+      wa_generic:"Cześć! Chcę zamówić portret. Proszę o więcej informacji.",
+      wa_template:"Cześć! Interesuje mnie ta praca: {title} ({technique}). Poproszę o wycenę i czas realizacji."
+    },
+    en: {
+      nav_home:"Home", nav_about:"Studio", nav_process:"Process", nav_gallery_a:"Pets", nav_gallery_b:"People", nav_contact:"Contact",
+      header_cta:"Message on WhatsApp",
+      splash_tagline:"Opening the gallery…",
+      hero_eyebrow:"Portrait studio · Poland",
+      hero_title:"Your memories, <em class=\"italic text-goldlight\">hand-painted</em>.",
+      hero_subtitle:"I turn photos of beloved pets and people into one-of-a-kind artworks — painted on wood, drawn in pencil, or reimagined as caricature. Every piece is made from scratch, in a single original copy.",
+      hero_cta_primary:"Order your portrait", hero_cta_secondary:"Go to the gallery",
+      about_eyebrow:"About the studio",
+      about_title:"A hand, an eye, <em class=\"italic text-goldlight\">and a little time</em>.",
+      about_text:"Every portrait starts with an ordinary photo — and dozens of hours of work. I paint on linden wood panels, draw in graphite, and sketch caricatures with humour and care. No prints, no copies — just an original piece, shipped safely anywhere in Poland.",
+      process_eyebrow:"How it works", process_title:"Three steps to your artwork",
+      process_step1_title:"Send a photo", process_step1_text:"Send your favourite photo of your pet or loved one over WhatsApp — the sharper, the better.",
+      process_step2_title:"Choose a technique", process_step2_text:"Together we'll pick the right form: painting on wood, pencil drawing, or a black-and-white or colour caricature.",
+      process_step3_title:"Receive your piece", process_step3_text:"I create the portrait by hand, sharing progress along the way, then pack and ship it carefully to you.",
+      cat_a_eyebrow:"Chapter I", cat_a_title:"Pet Portraits", cat_a_subtitle:"Dogs, cats and other four-legged heroes, captured with care and attention to every detail.",
+      cat_b_eyebrow:"Chapter II", cat_b_title:"People Portraits", cat_b_subtitle:"Portraits of the people you love — from realistic drawing to playful caricature.",
+      filter_all:"All", subcat_wood:"Painting on wood", subcat_pencil:"Pencil drawing", subcat_bw:"B&W caricature", subcat_color:"Colour caricature",
+      card_cta:"Ask for a quote", lightbox_cta:"Order this piece", gallery_empty:"More examples coming soon to this category.", piece_label:"Piece",
+      final_cta_eyebrow:"Invitation", final_cta_title:"Let's create something <em class=\"italic text-goldlight\">that lasts</em>.",
+      final_cta_subtitle:"Message me now, share your idea, and get a free quote within minutes.", final_cta_button:"Message on WhatsApp",
+      footer_nav_title:"Navigation", footer_contact_title:"Contact", footer_follow_title:"Follow", footer_rights:"All rights reserved.", footer_made:"Handmade in Poland.",
+      lightbox_close:"Close", lightbox_prev:"Previous", lightbox_next:"Next", menu_open:"Open menu", menu_close:"Close menu", lang_label:"Language",
+      wa_generic:"Hi! I'd like to order a portrait. Could you tell me more?",
+      wa_template:"Hi! I'm interested in this piece: {title} ({technique}). Could you give me a quote and turnaround time?"
+    },
+    es: {
+      nav_home:"Inicio", nav_about:"Estudio", nav_process:"Proceso", nav_gallery_a:"Mascotas", nav_gallery_b:"Personas", nav_contact:"Contacto",
+      header_cta:"Escribir por WhatsApp",
+      splash_tagline:"Abriendo la galería…",
+      hero_eyebrow:"Estudio de retratos · Polonia",
+      hero_title:"Tus recuerdos, <em class=\"italic text-goldlight\">pintados</em> a mano.",
+      hero_subtitle:"Convierto fotos de mascotas y seres queridos en obras únicas — pintadas sobre madera, dibujadas a lápiz o reinterpretadas como caricatura. Cada pieza se crea desde cero, en un único ejemplar original.",
+      hero_cta_primary:"Encarga tu retrato", hero_cta_secondary:"Ver la galería",
+      about_eyebrow:"Sobre el estudio",
+      about_title:"Una mano, un ojo <em class=\"italic text-goldlight\">y algo de tiempo</em>.",
+      about_text:"Cada retrato empieza con una foto cualquiera — y decenas de horas de trabajo. Pinto sobre tablas de tilo, dibujo con grafito y trazo caricaturas con humor y cariño. Sin impresiones ni copias: solo una pieza original, enviada con cuidado a cualquier punto de Polonia.",
+      process_eyebrow:"Cómo funciona", process_title:"Tres pasos hacia tu obra",
+      process_step1_title:"Envía una foto", process_step1_text:"Envíame tu foto favorita de tu mascota o de un ser querido por WhatsApp — cuanto más nítida, mejor.",
+      process_step2_title:"Elige una técnica", process_step2_text:"Juntos elegimos la forma adecuada: pintura sobre madera, dibujo a lápiz o caricatura en blanco y negro o a color.",
+      process_step3_title:"Recibe tu obra", process_step3_text:"Creo el retrato a mano, compartiendo el progreso en el camino, y lo empaco y envío con cuidado hasta ti.",
+      cat_a_eyebrow:"Capítulo I", cat_a_title:"Retratos de Mascotas", cat_a_subtitle:"Perros, gatos y otros héroes de cuatro patas, retratados con cariño y atención al detalle.",
+      cat_b_eyebrow:"Capítulo II", cat_b_title:"Retratos de Personas", cat_b_subtitle:"Retratos de las personas que quieres — del dibujo realista a la caricatura más divertida.",
+      filter_all:"Todas", subcat_wood:"Pintura sobre madera", subcat_pencil:"Dibujo a lápiz", subcat_bw:"Caricatura B/N", subcat_color:"Caricatura a color",
+      card_cta:"Pedir cotización", lightbox_cta:"Encargar esta obra", gallery_empty:"Pronto más ejemplos en esta categoría.", piece_label:"Obra",
+      final_cta_eyebrow:"Invitación", final_cta_title:"Creemos algo <em class=\"italic text-goldlight\">que perdure</em>.",
+      final_cta_subtitle:"Escríbeme ahora, cuéntame tu idea y recibe una cotización gratuita en minutos.", final_cta_button:"Escribir por WhatsApp",
+      footer_nav_title:"Navegación", footer_contact_title:"Contacto", footer_follow_title:"Síguenos", footer_rights:"Todos los derechos reservados.", footer_made:"Hecho a mano en Polonia.",
+      lightbox_close:"Cerrar", lightbox_prev:"Anterior", lightbox_next:"Siguiente", menu_open:"Abrir menú", menu_close:"Cerrar menú", lang_label:"Idioma",
+      wa_generic:"¡Hola! Quiero encargar un retrato. ¿Podrías darme más información?",
+      wa_template:"¡Hola! Me interesa esta obra: {title} ({technique}). ¿Podrías indicarme el precio y el tiempo de entrega?"
+    }
+  };
+
+  let currentLang = "pl"; // idioma por defecto: polaco
+
+  /* ===================================================================
+     C) FUNCIONES DE WHATSAPP
+     =================================================================== */
+  function waLink(message){
+    return "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(message);
+  }
+
+  function updateGenericWaLinks(){
+    const msg = translations[currentLang].wa_generic;
+    document.querySelectorAll(".js-wa-generic").forEach(function(el){
+      el.setAttribute("href", waLink(msg));
+    });
+  }
+
+  function buildPieceMessage(title, technique){
+    return translations[currentLang].wa_template
+      .replace("{title}", title)
+      .replace("{technique}", technique);
+  }
+
+  /* ===================================================================
+     D) SISTEMA DE IDIOMAS (i18n)
+     =================================================================== */
+  function applyLanguage(lang){
+    currentLang = translations[lang] ? lang : "pl";
+    const t = translations[currentLang];
+
+    // Texto simple (textContent)
+    document.querySelectorAll("[data-i18n]").forEach(function(el){
+      const key = el.getAttribute("data-i18n");
+      if (t[key] !== undefined) el.textContent = t[key];
+    });
+
+    // Texto con marcado HTML simple (ej. <em> para énfasis)
+    document.querySelectorAll("[data-i18n-html]").forEach(function(el){
+      const key = el.getAttribute("data-i18n-html");
+      if (t[key] !== undefined) el.innerHTML = t[key];
+    });
+
+    document.documentElement.setAttribute("lang", currentLang);
+
+    // Resalta el botón de idioma activo
+    document.querySelectorAll(".lang-pill").forEach(function(btn){
+      btn.classList.toggle("is-active", btn.getAttribute("data-lang") === currentLang);
+    });
+
+    updateGenericWaLinks();
+    renderMarquee();
+    renderFilters("a"); renderFilters("b");
+    renderGrid("a"); renderGrid("b");
+  }
+
+  document.querySelectorAll(".lang-switch [data-lang], #mobile-nav [data-lang]").forEach(function(btn){
+    btn.addEventListener("click", function(){ applyLanguage(btn.getAttribute("data-lang")); });
+  });
+
+  /* ===================================================================
+     E) MARQUESINA DE TÉCNICAS (hero) — generada a partir de las traducciones
+     =================================================================== */
+  function renderMarquee(){
+    const t = translations[currentLang];
+    const words = [t.subcat_wood, t.subcat_pencil, t.subcat_bw, t.subcat_color, t.cat_a_title, t.cat_b_title];
+    const track = document.getElementById("marquee-track");
+    if (!track) return;
+    // Se duplica la lista para lograr el efecto de bucle infinito sin saltos
+    const itemsHtml = words.concat(words).map(function(w){
+      return '<span class="flex items-center gap-10">' + w + '<span class="text-gold">&#10022;</span></span>';
+    }).join("");
+    track.innerHTML = itemsHtml;
+  }
+
+  /* ===================================================================
+     F) ESTADO DE FILTROS Y RENDERIZADO DE GALERÍAS
+     =================================================================== */
+  const activeFilter = { a: "all", b: "all" };
+
+  function renderFilters(catKey){
+    const t = translations[currentLang];
+    const container = document.getElementById("filters-" + catKey);
+    if (!container) return;
+
+    const labels = { all: t.filter_all, wood: t.subcat_wood, pencil: t.subcat_pencil, bw: t.subcat_bw, color: t.subcat_color };
+    const options = ["all"].concat(SUBCATS);
+
+    container.innerHTML = options.map(function(key){
+      const active = activeFilter[catKey] === key ? " is-active" : "";
+      return '<button type="button" data-filter="' + key + '" class="filter-pill px-4 py-2 rounded-full font-mono text-[11px] uppercase tracking-wider' + active + '">' + labels[key] + '</button>';
+    }).join("");
+
+    container.querySelectorAll("[data-filter]").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        activeFilter[catKey] = btn.getAttribute("data-filter");
+        renderFilters(catKey);
+        renderGrid(catKey);
+      });
+    });
+  }
+
+  function renderGrid(catKey){
+    const t = translations[currentLang];
+    const grid = document.getElementById("grid-" + catKey);
+    const emptyMsg = document.getElementById("empty-" + catKey);
+    if (!grid) return;
+
+    const items = galleryData[catKey];
+    const filter = activeFilter[catKey];
+    const techniqueLabels = { wood: t.subcat_wood, pencil: t.subcat_pencil, bw: t.subcat_bw, color: t.subcat_color };
+    const catLabel = catKey === "a" ? t.cat_a_title : t.cat_b_title;
+
+    let visibleCount = 0;
+    grid.innerHTML = items.map(function(item, index){
+      const isVisible = (filter === "all" || filter === item.subcat);
+      if (isVisible) visibleCount++;
+      const technique = techniqueLabels[item.subcat];
+      const title = t.piece_label + " " + String(index + 1).padStart(2, "0");
+      const altText = title + " — " + technique + " — " + catLabel;
+
+      return ''
+        + '<figure class="masonry-item' + (isVisible ? '' : ' is-hidden') + '" data-cat="' + catKey + '" data-index="' + index + '">'
+        +   '<div class="frame-corners relative overflow-hidden rounded-sm cursor-pointer" tabindex="0" role="button" aria-label="' + altText + '">'
+        +     '<span class="fc-tr"></span><span class="fc-bl"></span>'
+        +     '<img src="' + item.src + '" alt="' + altText + '" loading="lazy" decoding="async" class="w-full h-auto block">'
+        +     '<div class="gallery-overlay absolute inset-0 flex items-end p-4">'
+        +       '<button type="button" class="gallery-overlay-btn quote-btn btn-gold w-full px-4 py-2.5 rounded-sm font-mono text-[10px] uppercase tracking-wider">' + t.card_cta + '</button>'
+        +     '</div>'
+        +   '</div>'
+        +   '<figcaption class="placard mt-3 flex items-center justify-between font-mono text-[10px] uppercase tracking-widest text-bonedim">'
+        +     '<span class="text-bone">' + title + '</span><span class="text-gold">' + technique + '</span>'
+        +   '</figcaption>'
+        + '</figure>';
+    }).join("");
+
+    // Abrir el lightbox al hacer clic/tap o pulsar Enter sobre la imagen
+    grid.querySelectorAll(".masonry-item").forEach(function(fig){
+      const stage = fig.querySelector(".frame-corners");
+      const openHandler = function(){
+        openLightbox(catKey, parseInt(fig.getAttribute("data-index"), 10));
+      };
+      stage.addEventListener("click", openHandler);
+      stage.addEventListener("keydown", function(e){ if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openHandler(); } });
+    });
+
+    // Botón "pedir cotización" sobre cada tarjeta -> WhatsApp directo (sin abrir el lightbox)
+    grid.querySelectorAll(".quote-btn").forEach(function(btn, i){
+      btn.addEventListener("click", function(e){
+        e.stopPropagation();
+        const item = items[i];
+        const technique = techniqueLabels[item.subcat];
+        const title = t.piece_label + " " + String(i + 1).padStart(2, "0");
+        window.open(waLink(buildPieceMessage(title, technique)), "_blank", "noopener");
+      });
+    });
+
+    if (emptyMsg) emptyMsg.classList.toggle("hidden", visibleCount !== 0);
+  }
+
+  /* ===================================================================
+     G) LIGHTBOX (visor ampliado de la obra)
+     =================================================================== */
+  const lightbox = document.getElementById("lightbox");
+  const lbImg = document.getElementById("lightbox-img");
+  const lbTitle = document.getElementById("lightbox-title");
+  const lbTechnique = document.getElementById("lightbox-technique");
+  const lbCta = document.getElementById("lightbox-cta");
+  let lbState = { cat: "a", index: 0 };
+
+  function openLightbox(catKey, index){
+    lbState = { cat: catKey, index: index };
+    fillLightbox();
+    lightbox.classList.add("is-open");
+    document.body.classList.add("no-scroll");
+  }
+
+  function closeLightbox(){
+    lightbox.classList.remove("is-open");
+    document.body.classList.remove("no-scroll");
+  }
+
+  function fillLightbox(){
+    const t = translations[currentLang];
+    const items = galleryData[lbState.cat];
+    const item = items[lbState.index];
+    const techniqueLabels = { wood: t.subcat_wood, pencil: t.subcat_pencil, bw: t.subcat_bw, color: t.subcat_color };
+    const technique = techniqueLabels[item.subcat];
+    const title = t.piece_label + " " + String(lbState.index + 1).padStart(2, "0");
+
+    lbImg.src = item.src;
+    lbImg.alt = title + " — " + technique;
+    lbTitle.textContent = title;
+    lbTechnique.textContent = technique;
+    lbCta.setAttribute("href", waLink(buildPieceMessage(title, technique)));
+  }
+
+  function stepLightbox(delta){
+    const items = galleryData[lbState.cat];
+    lbState.index = (lbState.index + delta + items.length) % items.length;
+    fillLightbox();
+  }
+
+  document.getElementById("lightbox-close").addEventListener("click", closeLightbox);
+  document.getElementById("lightbox-prev").addEventListener("click", function(){ stepLightbox(-1); });
+  document.getElementById("lightbox-next").addEventListener("click", function(){ stepLightbox(1); });
+  lightbox.addEventListener("click", function(e){ if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener("keydown", function(e){
+    if (!lightbox.classList.contains("is-open")) return;
+    if (e.key === "Escape") closeLightbox();
+    if (e.key === "ArrowLeft") stepLightbox(-1);
+    if (e.key === "ArrowRight") stepLightbox(1);
+  });
+
+  /* ===================================================================
+     H) CABECERA: efecto al hacer scroll + menú móvil
+     =================================================================== */
+  const header = document.getElementById("site-header");
+  function onScroll(){
+    if (window.scrollY > 30) header.classList.add("scrolled");
+    else header.classList.remove("scrolled");
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  const mobileNav = document.getElementById("mobile-nav");
+  const menuToggle = document.getElementById("menu-toggle");
+  const menuClose = document.getElementById("menu-close");
+
+  function openMobileNav(){
+    mobileNav.classList.add("is-open");
+    document.body.classList.add("no-scroll");
+    menuToggle.setAttribute("aria-expanded", "true");
+  }
+  function closeMobileNav(){
+    mobileNav.classList.remove("is-open");
+    if (!lightbox.classList.contains("is-open")) document.body.classList.remove("no-scroll");
+    menuToggle.setAttribute("aria-expanded", "false");
+  }
+  menuToggle.addEventListener("click", openMobileNav);
+  menuClose.addEventListener("click", closeMobileNav);
+  mobileNav.querySelectorAll("a").forEach(function(a){ a.addEventListener("click", closeMobileNav); });
+
+  /* ===================================================================
+     I) RESPLANDOR DEL HERO QUE SIGUE AL CURSOR (efecto "foco de galería")
+     =================================================================== */
+  const heroSection = document.getElementById("home");
+  if (window.matchMedia("(pointer: fine)").matches){
+    heroSection.addEventListener("mousemove", function(e){
+      const rect = heroSection.getBoundingClientRect();
+      const mx = ((e.clientX - rect.left) / rect.width) * 100;
+      const my = ((e.clientY - rect.top) / rect.height) * 100;
+      heroSection.style.setProperty("--mx", mx + "%");
+      heroSection.style.setProperty("--my", my + "%");
+    });
+
+    // Pequeño efecto de inclinación 3D sobre la obra flotante del hero
+    const heroFrame = document.querySelector(".hero-frame");
+    if (heroFrame){
+      heroSection.addEventListener("mousemove", function(e){
+        const rect = heroFrame.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const rotateY = ((e.clientX - cx) / rect.width) * 8;
+        const rotateX = -((e.clientY - cy) / rect.height) * 8;
+        heroFrame.style.transform = "perspective(900px) rotateX(" + rotateX + "deg) rotateY(" + rotateY + "deg)";
+      });
+      heroSection.addEventListener("mouseleave", function(){ heroFrame.style.transform = ""; });
+    }
+  }
+
+  /* ===================================================================
+     J) REVELADO DE SECCIONES AL HACER SCROLL (IntersectionObserver)
+     =================================================================== */
+  const revealObserver = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting){
+        entry.target.classList.add("is-visible");
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: "0px 0px -60px 0px" });
+
+  function observeReveals(){
+    document.querySelectorAll(".reveal:not(.is-visible)").forEach(function(el){ revealObserver.observe(el); });
+  }
+
+  /* ===================================================================
+     K) MARCADO ACTIVO DE NAVEGACIÓN SEGÚN LA SECCIÓN VISIBLE
+     =================================================================== */
+  const sections = document.querySelectorAll("main section[id]");
+  const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
+  const navObserver = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting){
+        navLinks.forEach(function(link){
+          link.classList.toggle("is-active", link.getAttribute("href") === "#" + entry.target.id);
+        });
+      }
+    });
+  }, { threshold: 0.5 });
+  sections.forEach(function(s){ navObserver.observe(s); });
+
+  /* ===================================================================
+     L) AÑO DEL FOOTER
+     =================================================================== */
+  document.getElementById("footer-year").textContent = new Date().getFullYear();
+
+  /* ===================================================================
+     M) SPLASH SCREEN — temporizador de bienvenida
+     =================================================================== */
+  const splash = document.getElementById("splash");
+  function hideSplash(){
+    splash.classList.add("splash-hide");
+    document.body.classList.remove("no-scroll");
+    observeReveals();
+  }
+
+  /* ===================================================================
+     N) INICIALIZACIÓN GENERAL
+     =================================================================== */
+  applyLanguage("pl"); // Polaco como idioma principal por defecto
+
+  // El splash se muestra un mínimo de tiempo para que la animación se aprecie,
+  // y desaparece tanto si la página ya cargó como, como máximo, tras 2.6s.
+  let pageLoaded = false;
+  window.addEventListener("load", function(){ pageLoaded = true; });
+  setTimeout(function(){ hideSplash(); }, 2600);
+
+})();
+</script>
+</body>
+</html>
