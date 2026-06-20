@@ -445,6 +445,36 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(200,146,42,.1);padd
   .sr{opacity:1;transform:none;}
   *{animation-duration:.01ms !important;transition-duration:.01ms !important;}
 }
+
+/* ══ BOTÓN DISCRETO — MÁSCARA (enlace oculto a Artnoni.html) ══
+   Pequeño, semitransparente, fijo en la esquina inferior izquierda.
+   Sólo se revela del todo al pasar el cursor o al enfocarlo con teclado. */
+.mask-link{
+  position:fixed;
+  left:14px;
+  bottom:calc(14px + env(safe-area-inset-bottom, 0px));
+  z-index:300; /* por debajo del drawer (510-520) y del nav (500) */
+  width:38px;height:38px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(7,5,10,.45);
+  border:1px solid rgba(200,146,42,.16);
+  color:rgba(240,230,208,.32);
+  font-size:.92rem;
+  text-decoration:none;
+  opacity:.4;
+  transition:opacity .4s var(--ease),transform .4s var(--ease),color .3s,border-color .3s,background .3s;
+  -webkit-tap-highlight-color:transparent;
+}
+.mask-link:hover,.mask-link:focus-visible{
+  opacity:1;
+  color:var(--oro-l);
+  border-color:rgba(200,146,42,.45);
+  background:rgba(200,146,42,.1);
+  transform:translateY(-3px) scale(1.06);
+}
+@media(max-width:480px){
+  .mask-link{width:33px;height:33px;font-size:.8rem;left:10px;bottom:calc(10px + env(safe-area-inset-bottom, 0px));}
+}
 </style>
 </head>
 <body>
@@ -654,6 +684,12 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(200,146,42,.1);padd
   <p class="footer-sub" data-i18n="foot">Arte Andino · Murales · Tatuajes · Música · Polonia 2026</p>
   <p class="footer-credit">© 2026 Nali · <a href="https://septimapacha.com" target="_blank" rel="noopener">Séptima Pacha Co.</a></p>
 </footer>
+
+<!-- ══ BOTÓN DISCRETO — MÁSCARA → Artnoni.html ══
+     Enlace casi invisible, abajo a la izquierda, fuera del flujo de navegación principal. -->
+<a href="Artnoni.html" class="mask-link" aria-label="Más arte" title="Más arte">
+  <i class="fas fa-theater-masks"></i>
+</a>
 
 <!-- ══ SCRIPTS ══ -->
 <script>
