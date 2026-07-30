@@ -1413,9 +1413,15 @@
         .servicio-circulo:hover::before { width: 300px; height: 300px; }
 
         .servicio-agua { background: rgba(46, 204, 113, 0.15); border-color: var(--agua); }
- 
+        .servicio-tierra { background: rgba(139, 69, 19, 0.15); border-color: var(--tierra); }
+        .servicio-fuego { background: rgba(255, 107, 53, 0.15); border-color: var(--fuego); }
+        .servicio-aire { background: rgba(74, 144, 226, 0.15); border-color: var(--aire); }
+
         .servicio-agua:hover { box-shadow: 0 30px 70px rgba(46, 204, 113, 0.5), inset 0 0 40px rgba(46, 204, 113, 0.25); background: rgba(46, 204, 113, 0.28); }
-       
+        .servicio-tierra:hover { box-shadow: 0 30px 70px rgba(139, 69, 19, 0.5), inset 0 0 40px rgba(139, 69, 19, 0.25); background: rgba(139, 69, 19, 0.28); }
+        .servicio-fuego:hover { box-shadow: 0 30px 70px rgba(255, 107, 53, 0.5), inset 0 0 40px rgba(255, 107, 53, 0.25); background: rgba(255, 107, 53, 0.28); }
+        .servicio-aire:hover { box-shadow: 0 30px 70px rgba(74, 144, 226, 0.5), inset 0 0 40px rgba(74, 144, 226, 0.25); background: rgba(74, 144, 226, 0.28); }
+
         .servicio-circulo:hover { transform: scale(1.18) translateY(-25px); border-color: var(--oro); }
 
         .circulo-interno { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.8rem; text-align: center; z-index: 1; padding: 1.5rem; position: relative; }
@@ -1802,16 +1808,19 @@
 
 <!-- SERVICIOS -->
 <section class="servicios" id="servicios">
-    <h2 class="section-title" data-i18n="seccion-servicios">Servicios</h2>
+    <h2 class="section-title" data-i18n="seccion-servicios">Servicios de la Pacha</h2>
     <div class="servicios-container">
         <div class="servicio-circulo servicio-agua" data-servicio="agua">
             <div class="circulo-interno">
                 <div class="circulo-simbolo">💻</div>
-                <h3 class="circulo-nombre">Código Fluido</h3>
+                <h3 class="circulo-nombre">Codigo Fluido</h3>
                 <p class="circulo-desc">Código y Diseño</p>
             </div>
+    
         </div>
-        
+    </div>
+</section>
+
 <!-- SOBRE SÉPTIMA PACHA -->
 <section class="sobre-septima" id="sobre-septima">
     <div class="sobre-container">
@@ -2134,4 +2143,3 @@
 </script>
 </body>
 </html>
-
