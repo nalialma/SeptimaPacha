@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Panel de Administración | Nali Tattoo</title>
+<meta name="robots" content="noindex, nofollow">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Barlow+Condensed:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+
+<style>
+:root{
+  --noche:#080508; --tierra-dark:#1A0D08; --tierra:#4A2000;
+  --oro:#C8922A; --oro-light:#E8B84B; --crema:#F0E6D0;
+  --glass-bg:rgba(10,4,2,.6); --glass-border:rgba(200,146,42,.25); --glass-hover:rgba(200,146,42,.12);
+  --font-display:'Cinzel',serif; --font-body:'Barlow',sans-serif; --font-cond:'Barlow Condensed',sans-serif;
+  --wip-rojo:#CC0000; --wip-naranja:#E8720C; --wip-amarillo:#F5C400; --wip-verde:#00913A; --wip-azul:#005BAA; --wip-violeta:#5C2D91;
+  --ok:#00913A; --err:#CC0000;
+  --tr:all .3s cubic-bezier(.4,0,.2,1);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:var(--font-body);background:var(--noche);color:var(--crema);min-height:100vh;line-height:1.55;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse at 15% 10%,rgba(204,0,0,.06) 0%,transparent 55%),
+             radial-gradient(ellipse at 85% 90%,rgba(92,45,145,.07) 0%,transparent 55%),
+             radial-gradient(ellipse at 50% 50%,rgba(74,32,0,.35) 0%,transparent 70%);}
+a{color:inherit;text-decoration:none;}
+button{font:inherit;cursor:pointer;}
+input,textarea,select{font:inherit;color:var(--crema);}
+::selection{background:var(--oro);color:var(--noche);}
+
+.wiphala{height:5px;width:100%;background:linear-gradient(90deg,var(--wip-rojo) 0% 14.28%,var(--wip-naranja) 14.28% 28.56%,var(--wip-amarillo) 28.56% 42.84%,#F0EAD6 42.84% 57.12%,var(--wip-verde) 57.12% 71.4%,var(--wip-azul) 71.4% 85.68%,var(--wip-violeta) 85.68% 100%);}
+
+/* ── LOGIN ── */
+#loginScreen{position:relative;z-index:2;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;}
+.login-card{width:100%;max-width:380px;background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:18px;padding:2.4rem 2rem;backdrop-filter:blur(16px);text-align:center;}
+.login-logo{font-family:var(--font-display);font-size:1.8rem;letter-spacing:4px;margin-bottom:.3rem;}
+.login-logo span{color:var(--oro);}
+.login-sub{font-family:var(--font-cond);font-size:.75rem;letter-spacing:2px;text-transform:uppercase;color:rgba(240,230,208,.5);margin-bottom:2rem;}
+.field{text-align:left;margin-bottom:1.1rem;}
+.field label{display:block;font-family:var(--font-cond);font-size:.7rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--oro-light);margin-bottom:.4rem;}
+.field input{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--glass-border);border-radius:8px;padding:.7rem .9rem;font-size:.95rem;transition:var(--tr);}
+.field input:focus{outline:none;border-color:var(--oro);background:rgba(255,255,255,.06);}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;font-family:var(--font-cond);font-size:.85rem;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;padding:.75rem 1.4rem;border-radius:30px;transition:var(--tr);border:1px solid transparent;}
+.btn-gold{background:linear-gradient(135deg,var(--oro),var(--oro-light));color:var(--noche);width:100%;}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(200,146,42,.35);}
+.btn-gold:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+.btn-ghost{background:rgba(200,146,42,.08);border-color:var(--glass-border);color:var(--crema);}
+.btn-ghost:hover{background:var(--glass-hover);border-color:var(--oro);}
+.btn-danger{background:rgba(204,0,0,.12);border:1px solid rgba(204,0,0,.4);color:#ff8a8a;}
+.btn-danger:hover{background:rgba(204,0,0,.25);}
+.btn-sm{padding:.4rem .8rem;font-size:.7rem;border-radius:20px;}
+.msg{margin-top:1rem;font-size:.82rem;font-family:var(--font-cond);letter-spacing:.5px;}
+.msg.err{color:#ff7070;}
+.msg.ok{color:#3dd87d;}
+
+/* ── APP SHELL ── */
+#app{display:none;position:relative;z-index:2;min-height:100vh;}
+header.topbar{position:sticky;top:0;z-index:50;background:rgba(8,5,8,.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--glass-border);}
+.topbar-inner{max-width:1200px;margin:0 auto;padding:0 1.5rem;height:64px;display:flex;align-items:center;justify-content:space-between;gap:1rem;}
+.tb-logo{font-family:var(--font-display);font-size:1.25rem;letter-spacing:3px;}
+.tb-logo span{color:var(--oro);}
+.tb-right{display:flex;align-items:center;gap:.8rem;}
+.tb-email{font-family:var(--font-cond);font-size:.75rem;color:rgba(240,230,208,.5);letter-spacing:1px;}
+
+.tabs{display:flex;gap:.5rem;max-width:1200px;margin:1.5rem auto 0;padding:0 1.5rem;}
+.tab-btn{font-family:var(--font-cond);font-size:.85rem;letter-spacing:1.5px;text-transform:uppercase;padding:.65rem 1.3rem;border-radius:30px 30px 0 0;color:rgba(240,230,208,.55);border-bottom:2px solid transparent;transition:var(--tr);}
+.tab-btn.active{color:var(--oro-light);border-color:var(--oro);background:rgba(200,146,42,.06);}
+.tab-btn:hover:not(.active){color:var(--crema);}
+
+main{max-width:1200px;margin:0 auto;padding:1.5rem;}
+.panel{display:none;}
+.panel.active{display:block;}
+
+.panel-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem;}
+.panel-title{font-family:var(--font-display);font-size:1.5rem;color:var(--crema);}
+.panel-desc{font-family:var(--font-cond);font-size:.8rem;color:rgba(240,230,208,.45);letter-spacing:1px;margin-top:.2rem;}
+
+/* ── UPLOAD CARD ── */
+.upload-card{background:var(--glass-bg);border:1px dashed var(--glass-border);border-radius:16px;padding:1.6rem;margin-bottom:2rem;}
+.upload-card.dragover{border-color:var(--oro);background:rgba(200,146,42,.08);}
+.upload-row{display:grid;grid-template-columns:140px 1fr;gap:1.2rem;align-items:start;}
+.upload-preview{width:140px;height:140px;border-radius:12px;background:rgba(255,255,255,.03);border:1px solid var(--glass-border);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;position:relative;}
+.upload-preview img{width:100%;height:100%;object-fit:cover;}
+.upload-preview i{font-size:1.6rem;color:rgba(200,146,42,.4);}
+.upload-fields{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;}
+.upload-fields .full{grid-column:1/-1;}
+.chip-select{display:flex;flex-wrap:wrap;gap:.4rem;}
+.chip-opt{font-family:var(--font-cond);font-size:.72rem;letter-spacing:1px;text-transform:uppercase;padding:.3rem .8rem;border-radius:20px;border:1px solid var(--glass-border);color:rgba(240,230,208,.6);transition:var(--tr);}
+.chip-opt.sel{background:var(--oro);border-color:var(--oro);color:var(--noche);font-weight:700;}
+.chip-opt:hover{border-color:var(--oro);}
+.size-opt{display:flex;gap:.5rem;}
+.upload-actions{grid-column:1/-1;display:flex;justify-content:flex-end;gap:.7rem;margin-top:.3rem;}
+
+/* ── TATTOO LIST ── */
+.tt-list{display:flex;flex-direction:column;gap:.7rem;}
+.tt-row{display:grid;grid-template-columns:70px 1fr auto;gap:1rem;align-items:center;background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:12px;padding:.7rem .9rem;transition:var(--tr);}
+.tt-row:hover{border-color:rgba(200,146,42,.45);}
+.tt-thumb{width:70px;height:70px;border-radius:8px;object-fit:cover;background:rgba(255,255,255,.04);}
+.tt-info h4{font-family:var(--font-display);font-size:1rem;color:var(--crema);}
+.tt-info .tt-sub{font-family:var(--font-cond);font-size:.72rem;color:rgba(240,230,208,.45);letter-spacing:1px;margin-top:.15rem;}
+.tt-tags{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.4rem;}
+.tt-tag{font-family:var(--font-cond);font-size:.62rem;letter-spacing:1px;text-transform:uppercase;padding:.15rem .55rem;border-radius:14px;background:rgba(200,146,42,.1);border:1px solid rgba(200,146,42,.25);color:var(--oro-light);}
+.tt-actions{display:flex;align-items:center;gap:.35rem;flex-wrap:wrap;justify-content:flex-end;}
+.icon-btn{width:32px;height:32px;border-radius:8px;background:rgba(200,146,42,.08);border:1px solid var(--glass-border);display:flex;align-items:center;justify-content:center;color:var(--crema);transition:var(--tr);font-size:.8rem;}
+.icon-btn:hover{background:var(--glass-hover);border-color:var(--oro);color:var(--oro-light);}
+.icon-btn.danger:hover{background:rgba(204,0,0,.2);border-color:var(--err);color:#ff7070;}
+.empty-state{text-align:center;padding:3rem 1rem;color:rgba(240,230,208,.4);font-family:var(--font-cond);letter-spacing:1px;}
+
+/* ── STYLES LIST ── */
+.style-row{display:grid;grid-template-columns:auto 1fr auto;gap:1rem;align-items:center;background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:12px;padding:.9rem 1rem;margin-bottom:.7rem;}
+.style-icon-badge{width:42px;height:42px;border-radius:10px;background:rgba(200,146,42,.08);border:1px solid var(--glass-border);display:flex;align-items:center;justify-content:center;font-size:1.2rem;}
+.style-fields{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;}
+.style-fields .full{grid-column:1/-1;}
+.style-fields input,.style-fields select,.style-fields textarea{background:rgba(255,255,255,.04);border:1px solid var(--glass-border);border-radius:6px;padding:.4rem .6rem;font-size:.82rem;width:100%;}
+.mini-label{font-family:var(--font-cond);font-size:.6rem;letter-spacing:1px;text-transform:uppercase;color:rgba(240,230,208,.4);margin-bottom:.15rem;display:block;}
+
+.add-style-card{background:var(--glass-bg);border:1px dashed var(--glass-border);border-radius:12px;padding:1.2rem;margin-bottom:1.5rem;display:flex;gap:.7rem;flex-wrap:wrap;align-items:flex-end;}
+.add-style-card .field2{flex:1;min-width:140px;}
+.add-style-card label{display:block;font-family:var(--font-cond);font-size:.65rem;letter-spacing:1px;text-transform:uppercase;color:var(--oro-light);margin-bottom:.3rem;}
+.add-style-card input{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--glass-border);border-radius:6px;padding:.5rem .7rem;font-size:.85rem;}
+
+/* ── TOASTS ── */
+#toastWrap{position:fixed;bottom:1.5rem;right:1.5rem;z-index:999;display:flex;flex-direction:column;gap:.6rem;}
+.toast{background:rgba(10,4,2,.95);border:1px solid var(--glass-border);border-left:3px solid var(--oro);border-radius:8px;padding:.8rem 1.1rem;font-family:var(--font-cond);font-size:.82rem;letter-spacing:.5px;box-shadow:0 10px 30px rgba(0,0,0,.5);animation:toastIn .3s ease;max-width:320px;}
+.toast.err{border-left-color:var(--err);}
+.toast.ok{border-left-color:var(--ok);}
+@keyframes toastIn{from{opacity:0;transform:translateX(20px);}to{opacity:1;transform:none;}}
+
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.25);border-top-color:var(--noche);border-radius:50%;animation:spin .7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+@media(max-width:640px){
+  .upload-row{grid-template-columns:1fr;}
+  .upload-preview{width:100%;height:160px;}
+  .upload-fields{grid-template-columns:1fr;}
+  .tt-row{grid-template-columns:56px 1fr;}
+  .tt-actions{grid-column:1/-1;justify-content:flex-start;margin-top:.4rem;}
+  .style-row{grid-template-columns:1fr;}
+  .style-fields{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="wiphala"></div>
+<div id="toastWrap"></div>
+
+<!-- ══ LOGIN ══ -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo">NAL<span>I</span></div>
+    <div class="login-sub">Panel de Administración</div>
+    <form id="loginForm">
+      <div class="field">
+        <label>Email</label>
+        <input type="email" id="loginEmail" autocomplete="username" required>
+      </div>
+      <div class="field">
+        <label>Contraseña</label>
+        <input type="password" id="loginPassword" autocomplete="current-password" required>
+      </div>
+      <button type="submit" class="btn btn-gold" id="loginBtn">Ingresar</button>
+      <p class="msg" id="loginMsg"></p>
+    </form>
+  </div>
+</div>
+
+<!-- ══ APP ══ -->
+<div id="app">
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="tb-logo">NAL<span>I</span> · Admin</div>
+      <div class="tb-right">
+        <span class="tb-email" id="userEmail"></span>
+        <button class="btn btn-ghost btn-sm" id="changePwBtn"><i class="fas fa-key"></i></button>
+        <button class="btn btn-ghost btn-sm" id="logoutBtn"><i class="fas fa-arrow-right-from-bracket"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab-btn active" data-tab="tattoos">Obras</button>
+    <button class="tab-btn" data-tab="styles">Estilos</button>
+  </nav>
+
+  <main>
+    <!-- ═══ PANEL: OBRAS ═══ -->
+    <section class="panel active" id="panel-tattoos">
+      <div class="panel-head">
+        <div>
+          <div class="panel-title">Obras del portafolio</div>
+          <div class="panel-desc">Subí, renombrá, reordená o eliminá los tatuajes que aparecen en la web pública.</div>
+        </div>
+      </div>
+
+      <div class="upload-card" id="uploadCard">
+        <div class="upload-row">
+          <div class="upload-preview" id="uploadPreview"><i class="fas fa-image"></i></div>
+          <div class="upload-fields">
+            <div class="full">
+              <label class="mini-label">Imagen (JPG, PNG o WEBP)</label>
+              <input type="file" id="fileInput" accept="image/*">
+            </div>
+            <div class="full">
+              <label class="mini-label">Nombre / título</label>
+              <input type="text" id="ttTitle" placeholder="Ej: Cóndor andino, antebrazo">
+            </div>
+            <div class="full">
+              <label class="mini-label">Subtítulo (opcional — lugar, año)</label>
+              <input type="text" id="ttSubtitle" placeholder="Ej: Salta, Argentina · 2026">
+            </div>
+            <div>
+              <label class="mini-label">Tamaño en la grilla</label>
+              <div class="size-opt" id="sizeOpt">
+                <button type="button" class="chip-opt sel" data-size="med">Mediano</button>
+                <button type="button" class="chip-opt" data-size="big">Grande</button>
+                <button type="button" class="chip-opt" data-size="wide">Ancho</button>
+              </div>
+            </div>
+            <div class="full">
+              <label class="mini-label">Estilos</label>
+              <div class="chip-select" id="uploadStyleChips"></div>
+            </div>
+            <div class="upload-actions">
+              <button class="btn btn-gold" id="addTattooBtn"><i class="fas fa-plus"></i> Agregar obra</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tt-list" id="ttList"></div>
+    </section>
+
+    <!-- ═══ PANEL: ESTILOS ═══ -->
+    <section class="panel" id="panel-styles">
+      <div class="panel-head">
+        <div>
+          <div class="panel-title">Estilos de tatuaje</div>
+          <div class="panel-desc">Agregá, editá o quitá las especialidades que se muestran en la web.</div>
+        </div>
+      </div>
+
+      <div class="add-style-card">
+        <div class="field2">
+          <label>Ícono (emoji o símbolo)</label>
+          <input type="text" id="newStyleIcon" placeholder="✦" maxlength="4">
+        </div>
+        <div class="field2" style="flex:2;">
+          <label>Nombre del estilo</label>
+          <input type="text" id="newStyleName" placeholder="Ej: Ornamental">
+        </div>
+        <div class="field2">
+          <label>Etiqueta corta</label>
+          <input type="text" id="newStyleTag" placeholder="Ej: Detalle fino">
+        </div>
+        <button class="btn btn-gold btn-sm" id="addStyleBtn"><i class="fas fa-plus"></i> Agregar</button>
+      </div>
+
+      <div id="stylesList"></div>
+    </section>
+  </main>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://ampkoprhrujdwfodxrav.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFtcGtvcHJocnVqZHdmb2R4cmF2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg0MjIxMDksImV4cCI6MjEwMzk5ODEwOX0.YhX3BgLH0woLCpbMRy5Q7J9fR1xdKbtG5SBRyu1T6TQ';
+const { createClient } = supabase;
+const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const BUCKET = 'tattoos';
+
+let STYLES = [];
+let TATTOOS = [];
+let selectedStyleIds = [];
+let selectedSize = 'med';
+
+/* ── TOASTS ── */
+function toast(msg, type='ok'){
+  const wrap = document.getElementById('toastWrap');
+  const el = document.createElement('div');
+  el.className = 'toast ' + type;
+  el.textContent = msg;
+  wrap.appendChild(el);
+  setTimeout(()=>{ el.style.opacity='0'; el.style.transition='opacity .3s'; setTimeout(()=>el.remove(),300); }, 3200);
+}
+
+/* ── AUTH ── */
+async function checkSession(){
+  const { data:{ session } } = await db.auth.getSession();
+  if(session){ showApp(session); } else { showLogin(); }
+}
+function showLogin(){
+  document.getElementById('loginScreen').style.display='flex';
+  document.getElementById('app').style.display='none';
+}
+async function showApp(session){
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('app').style.display='block';
+  document.getElementById('userEmail').textContent = session.user.email;
+  await loadStyles();
+  await loadTattoos();
+}
+
+document.getElementById('loginForm').addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const btn = document.getElementById('loginBtn');
+  const msg = document.getElementById('loginMsg');
+  msg.textContent=''; msg.className='msg';
+  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> Ingresando…';
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  const { data, error } = await db.auth.signInWithPassword({ email, password });
+  btn.disabled = false; btn.textContent = 'Ingresar';
+  if(error){ msg.textContent = 'Email o contraseña incorrectos.'; msg.className='msg err'; return; }
+  showApp(data.session);
+});
+
+document.getElementById('logoutBtn').addEventListener('click', async ()=>{
+  await db.auth.signOut();
+  showLogin();
+});
+
+document.getElementById('changePwBtn').addEventListener('click', async ()=>{
+  const pw = prompt('Nueva contraseña (mínimo 6 caracteres):');
+  if(!pw) return;
+  if(pw.length < 6){ toast('La contraseña debe tener al menos 6 caracteres.', 'err'); return; }
+  const { error } = await db.auth.updateUser({ password: pw });
+  if(error){ toast('No se pudo cambiar la contraseña: ' + error.message, 'err'); return; }
+  toast('Contraseña actualizada correctamente.');
+});
+
+/* ── TABS ── */
+document.querySelectorAll('.tab-btn').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab-btn').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    document.getElementById('panel-'+b.dataset.tab).classList.add('active');
+  });
+});
+
+/* ── HELPERS ── */
+function publicUrl(path){
+  return db.storage.from(BUCKET).getPublicUrl(path).data.publicUrl;
+}
+function styleNamesFor(ids){
+  return (ids||[]).map(id => STYLES.find(s=>s.id===id)?.name).filter(Boolean);
+}
+
+/* ══════════════════════════════════════════
+   ESTILOS
+   ══════════════════════════════════════════ */
+async function loadStyles(){
+  const { data, error } = await db.from('styles').select('*').order('sort_order');
+  if(error){ toast('Error cargando estilos: '+error.message, 'err'); return; }
+  STYLES = data || [];
+  renderStylesList();
+  renderUploadStyleChips();
+}
+
+function renderStylesList(){
+  const wrap = document.getElementById('stylesList');
+  if(!STYLES.length){ wrap.innerHTML = '<div class="empty-state">Todavía no hay estilos cargados.</div>'; return; }
+  wrap.innerHTML = STYLES.map((s,i)=>`
+    <div class="style-row" data-id="${s.id}">
+      <div class="style-icon-badge">${escapeHtml(s.icon||'✦')}</div>
+      <div class="style-fields">
+        <div>
+          <span class="mini-label">Nombre</span>
+          <input type="text" class="f-name" value="${escapeAttr(s.name)}">
+        </div>
+        <div>
+          <span class="mini-label">Ícono</span>
+          <input type="text" class="f-icon" value="${escapeAttr(s.icon||'')}" maxlength="4">
+        </div>
+        <div class="full">
+          <span class="mini-label">Etiqueta corta</span>
+          <input type="text" class="f-tag" value="${escapeAttr(s.tag_label||'')}">
+        </div>
+        <div class="full">
+          <span class="mini-label">Descripción</span>
+          <textarea class="f-desc" rows="2">${escapeHtml(s.description||'')}</textarea>
+        </div>
+      </div>
+      <div class="tt-actions" style="flex-direction:column;">
+        <div style="display:flex;gap:.3rem;">
+          <button class="icon-btn move-up" title="Subir" ${i===0?'disabled':''}><i class="fas fa-arrow-up"></i></button>
+          <button class="icon-btn move-down" title="Bajar" ${i===STYLES.length-1?'disabled':''}><i class="fas fa-arrow-down"></i></button>
+        </div>
+        <div style="display:flex;gap:.3rem;">
+          <button class="icon-btn save-style" title="Guardar"><i class="fas fa-check"></i></button>
+          <button class="icon-btn danger del-style" title="Eliminar"><i class="fas fa-trash"></i></button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  wrap.querySelectorAll('.style-row').forEach(row=>{
+    const id = row.dataset.id;
+    row.querySelector('.save-style').addEventListener('click', async ()=>{
+      const name = row.querySelector('.f-name').value.trim();
+      const icon = row.querySelector('.f-icon').value.trim() || '✦';
+      const tag_label = row.querySelector('.f-tag').value.trim();
+      const description = row.querySelector('.f-desc').value.trim();
+      if(!name){ toast('El nombre no puede estar vacío.', 'err'); return; }
+      const { error } = await db.from('styles').update({ name, icon, tag_label, description }).eq('id', id);
+      if(error){ toast('Error al guardar: '+error.message, 'err'); return; }
+      toast('Estilo actualizado.');
+      await loadStyles();
+    });
+    row.querySelector('.del-style').addEventListener('click', async ()=>{
+      if(!confirm('¿Eliminar este estilo? Se quitará también de las obras que lo tengan asignado.')) return;
+      const { error } = await db.from('styles').delete().eq('id', id);
+      if(error){ toast('Error al eliminar: '+error.message, 'err'); return; }
+      toast('Estilo eliminado.');
+      await loadStyles();
+      await loadTattoos();
+    });
+    row.querySelector('.move-up')?.addEventListener('click', ()=>swapStyleOrder(id, -1));
+    row.querySelector('.move-down')?.addEventListener('click', ()=>swapStyleOrder(id, 1));
+  });
+}
+
+async function swapStyleOrder(id, dir){
+  const idx = STYLES.findIndex(s=>s.id===id);
+  const swapIdx = idx + dir;
+  if(swapIdx < 0 || swapIdx >= STYLES.length) return;
+  const a = STYLES[idx], b = STYLES[swapIdx];
+  const { error: e1 } = await db.from('styles').update({ sort_order: b.sort_order }).eq('id', a.id);
+  const { error: e2 } = await db.from('styles').update({ sort_order: a.sort_order }).eq('id', b.id);
+  if(e1 || e2){ toast('Error al reordenar.', 'err'); return; }
+  await loadStyles();
+}
+
+document.getElementById('addStyleBtn').addEventListener('click', async ()=>{
+  const name = document.getElementById('newStyleName').value.trim();
+  const icon = document.getElementById('newStyleIcon').value.trim() || '✦';
+  const tag_label = document.getElementById('newStyleTag').value.trim();
+  if(!name){ toast('Escribí un nombre para el estilo.', 'err'); return; }
+  const maxOrder = STYLES.reduce((m,s)=>Math.max(m,s.sort_order||0), 0);
+  const slug = name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'') || ('estilo-'+Date.now());
+  const { error } = await db.from('styles').insert({ name, icon, tag_label, slug, sort_order: maxOrder+1 });
+  if(error){ toast('Error al crear el estilo: '+error.message, 'err'); return; }
+  document.getElementById('newStyleName').value='';
+  document.getElementById('newStyleIcon').value='';
+  document.getElementById('newStyleTag').value='';
+  toast('Estilo agregado.');
+  await loadStyles();
+});
+
+/* ══════════════════════════════════════════
+   OBRAS (TATUAJES)
+   ══════════════════════════════════════════ */
+function renderUploadStyleChips(){
+  const wrap = document.getElementById('uploadStyleChips');
+  wrap.innerHTML = STYLES.map(s=>`<button type="button" class="chip-opt" data-id="${s.id}">${escapeHtml(s.icon||'')} ${escapeHtml(s.name)}</button>`).join('') || '<span class="mini-label">No hay estilos creados todavía.</span>';
+  wrap.querySelectorAll('.chip-opt').forEach(chip=>{
+    chip.addEventListener('click', ()=>{
+      const id = chip.dataset.id;
+      if(selectedStyleIds.includes(id)){
+        selectedStyleIds = selectedStyleIds.filter(x=>x!==id);
+        chip.classList.remove('sel');
+      } else {
+        selectedStyleIds.push(id);
+        chip.classList.add('sel');
+      }
+    });
+  });
+}
+
+document.querySelectorAll('#sizeOpt .chip-opt').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    document.querySelectorAll('#sizeOpt .chip-opt').forEach(x=>x.classList.remove('sel'));
+    b.classList.add('sel');
+    selectedSize = b.dataset.size;
+  });
+});
+
+let pendingFile = null;
+document.getElementById('fileInput').addEventListener('change', (e)=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  pendingFile = file;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    document.getElementById('uploadPreview').innerHTML = `<img src="${ev.target.result}" alt="">`;
+  };
+  reader.readAsDataURL(file);
+});
+
+document.getElementById('addTattooBtn').addEventListener('click', async ()=>{
+  const title = document.getElementById('ttTitle').value.trim();
+  const subtitle = document.getElementById('ttSubtitle').value.trim();
+  const btn = document.getElementById('addTattooBtn');
+
+  if(!pendingFile){ toast('Elegí una imagen para subir.', 'err'); return; }
+  if(!title){ toast('Escribí un nombre para la obra.', 'err'); return; }
+
+  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> Subiendo…';
+
+  try{
+    const ext = pendingFile.name.split('.').pop().toLowerCase();
+    const safeName = title.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
+    const path = `${Date.now()}-${safeName || 'obra'}.${ext}`;
+
+    const { error: upErr } = await db.storage.from(BUCKET).upload(path, pendingFile, { cacheControl: '3600', upsert: false });
+    if(upErr) throw upErr;
+
+    const maxOrder = TATTOOS.reduce((m,t)=>Math.max(m,t.sort_order||0), 0);
+    const { error: insErr } = await db.from('tattoos').insert({
+      title, subtitle, image_path: path,
+      style_ids: selectedStyleIds, size_variant: selectedSize,
+      sort_order: maxOrder + 1, is_published: true
+    });
+    if(insErr) throw insErr;
+
+    toast('Obra agregada correctamente.');
+    document.getElementById('ttTitle').value='';
+    document.getElementById('ttSubtitle').value='';
+    document.getElementById('fileInput').value='';
+    document.getElementById('uploadPreview').innerHTML = '<i class="fas fa-image"></i>';
+    selectedStyleIds = [];
+    selectedSize = 'med';
+    document.querySelectorAll('#sizeOpt .chip-opt').forEach(x=>x.classList.remove('sel'));
+    document.querySelector('#sizeOpt .chip-opt[data-size="med"]').classList.add('sel');
+    pendingFile = null;
+    renderUploadStyleChips();
+    await loadTattoos();
+  } catch(err){
+    toast('Error al subir la obra: ' + (err.message || err), 'err');
+  } finally {
+    btn.disabled = false; btn.innerHTML = '<i class="fas fa-plus"></i> Agregar obra';
+  }
+});
+
+async function loadTattoos(){
+  const { data, error } = await db.from('tattoos').select('*').order('sort_order');
+  if(error){ toast('Error cargando obras: '+error.message, 'err'); return; }
+  TATTOOS = data || [];
+  renderTattoosList();
+}
+
+function renderTattoosList(){
+  const wrap = document.getElementById('ttList');
+  if(!TATTOOS.length){ wrap.innerHTML = '<div class="empty-state">Todavía no subiste ninguna obra. Usá el formulario de arriba para empezar.</div>'; return; }
+  wrap.innerHTML = TATTOOS.map((t,i)=>`
+    <div class="tt-row" data-id="${t.id}">
+      <img class="tt-thumb" src="${publicUrl(t.image_path)}" alt="${escapeAttr(t.title)}">
+      <div class="tt-info">
+        <h4 class="tt-editable-title">${escapeHtml(t.title)}</h4>
+        <div class="tt-sub">${escapeHtml(t.subtitle||'')} · ${t.size_variant} ${t.is_published? '' : '· <span style="color:#ff7070">oculto</span>'}</div>
+        <div class="tt-tags">${styleNamesFor(t.style_ids).map(n=>`<span class="tt-tag">${escapeHtml(n)}</span>`).join('') || '<span class="tt-tag" style="opacity:.5">sin estilo</span>'}</div>
+      </div>
+      <div class="tt-actions">
+        <button class="icon-btn move-up" title="Subir" ${i===0?'disabled':''}><i class="fas fa-arrow-up"></i></button>
+        <button class="icon-btn move-down" title="Bajar" ${i===TATTOOS.length-1?'disabled':''}><i class="fas fa-arrow-down"></i></button>
+        <button class="icon-btn toggle-pub" title="Mostrar / ocultar"><i class="fas fa-eye${t.is_published?'':'-slash'}"></i></button>
+        <button class="icon-btn edit-tt" title="Editar"><i class="fas fa-pen"></i></button>
+        <button class="icon-btn danger del-tt" title="Eliminar"><i class="fas fa-trash"></i></button>
+      </div>
+    </div>
+  `).join('');
+
+  wrap.querySelectorAll('.tt-row').forEach(row=>{
+    const id = row.dataset.id;
+    const t = TATTOOS.find(x=>x.id===id);
+    row.querySelector('.move-up')?.addEventListener('click', ()=>swapTattooOrder(id,-1));
+    row.querySelector('.move-down')?.addEventListener('click', ()=>swapTattooOrder(id,1));
+    row.querySelector('.toggle-pub').addEventListener('click', async ()=>{
+      const { error } = await db.from('tattoos').update({ is_published: !t.is_published }).eq('id', id);
+      if(error){ toast('Error: '+error.message, 'err'); return; }
+      await loadTattoos();
+    });
+    row.querySelector('.del-tt').addEventListener('click', async ()=>{
+      if(!confirm(`¿Eliminar "${t.title}"? Esta acción no se puede deshacer.`)) return;
+      const { error: dbErr } = await db.from('tattoos').delete().eq('id', id);
+      if(dbErr){ toast('Error al eliminar: '+dbErr.message, 'err'); return; }
+      await db.storage.from(BUCKET).remove([t.image_path]);
+      toast('Obra eliminada.');
+      await loadTattoos();
+    });
+    row.querySelector('.edit-tt').addEventListener('click', ()=>openEditModal(t));
+  });
+}
+
+async function swapTattooOrder(id, dir){
+  const idx = TATTOOS.findIndex(t=>t.id===id);
+  const swapIdx = idx + dir;
+  if(swapIdx < 0 || swapIdx >= TATTOOS.length) return;
+  const a = TATTOOS[idx], b = TATTOOS[swapIdx];
+  const { error: e1 } = await db.from('tattoos').update({ sort_order: b.sort_order }).eq('id', a.id);
+  const { error: e2 } = await db.from('tattoos').update({ sort_order: a.sort_order }).eq('id', b.id);
+  if(e1 || e2){ toast('Error al reordenar.', 'err'); return; }
+  await loadTattoos();
+}
+
+/* ── EDIT MODAL (simple prompt-based inline edit) ── */
+function openEditModal(t){
+  const newTitle = prompt('Nombre de la obra:', t.title);
+  if(newTitle === null) return;
+  const newSubtitle = prompt('Subtítulo (lugar, año):', t.subtitle || '');
+  if(newSubtitle === null) return;
+  const styleNames = STYLES.map((s,i)=>`${i+1}) ${s.name}`).join('\n');
+  const currentIdx = t.style_ids.map(id => STYLES.findIndex(s=>s.id===id)+1).filter(n=>n>0).join(',');
+  const input = prompt(`Estilos disponibles:\n${styleNames}\n\nEscribí los números separados por coma (ej: 1,3):`, currentIdx);
+  if(input === null) return;
+  const chosen = input.split(',').map(s=>parseInt(s.trim(),10)).filter(n=>!isNaN(n) && n>=1 && n<=STYLES.length);
+  const newStyleIds = chosen.map(n => STYLES[n-1].id);
+
+  (async ()=>{
+    const { error } = await db.from('tattoos').update({
+      title: newTitle.trim() || t.title,
+      subtitle: newSubtitle.trim(),
+      style_ids: newStyleIds
+    }).eq('id', t.id);
+    if(error){ toast('Error al actualizar: '+error.message, 'err'); return; }
+    toast('Obra actualizada.');
+    await loadTattoos();
+  })();
+}
+
+/* ── UTIL ── */
+function escapeHtml(str){ return (str||'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function escapeAttr(str){ return escapeHtml(str); }
+
+checkSession();
+</script>
+</body>
+</html>
